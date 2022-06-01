@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\FacultyController;
+use App\Http\Controllers\Api\v1\RequirementBinController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,12 @@ use App\Http\Controllers\Api\v1\FacultyController;
         Route::get('/faculty/{id}', [FacultyController::class, 'show']);
         Route::get('/faculty/search/{name}', [FacultyController::class, 'search']);
         Route::get('/faculty/show_soft_deleted/{all}', [FacultyController::class, 'show_soft_deleted']);
+
+        // Requirement Bin
+        Route::get('/requirement_bin', [RequirementBinController::class, 'index']);
+        Route::get('/requirement_bin/{id}', [RequirementBinController::class, 'show']);
+        Route::get('/requirement_bin/search/{title}', [RequirementBinController::class, 'search']);
+        Route::get('/requirement_bin/show_soft_deleted/{all}', [RequirementBinController::class, 'show_soft_deleted']);
     });
 
 
@@ -60,6 +67,12 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/faculty/{id}', [FacultyController::class, 'update']);
         Route::delete('/faculty/destroy/{id}', [FacultyController::class, 'destroy']);
         Route::put('/faculty/restore/{id}', [FacultyController::class, 'restore']);
+
+        // Requirement Bin
+        Route::post('/requirement_bin', [RequirementBinController::class, 'store']);
+        Route::put('/requirement_bin/{id}', [RequirementBinController::class, 'update']);
+        Route::delete('/requirement_bin/destroy/{id}', [RequirementBinController::class, 'destroy']);
+        Route::put('/requirement_bin/restore/{id}', [RequirementBinController::class, 'restore']);
     });
 
 });
