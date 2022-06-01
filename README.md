@@ -27,6 +27,43 @@ Laravel has the most extensive and thorough [documentation](https://laravel.com/
 
 If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
+## Installation
+
+Clone the repository
+<pre class="notranslate"><code>git clone https://github.com/jrglomar/fms
+</code></pre>
+
+Switch to the repo folder
+<pre class="notranslate"><code>cd fms
+</code></pre>
+
+Install all the dependencies using composer 
+<pre class="notranslate"><code>composer install
+</code></pre>
+
+Generate a new application key
+<pre class="notranslate"><code>php artisan key:generate
+</code></pre>
+
+Generate a new JWT authentication secret key
+<pre class="notranslate"><code>php artisan jwt:generate
+</code></pre>
+
+Copy the example env file and make the required configuration changes in the .env file
+<pre class="notranslate"><code>cp .env.example .env
+</code></pre>
+
+Run the database migrations (Set the database connection in .env before migrating)  
+<pre class="notranslate"><code>php artisan migrate
+</code></pre>
+
+Start the local development server
+<pre class="notranslate"><code>php artisan serve
+</code></pre>
+
+
+
+
 ## Laravel Sponsors
 
 We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
@@ -47,6 +84,7 @@ We would like to extend our thanks to the following sponsors for funding Laravel
 - **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
 - **[Lendio](https://lendio.com)**
 
+
 ## Contributing
 
 Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
@@ -62,3 +100,4 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
