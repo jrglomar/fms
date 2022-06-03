@@ -1,15 +1,17 @@
 <?php
 
+//namespace App\Http\Controllers;
+
 // For versioning modified namespace        - Always add it to new controller
 namespace App\Http\Controllers\Api\v1;
 
 // For versioning controller        - Always add it to new controller
 use App\Http\Controllers\Controller;
 
-use App\Models\Observation;
+use App\Models\ActivityType;
 use Illuminate\Http\Request;
 
-class ObservationController extends Controller
+class ActivityTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +27,7 @@ class ObservationController extends Controller
         // return FacultyUserRole::all();
         
         // Return with relationships
-        return Observation::where('active_status', 'Active')->get();
+        return ActivityType::with('user', 'created_by_user')->get();
     }
 
     /**
@@ -38,14 +40,10 @@ class ObservationController extends Controller
     {
         //
         $request->validate([
-            'proof_of_observation_file_directory' => 'required',
-            'proof_of_observation_file_link' => 'required',
-            'remarks' => 'required',
-            'date_of_observation' => 'required',
-            'schedule_id' => 'required'
+            'title' => 'required'
         ]);
 
-        return Observation::create($request->all());
+        return ActivityType::create($request->all());
         
     }
 
@@ -60,7 +58,15 @@ class ObservationController extends Controller
         //
         // return FacultyUserRole::find($id);
 
-        return Observation::where('id', $id)->first();
+        return ActivityType::with('user', 'created_by_user')->find($id);
+    }
+
+    public function edit($id)
+    {
+        // Default
+        // return ActivityType::find($id);
+
+        return ActivityType::with('user', 'created_by_user')->find($id);
     }
 
     /**
@@ -73,24 +79,39 @@ class ObservationController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $observation = Observation::find($id);
-        $observation->update($request->all());
+        $activity_type = ActivityType::find($id);
+        $activity_type->update($request->all());
 
-        return $observation;
+        return $activity_type;
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function deactivate(Request $request, $id)
+    
+    public function restore(ActivityType $activity_type, $id)
     {
         //
-        $observation = Observation::find($id);
-        $observation->update(array('active_status' => 'Inactive'));
-
-        return $observation;
+        $activity_type = ActivityType::onlyTrashed()->where('id', $id)->restore();
+        return ActivityType::find($id);
     }
+
+    public function destroy(ActivityType $activity_type, $id)
+    {
+        //if the model soft deleted
+        $activity_type = ActivityType::find($id);
+
+        $activity_type->delete();
+        return $activity_type;
+    }
+
+    public function show_soft_deleted($all)
+    {
+        $activity_type = ActivityType::onlyTrashed()->get();
+
+        return $activity_type;
+    }
+
+    public function search($title)
+    {
+
+        return ActivityType::where('email', 'like', '%'.$title.'%')->get();
+    }
+    //
 }
