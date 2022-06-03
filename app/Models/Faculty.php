@@ -23,7 +23,7 @@ class Faculty extends Model
                 'contact_number',
                 'user_id',
                 'created_by',
-                'updated_by ',
+                'updated_by',
             ];
 
             protected $dates = ['deleted_at'];
@@ -34,7 +34,7 @@ class Faculty extends Model
         // [Declare relationships here]
             public function user()
             {
-                return $this->belongsTo(User::class)->withDefault();
+                return $this->belongsTo(User::class);
             }
 
         // End of [Declare relationships here]
