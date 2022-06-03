@@ -9,24 +9,29 @@ use Illuminate\Database\Eloquent\Model;
 // ADDED FOR UUID INCREMENT ERROR
 use Illuminate\Support\Str;
 
-class Requirement_bin extends Model
+class RequirementRequiredFacultyList extends Model
 {
     // -----  [[DEFAULT]]  -----  //
         use HasFactory, SoftDeletes;
 
         // [Modify this fillable base on tables]      - Can be modified
             protected $fillable = [
-                "active_status",
-                "title",
-                "description",
-                "deadline"
+                "requirement_bin_id",
+                "faculty_id"
             ];
 
-            protected $dates = ['deleted_at'];
+        protected $dates = ['deleted_at'];
 
         // protected $with = ['users','created_by_user','updated_by_user'];
 
         // [Declare relationships here]
+            public function faculty(){
+                return $this->belongsTo(Faculty::class)->withDefault();
+            }
+        
+            public function requirement_bin(){
+                return $this->belongsTo(RequirementBin::class)->withDefault();
+            }
         // End of [Declare relationships here]
         
         // [Default relationship]       - Default

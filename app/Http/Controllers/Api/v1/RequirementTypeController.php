@@ -9,10 +9,10 @@ namespace App\Http\Controllers\Api\v1;
 // For versioning controller        - Always add it to new controller
 use App\Http\Controllers\Controller;
 
-use App\Models\RequirementBin;
+use App\Models\RequirementType;
 use Illuminate\Http\Request;
 
-class RequirementBinController extends Controller
+class RequirementTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,10 +22,10 @@ class RequirementBinController extends Controller
     public function index()
     {
         /* Fetching w/o relationship */
-        return RequirementBin::all();
+        return RequirementType::all();
 
         // /* Fetching w/ relationship */
-        // return RequirementBin::with('user', 'created_by_user')->get();
+        // return RequirementType::with('user', 'created_by_user')->get();
     }
 
     /**
@@ -46,91 +46,89 @@ class RequirementBinController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        $request->validate([
+         //
+         $request->validate([
             'title' => 'required',
-            'description' => 'required',
-            'deadline' => 'required'
         ]);
 
-        return RequirementBin::create($request->all());
+        return RequirementType::create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\RequirementBin  $Requirement_bin
+     * @param  \App\Models\RequirementType  $requirement_type
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(RequirementType $requirement_type, $id)
     {
         // Default
-        return RequirementBin::find($id);
+        return RequirementType::find($id);
 
-        // return Requirement_bin::with('user', 'created_by_user')->find($id);
+        // return RequirementType::with('user', 'created_by_user')->find($id);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\RequirementBin  $requirement_bin
+     * @param  \App\Models\RequirementType  $requirement_type
      * @return \Illuminate\Http\Response
      */
-    public function edit(RequirementBin $requirement_bin, $id)
+    public function edit(RequirementType $requirement_type, $id)
     {
         // Default
-        // return RequirementBin::find($id);
+        // return RequirementType::find($id);
 
-        return RequirementBin::with('user', 'created_by_user')->find($id);
+        return RequirementType::with('user', 'created_by_user')->find($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\RequirementBin  $Requirement_bin
+     * @param  \App\Models\RequirementType  $requirementType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RequirementBin $requirement_bin, $id)
+    public function update(Request $request, RequirementType $requirement_type, $id)
     {
         //
-        $requirements_bin = RequirementBin::find($id);
-        $requirements_bin->update($request->all());
+        $requirement_type = RequirementType::find($id);
+        $requirement_type->update($request->all());
 
-        return $requirements_bin;
+        return $requirement_type;
     }
 
-    public function restore(RequirementBin $requirement_bin, $id)
+    public function restore(RequirementType $requirement_type, $id)
     {
         //
-        $requirement_bin = RequirementBin::onlyTrashed()->where('id', $id)->restore();
-        return RequirementBin::find($id);
+        $requirement_type = RequirementType::onlyTrashed()->where('id', $id)->restore();
+        return RequirementType::find($id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\RequirementBin  $Requirement_bin
+     * @param  \App\Models\RequirementType  $requirement_type
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RequirementBin $requirement_bin, $id)
+    public function destroy(RequirementType $requirement_type, $id)
     {
         //if the model soft deleted
-        $requirement_bin = RequirementBin::find($id);
+        $requirement_type = RequirementType::find($id);
 
-        $requirement_bin->delete();
-        return $requirement_bin;
+        $requirement_type->delete();
+        return $requirement_type;
     }
 
     public function show_soft_deleted($all)
     {
-        $requirement_bin = RequirementBin::onlyTrashed()->get();
+        $requirement_type = RequirementType::onlyTrashed()->get();
 
-        return $requirement_bin;
+        return $requirement_type;
     }
 
     public function search($title)
     {
-        return RequirementBin::where('title', 'like', '%'.$title.'%')->get();
+        return RequirementType::where('title', 'like', '%'.$title.'%')->get();
     }
 }
