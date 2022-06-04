@@ -27,7 +27,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         // return FacultyUserRole::all();
         
         // Return with relationships
-        return ActivityType::with('user', 'created_by_user')->get();
+        return ActivityAttendanceRequiredFacultyListController::with('user', 'created_by_user')->get();
     }
 
     /**
@@ -65,7 +65,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         //
         // return FacultyUserRole::find($id);
 
-        return ActivityType::with('user', 'created_by_user')->find($id);
+        return ActivityAttendanceRequiredFacultyListController::with('user', 'created_by_user')->find($id);
     }
 
     /**
@@ -87,37 +87,37 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
     public function edit($id)
     {
         // Default
-        // return ActivityType::find($id);
+        // return ActivityAttendanceRequiredFacultyListController::find($id);
 
-        return ActivityType::with('user', 'created_by_user')->find($id);
+        return ActivityAttendanceRequiredFacultyListController::with('user', 'created_by_user')->find($id);
     }
 
-    public function restore(ActivityType $activity_type, $id)
+    public function restore(ActivityAttendanceRequiredFacultyListController $ActivityAttendance, $id)
     {
         //
-        $activity_type = ActivityType::onlyTrashed()->where('id', $id)->restore();
-        return ActivityType::find($id);
+        $ActivityAttendance = ActivityAttendanceRequiredFacultyListController::onlyTrashed()->where('id', $id)->restore();
+        return ActivityAttendanceRequiredFacultyListController::find($id);
     }
 
-    public function destroy(ActivityType $activity_type, $id)
+    public function destroy(ActivityAttendanceRequiredFacultyListController $ActivityAttendance, $id)
     {
         //if the model soft deleted
-        $activity_type = ActivityType::find($id);
+        $ActivityAttendance = ActivityAttendanceRequiredFacultyListController::find($id);
 
-        $activity_type->delete();
-        return $activity_type;
+        $ActivityAttendance->delete();
+        return $ActivityAttendance;
     }
 
     public function show_soft_deleted($all)
     {
-        $activity_type = ActivityType::onlyTrashed()->get();
+        $ActivityAttendance = ActivityAttendanceRequiredFacultyListController::onlyTrashed()->get();
 
-        return $activity_type;
+        return $ActivityAttendance;
     }
 
     public function search($title)
     {
 
-        return ActivityType::where('email', 'like', '%'.$title.'%')->get();
+        return ActivityAttendanceRequiredFacultyListController::where('email', 'like', '%'.$title.'%')->get();
     }
 }
