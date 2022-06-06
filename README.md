@@ -41,19 +41,6 @@ Install all the dependencies using composer
 <pre class="notranslate"><code>composer install
 </code></pre>
 
-<!-- 
-Generate a new application key
-<pre class="notranslate"><code>php artisan key:generate
-</code></pre>
-
-Generate a new JWT authentication secret key
-<pre class="notranslate"><code>php artisan jwt:generate
-</code></pre>
-
-Copy the example env file and make the required configuration changes in the .env file
-<pre class="notranslate"><code>cp .env.example .env
-</code></pre> -->
-
 Run the database migrations (Set the database connection in .env before migrating)  
 <pre class="notranslate"><code>php artisan migrate
 </code></pre>

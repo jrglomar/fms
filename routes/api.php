@@ -11,6 +11,9 @@ use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\FacultyController;
 use App\Http\Controllers\Api\v1\RoleController;
 use App\Http\Controllers\Api\v1\UserRoleController;
+use App\Http\Controllers\Api\v1\MeetingTypeController;
+use App\Http\Controllers\Api\v1\MeetingController;
+use App\Http\Controllers\Api\v1\MeetingAttendanceRequiredFacultyListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +56,24 @@ use App\Http\Controllers\Api\v1\UserRoleController;
         Route::get('/user_role/{id}', [UserRoleController::class, 'show']);
         Route::get('/user_role/search/{name}', [UserRoleController::class, 'search']);
         Route::get('/user_role/show_soft_deleted/{all}', [UserRoleController::class, 'show_soft_deleted']);
+        
+        // Meeting Types
+        Route::get('/meeting_type', [MeetingTypeController::class, 'index']);
+        Route::get('/meeting_type/{id}', [MeetingTypeController::class, 'show']);
+        Route::get('/meeting_type/search/{name}', [MeetingTypeController::class, 'search']);
+        Route::get('/meeting_type/show_soft_deleted/{all}', [MeetingTypeController::class, 'show_soft_deleted']);
+        
+        // Meeting Types
+        Route::get('/meeting', [MeetingController::class, 'index']);
+        Route::get('/meeting/{id}', [MeetingController::class, 'show']);
+        Route::get('/meeting/search/{name}', [MeetingController::class, 'search']);
+        Route::get('/meeting/show_soft_deleted/{all}', [MeetingController::class, 'show_soft_deleted']);
+
+        // Meeting Attendance Required Faculty List
+        Route::get('/meeting_attendance_required_faculty_list', [MeetingAttendanceRequiredFacultyListController::class, 'index']);
+        Route::get('/meeting_attendance_required_faculty_list/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'show']);
+        Route::get('/meeting_attendance_required_faculty_list/search/{name}', [MeetingAttendanceRequiredFacultyListController::class, 'search']);
+        Route::get('/meeting_attendance_required_faculty_list/show_soft_deleted/{all}', [MeetingAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
 
     });
 
@@ -87,6 +108,20 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/user_role/{id}', [UserRoleController::class, 'update']);
         Route::delete('/user_role/destroy/{id}', [UserRoleController::class, 'destroy']);
         Route::put('/user_role/restore/{id}', [UserRoleController::class, 'restore']);
+
+        // Meeting Type
+        Route::post('/meeting', [MeetingController::class, 'store']);
+        Route::put('/meeting/{id}', [MeetingController::class, 'update']);
+        Route::delete('/meeting/destroy/{id}', [MeetingController::class, 'destroy']);
+        Route::put('/meeting/restore/{id}', [MeetingController::class, 'restore']);
+
+        // Meeting Attendance Required Faculty List
+        Route::post('/meeting_attendance_required_faculty_list', [MeetingAttendanceRequiredFacultyListController::class, 'store']);
+        Route::put('/meeting_attendance_required_faculty_list/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'update']);
+        Route::delete('/meeting_attendance_required_faculty_list/destroy/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'destroy']);
+        Route::put('/meeting_attendance_required_faculty_list/restore/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'restore']);
+
+
     });
 
 });
