@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\UserController;
 use App\Http\Controllers\Api\v1\FacultyController;
+use App\Http\Controllers\Api\v1\RoleController;
+use App\Http\Controllers\Api\v1\UserRoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,19 @@ use App\Http\Controllers\Api\v1\FacultyController;
         Route::get('/faculty/{id}', [FacultyController::class, 'show']);
         Route::get('/faculty/search/{name}', [FacultyController::class, 'search']);
         Route::get('/faculty/show_soft_deleted/{all}', [FacultyController::class, 'show_soft_deleted']);
+
+        // Role
+        Route::get('/role', [RoleController::class, 'index']);
+        Route::get('/role/{id}', [RoleController::class, 'show']);
+        Route::get('/role/search/{name}', [RoleController::class, 'search']);
+        Route::get('/role/show_soft_deleted/{all}', [RoleController::class, 'show_soft_deleted']);
+        
+        // User Role
+        Route::get('/user_role', [UserRoleController::class, 'index']);
+        Route::get('/user_role/{id}', [UserRoleController::class, 'show']);
+        Route::get('/user_role/search/{name}', [UserRoleController::class, 'search']);
+        Route::get('/user_role/show_soft_deleted/{all}', [UserRoleController::class, 'show_soft_deleted']);
+
     });
 
 
@@ -60,6 +75,18 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/faculty/{id}', [FacultyController::class, 'update']);
         Route::delete('/faculty/destroy/{id}', [FacultyController::class, 'destroy']);
         Route::put('/faculty/restore/{id}', [FacultyController::class, 'restore']);
+
+        // Role
+        Route::post('/role', [RoleController::class, 'store']);
+        Route::put('/role/{id}', [RoleController::class, 'update']);
+        Route::delete('/role/destroy/{id}', [RoleController::class, 'destroy']);
+        Route::put('/role/restore/{id}', [RoleController::class, 'restore']);
+
+        // User Role
+        Route::post('/user_role', [UserRoleController::class, 'store']);
+        Route::put('/user_role/{id}', [UserRoleController::class, 'update']);
+        Route::delete('/user_role/destroy/{id}', [UserRoleController::class, 'destroy']);
+        Route::put('/user_role/restore/{id}', [UserRoleController::class, 'restore']);
     });
 
 });

@@ -45,6 +45,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
     // ADDED FOR UUID INCREMENT ERROR
     public $incrementing = false;
 
