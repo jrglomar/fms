@@ -78,10 +78,10 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $ActivityAttendance = ActivityAttendanceRequiredFacultyList::find($id);
-        $ActivityAttendance->update($request->all());
+        $ActivityAttendanceRequiredFacultyList = ActivityAttendanceRequiredFacultyList::find($id);
+        $ActivityAttendanceRequiredFacultyList->update($request->all());
 
-        return $ActivityAttendance;
+        return $ActivityAttendanceRequiredFacultyList;
     }
 
     public function edit($id)
@@ -92,17 +92,17 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         //return ActivityType::with('user', 'created_by_user')->find($id);
     }
 
-    public function restore(ActivityType $activity_type, $id)
+    public function restore(ActivityAttendanceRequiredFacultyList $activity_type, $id)
     {
         //
-        $activity_type = ActivityType::onlyTrashed()->where('id', $id)->restore();
-        return ActivityType::find($id);
+        $activity_type = ActivityAttendanceRequiredFacultyList::onlyTrashed()->where('id', $id)->restore();
+        return ActivityAttendanceRequiredFacultyList::find($id);
     }
 
-    public function destroy(ActivityType $activity_type, $id)
+    public function destroy(ActivityAttendanceRequiredFacultyList $activity_type, $id)
     {
         //if the model soft deleted
-        $activity_type = ActivityType::find($id);
+        $activity_type = ActivityAttendanceRequiredFacultyList::find($id);
 
         $activity_type->delete();
         return $activity_type;
@@ -110,7 +110,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
 
     public function show_soft_deleted($all)
     {
-        $activity_type = ActivityType::onlyTrashed()->get();
+        $activity_type = ActivityAttendanceRequiredFacultyList::onlyTrashed()->get();
 
         return $activity_type;
     }
@@ -118,6 +118,6 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
     public function search($title)
     {
 
-        return ActivityType::where('email', 'like', '%'.$title.'%')->get();
+        return ActivityAttendanceRequiredFacultyList::where('email', 'like', '%'.$title.'%')->get();
     }
 }
