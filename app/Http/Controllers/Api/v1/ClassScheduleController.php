@@ -20,13 +20,13 @@ class ClassScheduleController extends Controller
     public function index()
     {
         // Only active data
-        // return FacultyUserRole::where('active_status', 'Active')->get();
+        // return ClassSchedule::where('active_status', 'Active')->get();
 
         // All data
-        // return FacultyUserRole::all();
+        return ClassSchedule::all();
         
         // Return with relationships
-        return ClassSchedule::with('user', 'created_by_user')->get();
+            
     }
 
     /**
@@ -60,9 +60,9 @@ class ClassScheduleController extends Controller
     public function show($id)
     {
         //
-        // return FacultyUserRole::find($id);
+        return ClassSchedule::find($id);
 
-        return ClassSchedule::with('user', 'created_by_user')->find($id);
+       // return ClassSchedule::with('user', 'created_by_user')->find($id);
     }
 
     public function edit($id)

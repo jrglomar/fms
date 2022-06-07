@@ -24,10 +24,10 @@ class ActivityController extends Controller
         // return FacultyUserRole::where('active_status', 'Active')->get();
 
         // All data
-        // return FacultyUserRole::all();
+         return FacultyUserRole::all();
         
         // Return with relationships
-        return Activity::with('user', 'created_by_user')->get();
+        //return Activity::with('user', 'created_by_user')->get();
     }
 
     /**
@@ -62,9 +62,9 @@ class ActivityController extends Controller
     public function show($id)
     {
         //
-        // return FacultyUserRole::find($id);
+         return FacultyUserRole::find($id);
 
-        return Activity::with('user', 'created_by_user')->find($id);
+        //return Activity::with('user', 'created_by_user')->find($id);
     }
 
     /**

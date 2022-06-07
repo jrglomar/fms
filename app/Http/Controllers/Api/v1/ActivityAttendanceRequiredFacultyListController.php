@@ -24,10 +24,10 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         // return FacultyUserRole::where('active_status', 'Active')->get();
 
         // All data
-        // return FacultyUserRole::all();
+        return FacultyUserRole::all();
         
         // Return with relationships
-        return ActivityType::with('user', 'created_by_user')->get();
+       // return ActivityType::with('user', 'created_by_user')->get();
     }
 
     /**
@@ -63,9 +63,9 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
     public function show($id)
     {
         //
-        // return FacultyUserRole::find($id);
+        return FacultyUserRole::find($id);
 
-        return ActivityType::with('user', 'created_by_user')->find($id);
+        //return ActivityType::with('user', 'created_by_user')->find($id);
     }
 
     /**
@@ -87,9 +87,9 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
     public function edit($id)
     {
         // Default
-        // return ActivityType::find($id);
+        return ActivityType::find($id);
 
-        return ActivityType::with('user', 'created_by_user')->find($id);
+        //return ActivityType::with('user', 'created_by_user')->find($id);
     }
 
     public function restore(ActivityType $activity_type, $id)

@@ -19,13 +19,13 @@ class ObservationController extends Controller
     public function index()
     {
         // Only active data
-        // return FacultyUserRole::where('active_status', 'Active')->get();
+        // return Observation::where('active_status', 'Active')->get();
 
         // All data
-        // return FacultyUserRole::all();
+        return Observation::all();
         
         // Return with relationships
-        return Observation::with('user', 'created_by_user')->get();
+        // return Observation::with('user', 'created_by_user')->get();
     }
 
     /**
@@ -58,9 +58,9 @@ class ObservationController extends Controller
     public function show($id)
     {
         //
-        // return FacultyUserRole::find($id);
+        return Observation::find($id);
 
-        return Observation::where('id', $id)->first();
+        //return Observation::where('id', $id)->first();
     }
 
     /**
