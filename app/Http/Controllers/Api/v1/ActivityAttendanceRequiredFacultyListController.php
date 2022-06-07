@@ -21,10 +21,10 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
     public function index()
     {
         // Only active data
-        // return FacultyUserRole::where('active_status', 'Active')->get();
+        // return ActivityAttendanceRequiredFacultyList::where('active_status', 'Active')->get();
 
         // All data
-        return FacultyUserRole::all();
+        return ActivityAttendanceRequiredFacultyList::all();
         
         // Return with relationships
        // return ActivityType::with('user', 'created_by_user')->get();
@@ -63,7 +63,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
     public function show($id)
     {
         //
-        return FacultyUserRole::find($id);
+        return ActivityAttendanceRequiredFacultyList::find($id);
 
         //return ActivityType::with('user', 'created_by_user')->find($id);
     }
