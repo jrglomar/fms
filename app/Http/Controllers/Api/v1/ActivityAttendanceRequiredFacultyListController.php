@@ -45,7 +45,6 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
             'attendance_status' => 'required',
             'proof_of_attendance_file_directory' => 'required',
             'proof_of_attendance_file_link' => 'required',
-            'end_datetime' => 'required',
             'activity_id' => 'required',
             'faculty_id' => 'required'
         ]);
