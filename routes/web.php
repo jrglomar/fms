@@ -19,6 +19,10 @@ Route::get('/', function () {
 
 //-------------ADMIN----------------//
 
-Route::get('/dashboard', function () {
+Route::get('admin/dashboard', function () {
     return view('admin/dashboard');
+});
+
+Route::get('admin/activity', function () {
+    return view('admin/activity');
 });
