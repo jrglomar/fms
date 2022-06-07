@@ -21,10 +21,10 @@ class ActivityController extends Controller
     public function index()
     {
         // Only active data
-        // return FacultyUserRole::where('active_status', 'Active')->get();
+        // return Activity::where('active_status', 'Active')->get();
 
         // All data
-         return FacultyUserRole::all();
+         return Activity::all();
         
         // Return with relationships
         //return Activity::with('user', 'created_by_user')->get();
@@ -62,7 +62,7 @@ class ActivityController extends Controller
     public function show($id)
     {
         //
-         return FacultyUserRole::find($id);
+         return Activity::find($id);
 
         //return Activity::with('user', 'created_by_user')->find($id);
     }
@@ -86,9 +86,9 @@ class ActivityController extends Controller
     public function edit($id)
     {
         // Default
-        // return Activity::find($id);
+        return Activity::find($id);
 
-        return Activity::with('user', 'created_by_user')->find($id);
+        //return Activity::with('user', 'created_by_user')->find($id);
     }
 
     public function restore(Activity $activity, $id)
