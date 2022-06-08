@@ -30,7 +30,7 @@ class SubmittedRequirementFolder extends Model
                 return $this->belongsTo(Faculty::class)->withDefault();
             }
             
-            public function requirements_bin(){
+            public function requirement_bin(){
                 return $this->belongsTo(RequirementBin::class)->withDefault();
             }
         // End of [Declare relationships here]

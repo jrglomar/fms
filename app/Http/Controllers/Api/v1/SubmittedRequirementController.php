@@ -68,8 +68,10 @@ class SubmittedRequirementController extends Controller
     public function show(SubmittedRequirement $submitted_requirement, $id)
     {
         // Default
-        return SubmittedRequirement::find($id);
+        // return SubmittedRequirement::find($id);
 
+        return SubmittedRequirement::with('submitted_requirement_folder')->find($id);
+        
         // return SubmittedRequirement::with('user', 'created_by_user')->find($id);
     }
 

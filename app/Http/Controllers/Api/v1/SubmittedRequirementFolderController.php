@@ -64,10 +64,12 @@ class SubmittedRequirementFolderController extends Controller
      */
     public function show(SubmittedRequirementFolder $submitted_requirement_folder, $id)
     {
-         // Default
-         return SubmittedRequirementFolder::find($id);
+        // Default
+        //  return SubmittedRequirementFolder::find($id);
 
-         // return SubmittedRequirementFolder::with('user', 'created_by_user')->find($id);
+        return SubmittedRequirementFolder::with('faculty', 'requirement_bin')->find($id);
+  
+        // return SubmittedRequirementFolder::with('user', 'created_by_user')->find($id);
     }
 
     /**

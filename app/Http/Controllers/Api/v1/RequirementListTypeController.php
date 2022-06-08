@@ -64,7 +64,9 @@ class RequirementListTypeController extends Controller
     public function show(RequirementListType $requirement_list_type, $id)
     {
         // Default
-        return RequirementListType::find($id);
+        // return RequirementListType::find($id);
+
+        return RequirementListType::with('requirement_bin', 'requirement_type')->find($id);
 
         // return RequirementListType::with('user', 'created_by_user')->find($id);
     }

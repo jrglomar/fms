@@ -29,7 +29,7 @@ class SubmittedRequirement extends Model
         // protected $with = ['users','created_by_user','updated_by_user'];
 
         // [Declare relationships here]
-            public function submitted_requirements_folder(){
+            public function submitted_requirement_folder(){
                 return $this->belongsTo(SubmittedRequirementFolder::class)->withDefault();
             }
         // End of [Declare relationships here]
