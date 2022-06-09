@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
 // ADDED FOR UUID INCREMENT ERROR       - Always add it to new model
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,10 +26,7 @@ class MeetingType extends Model
 
         protected $dates = ['deleted_at'];
 
-    
     // protected $with = ['users','created_by_user','updated_by_user'];
-
-    
     
     // [Default relationship]       - Default
     public function created_by_user()
@@ -55,6 +51,8 @@ class MeetingType extends Model
             $issue->id = Str::uuid(36);
         });
 
+
+        // Added for automated created_by and updated_by 
         static::creating(function ($model) {
             $model->created_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
             $model->updated_by = NULL;
