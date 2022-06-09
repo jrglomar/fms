@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\User;
 
 class AcademicRankFactory extends Factory
 {
@@ -15,7 +16,9 @@ class AcademicRankFactory extends Factory
     {
         return [
             "title" => $this->faker->word(10),
-            "description" => $this->faker->text(20)
+            "description" => $this->faker->text(20),
+            "created_by" => User::factory(),
+            "updated_by" => User::factory()
         ];
     }
 }
