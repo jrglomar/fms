@@ -63,7 +63,7 @@ use App\Http\Controllers\Api\v1\MeetingAttendanceRequiredFacultyListController;
         Route::get('/meeting_type/search/{name}', [MeetingTypeController::class, 'search']);
         Route::get('/meeting_type/show_soft_deleted/{all}', [MeetingTypeController::class, 'show_soft_deleted']);
         
-        // Meeting Types
+        // Meeting
         Route::get('/meeting', [MeetingController::class, 'index']);
         Route::get('/meeting/{id}', [MeetingController::class, 'show']);
         Route::get('/meeting/search/{name}', [MeetingController::class, 'search']);
@@ -109,17 +109,18 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::delete('/user_role/destroy/{id}', [UserRoleController::class, 'destroy']);
         Route::put('/user_role/restore/{id}', [UserRoleController::class, 'restore']);
 
+        // Meeting Type
+        Route::post('/meeting_type', [MeetingTypeController::class, 'store']);
+        Route::put('/meeting_type/{id}', [MeetingTypeController::class, 'update']);
+        Route::delete('/meeting_type/destroy/{id}', [MeetingTypeController::class, 'destroy']);
+        Route::put('/meeting_type/restore/{id}', [MeetingTypeController::class, 'restore']);
+
         // Meeting
         Route::post('/meeting', [MeetingController::class, 'store']);
         Route::put('/meeting/{id}', [MeetingController::class, 'update']);
         Route::delete('/meeting/destroy/{id}', [MeetingController::class, 'destroy']);
         Route::put('/meeting/restore/{id}', [MeetingController::class, 'restore']);
 
-        // Meeting Type
-        Route::post('/meeting_type', [MeetingController::class, 'store']);
-        Route::put('/meeting_type/{id}', [MeetingController::class, 'update']);
-        Route::delete('/meeting_type/destroy/{id}', [MeetingController::class, 'destroy']);
-        Route::put('/meeting_type/restore/{id}', [MeetingController::class, 'restore']);
 
         // Meeting Attendance Required Faculty List
         Route::post('/meeting_attendance_required_faculty_list', [MeetingAttendanceRequiredFacultyListController::class, 'store']);
