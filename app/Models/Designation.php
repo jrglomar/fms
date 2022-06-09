@@ -12,36 +12,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 // ADDED FOR CREATED AND UPDATED BY AUTOMATION
 use Illuminate\Support\Facades\Auth;
 
-
-class Faculty extends Model
+class Designation extends Model
 {
-    // -----  [[DEFAULT]]  -----  //
+        // -----  [[DEFAULT]]  -----  //
         use HasFactory, SoftDeletes;
         // [Modify this fillable base on tables]      - Can be modified
             protected $fillable = [
-                'image',
-                'salutation',
-                'first_name',
-                'middle_name',
-                'last_name',
-                'gender',
-                'birthdate',
-                'birthplace',
-                'hire_date',
-                'email',
-                'phone_number',
-                'province',
-                'city',
-                'barangay',
-                'street',
-                'house_number',
-                'created_by',
-                'updated_by',
-                // FK
-                'user_id',
-                'academic_rank_id',
-                'faculty_type_id',
-                'designation_id'
+                'title',
+                'description',
             ];
 
             protected $dates = ['deleted_at'];
@@ -50,26 +28,6 @@ class Faculty extends Model
         // protected $with = ['users','created_by_user','updated_by_user'];
 
         // [Declare relationships here]
-            public function user()
-            {
-                return $this->belongsTo(User::class);
-            }
-
-            public function faculty_type()
-            {
-                return $this->belongsTo(FacultyType::class);
-            }
-
-            public function academic_rank()
-            {
-                return $this->belongsTo(AcademicRank::class);
-            }
-
-            public function designation()
-            {
-                return $this->belongsTo(Designation::class);
-            }
-
         // End of [Declare relationships here]
         
         // [Default relationship]       - Default
@@ -82,7 +40,6 @@ class Faculty extends Model
         {
             return $this->belongsTo(User::class,'updated_by');
         }
-        
 
         // [Added for UUID Incrementation]      - Default
         public $incrementing = false;
