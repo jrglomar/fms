@@ -27,7 +27,7 @@ class FacultyController extends Controller
             // return User::all();
 
         /* Fetching w/ relationship */
-            return Faculty::with('user', 'created_by_user')->get();
+            return Faculty::with('user', 'designation', 'faculty_type', 'academic_rank', 'created_by_user', 'updated_by_user')->get();
     }
 
     /**
