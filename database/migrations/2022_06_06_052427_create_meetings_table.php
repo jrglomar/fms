@@ -25,8 +25,8 @@ class CreateMeetingsTable extends Migration
              $table->string('title');
              $table->time('start_time');
              $table->time('end_time');
-             $table->string('agenda');
-             $table->longText('description');
+             $table->string('agenda')->nullable();
+             $table->longText('description')->nullable();
              $table->string('status');
 
              // Relationship sample
