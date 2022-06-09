@@ -109,11 +109,17 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::delete('/user_role/destroy/{id}', [UserRoleController::class, 'destroy']);
         Route::put('/user_role/restore/{id}', [UserRoleController::class, 'restore']);
 
-        // Meeting Type
+        // Meeting
         Route::post('/meeting', [MeetingController::class, 'store']);
         Route::put('/meeting/{id}', [MeetingController::class, 'update']);
         Route::delete('/meeting/destroy/{id}', [MeetingController::class, 'destroy']);
         Route::put('/meeting/restore/{id}', [MeetingController::class, 'restore']);
+
+        // Meeting Type
+        Route::post('/meeting_type', [MeetingController::class, 'store']);
+        Route::put('/meeting_type/{id}', [MeetingController::class, 'update']);
+        Route::delete('/meeting_type/destroy/{id}', [MeetingController::class, 'destroy']);
+        Route::put('/meeting_type/restore/{id}', [MeetingController::class, 'restore']);
 
         // Meeting Attendance Required Faculty List
         Route::post('/meeting_attendance_required_faculty_list', [MeetingAttendanceRequiredFacultyListController::class, 'store']);
