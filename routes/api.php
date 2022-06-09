@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 // API v1
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\FacultyTypeController;
+use App\Http\Controllers\Api\v1\DesignationController;
+use App\Http\Controllers\Api\v1\AcademicRankController;
 use App\Http\Controllers\Api\v1\FacultyController;
 use App\Http\Controllers\Api\v1\RoleController;
 use App\Http\Controllers\Api\v1\UserRoleController;
@@ -50,6 +53,24 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/user/{id}', [UserController::class, 'show']);
         Route::get('/user/search/{name}', [UserController::class, 'search']);
         Route::get('/user/show_soft_deleted/{all}', [UserController::class, 'show_soft_deleted']);
+
+        // Faculty Type
+        Route::get('/faculty_type', [FacultyTypeController::class, 'index']);
+        Route::get('/faculty_type/{id}', [FacultyTypeController::class, 'show']);
+        Route::get('/faculty_type/search/{name}', [FacultyTypeController::class, 'search']);
+        Route::get('/faculty_type/show_soft_deleted/{all}', [FacultyTypeController::class, 'show_soft_deleted']);
+
+        // Academic Rank
+        Route::get('/academic_rank', [AcademicRankController::class, 'index']);
+        Route::get('/academic_rank/{id}', [AcademicRankController::class, 'show']);
+        Route::get('/academic_rank/search/{name}', [AcademicRankController::class, 'search']);
+        Route::get('/academic_rank/show_soft_deleted/{all}', [AcademicRankController::class, 'show_soft_deleted']);
+
+        // Designation
+        Route::get('/designation', [DesignationController::class, 'index']);
+        Route::get('/designation/{id}', [DesignationController::class, 'show']);
+        Route::get('/designation/search/{name}', [DesignationController::class, 'search']);
+        Route::get('/designation/show_soft_deleted/{all}', [DesignationController::class, 'show_soft_deleted']);
 
         // Faculty
         Route::get('/faculty', [FacultyController::class, 'index']);
@@ -172,6 +193,24 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/user/{id}', [UserController::class, 'update']);
         Route::delete('/user/destroy/{id}', [UserController::class, 'destroy']);
         Route::put('/user/restore/{id}', [UserController::class, 'restore']);
+
+        // Faculty Type
+        Route::post('/faculty_type', [FacultyTypeController::class, 'store']);
+        Route::put('/faculty_type/{id}', [FacultyTypeController::class, 'update']);
+        Route::delete('/faculty_type/destroy/{id}', [FacultyTypeController::class, 'destroy']);
+        Route::put('/faculty_type/restore/{id}', [FacultyTypeController::class, 'restore']);
+
+        // Academic Rank
+        Route::post('/academic_rank', [AcademicRankController::class, 'store']);
+        Route::put('/academic_rank/{id}', [AcademicRankController::class, 'update']);
+        Route::delete('/academic_rank/destroy/{id}', [AcademicRankController::class, 'destroy']);
+        Route::put('/academic_rank/restore/{id}', [AcademicRankController::class, 'restore']);
+
+        // Designation
+        Route::post('/designation', [DesignationController::class, 'store']);
+        Route::put('/designation/{id}', [DesignationController::class, 'update']);
+        Route::delete('/designation/destroy/{id}', [DesignationController::class, 'destroy']);
+        Route::put('/designation/restore/{id}', [DesignationController::class, 'restore']);
 
         // Faculty
         Route::post('/faculty', [FacultyController::class, 'store']);

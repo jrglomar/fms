@@ -51,10 +51,24 @@ class FacultyController extends Controller
         //
 
         $request->validate([
+            'image' => 'required',
+            'salutation' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
-            'contact_number' => 'required',
+            'gender' => 'required',
+            'birthdate' => 'required',
+            'birthplace' => 'required',
+            'hire_date' => 'required',
+            'email' => 'required',
+            'phone_number' => 'required',
+            'province' => 'required',
+            'city' => 'required',
+            'barangay' => 'required',
+            'street' => 'required',
+            'house_number' => 'required',
             'user_id' => 'required',
+            'academic_rank_id' => 'required',
+            'faculty_type_id' => 'required',
         ]);
 
         return Faculty::create($request->all());

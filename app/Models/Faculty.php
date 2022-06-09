@@ -17,16 +17,31 @@ class Faculty extends Model
 {
     // -----  [[DEFAULT]]  -----  //
         use HasFactory, SoftDeletes;
-
         // [Modify this fillable base on tables]      - Can be modified
             protected $fillable = [
+                'image',
+                'salutation',
                 'first_name',
                 'middle_name',
                 'last_name',
-                'contact_number',
-                'user_id',
+                'gender',
+                'birthdate',
+                'birthplace',
+                'hire_date',
+                'email',
+                'phone_number',
+                'province',
+                'city',
+                'barangay',
+                'street',
+                'house_number',
                 'created_by',
                 'updated_by',
+                // FK
+                'user_id',
+                'academic_rank_id',
+                'faculty_type_id',
+                'designation_id'
             ];
 
             protected $dates = ['deleted_at'];
@@ -38,6 +53,21 @@ class Faculty extends Model
             public function user()
             {
                 return $this->belongsTo(User::class);
+            }
+
+            public function faculty_type()
+            {
+                return $this->belongsTo(FacultyType::class);
+            }
+
+            public function academic_rank()
+            {
+                return $this->belongsTo(AcademicRank::class);
+            }
+
+            public function designation()
+            {
+                return $this->belongsTo(Designation::class);
             }
 
         // End of [Declare relationships here]
@@ -52,6 +82,7 @@ class Faculty extends Model
         {
             return $this->belongsTo(User::class,'updated_by');
         }
+        
 
         // [Added for UUID Incrementation]      - Default
         public $incrementing = false;
