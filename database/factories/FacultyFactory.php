@@ -24,6 +24,9 @@ class FacultyFactory extends Factory
             "last_name" => $this->faker->lastName,
             "contact_number" => $this->faker->phoneNumber,
             "user_id" => User::factory(),
+            "faculty_type_id" => FacultyType::factory(),
+            "academic_rank_id" => AcademicRank::factory(),
+            "designation_id" => Designation::factory(),
             "created_by" => User::factory(),
             "updated_by" => User::factory()
         ];
