@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+// ADDED FOR CREATED AND UPDATED BY AUTOMATION
+use Illuminate\Support\Facades\Auth;
+
 class Meeting extends Model
 {
     // -----  [[DEFAULT]]  -----  //
@@ -63,6 +66,17 @@ class Meeting extends Model
         static::creating(function ($issue) {
             $issue->id = Str::uuid(36);
         });
+
+        // [Added for Automation of Created_by and Updated_by]      - Default
+        static::creating(function ($model) {
+            $model->created_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
+            $model->updated_by = NULL;
+        });
+
+        static::updating(function ($model) {
+            $model->updated_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
+        });
+        // END [Added for Automation of Created_by and Updated_by]      - Default
     }
     // 
 // -----  [[DEFAULT]]  -----  //
