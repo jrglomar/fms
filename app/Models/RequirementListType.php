@@ -61,14 +61,14 @@ class RequirementListType extends Model
             });
 
             // [Added for Automation of Created_by and Updated_by]      - Default
-            static::creating(function ($model) {
-                $model->created_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
-                $model->updated_by = NULL;
-            });
+            // static::creating(function ($model) {
+            //     $model->created_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
+            //     $model->updated_by = NULL;
+            // });
 
-            static::updating(function ($model) {
-                $model->updated_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
-            });
+            // static::updating(function ($model) {
+            //     $model->updated_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
+            // });
             // END [Added for Automation of Created_by and Updated_by]      - Default
         }
         // 
