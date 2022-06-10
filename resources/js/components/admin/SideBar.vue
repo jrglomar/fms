@@ -37,22 +37,12 @@
                         <li class="dropdown">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
-                                <span>Curriculum</span></a>
+                                <span>Activity</span></a>
                             <ul class="dropdown-menu">
                                 <li><a class="nav-link" 
-                                        href="/programs">Programs</a></li>
+                                        href="/programs">Activity List</a></li>
                                 <li><a class="nav-link" 
-                                        href="/subjects">Subjects</a></li>
-                                <li><a class="nav-link" 
-                                        href="/semesters">Semesters</a></li>
-                                <li><a class="nav-link" 
-                                        href="/class_semesters">Class Semesters</a></li>
-                                <li><a class="nav-link" 
-                                        href="/year_levels">Year levels</a></li>
-                                <li><a class="nav-link" 
-                                        href="/curriculums">Curriculums</a></li>
-                                <li><a class="nav-link"
-                                        href="/curriculum_subjects">Curriculum Subjects</a></li>
+                                        href="/subjects">Activity Types</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">

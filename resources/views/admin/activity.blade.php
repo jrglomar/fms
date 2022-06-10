@@ -31,13 +31,13 @@
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
             
-            {{-- NAV BAR --}}
+            <!-- NAV BAR  -->
             <admin-navbar-component></admin-navbar-component>
-            {{-- END OF NAV BAR --}}
+             END OF NAV BAR 
 
-            {{-- SIDE BAR --}}
+            <!-- SIDE BAR -->
             <admin-sidebar-component></admin-sidebar-component>
-            {{-- END OF SIDE BAR --}}
+            <!-- END OF SIDE BAR  -->
 
             <!-- Main Content -->
             <div class="main-content">
@@ -48,124 +48,12 @@
 
                     <div class="section-body">
 
-                        <div class="row">
-                            <div class="col-md-12 collapse" id="create_card">
-                                <div class="card card-primary">
-                                    <div class="card-header">
-                                        <h4 class="text-dark"> <span id="create_card_title">Create</span> Activity</h4>
-                                    </div>
-                                    <form id="create_form">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="form-group col-md-6">
-                                                    <label class="required-input">Title</label>
-                                                    <input type="text" class="form-control" id="activity_title"
-                                                    placeholder="Title" tabindex="1" required>
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label class="required-input">Activity Type</label>
-                                                    <select class="form-control select2" id="activity_type"
-                                                        name="activity_type" required>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-md-12">
-                                                    <label class="required-input">Description</label>
-                                                    <input type="text" class="form-control" id="description" name="description"
-                                                        placeholder="Description" tabindex="1" required>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="form-group col-md-6">
-                                                    <label class="required-input">Date and Time Starts</label>
-                                                    <input type="datetime-local" class="form-control" id="start_time" name="start_time"
-                                                     tabindex="1" required>
-                                                </div>
-                                                <div class="form-group col-md-6">
-                                                    <label class="required-input">Date and Time Ends</label>
-                                                    <input type="datetime-local" class="form-control" id="end_time" name="end_time"
-                                                     tabindex="1" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer text-right">
-                                            <button type="button" class="btn btn-secondary"
-                                                id="create_cancel_btn">Cancel <i class="fas fa-times"></i></button>
-                                            <button type="submit" class="btn btn-primary ml-1" id="create_btn">Create <i
-                                                    class="fas fa-check"></i></button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card card-primary">
-                                    <div class="card-header">
-                                        <h4 class="text-dark">List of Users</h4>
-                                        <div class="card-header-action">
-                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
-                                            aria-expanded="false" aria-controls="create_card">New Activity <i
-                                                    class="fas fa-plus"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="d-flex mb-3 justify-content-start">
-                                            <div id="dt_btn_div">
-                                            </div>
-                                        </div>
+                        {{-- Activity Creation Form --}}
+                        <activity-create-form></activity-create-form>
+                        
+                        {{-- Activity Table --}}
+                        <activity-table></activity-table>
 
-                                        <table class="table table-striped" id="user_table" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Faculty</th>
-                                                    <th>Email</th>
-                                                    <th>Created At</th>
-                                                    <th>Updated At</th>
-                                                    <th>Status</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <td>Test</td>
-                                                <td>test@gmail.com</td>
-                                                <td>May 30, 2022</td>
-                                                <td>May 30, 2022</td>
-                                                <td><span class="badge badge-success rounded-pill">Active <i
-                                                            class="fas fa-check"></i></span></th>
-                                                <td>
-                                                    <div class="btn-group dropleft">
-                                                        <button class="btn btn-sm btn-secondary btn-icon rounded-circle"
-                                                            type="button" id="action_menu_btn" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false">
-                                                            <i class="fa fa-ellipsis-h"></i>
-                                                        </button>
-                                                        <div class="dropdown-menu">
-                                                            <div class="dropdown-title">Actions</div>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fas fa-eye mr-1"></i> View</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fas fa-pen text-info mr-1"></i> Update</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fas fa-trash text-danger mr-1"></i>
-                                                                Deactivate</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fas fa-trash-restore-alt text-success mr-1"></i>
-                                                                Restore</a>
-                                                            <a class="dropdown-item" href="#"><i
-                                                                    class="fas fa-times-circle text-danger mr-1"></i>
-                                                                Delete</a>
-
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </section>
             </div>

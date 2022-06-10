@@ -20,8 +20,16 @@ window.Vue = require('vue').default;
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+//-------------- ADMIN LAYOUT -------------------//
 Vue.component('admin-navbar-component', require('./components/admin/TopNav.vue').default);
 Vue.component('admin-sidebar-component', require('./components/admin/SideBar.vue').default);
+
+//------------------ FORMS ---------------------//
+Vue.component('activity-create-form', require('./components/forms/activity_create_form.vue').default);
+
+//----------------- DATATABLES -----------------//
+Vue.component('activity-table', require('./components/datatables/activity_table.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -26,3 +26,5 @@ Route::get('admin/dashboard', function () {
 Route::get('admin/activity', function () {
     return view('admin/activity');
 });
+
+//----------------------------------//
