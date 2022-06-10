@@ -23,6 +23,7 @@ class CreateMeetingTypesTable extends Migration
 
             // Fillables
             $table->string('title');
+            $table->text('description')->nullable();
         });
     }
 
