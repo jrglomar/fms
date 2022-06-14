@@ -21,6 +21,7 @@ class CreateActivityTypesTable extends Migration
             $table->foreignUuid('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->string('title');
+            $table->text('description')->nullable();
         });
     }
 

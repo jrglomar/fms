@@ -22,13 +22,28 @@ class CreateFacultiesTable extends Migration
             $table->foreignUuid('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade'); 
 
             // Fillables
+            $table->string('image');
+            $table->string('salutation');
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
-            $table->string('contact_number');
+            $table->string('gender');
+            $table->string('birthdate');
+            $table->string('birthplace');
+            $table->string('hire_date');
+            $table->string('email');
+            $table->string('phone_number');
+            $table->string('province');
+            $table->string('city');
+            $table->string('barangay');
+            $table->string('street');
+            $table->string('house_number');
 
             // Relationship sample
             $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUuid('faculty_type_id')->constrained('faculty_types')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUuid('academic_rank_id')->constrained('academic_ranks')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUuid('designation_id')->constrained('designations')->onDelete('cascade')->onUpdate('cascade')->nullable();
         });
     }
 

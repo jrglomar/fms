@@ -8,12 +8,21 @@ use Illuminate\Support\Facades\Route;
 // API v1
 use App\Http\Controllers\Api\v1\AuthController;
 use App\Http\Controllers\Api\v1\UserController;
+use App\Http\Controllers\Api\v1\FacultyTypeController;
+use App\Http\Controllers\Api\v1\DesignationController;
+use App\Http\Controllers\Api\v1\AcademicRankController;
 use App\Http\Controllers\Api\v1\FacultyController;
 use App\Http\Controllers\Api\v1\RoleController;
 use App\Http\Controllers\Api\v1\UserRoleController;
 use App\Http\Controllers\Api\v1\MeetingTypeController;
 use App\Http\Controllers\Api\v1\MeetingController;
 use App\Http\Controllers\Api\v1\MeetingAttendanceRequiredFacultyListController;
+use App\Http\Controllers\Api\v1\RequirementBinController;
+use App\Http\Controllers\Api\v1\RequirementTypeController;
+use App\Http\Controllers\Api\v1\RequirementListTypeController;
+use App\Http\Controllers\Api\v1\RequirementRequiredFacultyListController;
+use App\Http\Controllers\Api\v1\SubmittedRequirementFolderController;
+use App\Http\Controllers\Api\v1\SubmittedRequirementController;
 use App\Http\Controllers\Api\v1\ObservationController;
 use App\Http\Controllers\Api\v1\ActivityTypeController;
 use App\Http\Controllers\Api\v1\ActivityController;
@@ -44,6 +53,24 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/user/{id}', [UserController::class, 'show']);
         Route::get('/user/search/{name}', [UserController::class, 'search']);
         Route::get('/user/show_soft_deleted/{all}', [UserController::class, 'show_soft_deleted']);
+
+        // Faculty Type
+        Route::get('/faculty_type', [FacultyTypeController::class, 'index']);
+        Route::get('/faculty_type/{id}', [FacultyTypeController::class, 'show']);
+        Route::get('/faculty_type/search/{name}', [FacultyTypeController::class, 'search']);
+        Route::get('/faculty_type/show_soft_deleted/{all}', [FacultyTypeController::class, 'show_soft_deleted']);
+
+        // Academic Rank
+        Route::get('/academic_rank', [AcademicRankController::class, 'index']);
+        Route::get('/academic_rank/{id}', [AcademicRankController::class, 'show']);
+        Route::get('/academic_rank/search/{name}', [AcademicRankController::class, 'search']);
+        Route::get('/academic_rank/show_soft_deleted/{all}', [AcademicRankController::class, 'show_soft_deleted']);
+
+        // Designation
+        Route::get('/designation', [DesignationController::class, 'index']);
+        Route::get('/designation/{id}', [DesignationController::class, 'show']);
+        Route::get('/designation/search/{name}', [DesignationController::class, 'search']);
+        Route::get('/designation/show_soft_deleted/{all}', [DesignationController::class, 'show_soft_deleted']);
 
         // Faculty
         Route::get('/faculty', [FacultyController::class, 'index']);
@@ -81,6 +108,41 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/meeting_attendance_required_faculty_list/search/{name}', [MeetingAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/meeting_attendance_required_faculty_list/show_soft_deleted/{all}', [MeetingAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
 
+        // Requirement Bin
+        Route::get('/requirement_bin', [RequirementBinController::class, 'index']);
+        Route::get('/requirement_bin/{id}', [RequirementBinController::class, 'show']);
+        Route::get('/requirement_bin/search/{title}', [RequirementBinController::class, 'search']);
+        Route::get('/requirement_bin/show_soft_deleted/{all}', [RequirementBinController::class, 'show_soft_deleted']);
+
+        // Requirement Type
+        Route::get('/requirement_type', [RequirementTypeController::class, 'index']);
+        Route::get('/requirement_type/{id}', [RequirementTypeController::class, 'show']);
+        Route::get('/requirement_type/search/{title}', [RequirementTypeController::class, 'search']);
+        Route::get('/requirement_type/show_soft_deleted/{all}', [RequirementTypeController::class, 'show_soft_deleted']);
+
+        // Requirements List Type
+        Route::get('/requirement_list_type', [RequirementListTypeController::class, 'index']);
+        Route::get('/requirement_list_type/{id}', [RequirementListTypeController::class, 'show']);
+        Route::get('/requirement_list_type/search/{title}', [RequirementListTypeController::class, 'search']);
+        Route::get('/requirement_list_type/show_soft_deleted/{all}', [RequirementListTypeController::class, 'show_soft_deleted']);
+
+        // Requirements Required Faculty List
+        Route::get('/requirement_required_faculty_list', [RequirementRequiredFacultyListController::class, 'index']);
+        Route::get('/requirement_required_faculty_list/{id}', [RequirementRequiredFacultyListController::class, 'show']);
+        Route::get('/requirement_required_faculty_list/search/{title}', [RequirementRequiredFacultyListController::class, 'search']);
+        Route::get('/requirement_required_faculty_list/show_soft_deleted/{all}', [RequirementRequiredFacultyListController::class, 'show_soft_deleted']);
+
+        // Submitted Requirements Folder
+        Route::get('/submitted_requirement_folder', [SubmittedRequirementFolderController::class, 'index']);
+        Route::get('/submitted_requirement_folder/{id}', [SubmittedRequirementFolderController::class, 'show']);
+        Route::get('/submitted_requirement_folder/search/{title}', [SubmittedRequirementFolderController::class, 'search']);
+        Route::get('/submitted_requirement_folder/show_soft_deleted/{all}', [SubmittedRequirementFolderController::class, 'show_soft_deleted']);
+
+        // Submitted Requirements
+        Route::get('/submitted_requirement', [SubmittedRequirementController::class, 'index']);
+        Route::get('/submitted_requirement/{id}', [SubmittedRequirementController::class, 'show']);
+        Route::get('/submitted_requirement/search/{title}', [SubmittedRequirementController::class, 'search']);
+        Route::get('/submitted_requirement/show_soft_deleted/{all}', [SubmittedRequirementController::class, 'show_soft_deleted']);
         // Observations
         Route::get('/observation', [ObservationController::class, 'index']);
         Route::get('/observation/{id}', [ObservationController::class, 'show']);
@@ -131,6 +193,24 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/user/{id}', [UserController::class, 'update']);
         Route::delete('/user/destroy/{id}', [UserController::class, 'destroy']);
         Route::put('/user/restore/{id}', [UserController::class, 'restore']);
+
+        // Faculty Type
+        Route::post('/faculty_type', [FacultyTypeController::class, 'store']);
+        Route::put('/faculty_type/{id}', [FacultyTypeController::class, 'update']);
+        Route::delete('/faculty_type/destroy/{id}', [FacultyTypeController::class, 'destroy']);
+        Route::put('/faculty_type/restore/{id}', [FacultyTypeController::class, 'restore']);
+
+        // Academic Rank
+        Route::post('/academic_rank', [AcademicRankController::class, 'store']);
+        Route::put('/academic_rank/{id}', [AcademicRankController::class, 'update']);
+        Route::delete('/academic_rank/destroy/{id}', [AcademicRankController::class, 'destroy']);
+        Route::put('/academic_rank/restore/{id}', [AcademicRankController::class, 'restore']);
+
+        // Designation
+        Route::post('/designation', [DesignationController::class, 'store']);
+        Route::put('/designation/{id}', [DesignationController::class, 'update']);
+        Route::delete('/designation/destroy/{id}', [DesignationController::class, 'destroy']);
+        Route::put('/designation/restore/{id}', [DesignationController::class, 'restore']);
 
         // Faculty
         Route::post('/faculty', [FacultyController::class, 'store']);
@@ -204,6 +284,41 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/class_schedule/{id}', [ClassScheduleController::class, 'update']);
         Route::delete('/class_schedule/destroy/{id}', [ClassScheduleController::class, 'destroy']);
         Route::put('/class_schedule/restore/{id}', [ClassScheduleController::class, 'restore']);
-    });
 
+        // Requirement Bin
+        Route::post('/requirement_bin', [RequirementBinController::class, 'store']);
+        Route::put('/requirement_bin/{id}', [RequirementBinController::class, 'update']);
+        Route::delete('/requirement_bin/destroy/{id}', [RequirementBinController::class, 'destroy']);
+        Route::put('/requirement_bin/restore/{id}', [RequirementBinController::class, 'restore']);
+
+        // Requirement Type
+        Route::post('/requirement_type', [RequirementTypeController::class, 'store']);
+        Route::put('/requirement_type/{id}', [RequirementTypeController::class, 'update']);
+        Route::delete('/requirement_type/destroy/{id}', [RequirementTypeController::class, 'destroy']);
+        Route::put('/requirement_type/restore/{id}', [RequirementTypeController::class, 'restore']);
+
+        // Requirements List Type
+        Route::post('/requirement_list_type', [RequirementListTypeController::class, 'store']);
+        Route::put('/requirement_list_type/{id}', [RequirementListTypeController::class, 'update']);
+        Route::delete('/requirement_list_type/destroy/{id}', [RequirementListTypeController::class, 'destroy']);
+        Route::put('/requirement_list_type/restore/{id}', [RequirementListTypeController::class, 'restore']);
+
+        // Requirements Required Faculty List
+        Route::post('/requirement_required_faculty_list', [RequirementRequiredFacultyListController::class, 'store']);
+        Route::put('/requirement_required_faculty_list/{id}', [RequirementRequiredFacultyListController::class, 'update']);
+        Route::delete('/requirement_required_faculty_list/destroy/{id}', [RequirementRequiredFacultyListController::class, 'destroy']);
+        Route::put('/requirement_required_faculty_list/restore/{id}', [RequirementRequiredFacultyListController::class, 'restore']);
+
+        // Submitted Requirements Folder
+        Route::post('/submitted_requirement_folder', [SubmittedRequirementFolderController::class, 'store']);
+        Route::put('/submitted_requirement_folder/{id}', [SubmittedRequirementFolderController::class, 'update']);
+        Route::delete('/submitted_requirement_folder/destroy/{id}', [SubmittedRequirementFolderController::class, 'destroy']);
+        Route::put('/submitted_requirement_folder/restore/{id}', [SubmittedRequirementFolderController::class, 'restore']);
+
+        // Submitted Requirement
+        Route::post('/submitted_requirement', [SubmittedRequirementController::class, 'store']);
+        Route::put('/submitted_requirement/{id}', [SubmittedRequirementController::class, 'update']);
+        Route::delete('/submitted_requirement/destroy/{id}', [SubmittedRequirementController::class, 'destroy']);
+        Route::put('/submitted_requirement/restore/{id}', [SubmittedRequirementController::class, 'restore']);;
+        });
 });

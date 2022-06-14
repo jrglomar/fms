@@ -23,6 +23,7 @@ class CreateRolesTable extends Migration
 
             // Fillables
             $table->string('title');
+            $table->text('description')->nullable();
 
         });
     }

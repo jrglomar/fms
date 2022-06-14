@@ -48,6 +48,7 @@ Create new .env file. Copy the .env.example content and paste it to new .env fil
 Generate a new application key
 <pre class="notranslate"><code>php artisan key:generate
 </code></pre>
+
 <!-- 
 Generate a new JWT authentication secret key
 <pre class="notranslate"><code>php artisan jwt:generate
