@@ -44,9 +44,15 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="required-input">Date and Time Ends</label>
-                                    <input type="datetime-local" class="form-control" id="end_time" name="end_time"
-                                        v-model="end_time" tabindex="1" required>
+                                    <label class="required-input">Status</label>
+                                    <select class="form-control select2" id="status_form" required
+                                        name="status_form" data-parsley-errors-container="#status-errors">
+                                        <option value="Pending">Pending</option>
+                                        <option value="Ongoing">Ongoing</option>
+                                    </select>
+                                    <ul class="parsley-err-msg">
+                                        <li id="status-errors"></li>
+                                    </ul>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="memo_upload" class="form-label">Memorandum File</label>
@@ -69,10 +75,14 @@
 
 <script>
     export default {
+
+        // ALL FUNCTIONS HERE AUTOMATICALLY RUNS WHEN MOUNTED
         mounted() {
             console.log('Activity Create Form mounted.')
             this.getActivityTypes();
         },
+
+        // ALL DATA VARIABLES USED IN THIS COMPONENT
         data(){
             return {
                 activity_title: '',
@@ -80,10 +90,11 @@
                 start_time: '',
                 end_time: '',
                 file: '',
-                status: 'Chenes',
 
             }
         },
+
+        // ALL FUNCTIONS USED IN THIS COMPONENT
         methods:{
             getActivityTypes(){
                 axios.get('http://127.0.0.1:8000/api/v1/activity_type/')
@@ -112,10 +123,19 @@
             },
 
             addActivity(){
-                let formData = new FormData();
-                formData.append('file', this.memo_upload);
+                // let formData = new FormData();
+                // formData.append('file', this.memo_upload);
+                //console.log(formData)
 
-                console.log(formData)
+                console.log({
+                    title: this.activity_title,
+                    activity_type_id: document.getElementById("activity_type_id").value,
+                    description: this.description,
+                    start_datetime: this.start_time,
+                    end_datetime: this.end_time,
+                    memorandum_file_directory: "url",
+                    status: document.getElementById("status_form").value,
+                })
 
                 // axios.post('http://127.0.0.1:8000/api/v1/activity',
                 // {

@@ -5400,29 +5400,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log('Sidebar component mounted.');
+    this.checkUrl();
+  },
+  data: function data() {
+    return {
+      isActive_Activity: false,
+      isActive_ActivityList: false
+    };
+  },
+  methods: {
+    checkUrl: function checkUrl() {
+      if (window.location.pathname == "/admin/activity") {
+        this.isActive_Activity = true;
+        this.isActive_ActivityList = true;
+      }
+
+      ;
+    }
   }
 });
 
@@ -5793,21 +5790,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  // ALL FUNCTIONS HERE AUTOMATICALLY RUNS WHEN MOUNTED
   mounted: function mounted() {
     console.log('Activity Create Form mounted.');
     this.getActivityTypes();
   },
+  // ALL DATA VARIABLES USED IN THIS COMPONENT
   data: function data() {
     return {
       activity_title: '',
       description: '',
       start_time: '',
       end_time: '',
-      file: '',
-      status: 'Chenes'
+      file: ''
     };
   },
+  // ALL FUNCTIONS USED IN THIS COMPONENT
   methods: {
     getActivityTypes: function getActivityTypes() {
       axios.get('http://127.0.0.1:8000/api/v1/activity_type/').then(function (response) {
@@ -5829,9 +5834,18 @@ __webpack_require__.r(__webpack_exports__);
       this.memo_upload = this.$refs.file.files[0];
     },
     addActivity: function addActivity() {
-      var formData = new FormData();
-      formData.append('file', this.memo_upload);
-      console.log(formData); // axios.post('http://127.0.0.1:8000/api/v1/activity',
+      // let formData = new FormData();
+      // formData.append('file', this.memo_upload);
+      //console.log(formData)
+      console.log({
+        title: this.activity_title,
+        activity_type_id: document.getElementById("activity_type_id").value,
+        description: this.description,
+        start_datetime: this.start_time,
+        end_datetime: this.end_time,
+        memorandum_file_directory: "url",
+        status: document.getElementById("status_form").value
+      }); // axios.post('http://127.0.0.1:8000/api/v1/activity',
       // {
       //     title: this.activity_title,
       //     activity_type_id: document.getElementById("activity_type_id").value,
@@ -5881,6 +5895,7 @@ window.Vue = (__webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js
  */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+//----------------- GLOBAL DECLARATION OF COMPONENTS -----------------------//
 
 Vue.component('example-component', (__webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"])); //-------------- ADMIN LAYOUT -------------------//
 
@@ -28808,285 +28823,267 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "main-sidebar sidebar-style-2" }, [
+      _c("aside", { attrs: { id: "sidebar-wrapper" } }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _vm._m(2),
+        _vm._v(" "),
+        _vm._m(3),
+        _vm._v(" "),
+        _c("ul", { staticClass: "sidebar-menu" }, [
+          _c("li", { staticClass: "menu-header" }, [_vm._v("Dashboard")]),
+          _vm._v(" "),
+          _vm._m(4),
+          _vm._v(" "),
+          _c("li", { staticClass: "menu-header" }, [_vm._v("Setup")]),
+          _vm._v(" "),
+          _c(
+            "li",
+            {
+              staticClass: "dropdown",
+              class: {
+                active: _vm.isActive_Activity,
+                "text-primary": _vm.isActive_Activity,
+              },
+            },
+            [
+              _vm._m(5),
+              _vm._v(" "),
+              _c("ul", { staticClass: "dropdown-menu" }, [
+                _c("li", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "nav-link",
+                      class: {
+                        active: _vm.isActive_ActivityList,
+                        "text-primary": _vm.isActive_ActivityList,
+                      },
+                    },
+                    [
+                      _vm._v(
+                        "\n                                    Activity List"
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _vm._m(6),
+              ]),
+            ]
+          ),
+          _vm._v(" "),
+          _vm._m(7),
+          _vm._v(" "),
+          _c("li", { staticClass: "menu-header" }, [_vm._v("User Management")]),
+          _vm._v(" "),
+          _vm._m(8),
+          _vm._v(" "),
+          _vm._m(9),
+          _vm._v(" "),
+          _vm._m(10),
+        ]),
+        _vm._v(" "),
+        _vm._m(11),
+        _vm._v(" "),
+        _vm._m(12),
+      ]),
+    ]),
+  ])
 }
 var staticRenderFns = [
   function () {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "main-sidebar sidebar-style-2" }, [
-        _c("aside", { attrs: { id: "sidebar-wrapper" } }, [
-          _c("div", { staticClass: "sidebar-brand" }, [
-            _c("a", { attrs: { href: "index.html" } }, [_vm._v("PUPQCSS")]),
-          ]),
+    return _c("div", { staticClass: "sidebar-brand" }, [
+      _c("a", { attrs: { href: "index.html" } }, [_vm._v("PUPQCSS")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "sidebar-brand sidebar-brand-sm" }, [
+      _c("a", { attrs: { href: "index.html" } }, [_vm._v("SS")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-3 hide-sidebar-mini" }, [
+      _c("div", { staticClass: "media" }, [
+        _c("figure", { staticClass: "avatar mr-2 avatar" }, [
+          _vm._v(
+            '\n                                alt="Avatar image">\n                            '
+          ),
+          _c("i", { staticClass: "avatar-presence online" }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "media-body" }, [
+          _c("h6", { staticClass: "mt-1 mb-0" }, [_vm._v(" Faculty Name")]),
           _vm._v(" "),
-          _c("div", { staticClass: "sidebar-brand sidebar-brand-sm" }, [
-            _c("a", { attrs: { href: "index.html" } }, [_vm._v("SS")]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "p-3 hide-sidebar-mini" }, [
-            _c("div", { staticClass: "media" }, [
-              _c("figure", { staticClass: "avatar mr-2 avatar" }, [
-                _vm._v(
-                  '\n                                alt="Avatar image">\n                            '
-                ),
-                _c("i", { staticClass: "avatar-presence online" }),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "media-body" }, [
-                _c("h6", { staticClass: "mt-1 mb-0" }, [
-                  _vm._v(" Faculty Name"),
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "mb-0" }, [_vm._v("Admin")]),
-              ]),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "sidebar-brand sidebar-brand-sm" }, [
-            _c("figure", { staticClass: "avatar avatar" }, [
-              _c("i", { staticClass: "avatar-presence online" }),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("ul", { staticClass: "sidebar-menu" }, [
-            _c("li", { staticClass: "menu-header" }, [_vm._v("Dashboard")]),
-            _vm._v(" "),
-            _c("li", { staticClass: "active" }, [
-              _c(
-                "a",
-                { staticClass: "nav-link", attrs: { href: "/dashboard" } },
-                [
-                  _c("i", { staticClass: "fas fa-th-large" }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Dashboard")]),
-                ]
-              ),
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "menu-header" }, [_vm._v("Setup")]),
-            _vm._v(" "),
-            _c("li", { staticClass: "dropdown" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "nav-link has-dropdown",
-                  attrs: { href: "#", "data-toggle": "dropdown" },
-                },
-                [
-                  _c("i", { staticClass: "fas fa-book-reader" }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Activity")]),
-                ]
-              ),
-              _vm._v(" "),
-              _c("ul", { staticClass: "dropdown-menu" }, [
-                _c("li", [
-                  _c(
-                    "a",
-                    { staticClass: "nav-link", attrs: { href: "/programs" } },
-                    [_vm._v("Activity List")]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c(
-                    "a",
-                    { staticClass: "nav-link", attrs: { href: "/subjects" } },
-                    [_vm._v("Activity Types")]
-                  ),
-                ]),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "dropdown" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "nav-link has-dropdown ",
-                  attrs: { href: "#", "data-toggle": "dropdown" },
-                },
-                [
-                  _c("i", { staticClass: "fas fa-user-tie" }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Faculty")]),
-                ]
-              ),
-              _vm._v(" "),
-              _c("ul", { staticClass: "dropdown-menu " }, [
-                _c("li", [
-                  _c(
-                    "a",
-                    { staticClass: "nav-link ", attrs: { href: "/faculties" } },
-                    [_vm._v("Faculties")]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link ",
-                      attrs: { href: "/available_hrs" },
-                    },
-                    [_vm._v("Available Hours")]
-                  ),
-                ]),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "dropdown" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "nav-link has-dropdown ",
-                  attrs: { href: "#", "data-toggle": "dropdown" },
-                },
-                [
-                  _c("i", { staticClass: "fas fa-chalkboard-teacher" }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Class")]),
-                ]
-              ),
-              _vm._v(" "),
-              _c("ul", { staticClass: "dropdown-menu " }, [
-                _c("li", [
-                  _c(
-                    "a",
-                    { staticClass: "nav-link ", attrs: { href: "/rooms" } },
-                    [_vm._v("Rooms")]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c(
-                    "a",
-                    { staticClass: "nav-link ", attrs: { href: "/batches" } },
-                    [_vm._v("Batches")]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c(
-                    "a",
-                    { staticClass: "nav-link", attrs: { href: "/sections" } },
-                    [_vm._v("Sections")]
-                  ),
-                ]),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "dropdown" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "nav-link has-dropdown",
-                  attrs: { href: "#", "data-toggle": "dropdown" },
-                },
-                [
-                  _c("i", { staticClass: "fas fa-calendar-alt" }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("Scheduling")]),
-                ]
-              ),
-              _vm._v(" "),
-              _c("ul", { staticClass: "dropdown-menu" }, [
-                _c("li", [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { href: "/subject_offerings" },
-                    },
-                    [_vm._v("Subject Offering")]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { href: "/class_schedules" },
-                    },
-                    [_vm._v("Class Schedules")]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c("li", [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "nav-link",
-                      attrs: { href: "/change_requests" },
-                    },
-                    [_vm._v("Change Requests")]
-                  ),
-                ]),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("li", { staticClass: "menu-header" }, [
-              _vm._v("User Management"),
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { staticClass: "nav-link", attrs: { href: "/roles" } }, [
-                _c("i", { staticClass: "fas fa-user-cog" }),
-                _vm._v(" "),
-                _c("span", [_vm._v("Roles")]),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c("a", { staticClass: "nav-link", attrs: { href: "/users" } }, [
-                _c("i", { staticClass: "fas fa-users" }),
-                _c("span", [_vm._v("Users")]),
-              ]),
-            ]),
-            _vm._v(" "),
-            _c("li", [
-              _c(
-                "a",
-                { staticClass: "nav-link", attrs: { href: "/user_roles" } },
-                [
-                  _c("i", { staticClass: "fas fa-users-cog" }),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("User Roles")]),
-                ]
-              ),
-            ]),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "mt-4 mb-4 p-3 hide-sidebar-mini" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "btn btn-danger btn-lg btn-block btn-icon-split logout-btn",
-                attrs: { type: "submit", name: "logout_btn" },
-              },
-              [
-                _vm._v("\n                        Logout "),
-                _c("i", { staticClass: "fas fa-sign-out-alt" }),
-              ]
-            ),
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "sidebar-brand sidebar-brand-sm" }, [
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-danger text-white",
-                attrs: { href: "https://getstisla.com/docs", title: "Logout" },
-              },
-              [_c("i", { staticClass: "fas fa-sign-out-alt" })]
-            ),
-          ]),
+          _c("p", { staticClass: "mb-0" }, [_vm._v("Admin")]),
         ]),
       ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "sidebar-brand sidebar-brand-sm" }, [
+      _c("figure", { staticClass: "avatar avatar" }, [
+        _c("i", { staticClass: "avatar-presence online" }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", {}, [
+      _c("a", { staticClass: "nav-link", attrs: { href: "/dashboard" } }, [
+        _c("i", { staticClass: "fas fa-th-large" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Dashboard")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "nav-link has-dropdown",
+        attrs: { href: "#", "data-toggle": "dropdown" },
+      },
+      [
+        _c("i", { staticClass: "fas fa-book-reader" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Activity")]),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { staticClass: "nav-link", attrs: { href: "/subjects" } }, [
+        _vm._v("Activity Types"),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "dropdown" }, [
+      _c(
+        "a",
+        {
+          staticClass: "nav-link has-dropdown ",
+          attrs: { href: "#", "data-toggle": "dropdown" },
+        },
+        [
+          _c("i", { staticClass: "fas fa-user-tie" }),
+          _vm._v(" "),
+          _c("span", [_vm._v("Faculty")]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("ul", { staticClass: "dropdown-menu " }, [
+        _c("li", [
+          _c("a", { staticClass: "nav-link" }, [
+            _vm._v("\n                                    Faculties"),
+          ]),
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c(
+            "a",
+            { staticClass: "nav-link ", attrs: { href: "/available_hrs" } },
+            [_vm._v("Available Hours")]
+          ),
+        ]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { staticClass: "nav-link", attrs: { href: "/roles" } }, [
+        _c("i", { staticClass: "fas fa-user-cog" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("Roles")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { staticClass: "nav-link", attrs: { href: "/users" } }, [
+        _c("i", { staticClass: "fas fa-users" }),
+        _c("span", [_vm._v("Users")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { staticClass: "nav-link", attrs: { href: "/user_roles" } }, [
+        _c("i", { staticClass: "fas fa-users-cog" }),
+        _vm._v(" "),
+        _c("span", [_vm._v("User Roles")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-4 mb-4 p-3 hide-sidebar-mini" }, [
+      _c(
+        "button",
+        {
+          staticClass:
+            "btn btn-danger btn-lg btn-block btn-icon-split logout-btn",
+          attrs: { type: "submit", name: "logout_btn" },
+        },
+        [
+          _vm._v("\n                        Logout "),
+          _c("i", { staticClass: "fas fa-sign-out-alt" }),
+        ]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "sidebar-brand sidebar-brand-sm" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-danger text-white",
+          attrs: { href: "https://getstisla.com/docs", title: "Logout" },
+        },
+        [_c("i", { staticClass: "fas fa-sign-out-alt" })]
+      ),
     ])
   },
 ]
@@ -29896,39 +29893,7 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "form-group col-md-6" }, [
-                    _c("label", { staticClass: "required-input" }, [
-                      _vm._v("Date and Time Ends"),
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.end_time,
-                          expression: "end_time",
-                        },
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "datetime-local",
-                        id: "end_time",
-                        name: "end_time",
-                        tabindex: "1",
-                        required: "",
-                      },
-                      domProps: { value: _vm.end_time },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.end_time = $event.target.value
-                        },
-                      },
-                    }),
-                  ]),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-6" }, [
                     _c(
@@ -29954,7 +29919,7 @@ var render = function () {
                 ]),
               ]),
               _vm._v(" "),
-              _vm._m(2),
+              _vm._m(3),
             ]
           ),
         ]),
@@ -29993,6 +29958,36 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("ul", { staticClass: "parsley-err-msg" }, [
         _c("li", { attrs: { id: "activity-errors" } }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-6" }, [
+      _c("label", { staticClass: "required-input" }, [_vm._v("Status")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticClass: "form-control select2",
+          attrs: {
+            id: "status_form",
+            required: "",
+            name: "status_form",
+            "data-parsley-errors-container": "#status-errors",
+          },
+        },
+        [
+          _c("option", { attrs: { value: "Pending" } }, [_vm._v("Pending")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "Ongoing" } }, [_vm._v("Ongoing")]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("ul", { staticClass: "parsley-err-msg" }, [
+        _c("li", { attrs: { id: "status-errors" } }),
       ]),
     ])
   },

@@ -30,61 +30,41 @@
 
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
-                        <li class="active"><a class="nav-link" href="/dashboard"><i class="fas fa-th-large"></i>
+                        <li class=""><a class="nav-link" href="/dashboard"><i class="fas fa-th-large"></i>
                                 <span>Dashboard</span></a></li>
-
                         <li class="menu-header">Setup</li>
-                        <li class="dropdown">
+
+                        <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                        <li class="dropdown"
+                        :class="{ active: isActive_Activity, 'text-primary': isActive_Activity}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
                                 <span>Activity</span></a>
                             <ul class="dropdown-menu">
-                                <li><a class="nav-link" 
-                                        href="/programs">Activity List</a></li>
+                                
+                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                <li><a class="nav-link"
+                                        :class="{ active: isActive_ActivityList, 'text-primary': isActive_ActivityList}">
+                                        Activity List</a></li>
                                 <li><a class="nav-link" 
                                         href="/subjects">Activity Types</a></li>
                             </ul>
                         </li>
+                        
                         <li class="dropdown">
                             <a href="#" class="nav-link has-dropdown " data-toggle="dropdown"><i
                                     class="fas fa-user-tie"></i>
                                 <span>Faculty</span></a>
                             <ul class="dropdown-menu ">
 
-                                <li ><a class="nav-link "
-                                        href="/faculties">Faculties</a></li>
+                                <li ><a class="nav-link">
+                                        Faculties</a></li>
                                 <li ><a class="nav-link "
                                         href="/available_hrs">Available Hours</a></li>
                             </ul>
                         </li>
-                        <li class="dropdown">
-                            <a href="#" class="nav-link has-dropdown " data-toggle="dropdown"><i
-                                    class="fas fa-chalkboard-teacher"></i>
-                                <span>Class</span></a>
-                            <ul class="dropdown-menu ">
-                                <li ><a class="nav-link "
-                                        href="/rooms">Rooms</a></li>
-                                <li ><a class="nav-link "
-                                        href="/batches">Batches</a></li>
-                                <li><a class="nav-link"
-                                        href="/sections">Sections</a></li>
-                                <!-- personal info and available schedule -->
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                                    class="fas fa-calendar-alt"></i>
-                                <span>Scheduling</span></a>
-                            <ul class="dropdown-menu">
-                                <li ><a class="nav-link"
-                                        href="/subject_offerings">Subject Offering</a></li>
-                                <li ><a class="nav-link"
-                                        href="/class_schedules">Class Schedules</a></li>
-                                <li ><a class="nav-link"
-                                        href="/change_requests">Change Requests</a></li>
-
-                            </ul>
-                        </li>
+                        
+                        
                         <li class="menu-header">User Management</li>
                         <li>
                             <a class="nav-link" href="/roles"><i class="fas fa-user-cog"></i>
@@ -121,6 +101,23 @@
     export default {
         mounted() {
             console.log('Sidebar component mounted.')
+            this.checkUrl();
+        },
+
+        data() {
+        return {
+            isActive_Activity: false,
+            isActive_ActivityList: false
+        }
+        },
+
+        methods:{
+            checkUrl(){
+                if (window.location.pathname == "/admin/activity"){
+                    this.isActive_Activity = true;
+                    this.isActive_ActivityList = true;
+                };
+            }
         }
     }
 </script>
