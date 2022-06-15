@@ -23,7 +23,6 @@
     <link rel="stylesheet" href="{{ asset('stisla/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla/css/components.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla/css/custom.css') }}">
-
 </head>
 
 <body>
@@ -52,53 +51,16 @@
                         <activity-create-form></activity-create-form>
                         
                         {{-- Activity Table --}}
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card card-primary">
-                                    <div class="card-header">
-                                        <h4 class="text-dark">List of Activities</h4>
-                                        <div class="card-header-action">
-                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
-                                            aria-expanded="false" aria-controls="create_card">New Activity <i
-                                            class="fas fa-plus"></i></button>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="d-flex mb-3 justify-content-start">
-                                            <div id="dt_btn_div">
-                                            </div>
-                                        </div>
-
-                                        <table class="table table-striped" id="activity_table" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                  <th>ID</th>
-                                                  <th>Title</th>
-                                                  <th>Type</th>
-                                                  <th>Starts</th>
-                                                  <th>Ends</th>
-                                                  <th>Action</th>
-                                                </tr>
-                                              </thead>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <activity-datatable></activity-datatable>
 
                     </div>
                 </section>
             </div>
+            <!-- Main Content -->
 
-
-            <footer class="main-footer">
-                <div class="footer-left">
-                    Copyright &copy; 2022 <div class="bullet"></div> <a href="#">PUPQC</a>
-                </div>
-                <div class="footer-right">
-                    1.0
-                </div>
-            </footer>
+             <!-- FOOTER -->
+             <admin-footer-component></admin-footer-component>
+             <!-- END OF FOOTER  -->
 
         </div>
     </div>
@@ -134,46 +96,7 @@
     <script>
         $("#create_form").parsley()
 
-        function dataTable(){
-            activityTable = $('#activity_table').DataTable({
-              "ajax": {url: "http://127.0.0.1:8000/api/v1/activity/",
-                    dataSrc: ''},
-              "columns": [
-                  {data: "id"},
-                  {data: "title"},
-                  {data: "activity_type_id"},
-                  {data: "start_datetime"},
-                  {data: "end_datetime"},
-                  {data: "deleted_at", render: function(data, type, row){
-                        if (data == null){
-                            return '<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>' +
-                            '<div class="dropdown-menu dropdown-menu-right">' +
-                                '<div class="dropdown-item d-flex btn_view" id="'+ row.id +'" role="button">' +
-                                  '<div style="width: 2rem"><i class="fas fa-eye"></i></div>' +
-                                  '<div>View Category</div></div>' +
-                                  '<div class="dropdown-item d-flex btn_edit" id="'+ row.id +'" role="button">' +
-                                    '<div style="width: 2rem"><i class="fas fa-edit"></i></div>' +
-                                    '<div>Edit Category</div></div>' +
-                                    '<div class="dropdown-divider"</div></div>' +
-                                    '<div class="dropdown-item d-flex btn_delete" id="'+ row.id +'" role="button">' +
-                                      '<div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>' +
-                                      '<div style="color: red">Delete Category</div></div></div></div>';
-                        }
-                        else{
-                          return '<button class="btn btn-danger btn-sm">Activate</button>';
-                        }
-                      }
-                  }
-                ],
         
-              "aoColumnDefs": [{ "bVisible": false, "aTargets": [0] }],
-              "order": [[1, "desc"]]
-        
-            })
-        
-        };
-
-        dataTable();
     </script>
     
 </body>

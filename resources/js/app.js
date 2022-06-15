@@ -24,15 +24,19 @@ window.Vue = require('vue').default;
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
                                     //-------------- INCLUDES -------------------//
+// BASE
+
+// ADMIN
 Vue.component('admin-navbar-component', require('./components/includes/admin/TopNav.vue').default);
 Vue.component('admin-sidebar-component', require('./components/includes/admin/SideBar.vue').default);
+Vue.component('admin-footer-component', require('./components/includes/admin/Footer.vue').default);
 
                                     //------------------ ADMIN ---------------------//
 
                                     /*----------------- ACAD HEAD -----------------*/
 // ACTIVITY
 Vue.component('activity-create-form', require('./components/acad_head/activity/activity_create_form.vue').default);
-// Vue.component('activity-datatable', require('./components/datatables/activity_datatable.vue').default);
+Vue.component('activity-datatable', require('./components/acad_head/activity/activity_datatable.vue').default);
 
                                     //----------------- FACULTY -----------------//
 

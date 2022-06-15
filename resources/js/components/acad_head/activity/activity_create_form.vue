@@ -80,6 +80,7 @@
         mounted() {
             console.log('Activity Create Form mounted.')
             this.getActivityTypes();
+            this.dataTable();
         },
 
         // ALL DATA VARIABLES USED IN THIS COMPONENT
@@ -118,6 +119,49 @@
                 });
             },
 
+            dataTable(){
+                this.activityTable = $('#activity_table').DataTable({
+                "ajax": {url: "http://127.0.0.1:8000/api/v1/activity/",
+                        dataSrc: ''},
+                "columns": [
+                    {data: "id"},
+                    {data: "title"},
+                    {data: "activity_type_id"},
+                    {data: "start_datetime"},
+                    {data: "end_datetime"},
+                    {data: "deleted_at", render: function(data, type, row){
+                            if (data == null){
+                                return '<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>' +
+                                '<div class="dropdown-menu dropdown-menu-right">' +
+                                    '<div class="dropdown-item d-flex btn_view" id="'+ row.id +'" role="button">' +
+                                    '<div style="width: 2rem"><i class="fas fa-eye"></i></div>' +
+                                    '<div>View Category</div></div>' +
+                                    '<div class="dropdown-item d-flex btn_edit" id="'+ row.id +'" role="button">' +
+                                        '<div style="width: 2rem"><i class="fas fa-edit"></i></div>' +
+                                        '<div>Edit Category</div></div>' +
+                                        '<div class="dropdown-divider"</div></div>' +
+                                        '<div class="dropdown-item d-flex btn_delete" id="'+ row.id +'" role="button">' +
+                                        '<div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>' +
+                                        '<div style="color: red">Delete Category</div></div></div></div>';
+                            }
+                            else{
+                            return '<button class="btn btn-danger btn-sm">Activate</button>';
+                            }
+                        }
+                    }
+                    ],
+            
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0] }],
+                "order": [[1, "desc"]]
+                })
+            },
+
+            refresh(){
+                var url = "http://127.0.0.1:8000/api/v1/activity/";
+                
+                this.activityTable.ajax.url(url).load();
+            },
+
             handleFileUpload(){
                 this.memo_upload = this.$refs.file.files[0];
             },
@@ -136,7 +180,7 @@
                 //     memorandum_file_directory: "url",
                 //     status: document.getElementById("status_form").value,
                 // })
-
+                var self=this
                 axios.post('http://127.0.0.1:8000/api/v1/activity',
                 {
                     title: this.activity_title,
@@ -154,6 +198,7 @@
                 })
                 .then(function (response) {
                     console.log(response);
+                    self.refresh();
                 })
                 .catch(function (error) {
                     console.log(error);
