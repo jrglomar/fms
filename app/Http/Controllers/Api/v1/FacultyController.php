@@ -85,7 +85,7 @@ class FacultyController extends Controller
         // Default
         // return Faculty::find($id);
 
-        return Faculty::with('user', 'created_by_user')->find($id);
+        return Faculty::with('user', 'faculty_type', 'designation', 'academic_rank')->find($id);
     }
 
     /**
