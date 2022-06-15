@@ -25,7 +25,7 @@ class FacultyFactory extends Factory
             "first_name" => $this->faker->firstName,
             "middle_name" => $this->faker->lastName,
             "last_name" => $this->faker->lastName,
-            "gender" => $this->faker->phoneNumber,
+            "gender" => $this->faker->word(6),
             "image" => $this->faker->imageUrl($width = 640, $height = 480),
             "salutation" => $this->faker->title,
             "birthdate" => $this->faker->dateTimeBetween($startDate = '-30 years', $endDate = '-15 years'),

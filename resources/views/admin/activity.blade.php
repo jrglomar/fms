@@ -33,7 +33,7 @@
             
             <!-- NAV BAR  -->
             <admin-navbar-component></admin-navbar-component>
-             END OF NAV BAR 
+            {{-- END OF NAV BAR  --}}
 
             <!-- SIDE BAR -->
             <admin-sidebar-component></admin-sidebar-component>

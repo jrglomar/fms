@@ -25,7 +25,6 @@ class RoomController extends Controller
 
         // All data
         return Room::all();
-        
         // Return with relationships
         //return Room::with('user', 'created_by_user')->get();
     }

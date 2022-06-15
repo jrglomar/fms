@@ -127,7 +127,18 @@
                 // formData.append('file', this.memo_upload);
                 //console.log(formData)
 
-                console.log({
+                // console.log({
+                //     title: this.activity_title,
+                //     activity_type_id: document.getElementById("activity_type_id").value,
+                //     description: this.description,
+                //     start_datetime: this.start_time,
+                //     end_datetime: this.end_time,
+                //     memorandum_file_directory: "url",
+                //     status: document.getElementById("status_form").value,
+                // })
+
+                axios.post('http://127.0.0.1:8000/api/v1/activity',
+                {
                     title: this.activity_title,
                     activity_type_id: document.getElementById("activity_type_id").value,
                     description: this.description,
@@ -135,29 +146,18 @@
                     end_datetime: this.end_time,
                     memorandum_file_directory: "url",
                     status: document.getElementById("status_form").value,
+                },
+                {
+                    headers: {
+                        'Authorization': 'Bearer 2|hk508RktlUJeouy2YTx27AX5ht5IYXFCxI8o0j7d'
+                    }
                 })
-
-                // axios.post('http://127.0.0.1:8000/api/v1/activity',
-                // {
-                //     title: this.activity_title,
-                //     activity_type_id: document.getElementById("activity_type_id").value,
-                //     description: this.description,
-                //     start_datetime: this.start_time,
-                //     end_datetime: this.end_time,
-                //     memorandum_file_directory: formData,
-                //     status: this.status,
-                // },
-                // {
-                //     headers: {
-                //         'Authorization': 'Bearer 4|Cpl2er8rfw5YxsjsT5SuMXMePhODNu8BRNnzAfGL'
-                //     }
-                // })
-                // .then(function (response) {
-                //     console.log(response);
-                // })
-                // .catch(function (error) {
-                //     console.log(error);
-                // });
+                .then(function (response) {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
             }
         }
     }

@@ -21,17 +21,22 @@ window.Vue = require('vue').default;
 
 //----------------- GLOBAL DECLARATION OF COMPONENTS -----------------------//
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-//-------------- ADMIN LAYOUT -------------------//
-Vue.component('admin-navbar-component', require('./components/admin/TopNav.vue').default);
-Vue.component('admin-sidebar-component', require('./components/admin/SideBar.vue').default);
+                                    //-------------- INCLUDES -------------------//
+Vue.component('admin-navbar-component', require('./components/includes/admin/TopNav.vue').default);
+Vue.component('admin-sidebar-component', require('./components/includes/admin/SideBar.vue').default);
 
-//------------------ FORMS ---------------------//
-Vue.component('activity-create-form', require('./components/forms/activity_create_form.vue').default);
+                                    //------------------ ADMIN ---------------------//
 
-//----------------- DATATABLES -----------------//
-Vue.component('activity-table', require('./components/datatables/activity_table.vue').default);
+                                    /*----------------- ACAD HEAD -----------------*/
+// ACTIVITY
+Vue.component('activity-create-form', require('./components/acad_head/activity/activity_create_form.vue').default);
+// Vue.component('activity-datatable', require('./components/datatables/activity_datatable.vue').default);
+
+                                    //----------------- FACULTY -----------------//
+
+                                    //----------------- CHECKER -----------------//
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
