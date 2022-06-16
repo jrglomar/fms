@@ -65,12 +65,12 @@
                         </li>
                         
                         
-                        <li class="menu-header">User Management</li>
+                        <li class="menu-header">ACcount Management</li>
                         <li>
                             <a class="nav-link" href="/roles"><i class="fas fa-user-cog"></i>
                                 <span>Roles</span></a>
                         </li>
-                        <li><a class="nav-link" href="/users">
+                        <li><a class="nav-link" href="/admin/users">
                                 <i class="fas fa-users"></i><span>Users</span></a></li>
                         <li >
                             <a class="nav-link" href="/user_roles"><i class="fas fa-users-cog"></i>

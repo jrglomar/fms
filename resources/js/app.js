@@ -32,6 +32,9 @@ Vue.component('admin-sidebar-component', require('./components/includes/admin/Si
 Vue.component('admin-footer-component', require('./components/includes/admin/Footer.vue').default);
 
                                     //------------------ ADMIN ---------------------//
+// ACCOUNT
+Vue.component('user-create-form', require('./components/admin/user/user_create_form.vue').default);
+Vue.component('user-datatable', require('./components/admin/user/user_datatable.vue').default);
 
                                     /*----------------- ACAD HEAD -----------------*/
 // ACTIVITY
