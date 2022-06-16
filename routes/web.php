@@ -17,18 +17,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+//-------------AUTH----------------//
+
+Route::get('login', function () {
+    return view('auth/login');
+});
+
 //-------------ADMIN----------------//
 
 Route::get('admin/dashboard', function () {
     return view('admin/dashboard');
 });
 
-Route::get('admin/users', function () {
+Route::get('admin/user', function () {
     return view('admin/user');
 });
 
-Route::get('admin/activity', function () {
-    return view('admin/activity');
-});
 
 //----------------------------------//
