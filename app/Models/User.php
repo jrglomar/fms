@@ -48,7 +48,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
     // ADDED FOR UUID INCREMENT ERROR
     public $incrementing = false;
 
@@ -61,5 +60,5 @@ class User extends Authenticatable
             $issue->id = Str::uuid(36);
         });
     }
-    // 
+    //
 }

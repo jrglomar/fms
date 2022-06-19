@@ -1,8 +1,6 @@
 <template>
     <div>
-        <span> {{ users.email }} </span>
-        <span> {{ users.id }} </span>
-        <span> {{ test_props.name }} </span>
+        asfasfasfsafas
     </div>
 
 </template>

@@ -1,28 +1,33 @@
 <template>
     <div class="userContainer">
         <div class="heading">
-            <h2>User List</h2>
+
             <user-create-form
-                v-on:reloadlist="getUser()"
-                />
+            />
+
+            <user-datatable
+            />
+
         </div>
-        <user-view :users="users" />
+
     </div>
 </template>
 
 <script>
 import userCreateForm from "./userCreateForm"
 import userView from "./userView"
+import userDatatable from "./userDatatable"
 
 export default {
     name: 'User',
     components: {
         userCreateForm,
-        userView
+        userView,
+        userDatatable
     },
     data: function () {
         return {
-            users: []
+            users: [],
         }
     },
     methods: {
@@ -34,7 +39,7 @@ export default {
             .catch( errror => {
                 console.log ( error )
             })
-        }
+        },
     },
     created() {
         this.getUser();

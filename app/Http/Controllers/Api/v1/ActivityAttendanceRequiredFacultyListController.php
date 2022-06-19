@@ -24,14 +24,10 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         // return ActivityAttendanceRequiredFacultyList::where('active_status', 'Active')->get();
 
         // All data
-        return ActivityAttendanceRequiredFacultyList::all();
-        
+        // return ActivityAttendanceRequiredFacultyList::all();
+
         // Return with relationships
-<<<<<<< HEAD
         return ActivityAttendanceRequiredFacultyListController::with('user', 'created_by_user')->get();
-=======
-       // return ActivityType::with('user', 'created_by_user')->get();
->>>>>>> a9cdf25104474df1460563c2568a03697f35d72a
     }
 
     /**
@@ -54,7 +50,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         ]);
 
         return ActivityAttendanceRequiredFacultyList::create($request->all());
-        
+
     }
 
     /**
@@ -68,11 +64,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         //
         return ActivityAttendanceRequiredFacultyList::find($id);
 
-<<<<<<< HEAD
         return ActivityAttendanceRequiredFacultyListController::with('user', 'created_by_user')->find($id);
-=======
-        //return ActivityType::with('user', 'created_by_user')->find($id);
->>>>>>> a9cdf25104474df1460563c2568a03697f35d72a
     }
 
     /**
@@ -94,7 +86,6 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
     public function edit($id)
     {
         // Default
-<<<<<<< HEAD
         // return ActivityAttendanceRequiredFacultyListController::find($id);
 
         return ActivityAttendanceRequiredFacultyListController::with('user', 'created_by_user')->find($id);
@@ -111,24 +102,6 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
     {
         //if the model soft deleted
         $ActivityAttendance = ActivityAttendanceRequiredFacultyListController::find($id);
-=======
-        return ActivityType::find($id);
-
-        //return ActivityType::with('user', 'created_by_user')->find($id);
-    }
-
-    public function restore(ActivityAttendanceRequiredFacultyList $activity_type, $id)
-    {
-        //
-        $activity_type = ActivityAttendanceRequiredFacultyList::onlyTrashed()->where('id', $id)->restore();
-        return ActivityAttendanceRequiredFacultyList::find($id);
-    }
-
-    public function destroy(ActivityAttendanceRequiredFacultyList $activity_type, $id)
-    {
-        //if the model soft deleted
-        $activity_type = ActivityAttendanceRequiredFacultyList::find($id);
->>>>>>> a9cdf25104474df1460563c2568a03697f35d72a
 
         $ActivityAttendance->delete();
         return $ActivityAttendance;
@@ -136,11 +109,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
 
     public function show_soft_deleted($all)
     {
-<<<<<<< HEAD
         $ActivityAttendance = ActivityAttendanceRequiredFacultyListController::onlyTrashed()->get();
-=======
-        $activity_type = ActivityAttendanceRequiredFacultyList::onlyTrashed()->get();
->>>>>>> a9cdf25104474df1460563c2568a03697f35d72a
 
         return $ActivityAttendance;
     }
@@ -148,10 +117,6 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
     public function search($title)
     {
 
-<<<<<<< HEAD
         return ActivityAttendanceRequiredFacultyListController::where('email', 'like', '%'.$title.'%')->get();
-=======
-        return ActivityAttendanceRequiredFacultyList::where('email', 'like', '%'.$title.'%')->get();
->>>>>>> a9cdf25104474df1460563c2568a03697f35d72a
     }
 }

@@ -19,8 +19,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         return User::all();
     }
 
@@ -31,8 +30,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        // 
-        
+        //
+
     }
 
     /**
@@ -99,12 +98,12 @@ class UserController extends Controller
     {
         //if the model soft deleted
         $user = User::find($id);
-        
+
         $user->delete();
         return $user;
     }
 
-    
+
     public function show_soft_deleted($all)
     {
         $user = User::onlyTrashed()->get();

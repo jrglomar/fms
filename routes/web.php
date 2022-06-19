@@ -32,7 +32,7 @@ Route::get('admin/dashboard', function () {
 });
 
 Route::get('admin/user', function () {
-    return view('admin/user');
+    return view('admin/user/user', ['page_title' => 'User']);
 });
 
 
