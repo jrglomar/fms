@@ -13,6 +13,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class AuthController extends Controller
 {
@@ -43,24 +45,40 @@ class AuthController extends Controller
             'password' => 'required|string'
         ]);
 
-        // Check email
-        $user = User::where('email', $fields['email'])->first();
-
-        // Check password
-        if(!$user || !Hash::check($fields['password'], $user->password)){
+        if( !Auth::attempt( $fields )){
             return response([
                 'message' => 'Login failed.'
             ], 401);
         }
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
-
+        $request->session()->regenerate();
+        $token = Auth::user()->createToken('myapptoken')->plainTextToken;
         $response = [
-            'user' => $user,
+            'user' => Auth::user(),
             'token' => $token
         ];
 
         return response($response, 201);
+
+        // // Check email
+        // $user = User::where('email', $fields['email'])->first();
+
+        // // Check password
+        // if(!$user || !Hash::check($fields['password'], $user->password)){
+        //     return response([
+        //         'message' => 'Login failed.'
+        //     ], 401);
+        // }
+
+
+        // $token = $user->createToken('myapptoken')->plainTextToken;
+
+        // $response = [
+        //     'user' => $user,
+        //     'token' => $token
+        // ];
+
+        // return response($response, 201);
     }
 
     public function logout(Request $request){

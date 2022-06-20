@@ -16,7 +16,6 @@
                         </div>
                     </div>
 
-
                     <table class="table table-sm" id="dataTable" style="width:100%">
                         <thead>
                             <tr>

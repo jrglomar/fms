@@ -4,7 +4,10 @@
 
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
-        var API_TOKEN = "Bearer 1|QDOcaqiFz1CG5nPFI2zHYhi3bxwfJPGg2bj6w4EB"
+        var API_TOKEN = localStorage.getItem("API_TOKEN")
+        var USER_DATA = localStorage.getItem("USER_DATA")
+        console.log(API_TOKEN)
+        console.log(JSON.parse(USER_DATA))
         // END OF GLOBAL VARIABLE
 
         // DATA TABLES FUNCTION
@@ -80,7 +83,8 @@
                 },
                 success: function(data){
                     console.log(data)
-                    $("#createForm").trigger("reset");
+                    $("#createForm").trigger("reset")
+                    $("#create_card").collapse("hide")
                     refresh();
                 },
                 error: function(error){

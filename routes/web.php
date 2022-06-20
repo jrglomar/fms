@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,12 +16,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 //-------------AUTH----------------//
 
 Route::get('login', function () {
-    return view('auth/login');
+    return view('auth/login', ['page_title' => 'Login']);
 });
 
 //-------------ADMIN----------------//

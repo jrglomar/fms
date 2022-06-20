@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="viewForm">
+                <form id="viewForm" class="needs-validation" novalidate="">
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12" hidden>
@@ -56,7 +56,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="updateForm">
+                <form id="updateForm" class="needs-validation" novalidate="">
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12" hidden>
@@ -93,7 +93,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="deactivateForm">
+                <form id="deactivateForm" class="needs-validation" novalidate="">
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12" hidden>

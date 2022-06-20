@@ -24,12 +24,12 @@ class FacultyType extends Model
 
             protected $dates = ['deleted_at'];
 
-        
+
         // protected $with = ['users','created_by_user','updated_by_user'];
 
         // [Declare relationships here]
         // End of [Declare relationships here]
-        
+
         // [Default relationship]       - Default
         public function created_by_user()
         {
@@ -54,16 +54,16 @@ class FacultyType extends Model
             });
 
             // [Added for Automation of Created_by and Updated_by]      - Default
-            // static::creating(function ($model) {
-            //     $model->created_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
-            //     $model->updated_by = NULL;
-            // });
+            static::creating(function ($model) {
+                $model->created_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
+                $model->updated_by = NULL;
+            });
 
-            // static::updating(function ($model) {
-            //     $model->updated_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
-            // });
+            static::updating(function ($model) {
+                $model->updated_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
+            });
             // END [Added for Automation of Created_by and Updated_by]      - Default
         }
-        // 
+        //
     // -----  [[DEFAULT]]  -----  //
 }

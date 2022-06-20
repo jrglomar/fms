@@ -6,24 +6,24 @@
                 <h4 class="text-dark"> <span id="create_card_title">Create</span>{{ $page_title }}</h4>
             </div>
 
-            <form id="createForm">
+            <form id="createForm" class="needs-validation" novalidate="">
                 <div class="card-body">
                     <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                             <label class="required-input">Email</label>
                             <input type="email" class="form-control" id="email" name="email"
                             placeholder="Email" tabindex="1" required>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                             <label class="required-input">Password</label>
                             <input type="password" class="form-control" id="password" name="password"
                             placeholder="Password" tabindex="1" required>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                             <label class="required-input">Password Confirmation</label>
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
                             placeholder="Password Confirmation" tabindex="1" required>
