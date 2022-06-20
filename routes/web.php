@@ -32,5 +32,9 @@ Route::get('admin/user', function () {
     return view('admin/user/user', ['page_title' => 'User']);
 });
 
+//DESIGNATION
+Route::get('admin/designation', function () {
+    return view('admin/designation/designation', ['page_title' => 'Designation']);
+});
 
 //----------------------------------//

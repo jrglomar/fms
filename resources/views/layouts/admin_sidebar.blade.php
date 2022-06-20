@@ -70,14 +70,28 @@
 
                                 <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
                                 <li class="{{ Request::segment(2) == 'role' ? 'active' : ''}}">
-                                    <a class="nav-link" href="admin/role">
+                                    <a class="nav-link" href="/admin/role">
                                         <span>Roles</span></a>
                                 </li>
-                                <li class="{{ Request::segment(2) == 'user' ? 'active' : ''}}" ><a class="nav-link" href="/admin/user">
+                                <li class="{{ Request::segment(2) == 'user' ? 'active' : ''}}" >
+                                    <a class="nav-link" href="/admin/user">
                                         <span>Users</span></a></li>
                                 <li class="{{ Request::segment(2) == 'user_role' ? 'active' : ''}}">
                                     <a class="nav-link" href="admin/user_role">
                                         <span>User Roles</span></a>
+                                </li>
+
+                                <li class="{{ Request::segment(2) == 'designation' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/designation">
+                                        <span>Designation</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'academic_rank' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/academic_rank">
+                                        <span>Academic Rank</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'faculty_type' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/faculty_type">
+                                        <span>Faculty Type</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -98,3 +112,5 @@
                 </aside>
             </div>
     </div>
+
+    
