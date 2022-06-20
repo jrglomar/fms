@@ -62,12 +62,39 @@
                                 <li ><a class="nav-link "
                                         href="/available_hrs">Available Hours</a></li>
                             </ul>
+                        </li> 
+
+                        <!-- ACCOUNT MANAGEMENT -->
+                        <li class="dropdown"
+                        :class="{ active: isActive_AccountManagement, 'text-primary': isActive_AccountManagement}">
+                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-solid fa-user"></i>
+                                <span>Account Management</span></a>
+                            <ul class="dropdown-menu">
+                                
+                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                <li><a class="nav-link" href="/admin/academic_rank"
+                                        :class="{ active: isActive_AcademicRankList, 'text-primary': isActive_AcademicRankList}">
+                                        Academic Rank</a></li>
+                            </ul>
+                            <ul class="dropdown-menu">
+                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                <li><a class="nav-link" href="/admin/designation"
+                                        :class="{ active: isActive_DesignationList, 'text-primary': isActive_DesignationList}">
+                                        Designation</a></li>
+                            </ul>
+                            <ul class="dropdown-menu">
+                                
+                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                <li><a class="nav-link" href="/admin/faculty_type"
+                                        :class="{ active: isActive_FacultyTypeList, 'text-primary': isActive_FacultyTypeList}">
+                                        Faculty Type</a></li>
+                            </ul>
                         </li>
-                        
+
                         
                         <li class="menu-header">User Management</li>
                         <li>
-                            <a class="nav-link" href="/roles"><i class="fas fa-user-cog"></i>
+                            <a class="nav-link" href="/admin/role"><i class="fas fa-user-cog"></i>
                                 <span>Roles</span></a>
                         </li>
                         <li><a class="nav-link" href="/users">
@@ -107,7 +134,18 @@
         data() {
         return {
             isActive_Activity: false,
-            isActive_ActivityList: false
+            isActive_ActivityList: false,
+            //------- ACCOUNT MANAGEMENT-------//
+            isActive_AccountManagement: false,
+            // ACADEMIC RANK
+            isActive_AcademicRankList: false,
+            // DESIGNATION
+            isActive_DesignationList: false,
+            // FACULTY TYPE
+            isActive_FacultyTypeList: false,
+            // ROLE
+            isActive_Role: false,
+            isActive_RoleList: false
         }
         },
 
@@ -116,6 +154,30 @@
                 if (window.location.pathname == "/admin/activity"){
                     this.isActive_Activity = true;
                     this.isActive_ActivityList = true;
+                };
+
+                // ACADEMIC RANK
+                if (window.location.pathname == "/admin/academic_rank"){
+                    this.isActive_AccountManagement = true;
+                    this.isActive_AcademicRankList = true;
+                };
+
+                // DESIGNATION
+                if (window.location.pathname == "/admin/designation"){
+                    this.isActive_AccountManagement = true;
+                    this.isActive_DesignationList = true;
+                };
+
+                // FACULTY TYPE
+                if (window.location.pathname == "/admin/faculty_type"){
+                    this.isActive_AccountManagement = true;
+                    this.isActive_FacultyTypeList = true;
+                };
+
+                // ROLE
+                if (window.location.pathname == "/admin/role"){
+                    this.isActive_Role = true;
+                    this.isActive_RoleList = true;
                 };
             }
         }

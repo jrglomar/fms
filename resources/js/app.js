@@ -21,7 +21,7 @@ window.Vue = require('vue').default;
 
 //----------------- GLOBAL DECLARATION OF COMPONENTS -----------------------//
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('sample-datatable', require('./components/sample/sample_datatable.vue').default);
 
                                     //-------------- INCLUDES -------------------//
 // BASE
@@ -32,6 +32,23 @@ Vue.component('admin-sidebar-component', require('./components/includes/admin/Si
 Vue.component('admin-footer-component', require('./components/includes/admin/Footer.vue').default);
 
                                     //------------------ ADMIN ---------------------//
+// ACADEMIC RANK
+Vue.component('academic-rank-create-form', require('./components/admin/academic_rank/academic_rank_create_form.vue').default);
+Vue.component('academic-rank-datatable', require('./components/admin/academic_rank/academic_rank_datatable.vue').default);
+Vue.component('academic-rank-update-modal', require('./components/admin/academic_rank/academic_rank_update_modal.vue').default);
+
+// DESIGNATION
+Vue.component('designation-create-form', require('./components/admin/designation/designation_create_form.vue').default);
+Vue.component('designation-datatable', require('./components/admin/designation/designation_datatable.vue').default);
+Vue.component('designation-update-modal', require('./components/admin/designation/designation_update_modal.vue').default);
+
+// FACULTY TYPE
+Vue.component('faculty-type-create-form', require('./components/admin/faculty_type/faculty_type_create_form.vue').default);
+Vue.component('faculty-type-datatable', require('./components/admin/faculty_type/faculty_type_datatable.vue').default);
+
+// ROLE
+Vue.component('role-create-form', require('./components/admin/role/role_create_form.vue').default);
+Vue.component('role-datatable', require('./components/admin/role/role_datatable.vue').default);
 
                                     /*----------------- ACAD HEAD -----------------*/
 // ACTIVITY

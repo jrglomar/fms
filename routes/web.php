@@ -17,6 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 //-------------ADMIN----------------//
 
 Route::get('admin/dashboard', function () {
@@ -25,6 +26,31 @@ Route::get('admin/dashboard', function () {
 
 Route::get('admin/activity', function () {
     return view('admin/activity');
+});
+
+// Sample
+Route::get('admin/sample', function () {
+    return view('admin/sample');
+});
+
+// ACADEMIC RANK
+Route::get('admin/academic_rank', function () {
+    return view('admin/academic_rank');
+});
+
+// DESIGNATION
+Route::get('admin/designation', function () {
+    return view('admin/designation');
+});
+
+// FACULTY TYPE
+Route::get('admin/faculty_type', function () {
+    return view('admin/faculty_type');
+});
+
+// ROLE
+Route::get('admin/role', function () {
+    return view('admin/role');
 });
 
 //----------------------------------//
