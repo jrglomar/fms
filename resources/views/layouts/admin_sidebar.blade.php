@@ -31,54 +31,84 @@
                         <li class="menu-header">Dashboard</li>
                         <li class=""><a class="nav-link" href="/dashboard"><i class="fas fa-th-large"></i>
                                 <span>Dashboard</span></a></li>
-                        <li class="menu-header">Setup</li>
 
+                        <li class="menu-header">System Setup</li>
                         <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                        <li class="dropdown">
-                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                                    class="fas fa-book-reader"></i>
-                                <span>Activity</span></a>
-                            <ul class="dropdown-menu">
-
-                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                                <li><a class="nav-link">
-                                        Activity List</a></li>
-                                <li><a class="nav-link"
-                                        href="/subjects">Activity Types</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown">
-                            <a href="#" class="nav-link has-dropdown " data-toggle="dropdown"><i
-                                    class="fas fa-user-tie"></i>
-                                <span>Faculty</span></a>
-                            <ul class="dropdown-menu ">
-
-                                <li ><a class="nav-link">
-                                        Faculties</a></li>
-                                <li ><a class="nav-link "
-                                        href="/available_hrs">Available Hours</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="menu-header">Account Management</li>
-                        <li class="dropdown {{ Request::segment(2) == 'user' || 'role' || 'user_role' ? 'active' : ''}}">
+                        <li class="dropdown {{ Request::segment(2) == 'role' || 'user_role' || 'designation' || 'academic_rank' || 'faculty_type' ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
                                 <span>Account</span></a>
                             <ul class="dropdown-menu">
-
                                 <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
                                 <li class="{{ Request::segment(2) == 'role' ? 'active' : ''}}">
-                                    <a class="nav-link" href="admin/role">
+                                    <a class="nav-link" href="/admin/role">
                                         <span>Roles</span></a>
                                 </li>
-                                <li class="{{ Request::segment(2) == 'user' ? 'active' : ''}}" ><a class="nav-link" href="/admin/user">
-                                        <span>Users</span></a></li>
                                 <li class="{{ Request::segment(2) == 'user_role' ? 'active' : ''}}">
                                     <a class="nav-link" href="admin/user_role">
                                         <span>User Roles</span></a>
                                 </li>
+                                <li class="{{ Request::segment(2) == 'designation' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/designation">
+                                        <span>Designation</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'academic_rank' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/academic_rank">
+                                        <span>Academic Rank</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'faculty_type' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/faculty_type">
+                                        <span>Faculty Type</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown {{ Request::segment(2) == 'requirement_type' ? 'active' : ''}}">
+                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                    class="fas fa-book-reader"></i>
+                                <span>SRD</span></a>
+                            <ul class="dropdown-menu">
+                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                <li class="{{ Request::segment(2) == 'requirement_type' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/requirement_type">
+                                        <span>Requirement Types</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown {{ Request::segment(2) == 'meeting_type' ? 'active' : ''}}">
+                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                    class="fas fa-book-reader"></i>
+                                <span>Meeting</span></a>
+                            <ul class="dropdown-menu">
+                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                <li class="{{ Request::segment(2) == 'meeting_type' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/meeting_type">
+                                        <span>Meeting Types</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown {{ Request::segment(2) == 'activity_type' ? 'active' : ''}}">
+                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                    class="fas fa-book-reader"></i>
+                                <span>Activity</span></a>
+                            <ul class="dropdown-menu">
+                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                <li class="{{ Request::segment(2) == 'activity_type' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/activity_type">
+                                        <span>Activity Types</span></a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="menu-header">Account Management</li>
+                        <li class="dropdown {{ Request::segment(2) == 'user' ? 'active' : ''}}">
+                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                    class="fas fa-book-reader"></i>
+                                <span>Account</span></a>
+                            <ul class="dropdown-menu">  
+                                <li class="{{ Request::segment(2) == 'user' ? 'active' : ''}}" >
+                                    <a class="nav-link" href="/admin/user">
+                                        <span>Users</span></a></li> 
                             </ul>
                         </li>
 
@@ -98,3 +128,5 @@
                 </aside>
             </div>
     </div>
+
+    
