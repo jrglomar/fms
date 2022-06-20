@@ -6,12 +6,13 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
+        var BASE_API = APP_URL + 'api/v1/user/'
         // END OF GLOBAL VARIABLE
 
         // DATA TABLES FUNCTION
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
-                "ajax": {url: "http://127.0.0.1:8000/api/v1/user/", dataSrc: ''},
+                "ajax": {url: BASE_API, dataSrc: ''},
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
@@ -48,7 +49,7 @@
 
         // REFRESH DATATABLE FUNCTION
         function refresh(){
-            let url = APP_URL+'/api/v1/user/'
+            let url = BASE_API
 
             dataTable.ajax.url(url).load()
         }
@@ -98,7 +99,7 @@
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var id = this.id;
-            let form_url =APP_URL+'/api/v1/user/'+id
+            let form_url = BASE_API+id
 
             $.ajax({
                 url: form_url,
@@ -128,7 +129,7 @@
         // EDIT FUNCTION
         $(document).on("click", ".btnEdit", function(){
             var id = this.id;
-            let form_url = APP_URL+'/api/v1/user/'+id
+            let form_url = BASE_API+id
 
             $.ajax({
                 url: form_url,
@@ -160,7 +161,7 @@
         $('#updateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_edit').val();
-            var form_url = APP_URL+'/api/v1/user/'+id
+            var form_url = BASE_API+id
 
             let data = {
                 "email": $('#email_edit').val()
@@ -196,7 +197,7 @@
         // DEACTIVATE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = APP_URL+'/api/v1/user/'+id
+            let form_url = BASE_API+id
 
             $.ajax({
                 url: form_url,
@@ -227,7 +228,7 @@
         $('#deactivateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_delete').val();
-            var form_url = APP_URL+'/api/v1/user/destroy/'+id
+            var form_url = BASE_API+id
 
             $.ajax({
                 url: form_url,
