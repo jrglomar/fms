@@ -35,6 +35,7 @@
                     localStorage.setItem('API_TOKEN', data.token);
                     localStorage.setItem('USER_DATA', JSON.stringify(data.user));
 
+                    window.location.href = "/admin/user";
                 },
                 error: function(error){
                     console.log(error)
