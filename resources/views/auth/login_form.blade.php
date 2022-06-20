@@ -12,7 +12,7 @@
                 <h4 class="text-dark">Login</h4>
                 </div>
                 <div class="card-body">
-                <p>Login using your email and password.</p>
+                {{-- <p>Login using your email and password.</p> --}}
                 <form id="loginForm" class="needs-validation" novalidate="">
                     <div class="form-group">
                     <label for="email">Email</label>
@@ -24,7 +24,7 @@
                     <div class="d-block">
                         <label for="password" class="control-label">Password</label>
                         <div class="float-right">
-                        <a href="auth-forgot-password.html" class="text-small text-info">
+                        <a href="" class="text-small text-info">
                             Forgot Password?
                         </a>
                         </div>

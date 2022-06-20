@@ -41,15 +41,13 @@
     <!-- Styles -->
 </head>
     <body>
-        <div id="app">
+        <div>
 
-                <div class="main-content">
                     <section class="section">
 
                         @yield('content')
 
                     </section>
-                </div>
         </div>
 
         <!-- General JS Scripts -->
@@ -80,12 +78,6 @@
         <script src="{{ mix('js/app.js') }}"></script>
 
         <!-- Scripts -->
-        <script src="https://unpkg.com/vue@3"></script>
-        <script src="https://unpkg.com/vue-router@4"></script>
-
-        <script src="https://unpkg.com/vue@latest"></script>
-        <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.4.1/dist/js/tabulator.min.js"></script>
-
         @yield('script')
     </body>
 </html>

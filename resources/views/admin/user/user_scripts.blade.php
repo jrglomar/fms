@@ -6,8 +6,6 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
-        console.log(API_TOKEN)
-        console.log(JSON.parse(USER_DATA))
         // END OF GLOBAL VARIABLE
 
         // DATA TABLES FUNCTION
