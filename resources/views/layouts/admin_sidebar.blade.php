@@ -99,7 +99,7 @@
                     </ul>
 
                     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-                        <button type="submit" class="btn btn-danger btn-lg btn-block btn-icon-split logout-btn"
+                        <button type="button" class="btn btn-danger btn-lg btn-block btn-icon-split logout-btn" onclick="location.href='/logout'"
                             name="logout_btn">
                             Logout <i class="fas fa-sign-out-alt"></i>
                         </button>

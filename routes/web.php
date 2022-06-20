@@ -20,21 +20,37 @@ Route::get('/', function () {
 
 Route::get('login', function () {
     return view('auth/login', ['page_title' => 'Login']);
-});
+})->name('login');
+
+Route::get('logout', function () {
+    return view('auth/logout', ['page_title' => 'Logout']);
+})->name('logout');
+
+
+//-------------ERROR----------------//
+
+Route::get('401', function(){
+    return view('error/401', ['page_title' => '401 Unauthenticated']);
+})->name('401');
 
 //-------------ADMIN----------------//
 
-Route::get('admin/dashboard', function () {
-    return view('admin/dashboard');
-});
+Route::group(['middleware' => ['auth']], function(){
 
-Route::get('admin/user', function () {
-    return view('admin/user/user', ['page_title' => 'User']);
+    Route::get('admin/dashboard', function () {
+        return view('admin/dashboard');
+    })->name('admin_dashboard');
+
+    Route::get('admin/user', function () {
+        return view('admin/user/user', ['page_title' => 'User']);
+    })->name('admin_user');
+
 });
 
 //DESIGNATION
 Route::get('admin/designation', function () {
     return view('admin/designation/designation', ['page_title' => 'Designation']);
 });
+
 
 //----------------------------------//

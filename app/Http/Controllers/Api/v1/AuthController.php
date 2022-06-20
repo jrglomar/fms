@@ -59,30 +59,13 @@ class AuthController extends Controller
         ];
 
         return response($response, 201);
-
-        // // Check email
-        // $user = User::where('email', $fields['email'])->first();
-
-        // // Check password
-        // if(!$user || !Hash::check($fields['password'], $user->password)){
-        //     return response([
-        //         'message' => 'Login failed.'
-        //     ], 401);
-        // }
-
-
-        // $token = $user->createToken('myapptoken')->plainTextToken;
-
-        // $response = [
-        //     'user' => $user,
-        //     'token' => $token
-        // ];
-
-        // return response($response, 201);
     }
 
     public function logout(Request $request){
         auth()->user()->tokens()->delete();
+
+        auth('web')->logout();
+        $request->session()->invalidate();
 
         return [
             'message' => 'Logged out.'

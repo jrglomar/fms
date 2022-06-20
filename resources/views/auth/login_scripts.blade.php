@@ -4,7 +4,7 @@
 
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
-        var API_TOKEN = "Bearer 1|QDOcaqiFz1CG5nPFI2zHYhi3bxwfJPGg2bj6w4EB"
+        var API_TOKEN = localStorage.getItem("API_TOKEN")
         // END OF GLOBAL VARIABLE
 
 
@@ -35,6 +35,7 @@
                     localStorage.setItem('API_TOKEN', data.token);
                     localStorage.setItem('USER_DATA', JSON.stringify(data.user));
 
+                    window.location.href = "/admin/user";
                 },
                 error: function(error){
                     console.log(error)
