@@ -32,12 +32,6 @@
     <link rel="stylesheet" href="{{ asset('stisla/css/custom.css') }}">
 
 
-    <link href="https://unpkg.com/tabulator-tables@4.4.1/dist/css/tabulator.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('vendors/tabulator-master/dist/css/tabulator_simple.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendors/tabulator-master/dist/css/tabulator_bootstrap5.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendors/tabulator-master/dist/css/tabulator_bootstrap5.min.css') }}">
-
-
     <!-- Styles -->
 </head>
     <body>

@@ -27,12 +27,6 @@ Route::get('logout', function () {
 })->name('logout');
 
 
-//-------------ERROR----------------//
-
-Route::get('401', function(){
-    return view('error/401', ['page_title' => '401 Unauthenticated']);
-})->name('401');
-
 //-------------ADMIN----------------//
 
 Route::group(['middleware' => ['auth']], function(){
