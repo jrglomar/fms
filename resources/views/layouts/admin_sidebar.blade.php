@@ -34,7 +34,11 @@
 
                         <li class="menu-header">System Setup</li>
                         <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                        <li class="dropdown {{ Request::segment(2) == 'role' || 'user_role' || 'designation' || 'academic_rank' || 'faculty_type' ? 'active' : ''}}">
+                        <li class="dropdown {{ Request::segment(2) == 'role' ||
+                                                Request::segment(2) == 'designation' ||
+                                                Request::segment(2) == 'academic_rank' ||
+                                                Request::segment(2) == 'faculty_type'
+                                            ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
                                 <span>Account</span></a>
@@ -43,10 +47,6 @@
                                 <li class="{{ Request::segment(2) == 'role' ? 'active' : ''}}">
                                     <a class="nav-link" href="/admin/role">
                                         <span>Roles</span></a>
-                                </li>
-                                <li class="{{ Request::segment(2) == 'user_role' ? 'active' : ''}}">
-                                    <a class="nav-link" href="admin/user_role">
-                                        <span>User Roles</span></a>
                                 </li>
                                 <li class="{{ Request::segment(2) == 'designation' ? 'active' : ''}}">
                                     <a class="nav-link" href="/admin/designation">
@@ -62,7 +62,9 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="dropdown {{ Request::segment(2) == 'requirement_type' ? 'active' : ''}}">
+                        <li class="dropdown {{ Request::segment(2) == 'requirement_type'
+
+                                            ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
                                 <span>SRD</span></a>
@@ -74,7 +76,9 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="dropdown {{ Request::segment(2) == 'meeting_type' ? 'active' : ''}}">
+                        <li class="dropdown {{ Request::segment(2) == 'meeting_type'
+
+                                            ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
                                 <span>Meeting</span></a>
@@ -101,15 +105,22 @@
 
 
                         <li class="menu-header">Account Management</li>
-                        <li class="dropdown {{ Request::segment(2) == 'user' ? 'active' : ''}}">
+                        <li class="dropdown {{ Request::segment(2) == 'role' ||
+                                                Request::segment(2) == 'user_role'
+                                            ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
                                 <span>Account</span></a>
-                            <ul class="dropdown-menu">  
+                            <ul class="dropdown-menu">
                                 <li class="{{ Request::segment(2) == 'user' ? 'active' : ''}}" >
                                     <a class="nav-link" href="/admin/user">
-                                        <span>Users</span></a></li> 
+                                        <span>Users</span></a></li>
+                                <li class="{{ Request::segment(2) == 'user_role' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/user_role">
+                                        <span>User Roles</span></a>
+                                </li>
                             </ul>
+
                         </li>
 
                     </ul>
@@ -129,4 +140,4 @@
             </div>
     </div>
 
-    
+
