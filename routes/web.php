@@ -64,4 +64,19 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('admin/academic_rank', function () {
         return view('admin/academic_rank/academic_rank', ['page_title' => 'Academic Rank']);
     })->name('admin_academic_rank');
+
+    //ACTIVITY TYPE
+    Route::get('admin/activity_type', function () {
+        return view('admin/activity_type/activity_type', ['page_title' => 'Activity Type']);
+    })->name('admin_activity_type');
+
+    //MEETING TYPE
+    Route::get('admin/meeting_type', function () {
+        return view('admin/meeting_type/meeting_type', ['page_title' => 'Meeting Type']);
+    })->name('admin_meeting_type');
+
+    //REQUIREMENT TYPE
+    Route::get('admin/requirement_type', function () {
+        return view('admin/requirement_type/requirement_type', ['page_title' => 'Requirement Type']);
+    })->name('admin_requirement_type');
 });

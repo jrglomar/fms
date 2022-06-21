@@ -18,6 +18,9 @@ class ActivityType extends Model
 
     protected $fillable = [
         "title",
+        "description",
+        'created_by',
+        'updated_by',
     ];
 
     protected $dates = ['deleted_at'];
