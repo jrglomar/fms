@@ -6,31 +6,35 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
-        var BASE_API = APP_URL + 'api/v1/user/'
+        console.log(API_TOKEN)
+        console.log(JSON.parse(USER_DATA))
         // END OF GLOBAL VARIABLE
 
         // DATA TABLES FUNCTION
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
-                "ajax": {url: BASE_API, dataSrc: ''},
+                "ajax": {
+                    url: "http://127.0.0.1:8000/api/v1/role/", 
+                    dataSrc: ''
+                },
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
-                    { data: "email"},
+                    { data: "title"},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
                                     return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View Category</div></div>
+                                        <div>View Role Type</div></div>
                                         <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit Category</div></div>
+                                            <div>Edit Role Type</div></div>
                                             <div class="dropdown-divider"</div></div>
                                             <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete Category</div></div></div></div>`;
+                                            <div style="color: red">Delete Role Type</div></div></div></div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -49,7 +53,7 @@
 
         // REFRESH DATATABLE FUNCTION
         function refresh(){
-            let url = BASE_API
+            let url = APP_URL+'/api/v1/role/'
 
             dataTable.ajax.url(url).load()
         }
@@ -60,7 +64,7 @@
         $('#createForm').on('submit', function(e){
             e.preventDefault();
 
-            var form_url = APP_URL+'/api/v1/register/'
+            var form_url = APP_URL+'/api/v1/role/'
             var form = $("#createForm").serializeArray();
             let data = {}
 
@@ -99,7 +103,7 @@
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var id = this.id;
-            let form_url = BASE_API+id
+            let form_url =APP_URL+'/api/v1/role/'+id
 
             $.ajax({
                 url: form_url,
@@ -115,9 +119,8 @@
                     let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
 
                     $('#id_view').html(data.id);
-                    $('#email_view').html(data.email);
+                    $('#title_view').html(data.title);
                     $('#created_at_view').html(created_at);
-                    $('#status_view').html(status);
 
                     $('#viewModal').modal('show');
                 }
@@ -129,7 +132,7 @@
         // EDIT FUNCTION
         $(document).on("click", ".btnEdit", function(){
             var id = this.id;
-            let form_url = BASE_API+id
+            let form_url = APP_URL+'/api/v1/role/'+id
 
             $.ajax({
                 url: form_url,
@@ -143,7 +146,7 @@
 
                 success: function(data){
                     $('#id_edit').val(data.id);
-                    $('#email_edit').val(data.email);
+                    $('#title_edit').val(data.title);
 
                     $('#editModal').modal('show');
                 },
@@ -161,10 +164,11 @@
         $('#updateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_edit').val();
-            var form_url = BASE_API+id
+            var form_url = APP_URL+'/api/v1/role/'+id
 
             let data = {
-                "email": $('#email_edit').val()
+                "title": $('#title_edit').val(),
+                "description": $('#description_edit').val()
             }
 
             $.ajax({
@@ -197,7 +201,7 @@
         // DEACTIVATE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = BASE_API+id
+            let form_url = APP_URL+'/api/v1/role/'+id
 
             $.ajax({
                 url: form_url,
@@ -210,7 +214,7 @@
 
                 success: function(data){
                     $('#id_delete').val(data.id);
-                    $('#email_delete').html(data.email);
+                    $('#title_delete').html(data.title);
 
                     $('#deactivateModal').modal('show');
                 },
@@ -228,7 +232,7 @@
         $('#deactivateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_delete').val();
-            var form_url = BASE_API+id
+            var form_url = APP_URL+'/api/v1/role/destroy/'+id
 
             $.ajax({
                 url: form_url,
