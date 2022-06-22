@@ -79,4 +79,9 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('admin/requirement_type', function () {
         return view('admin/requirement_type/requirement_type', ['page_title' => 'Requirement Type']);
     })->name('admin_requirement_type');
+
+    //REQUIREMENT TYPE
+    Route::get('admin/activity', function () {
+        return view('admin/activity/activity', ['page_title' => 'Activity']);
+    })->name('Activity');
 });

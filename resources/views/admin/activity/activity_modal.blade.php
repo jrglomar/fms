@@ -110,7 +110,7 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label>
-                                    Are you sure you want to delete this activity type? <span id="description_delete"></span>?
+                                    Are you sure you want to delete this activity ? <span id="description_delete"></span>?
                                 </label>
                             </div>
                         </div>

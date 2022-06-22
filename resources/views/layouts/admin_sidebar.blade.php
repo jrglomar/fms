@@ -96,6 +96,10 @@
                                     <a class="nav-link" href="/admin/activity_type">
                                         <span>Activity Types</span></a>
                                 </li>
+                                <li class="{{ Request::segment(2) == 'activity' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/activity">
+                                        <span>Activity</span></a>
+                                </li>
                             </ul>
                         </li>
 
