@@ -29,7 +29,7 @@ Route::get('logout', function () {
 
 //-------------ADMIN----------------//
 
-Route::group(['middleware' => ['auth'], 'prefix' => '/admin',], function(){
+Route::group(['middleware' => ['role.admin'], 'prefix' => '/admin',], function(){
 
     Route::get('/dashboard', function () {
         return view('admin/dashboard');

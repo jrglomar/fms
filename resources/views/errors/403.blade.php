@@ -40,7 +40,7 @@
     <body class="antialiased">
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
             <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex items-center pt-8 sm:justify-start sm:pt-0">
+                <div class="flex justify-content-center sm:justify-center sm:pt-0">
                     <div class="px-4 text-lg text-gray-500 border-r border-gray-400 tracking-wider">
                         403                    </div>
 
@@ -48,12 +48,11 @@
                         Forbidden                    </div>
                 </div>
                 <br>
-                <div class="flex justify-content-center pt-12 sm:justify-center sm:pt-0">
-                    <div class="px-12 text-lg">
-                        <button type="button" onclick="location.href='/login'" class="shadow-none btn btn-info btn-md btn-block" tabindex="4">
-                            Back to Login <i class="fas fa-sign-in-alt"></i>
-                        </button>
-                                      </div>
+
+                <div class="flex justify-content-center sm:justify-center sm:pt-0">
+                    <div class="text-center px-12 text-lg">
+
+                        <label>Please contact admin to get access to this page.</label>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Auth;
 
-class RoleAdmin
+class RoleAcademicHead
 {
     /**
      * Handle an incoming request.
@@ -15,7 +15,7 @@ class RoleAdmin
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (!Auth::check()) // I included this check because you have it, but it really should be part of your 'auth' middleware, most likely added as part of a route group.
             return abort(401);
@@ -23,7 +23,7 @@ class RoleAdmin
         $users = Auth::user();
 
         foreach($users->user_role as $row) {
-            if($row->role->title == 'Admin')
+            if($row->role->title == 'Academic Head')
                 return $next($request);
         }
 
