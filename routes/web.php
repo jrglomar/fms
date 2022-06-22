@@ -29,13 +29,16 @@ Route::get('logout', function () {
 
 //-------------ADMIN----------------//
 
-Route::group(['middleware' => ['role.admin'], 'prefix' => '/admin',], function(){
-
-    Route::get('/dashboard', function () {
-        return view('admin/dashboard');
-    })->name('admin_dashboard');
+Route::group(['middleware' => ['role.admin'],
+ 'prefix' => '/admin',], function(){
+    
+    // ------------DASHBOARD--------------- //
+        Route::get('/dashboard', function () {
+            return view('admin/dashboard/dashboard', ['page_title' => 'Dashboard']);
+        })->name('admin_dashboard');
 
     // ------------SYSTEM SETUP--------------- //
+    
         //DESIGNATION
         Route::get('/designation', function () {
             return view('admin/designation/designation', ['page_title' => 'Designation']);
@@ -45,7 +48,7 @@ Route::group(['middleware' => ['role.admin'], 'prefix' => '/admin',], function()
         Route::get('/faculty_type', function () {
             return view('admin/faculty_type/faculty_type', ['page_title' => 'Faculty Type']);
         })->name('admin_faculty_type');
-
+        
         //ROLE
         Route::get('/role', function () {
             return view('admin/role/role', ['page_title' => 'Role']);

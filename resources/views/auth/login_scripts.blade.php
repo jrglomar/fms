@@ -41,8 +41,9 @@
                         role.push(data.user.user_role[i].role.title)
                     })
 
+                    console.log(role)
                     if(role.includes('Admin')){
-                        window.location.href = "/admin/user"
+                        window.location.href = "/admin/dashboard"
                     }
                     else if(role.includes('Academic Head')){
                         window.location.href = "/acad_head/dashboard"
@@ -54,7 +55,7 @@
                         window.location.href = "/checker/dashboard"
                     }
                     else{
-                        window.location.href = "/admin"
+                        window.location.href = "/"
                     }
 
                 },

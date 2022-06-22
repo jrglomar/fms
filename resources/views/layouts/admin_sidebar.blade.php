@@ -29,7 +29,7 @@
 
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
-                        <li class=""><a class="nav-link" href="/dashboard"><i class="fas fa-th-large"></i>
+                        <li class=""><a class="nav-link" href="/admin/dashboard"><i class="fas fa-th-large"></i>
                                 <span>Dashboard</span></a></li>
 
                         <li class="menu-header">System Setup</li>
