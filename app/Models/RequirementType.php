@@ -19,7 +19,8 @@ class RequirementType extends Model
 
         // [Modify this fillable base on tables]      - Can be modified
             protected $fillable = [
-                "title"
+                "title",
+                "description"
             ];
 
             protected $dates = ['deleted_at'];
