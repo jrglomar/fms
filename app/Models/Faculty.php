@@ -83,6 +83,8 @@ class Faculty extends Model
             return $this->belongsTo(User::class,'updated_by');
         }
 
+        protected $with = ['academic_rank', 'designation', 'faculty_type', 'user','created_by_user','updated_by_user'];
+
 
         // [Added for UUID Incrementation]      - Default
         public $incrementing = false;

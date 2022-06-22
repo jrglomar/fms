@@ -60,6 +60,8 @@ class MeetingAttendanceRequiredFacultyList extends Model
         return $this->belongsTo(User::class,'updated_by');
     }
 
+    protected $with = ['meeting', 'faculty','created_by_user','updated_by_user'];
+
     // [Added for UUID Incrementation]      - Default
     public $incrementing = false;
 

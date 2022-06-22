@@ -28,19 +28,17 @@ class UserRole extends Model
 
         protected $dates = ['deleted_at'];
 
-
-    // protected $with = ['users','created_by_user','updated_by_user'];
-
     // [Declare relationships here]
         public function user()
         {
-            return $this->belongsTo(User::class);
+            return $this->belongsTo(User::class, 'user_id')->without('user_role');
         }
 
         public function role()
         {
-            return $this->belongsTo(Role::class)->withDefault();
+            return $this->belongsTo(Role::class, 'role_id');
         }
+
 
     // End of [Declare relationships here]
 
@@ -54,6 +52,8 @@ class UserRole extends Model
     {
         return $this->belongsTo(User::class,'updated_by');
     }
+
+    protected $with = ['user', 'role'];
 
     // [Added for UUID Incrementation]      - Default
     public $incrementing = false;

@@ -39,6 +39,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+        public function user_role()
+        {
+            return $this->hasMany(UserRole::class)->without('user');;
+        }
+
     /**
      * The attributes that should be cast.
      *
@@ -47,6 +52,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $with = ['user_role'];
 
     // ADDED FOR UUID INCREMENT ERROR
     public $incrementing = false;

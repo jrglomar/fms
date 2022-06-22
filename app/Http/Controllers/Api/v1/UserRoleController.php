@@ -22,10 +22,10 @@ class UserRoleController extends Controller
     public function index()
     {
         /* Fetching w/o relationship */
-        // return UserRole::all();
+        return UserRole::all();
 
         /* Fetching w/ relationship */
-        return UserRole::with('user', 'role')->get();
+        // return UserRole::with('user', 'role')->get();
     }
 
     /**
