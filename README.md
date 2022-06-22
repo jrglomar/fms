@@ -41,8 +41,8 @@ Install all the dependencies using composer
 <pre class="notranslate"><code>composer install
 </code></pre>
 
-Create new .env file. Copy the .env.example content and paste it to new .env file
-<pre class="notranslate"><code>
+Copy the .env.example content and rename it to .env file
+<pre class="notranslate"><code>cp .env.example .env
 </code></pre>
 
 Generate a new application key
@@ -59,13 +59,30 @@ Copy the example env file and make the required configuration changes in the .en
 </code></pre> -->
 
 Run the database migrations (Set the database connection in .env before migrating)  
-<pre class="notranslate"><code>php artisan migrate
+<pre class="notranslate"><code>php artisan migrate:fresh --seed
 </code></pre>
 
 Start the local development server
 <pre class="notranslate"><code>php artisan serve
 </code></pre>
 
+<p dir="auto">Login at APP_URL/login to setup system</p>
+    <table>
+        <thead>
+            <tr>
+                <th><strong>Email</strong></th>
+                <th><strong>Password</strong></th>
+                <th><strong>Role</strong></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>admin@gmail.com</td>
+                <td>User01</td>
+                <td>Admin</td>
+            </tr>
+        </tbody>
+    </table>
 
 
 
