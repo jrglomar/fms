@@ -40,8 +40,7 @@
                     $.each(data.user.user_role, function(i){
                         role.push(data.user.user_role[i].role.title)
                     })
-
-                    console.log(role)
+                    
                     if(role.includes('Admin')){
                         window.location.href = "/admin/dashboard"
                     }
