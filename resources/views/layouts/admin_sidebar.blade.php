@@ -103,7 +103,6 @@
                             </ul>
                         </li>
 
-
                         <li class="menu-header">Account Management</li>
                         <li class="dropdown {{ Request::segment(2) == 'role' ||
                                                 Request::segment(2) == 'user_role'

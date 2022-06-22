@@ -20,6 +20,7 @@ class MeetingType extends Model
     // [Modify this fillable base on tables]      - Can be modified
         protected $fillable = [
             'title',
+            "description",
             'created_by',
             'updated_by',
         ];
