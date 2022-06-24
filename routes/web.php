@@ -31,14 +31,14 @@ Route::get('logout', function () {
 
 Route::group(['middleware' => ['role.admin'],
  'prefix' => '/admin',], function(){
-    
+
     // ------------DASHBOARD--------------- //
         Route::get('/dashboard', function () {
             return view('admin/dashboard/dashboard', ['page_title' => 'Dashboard']);
         })->name('admin_dashboard');
 
     // ------------SYSTEM SETUP--------------- //
-    
+
         //DESIGNATION
         Route::get('/designation', function () {
             return view('admin/designation/designation', ['page_title' => 'Designation']);
@@ -48,7 +48,7 @@ Route::group(['middleware' => ['role.admin'],
         Route::get('/faculty_type', function () {
             return view('admin/faculty_type/faculty_type', ['page_title' => 'Faculty Type']);
         })->name('admin_faculty_type');
-        
+
         //ROLE
         Route::get('/role', function () {
             return view('admin/role/role', ['page_title' => 'Role']);
@@ -65,6 +65,10 @@ Route::group(['middleware' => ['role.admin'],
         Route::get('/user', function () {
             return view('admin/user/user', ['page_title' => 'User']);
         })->name('admin_user');
+
+        Route::get('/user/{id}', function ($id) {
+            return view('admin/profile/profile', ['page_title' => 'User Details', 'user_id' => $id]);
+        })->name('admin_user_details');
 
         //USER ROLE
         Route::get('/user_role', function () {
@@ -110,4 +114,22 @@ Route::group(['middleware' => ['role.admin'],
         Route::get('/activity', function () {
             return view('admin/activity/activity', ['page_title' => 'Activity']);
         })->name('Activity');
+});
+
+
+//-------------FACULTY----------------//
+
+Route::group(['middleware' => ['role.faculty'],
+ 'prefix' => '/faculty',], function(){
+
+    // ------------DASHBOARD--------------- //
+        Route::get('/dashboard', function () {
+            return view('faculty/dashboard/dashboard', ['page_title' => 'Dashboard']);
+        })->name('faculty_dashboard');
+
+    // ------------ACCOUNT MANAGEMENT--------------- //
+        Route::get('/profile', function () {
+            return view('faculty/profile/profile', ['page_title' => 'Profile']);
+        })->name('faculty_profile');
+
 });

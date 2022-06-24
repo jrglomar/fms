@@ -19,18 +19,25 @@
                     { data: "email"},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
-                                    return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
-                                        <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View Category</div></div>
-                                        <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit Category</div></div>
-                                            <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete Category</div></div></div></div>`;
+                                    return `
+                                    <div class="text-center dropdown">
+                                        <div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
+                                            <div style="width: 2rem"><i class="fas fa-eye"></i></div>
+                                            <div>View User</div></div>
+                                            <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
+                                                <div style="width: 2rem"><i class="fas fa-edit"></i></div>
+                                                <div>Edit User</div></div>
+                                                <div class="dropdown-divider"</div></div>
+                                                <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
+                                                <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
+                                                <div style="color: red">Delete User</div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-info btnViewDetails" id="${row.id}">
+                                        <div>Update User Details</div></button>
+                                    </div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -53,6 +60,15 @@
 
             dataTable.ajax.url(url).load()
         }
+        // REFRESH DATATABLE FUNCTION
+
+        // REFRESH DATATABLE FUNCTION
+        $(document).on("click", ".btnViewDetails", function(){
+            var id = this.id
+            console.log(id)
+
+            window.location.href = APP_URL+'/admin/user/'+id
+        });
         // REFRESH DATATABLE FUNCTION
 
 
