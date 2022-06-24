@@ -11,14 +11,48 @@
                     {{-- EMAIL --}}
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="email">Email</label>
+                            <label class="required-input" for="email">Email</label>
                             <input disabled type="email" class="form-control" id="email">
                         </div>
                     </div>
+
+                    
+                    {{-- USER ROLE --}}
+                    <div class="form-row">
+                        <div class="form-group col-md-1">
+                            <label class="required-input">User Role</label>
+                        </div>
+                        <div class="form-group col-md-10" id="role_id">
+                            
+                        </div>
+                    </div>
+
+                    {{-- DESIGNATION, ACAD RANK, FACULTY TYPES --}}
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label class="required-input" >Faculty Type</label>
+                            <select id="faculty_type_id" name="faculty_type_id" class="form-control select2">
+                                <option disabled selected>List of user/s</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="required-input">Academic Rank</label>
+                            <select id="academic_rank_id" name="academic_rank_id " class="form-control select2">
+                                <option disabled selected>List of role/s</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="required-input">Designation</label>
+                            <select id="designation_id" name="designation_id" class="form-control select2">
+                                <option disabled selected>List of role/s</option>
+                            </select>
+                        </div>
+                    </div>
+
                     {{-- FIRST NAME, MIDDLE NAME, LAST NAME --}}
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="first_name">First Name</label>
+                            <label class="required-input" for="first_name">First Name</label>
                             <input required type="text" class="form-control" id="first_name">
                         </div>
                         <div class="form-group col-md-4">
@@ -26,7 +60,7 @@
                             <input type="text" class="form-control" id="middle_name">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="last_name">Last Name</label>
+                            <label class="required-input" for="last_name">Last Name</label>
                             <input required type="text" class="form-control" id="last_name">
                         </div>
                     </div>
@@ -34,7 +68,7 @@
                     {{-- SALUTATION, GENDER, BIRTHDATE, BIRTHPLACE --}}
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="gender">Gender</label>
+                            <label class="required-input" for="gender">Gender</label>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="gender" id="gender1" value="Female">
                                 <label class="form-check-label" for="gender1">Female</label>

@@ -17,9 +17,23 @@
                     { data: "id"},
                     { data: "created_at"},
                     { data: "email"},
+                    { data: "status", render: function(data, type, row){
+                        if(data == 'Inactive'){
+                            return `</div>
+                                        <button type="button" class="btn btn-warning btnViewDetails" id="${row.id}">
+                                        <div>Inactive / Update User Details</div>
+                                    </button>`
+                        }
+                        else{
+                            return `</div>
+                                        <button type="button" class="btn btn-success btnViewDetails" id="${row.id}">
+                                        <div>Active / Update User Details</div>
+                                    </button>`
+                        }
+                    }},
                     { data: "deleted_at", render: function(data, type, row){
-                                if (data == null){
-                                    return `
+                            if (data == null){
+                                return `
                                     <div class="text-center dropdown">
                                         <div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
                                         <div class="dropdown-menu dropdown-menu-right">
@@ -34,17 +48,14 @@
                                                 <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
                                                 <div style="color: red">Delete User</div>
                                             </div>
-                                        </div>
-                                        <button type="button" class="btn btn-info btnViewDetails" id="${row.id}">
-                                        <div>Update User Details</div></button>
                                     </div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
                                 }
-                            }
                         }
-                    ],
+                    }
+                ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
                 "order": [[1, "desc"]]
                 })
@@ -128,12 +139,11 @@
 
                 success: function(data){
                     let created_at = moment(data.created_at).format('LLL');
-                    let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
 
                     $('#id_view').html(data.id);
                     $('#email_view').html(data.email);
                     $('#created_at_view').html(created_at);
-                    $('#status_view').html(status);
+                    $('#status_view').html(data.status);
 
                     $('#viewModal').modal('show');
                 }
