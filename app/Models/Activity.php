@@ -24,7 +24,8 @@ class Activity extends Model
         "status",
         "start_datetime",
         "end_datetime",
-        "activity_type_id"
+        "activity_type_id",
+        "is_required"
     ];
 
     protected $dates = ['deleted_at'];

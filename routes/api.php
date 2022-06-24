@@ -263,6 +263,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
         // Activity
         Route::post('/activity', [ActivityController::class, 'store']);
+        Route::post('/activity/upload', [ActivityController::class, 'memo_upload']);
+        Route::post('/activity/replace', [ActivityController::class, 'memo_replace']);
         Route::put('/activity/{id}', [ActivityController::class, 'update']);
         Route::delete('/activity/destroy/{id}', [ActivityController::class, 'destroy']);
         Route::put('/activity/restore/{id}', [ActivityController::class, 'restore']);

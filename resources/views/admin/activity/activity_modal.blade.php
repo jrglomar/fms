@@ -13,27 +13,44 @@
                 <form id="viewForm" class="needs-validation" novalidate="">
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group col-md-12" hidden>
-                                <label>ID</label>
-                                <p id="id_view" class="card-text"></p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label>Title</label>
                                 <p id="title_view" class="card-text"></p>
                             </div>
+                            <div class="form-group col-md-6">
+                                <label>Activity Type</label>
+                                <p id="activity_type_view" class="card-text"></p>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <label>Descrition</label>
+                                <label>Description</label>
                                 <p id="description_view" class="card-text"></p>
                             </div>
                         </div>
                         <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Status</label>
+                                <p id="status_view" class="card-text"></p>
+                                <ul class="parsley-err-msg">
+                                    <li id="activity-type-errors"></li>
+                                </ul>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label>Required to attend</label>
+                                <p id="is_required_view" class="card-text"></p>
+                                <ul class="parsley-err-msg">
+                                    <li id="activity-type-errors"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row additional-form">
+                        </div>
+                        <div class="row">
                             <div class="form-group col-md-12">
-                                <label>Date Created</label>
-                                <p id="created_at_view" class="card-text"></p>
+                                <label>Memorandum</label>
+                                <embed id="memorandum_view" src="" 
+                                width="640" height="512" scale="tofit"/>
                             </div>
                         </div>
                     </div>
@@ -60,21 +77,71 @@
             <div class="modal-body">
                 <form id="updateForm" class="needs-validation" novalidate="">
                     <div class="card-body">
+                        <div class="form-group col-md-12" hidden>
+                            <label class="required-input">ID</label>
+                            <input type="text" class="form-control" id="id_edit" name="id_edit"
+                            placeholder="ID" tabindex="1" required>
+                        </div>
                         <div class="row">
-                            <div class="form-group col-md-12" hidden>
-                                <label class="required-input">ID</label>
-                                <input type="text" class="form-control" id="id_edit" name="id_edit"
-                                placeholder="ID" tabindex="1" required>
-                            </div>
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-6">
                                 <label class="required-input">Title</label>
                                 <input type="text" class="form-control" id="title_edit" name="title_edit"
                                 placeholder="Title" tabindex="1" required>
                             </div>
+                            <div class="form-group col-md-6">
+                                <label class="required-input">Activity Type</label>
+                                <select class="form-control" id="activity_type_id_edit"
+                                    name="activity_type_id_edit" required
+                                    data-parsley-errors-container="#activity-type-errors">
+                                </select>
+                                <ul class="parsley-err-msg">
+                                    <li id="activity-type-errors"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group col-md-12">
                                 <label class="required-input">Description</label>
                                 <input type="text" class="form-control" id="description_edit" name="description_edit"
                                 placeholder="Description" tabindex="1" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label class="required-input">Status</label>
+                                <select class="form-control" id="status_edit"
+                                    name="status_edit" required
+                                    data-parsley-errors-container="#activity-type-errors">
+                                    <option value="" disabled>-- Select Status --</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Ongoing">Ongoing</option>
+                                    <option value="Ended">Ended</option>
+                                </select>
+                                <ul class="parsley-err-msg">
+                                    <li id="activity-type-errors"></li>
+                                </ul>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label class="required-input">Required to attend</label>
+                                <select class="form-control" id="is_required_edit"
+                                    name="is_required_edit" required
+                                    data-parsley-errors-container="#activity-type-errors">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                                <ul class="parsley-err-msg">
+                                    <li id="activity-type-errors"></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row additional-form">
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="required-input">Memorandum</label>
+                                <input hidden type="text" id="memorandum_path">
+                                <input type="file" class="form-control" id="memorandum_file_directory_edit" name="memorandum_file_directory_edit"
+                                tabindex="1" required>
                             </div>
                         </div>
                     </div>

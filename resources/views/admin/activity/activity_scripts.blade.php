@@ -21,7 +21,7 @@
                     { data: "id"},
                     { data: "created_at"},
                     { data: "title"},
-                    { data: "activity_type_id"},
+                    { data: "activity_type.title"},
                     { data: "description"},
                     { data: "status"},
                     { data: "start_datetime"},
@@ -74,7 +74,8 @@
                 html += `<option value="${data[i].id}">${data[i].title}</option>`
                 }
                 
-                $('#activity_type_form').html(html);
+                $('#activity_type_id').html(html);
+                $('#activity_type_id_edit').html(html);
                 //$('#busTypeEdit').html(html);
 
             }
@@ -86,15 +87,15 @@
         activity_type()
 
         $('#status').change(function(){
-            if(this.value == "Pending") {
+            if(this.value == "Pending" || "Ongoing" || "Ended") {
                 html = '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">Start time</label>' +
-                            '<input type="datetime-local" class="form-control" id="start_time" name="start_time"' +
+                            '<input type="datetime-local" class="form-control" id="start_datetime" name="start_datetime"' +
                             'tabindex="1" required>' +
                         '</div>' +
                         '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">End time</label>' +
-                            '<input type="datetime-local" class="form-control" id="end_time" name="end_time"' +
+                            '<input type="datetime-local" class="form-control" id="end_datetime" name="end_datetime"' +
                             'tabindex="1" required>' +
                         '</div>'
 
@@ -102,6 +103,26 @@
             }
             else{
                 $(".additional-input").remove()
+            }
+        });
+
+        $('#status_edit').change(function(){
+            if(this.value == "Pending" || "Ongoing" || "Ended") {
+                html = '<div class="form-group col-md-6 additional-input">' +
+                            '<label class="required-input">Start time</label>' +
+                            '<input type="datetime-local" class="form-control" id="start_datetime_edit" name="start_datetime_edit"' +
+                            'tabindex="1" required>' +
+                        '</div>' +
+                        '<div class="form-group col-md-6 additional-input">' +
+                            '<label class="required-input">End time</label>' +
+                            '<input type="datetime-local" class="form-control" id="end_datetime_edit" name="end_datetime_edit"' +
+                            'tabindex="1" required>' +
+                        '</div>'
+
+                $('.additional-form-edit').html(html);
+            }
+            else{
+                $(".additional-input-edit").remove()
             }
         });
         
@@ -118,40 +139,76 @@
         $('#createForm').on('submit', function(e){
             e.preventDefault();
 
-            var form_url = APP_URL+'/api/v1/activity/'
-            var form = $("#createForm").serializeArray();
-            let data = {}
+            var fd = new FormData();
+            var files = $('#memorandum_file_directory')[0].files[0]
 
-            $.each(form, function(){
-                data[[this.name]] = this.value;
+            fd.append('file', files)
+
+            var form_url = APP_URL+'/api/v1/activity/upload'
+
+            console.log(fd)
+
+            $.ajax({
+                url: form_url,
+                method: "POST",
+                data: fd,
+                dataType: "JSON",
+                processData: false,
+                contentType: false,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    
+                },
+                success: function(data){
+                    //console.log(data)
+                    form_url = APP_URL+'/api/v1/activity'
+
+                    var form = $("#createForm").serializeArray();
+                    let formdata = {}
+
+                    formdata['memorandum_file_directory'] = data.path
+
+                    $.each(form, function(){
+                        formdata[[this.name]] = this.value;
+                    })
+
+                    console.log(formdata)
+
+                    //ajax opening tag
+                    $.ajax({
+                        url: form_url,
+                        method: "POST",
+                        data: JSON.stringify(formdata),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+                        success: function(data){
+                            console.log(data)
+                            $("#createForm").trigger("reset")
+                            $("#create_card").collapse("hide")
+                            refresh();
+                        },
+                        error: function(error){
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        }
+                    //ajax closing tag
+                    })
+
+                },
+                error: function(error){
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
             })
 
-            console.log(JSON.stringify(data))
-
-            //ajax opening tag
-            // $.ajax({
-            //     url: form_url,
-            //     method: "POST",
-            //     data: JSON.stringify(data),
-            //     dataType: "JSON",
-            //     headers: {
-            //         "Accept": "application/json",
-            //         "Authorization": API_TOKEN,
-            //         "Content-Type": "application/json"
-            //     },
-            //     success: function(data){
-            //         console.log(data)
-            //         $("#createForm").trigger("reset")
-            //         $("#create_card").collapse("hide")
-            //         refresh();
-            //     },
-            //     error: function(error){
-            //         console.log(error)
-            //         console.log(`message: ${error.responseJSON.message}`)
-            //         console.log(`status: ${error.status}`)
-            //     }
-            // //ajax closing tag
-            // })
+            
         });
         // END OF SUBMIT FUNCTION
 
@@ -172,11 +229,27 @@
                 success: function(data){
                     let created_at = moment(data.created_at).format('LLL');
                     let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
+                    let is_required_view = ""
 
                     $('#id_view').html(data.id);
                     $('#title_view').html(data.title);
                     $('#description_view').html(data.description);
-                    $('#created_at_view').html(created_at);
+                    $('#activity_type_view').html(data.activity_type.title); 
+                    console.log(data.activity_type)  
+
+                    if(data.is_required == 0){
+                        is_required_view = "No"
+                    } else{
+                        is_required_view = "Yes"
+                    }
+
+                    $('#status_view').html(data.status);
+                    $('#is_required_view').html(is_required_view);
+                    //$('#created_at_view').html(created_at);
+
+                    //console.log(data.memorandum_file_directory)
+                    document.getElementById("memorandum_view").src="http://127.0.0.1:8000/" + data.memorandum_file_directory;
+                    //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
 
                     $('#viewModal').modal('show');
                 }
@@ -202,9 +275,19 @@
 
                 success: function(data){
                     console.log(data)
+
+
                     $('#id_edit').val(data.id);
                     $('#title_edit').val(data.title);
                     $('#description_edit').val(data.description);
+                    $('#activity_type_id_edit').val(data.activity_type.id);
+                    //console.log(data.activity_type.id)
+                    
+                    $('#status_edit').val(data.status);
+
+                    $('#is_required_edit').val(data.is_required);
+                    $('#memorandum_path').val(data.memorandum_file_directory);
+                    //console.log(data.is_required)
 
                     $('#editModal').modal('show');
                 },
@@ -221,38 +304,121 @@
         // UPDATE FUNCTION
         $('#updateForm').on('submit', function(e){
             e.preventDefault()
-            var id = $('#id_edit').val();
-            var form_url = APP_URL+'/api/v1/activity/'+id
 
-            let data = {
-                "title": $('#title_edit').val(),
-                "description": $('#description_edit').val()
+            var memo_path = $('#memorandum_path').val()
+
+            var new_memo_path = ""
+
+            if($('#memorandum_file_directory_edit')[0].files[0] == null){
+                new_memo_path = $('#memorandum_path').val()
+
+                var id = $('#id_edit').val();
+
+                var form_url = APP_URL+'/api/v1/activity/'+id
+
+                let data_form = {
+                    "title": $('#title_edit').val(),
+                    "description": $('#description_edit').val(),
+                    "activity_type_id": $('#activity_type_id_edit').val(),
+                    "status": $('#status_edit').val(),
+                    "is_required": $('#is_required_edit').val(),
+                    "memorandum_file_directory": new_memo_path
+                }
+
+                console.log(data_form)
+
+                $.ajax({
+                    url: form_url,
+                    method: "PUT",
+                    data: JSON.stringify(data_form),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+
+                    success: function(data){
+                        refresh()
+                        $('#editModal').modal('hide');
+                    },
+                    error: function(error){
+                        console.log(error)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+
+                })
+            }
+            else{
+
+                let form_url =APP_URL+'/api/v1/activity/replace'
+
+                var fd = new FormData();
+                var files = $('#memorandum_file_directory_edit')[0].files[0]
+
+                fd.append('file', files)
+                fd.append('old_file', memo_path)
+
+                $.ajax({
+                    url: form_url,
+                    method: "POST",
+                    data: fd,
+                    dataType: "JSON",
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        
+                    },
+                    success: function(data){
+                        //console.log(data)
+                        new_memo_path = data.path
+                        console.log(new_memo_path)
+
+                        var id = $('#id_edit').val();
+
+                        var form_url = APP_URL+'/api/v1/activity/'+id
+
+                        let data_form = {
+                            "title": $('#title_edit').val(),
+                            "description": $('#description_edit').val(),
+                            "activity_type_id": $('#activity_type_id_edit').val(),
+                            "status": $('#status_edit').val(),
+                            "is_required": $('#is_required_edit').val(),
+                            "memorandum_file_directory": new_memo_path
+                        }
+                        
+                        console.log(data_form)
+
+                        $.ajax({
+                            url: form_url,
+                            method: "PUT",
+                            data: JSON.stringify(data_form),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+
+                            success: function(data){
+                                refresh()
+                                $('#editModal').modal('hide');
+                            },
+                            error: function(error){
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+
+                        })
+                    }
+                })
             }
 
-            $.ajax({
-                url: form_url,
-                method: "PUT",
-                data: JSON.stringify(data),
-                dataType: "JSON",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-
-                success: function(data){
-                    refresh()
-                    $('#editModal').modal('hide');
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            // ajax closing tag
-            })
-
-
+            
         });
         // END OF UPDATE FUNCTION
 

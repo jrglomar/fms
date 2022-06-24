@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Activity;
 use Illuminate\Http\Request;
+use File;
 
 class ActivityController extends Controller
 {
@@ -24,7 +25,7 @@ class ActivityController extends Controller
         // return Activity::where('active_status', 'Active')->get();
 
         // All data
-         return Activity::all();
+         return Activity::with('activity_type')->get();
         
         // Return with relationships
         //return Activity::with('user', 'created_by_user')->get();
@@ -42,15 +43,66 @@ class ActivityController extends Controller
         $request->validate([
             'title' => 'required',
             'memorandum_file_directory' => 'required',
-            'description' => 'required',
             'status' => 'required',
             'start_datetime' => 'required',
             'end_datetime' => 'required',
             'activity_type_id' => 'required'
         ]);
 
-        return Activity::create($request->all());
         
+        // $file_upload = $request->'memorandum_file_directory'->store('memo');
+        return Activity::create($request->all());
+        // return $request->file('memorandum_file_directory')->store('memo');
+    }
+
+    public function memo_upload(Request $request)
+    {
+        $data = array();
+
+        $validator = $request->validate([
+            'file' => 'required|mimes:pdf'
+        ]);
+
+            $data['success'] = 1;
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName();
+
+            $unique_name = md5($filename . microtime());
+            $extension = $request->file('file')->extension();
+
+            $file->move('uploads/memorandum/', $unique_name.'.'.$extension);
+
+            $data['path'] = 'uploads/memorandum/'.$unique_name.'.'.$extension;
+
+        return $data;
+    }
+
+    public function memo_replace(Request $request)
+    {
+        $data = array();
+
+        $validator = $request->validate([
+            'file' => 'required|mimes:pdf'
+        ]);
+
+            $data['success'] = 1;
+            $file = $request->file('file');
+            $old_file = $request->input('old_file');
+            $filename = $file->getClientOriginalName();
+
+            $unique_name = md5($filename . microtime());
+            $extension = $request->file('file')->extension();
+
+            if(File::exists($old_file)){
+                File::delete($old_file);
+                $file->move('uploads/memorandum/', $unique_name.'.'.$extension);
+                $data['path'] = 'uploads/memorandum/'.$unique_name.'.'.$extension;
+                $data['message'] = "old memo deleted";
+            }else{
+                $data['message'] = "old memo doesnt exist";
+            }
+
+        return $data;
     }
 
     /**
@@ -62,7 +114,7 @@ class ActivityController extends Controller
     public function show($id)
     {
         //
-         return Activity::find($id);
+         return Activity::with('activity_type')->find($id);
 
         //return Activity::with('user', 'created_by_user')->find($id);
     }
