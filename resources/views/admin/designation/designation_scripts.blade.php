@@ -267,6 +267,7 @@
         });
         // END OF ACTIVATE FUNCTION
 
+        removeLoader()
     // END OF JQUERY FUNCTIONS
     });
 </script>

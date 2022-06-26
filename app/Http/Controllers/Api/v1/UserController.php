@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use DataTables;
 
 class UserController extends Controller
 {
@@ -20,7 +21,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+
         return User::all();
+        
     }
 
     /**
@@ -28,6 +31,15 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function datatable(){
+        
+        $data = User::all();
+            return Datatables::of($data)
+                    ->addIndexColumn()
+                    ->rawColumns(['action'])
+                    ->make(true);
+    }
     public function create()
     {
         //

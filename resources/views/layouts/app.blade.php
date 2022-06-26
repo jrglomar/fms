@@ -31,11 +31,24 @@
     <link rel="stylesheet" href="{{ asset('stisla/css/components.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla/css/custom.css') }}">
 
+    <style>
+        #loading_cover {position: fixed; height: 100%; width: 100%; top:0; left: 0; background: rgb(255, 255, 255); z-index:9999;}
+    </style>
+
 
     <!-- Styles -->
 </head>
     <body>
-        <div>
+        <div id="loading_cover">
+            <div style="position: fixed; height:100%; width:100%; top:50%; left:50%">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
+        </div>
+        
+          
+        <div id="">
 
             {{-- NAVBAR --}}
                 @yield('navbar')
@@ -43,6 +56,7 @@
             {{-- SIDEBAR --}}
                 @yield('sidebar')
 
+                
                 <div class="main-content">
                     <section class="section">
 
@@ -85,6 +99,12 @@
         <script src="{{ asset('stisla/js/custom.js') }}"></script>
 
         <script src="{{ mix('js/app.js') }}"></script>
+
+        <script>
+            function removeLoader(){
+                    $("#loading_cover").fadeOut();
+            };
+        </script>
 
         <!-- Scripts -->
         @yield('script')

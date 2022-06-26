@@ -105,7 +105,7 @@
                         </li>
 
                         <li class="menu-header">Account Management</li>
-                        <li class="dropdown {{ Request::segment(2) == 'role' ||
+                        <li class="dropdown {{ Request::segment(2) == 'user' ||
                                                 Request::segment(2) == 'user_role'
                                             ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i

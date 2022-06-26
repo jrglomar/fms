@@ -19,7 +19,7 @@ class FacultyTypesSeeder extends Seeder
     public function run()
     {
         // \App\Models\FacultyType::factory(10)->create();
-        DB::table('academic_ranks')->insert([
+        DB::table('faculty_types')->insert([
             'id' => Str::uuid(),
             'created_at' => '2022-06-22 16:33:33',
             'updated_at' => '2022-06-22 16:33:33',
@@ -27,7 +27,7 @@ class FacultyTypesSeeder extends Seeder
             'title' => 'Part time',
             'description' => 'Part time'
         ]);
-        DB::table('academic_ranks')->insert([
+        DB::table('faculty_types')->insert([
             'id' => Str::uuid(),
             'created_at' => '2022-06-22 16:33:33',
             'updated_at' => '2022-06-22 16:33:33',
@@ -35,7 +35,7 @@ class FacultyTypesSeeder extends Seeder
             'title' => 'Temporary',
             'description' => 'Temporary'
         ]);
-        DB::table('academic_ranks')->insert([
+        DB::table('faculty_types')->insert([
             'id' => Str::uuid(),
             'created_at' => '2022-06-22 16:33:33',
             'updated_at' => '2022-06-22 16:33:33',

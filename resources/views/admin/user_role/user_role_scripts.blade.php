@@ -333,5 +333,6 @@
         dataTable()
         getUserList()
         getRoleList()
+        removeLoader()
     });
 </script>

@@ -19,7 +19,6 @@ class Faculty extends Model
         use HasFactory, SoftDeletes;
         // [Modify this fillable base on tables]      - Can be modified
             protected $fillable = [
-                'image',
                 'salutation',
                 'first_name',
                 'middle_name',
@@ -28,7 +27,6 @@ class Faculty extends Model
                 'birthdate',
                 'birthplace',
                 'hire_date',
-                'email',
                 'phone_number',
                 'province',
                 'city',

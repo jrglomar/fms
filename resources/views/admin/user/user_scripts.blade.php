@@ -12,21 +12,37 @@
         // DATA TABLES FUNCTION
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
-                "ajax": {url: BASE_API, dataSrc: ''},
+                "ajax": { url: BASE_API + 'datatable'},
+                "processing": true,
+                "serverSide": true,
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
                     { data: "email"},
+                    { data: "user_role", render: function(data, type, row){
+                        let user_role = ''
+
+                        $.each(data, function(i){
+                            if(i < (data.length) - 1){
+                                user_role += data[i].role.title + ', '
+                            }
+                            else{
+                                user_role += data[i].role.title
+                            }
+                        })
+
+                        return user_role;
+                    }},
                     { data: "status", render: function(data, type, row){
                         if(data == 'Inactive'){
                             return `</div>
-                                        <button type="button" class="btn btn-warning btnViewDetails" id="${row.id}">
+                                        <button type="button" class="btn btn-sm btn-warning btnViewDetails" id="${row.id}">
                                         <div>Inactive / Update User Details</div>
                                     </button>`
                         }
                         else{
                             return `</div>
-                                        <button type="button" class="btn btn-success btnViewDetails" id="${row.id}">
+                                        <button type="button" class="btn btn-sm  btn-success btnViewDetails" id="${row.id}">
                                         <div>Active / Update User Details</div>
                                     </button>`
                         }
@@ -57,7 +73,7 @@
                     }
                 ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
-                "order": [[1, "desc"]]
+                "order": [[2, "desc"]]
                 })
         }
         // END OF DATATABLE FUNCTION
@@ -67,7 +83,7 @@
 
         // REFRESH DATATABLE FUNCTION
         function refresh(){
-            let url = BASE_API
+            let url = BASE_API + 'datatable';
 
             dataTable.ajax.url(url).load()
         }
@@ -108,7 +124,6 @@
                     "Content-Type": "application/json"
                 },
                 success: function(data){
-                    console.log(data)
                     $("#createForm").trigger("reset")
                     $("#create_card").collapse("hide")
                     refresh();
@@ -286,6 +301,7 @@
         });
         // END OF ACTIVATE FUNCTION
 
+        removeLoader()
     // END OF JQUERY FUNCTIONS
     });
 </script>

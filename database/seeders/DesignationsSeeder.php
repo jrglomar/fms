@@ -20,7 +20,7 @@ class DesignationsSeeder extends Seeder
     public function run()
     {
         // \App\Models\Designation::factory(10)->create();
-        DB::table('academic_ranks')->insert([
+        DB::table('designations')->insert([
             'id' => Str::uuid(),
             'created_at' => '2022-06-22 16:33:33',
             'updated_at' => '2022-06-22 16:33:33',
@@ -28,7 +28,7 @@ class DesignationsSeeder extends Seeder
             'title' => 'Research Professor',
             'description' => 'Research Professor'
         ]);
-        DB::table('academic_ranks')->insert([
+        DB::table('designations')->insert([
             'id' => Str::uuid(),
             'created_at' => '2022-06-22 16:33:33',
             'updated_at' => '2022-06-22 16:33:33',

@@ -16,7 +16,7 @@
 
     {{-- CONTENT --}}
     @section('content')
-
+        @include('admin.dashboard.dashboard_content')
     @endsection
 
 

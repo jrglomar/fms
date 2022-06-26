@@ -50,6 +50,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
 
         // User
         Route::get('/user', [UserController::class, 'index']);
+        Route::get('/user/datatable', [UserController::class, 'datatable']);
         Route::get('/user/{id}', [UserController::class, 'show']);
         Route::get('/user/search/{name}', [UserController::class, 'search']);
         Route::get('/user/show_soft_deleted/{all}', [UserController::class, 'show_soft_deleted']);
@@ -77,6 +78,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/faculty/{id}', [FacultyController::class, 'show']);
         Route::get('/faculty/search/{name}', [FacultyController::class, 'search']);
         Route::get('/faculty/show_soft_deleted/{all}', [FacultyController::class, 'show_soft_deleted']);
+        Route::get('/faculty/check_user_exist/{id}', [FacultyController::class, 'check_user_exist']);
 
         // Role
         Route::get('/role', [RoleController::class, 'index']);
