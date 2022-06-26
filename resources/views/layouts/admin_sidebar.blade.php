@@ -62,7 +62,11 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="dropdown {{ Request::segment(2) == 'requirement_type'
+
+                        <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 
+                                                Request::segment(2) == 'requirement_bin' ||
+                                                Request::segment(2) == 'requirement_list_type' 
+                                                
 
                                             ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
@@ -74,9 +78,18 @@
                                     <a class="nav-link" href="/admin/requirement_type">
                                         <span>Requirement Types</span></a>
                                 </li>
+                                <li class="{{ Request::segment(2) == 'requirement_bin' || 
+                                                Request::segment(2) == 'requirement_list_type' 
+                                                
+                                                ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/requirement_bin">
+                                        <span>Requirement Bins</span></a>
+                                </li>
                             </ul>
                         </li>
-                        <li class="dropdown {{ Request::segment(2) == 'meeting_type'
+
+                        <li class="dropdown {{ Request::segment(2) == 'meeting_type' || 
+                                                Request::segment(2) == 'meeting'
 
                                             ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
@@ -87,6 +100,10 @@
                                 <li class="{{ Request::segment(2) == 'meeting_type' ? 'active' : ''}}">
                                     <a class="nav-link" href="/admin/meeting_type">
                                         <span>Meeting Types</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'meeting' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/meeting">
+                                        <span>Meetings</span></a>
                                 </li>
                             </ul>
                         </li>

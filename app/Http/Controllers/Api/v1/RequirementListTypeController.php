@@ -22,10 +22,10 @@ class RequirementListTypeController extends Controller
     public function index()
     {
         /* Fetching w/o relationship */
-        return RequirementListType::all();
+        // return RequirementListType::all();
 
         // /* Fetching w/ relationship */
-        // return RequirementListType::with('user', 'created_by_user')->get();
+        return RequirementListType::with('requirement_bin', 'requirement_type')->get();
     }
 
     /**
@@ -36,6 +36,12 @@ class RequirementListTypeController extends Controller
     public function create()
     {
         //
+        $request->validate([
+            'requirement_bin_id' => 'required',
+            'requirement_type_id' => 'required',
+        ]);
+
+        return RequirementListType::create($request->all());
     }
 
     /**
@@ -130,8 +136,13 @@ class RequirementListTypeController extends Controller
         return $requirement_list_type;
     }
 
-    public function search($id)
+    public function search($requirement_bin_id)
     {
-        return RequirementListType::where('id', 'like', '%'.$id.'%')->get();
+        return RequirementListType::where('requirement_bin_id', 'like', '%'.$requirement_bin_id.'%')->get();
+    }
+
+    public function search_existing($requirement_bin_id, $requirement_type_id)
+    {
+        return RequirementListType::where('requirement_bin_id', $requirement_bin_id)->where('requirement_type_id', $requirement_type_id)->get();
     }
 }

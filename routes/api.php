@@ -123,7 +123,8 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         // Requirements List Type
         Route::get('/requirement_list_type', [RequirementListTypeController::class, 'index']);
         Route::get('/requirement_list_type/{id}', [RequirementListTypeController::class, 'show']);
-        Route::get('/requirement_list_type/search/{title}', [RequirementListTypeController::class, 'search']);
+        Route::get('/requirement_list_type/search/{requirement_bin_id}', [RequirementListTypeController::class, 'search']);
+        Route::get('/requirement_list_type/search_existing/{requirement_bin_id}/{requirement_type_id}', [RequirementListTypeController::class, 'search_existing']);
         Route::get('/requirement_list_type/show_soft_deleted/{all}', [RequirementListTypeController::class, 'show_soft_deleted']);
 
         // Requirements Required Faculty List
