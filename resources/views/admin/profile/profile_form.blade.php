@@ -1,20 +1,24 @@
 {{-- CREATE FORM --}}
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-4">
         <div class="card card-primary">
             <div class="card-header">
                 <h4 class="text-dark"> <span id="create_card_title">User </span>Settings</h4>
             </div>
             <div class="card-body">
-
+                <div class="d-flex justify-content-center">
+                    <button class="btn" id="uploadImage" data-toggle="tooltip" data-placement="bottom" title="Upload Image">
+                        <img alt="image" src="https://demo.getstisla.com/assets/img/avatar/avatar-3.png" style="width:120px" class="rounded-circle profile-widget-picture">
+                    </button>                  
+                  </div>
                 <form id="updateUserForm" class="needs-validation" novalidate="">
                     {{-- EMAIL --}}
                     <div class="form-row">
-                        <div class="form-group col-md-4">
+                        <div class="form-group col-md-6">
                             <label class="required-input" for="email">Email</label>
                             <input disabled type="email" class="form-control" id="email">
                         </div>
-                        <div class="form-group col-md-4"></div>
+                        <div class="form-group col-md-2"></div>
                         <div class="form-group  col-md-4">
                             <label class="required-input" for="email">Status</label><br>
                             <div class="custom-control custom-switch">
@@ -27,22 +31,21 @@
                     
                     {{-- USER ROLE --}}
                     <div class="form-row">
-                        <div class="form-group col-md-1">
-                            <label class="required-input">User Role (This feature on maintenance)</label>
+                        <div class="form-group col-md-2">
+                            <label class="required-input">User Role</label>
                         </div>
                         <div class="form-group col-md-10" id="role_id">
                             
                         </div>
                     </div>
 
-
-                    <button type="submit" class="btn btn-success float-right" disabled>Save Changes</button>
+                    <button type="submit" class="btn btn-success float-right" >Save Changes</button>
                 </form>
 
             </div>
         </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-8">
         <div class="card card-primary">
             <div class="card-header">
                 <h4 class="text-dark"> <span id="create_card_title">Faculty </span>Details</h4>

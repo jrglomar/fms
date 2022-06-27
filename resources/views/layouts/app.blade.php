@@ -106,6 +106,13 @@
                     $("#loading_cover").fadeOut();
             };
 
+            function swalAlert(icon, text){
+                Swal.fire({
+                    icon: icon,
+                    text: text
+                })
+            }
+
             $(document).ready(function(){
                 // GLOBAL VARIABLE
                 var APP_URL = {!! json_encode(url('/')) !!}

@@ -339,9 +339,15 @@
             })
         });
 
+        $('#uploadImage').on('click', function(){
+            swalAlert('warning', 'This feature is still under development')
+        })
+
         // FORM SUBMIT
         $('#updateUserForm').on('submit', function(e){
             e.preventDefault()
+
+            swalAlert('warning', 'This feature is still under development')
 
             var check_form_url = APP_URL+'/api/v1/faculty/check_user_exist/'+USER_ID;
             var create_form_url = BASE_API
