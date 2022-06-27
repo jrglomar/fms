@@ -22,6 +22,8 @@
                                 <th>ID</th>
                                 <th>Created at</th>
                                 <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

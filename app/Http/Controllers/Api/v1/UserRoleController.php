@@ -22,10 +22,10 @@ class UserRoleController extends Controller
     public function index()
     {
         /* Fetching w/o relationship */
-        // return UserRole::all();
+        return UserRole::all();
 
         /* Fetching w/ relationship */
-        return UserRole::with('user', 'role')->get();
+        // return UserRole::with('user', 'role')->get();
     }
 
     /**
@@ -68,9 +68,9 @@ class UserRoleController extends Controller
     public function show($id)
     {
         // Default
-        return UserRole::find($id);
+        // return UserRole::find($id);
 
-        // return UserRole::with('user', 'created_by_user')->find($id);
+        return UserRole::with('user', 'role')->find($id);
     }
 
     /**
@@ -82,9 +82,9 @@ class UserRoleController extends Controller
     public function edit($id)
     {
         // Default
-        return UserRole::find($id);
+        // return UserRole::find($id);
 
-        // return UserRole::with('user', 'created_by_user')->find($id);
+        return UserRole::with('user', 'role')->find($id);
     }
 
     /**

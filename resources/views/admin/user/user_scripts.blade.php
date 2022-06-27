@@ -6,40 +6,74 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
-        var BASE_API = APP_URL + 'api/v1/user/'
+        var BASE_API = APP_URL + '/api/v1/user/'
         // END OF GLOBAL VARIABLE
 
         // DATA TABLES FUNCTION
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
-                "ajax": {url: BASE_API, dataSrc: ''},
+                "ajax": { url: BASE_API + 'datatable'},
+                "processing": true,
+                "serverSide": true,
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
                     { data: "email"},
+                    { data: "user_role", render: function(data, type, row){
+                        let user_role = ''
+
+                        $.each(data, function(i){
+                            if(i < (data.length) - 1){
+                                user_role += data[i].role.title + ', '
+                            }
+                            else{
+                                user_role += data[i].role.title
+                            }
+                        })
+
+                        return user_role;
+                    }},
+                    { data: "status", render: function(data, type, row){
+                        if(data == 'Inactive'){
+                            return `</div>
+                                        <button type="button" class="btn btn-sm btn-warning btnViewDetails" id="${row.id}">
+                                        <div>Inactive / Update User Details</div>
+                                    </button>`
+                        }
+                        else{
+                            return `</div>
+                                        <button type="button" class="btn btn-sm  btn-success btnViewDetails" id="${row.id}">
+                                        <div>Active / Update User Details</div>
+                                    </button>`
+                        }
+                    }},
                     { data: "deleted_at", render: function(data, type, row){
-                                if (data == null){
-                                    return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
-                                        <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View Category</div></div>
-                                        <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit Category</div></div>
-                                            <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete Category</div></div></div></div>`;
+                            if (data == null){
+                                return `
+                                    <div class="text-center dropdown">
+                                        <div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
+                                            <div style="width: 2rem"><i class="fas fa-eye"></i></div>
+                                            <div>View User</div></div>
+                                            <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
+                                                <div style="width: 2rem"><i class="fas fa-edit"></i></div>
+                                                <div>Edit User</div></div>
+                                                <div class="dropdown-divider"</div></div>
+                                                <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
+                                                <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
+                                                <div style="color: red">Delete User</div>
+                                            </div>
+                                    </div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
                                 }
-                            }
                         }
-                    ],
+                    }
+                ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
-                "order": [[1, "desc"]]
+                "order": [[2, "desc"]]
                 })
         }
         // END OF DATATABLE FUNCTION
@@ -49,10 +83,19 @@
 
         // REFRESH DATATABLE FUNCTION
         function refresh(){
-            let url = BASE_API
+            let url = BASE_API + 'datatable';
 
             dataTable.ajax.url(url).load()
         }
+        // REFRESH DATATABLE FUNCTION
+
+        // REFRESH DATATABLE FUNCTION
+        $(document).on("click", ".btnViewDetails", function(){
+            var id = this.id
+            console.log(id)
+
+            window.location.href = APP_URL+'/admin/user/'+id
+        });
         // REFRESH DATATABLE FUNCTION
 
 
@@ -81,7 +124,6 @@
                     "Content-Type": "application/json"
                 },
                 success: function(data){
-                    console.log(data)
                     $("#createForm").trigger("reset")
                     $("#create_card").collapse("hide")
                     refresh();
@@ -112,12 +154,11 @@
 
                 success: function(data){
                     let created_at = moment(data.created_at).format('LLL');
-                    let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
 
                     $('#id_view').html(data.id);
                     $('#email_view').html(data.email);
                     $('#created_at_view').html(created_at);
-                    $('#status_view').html(status);
+                    $('#status_view').html(data.status);
 
                     $('#viewModal').modal('show');
                 }
@@ -260,6 +301,7 @@
         });
         // END OF ACTIVATE FUNCTION
 
+        removeLoader()
     // END OF JQUERY FUNCTIONS
     });
 </script>

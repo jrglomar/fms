@@ -47,6 +47,8 @@ class ActivityAttendanceRequiredFacultyList extends Model
         return $this->belongsTo(User::class,'updated_by');
     }
 
+    protected $with = ['activity', 'faculty','created_by_user','updated_by_user'];
+
     // ADDED FOR UUID INCREMENT ERROR
     public $incrementing = false;
 

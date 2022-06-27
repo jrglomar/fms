@@ -35,7 +35,28 @@
                     localStorage.setItem('API_TOKEN', data.token);
                     localStorage.setItem('USER_DATA', JSON.stringify(data.user));
 
-                    window.location.href = "/admin/user";
+                    let role = []
+
+                    $.each(data.user.user_role, function(i){
+                        role.push(data.user.user_role[i].role.title)
+                    })
+                    
+                    if(role.includes('Admin')){
+                        window.location.href = "/admin/dashboard"
+                    }
+                    else if(role.includes('Academic Head')){
+                        window.location.href = "/acad_head/dashboard"
+                    }
+                    else if(role.includes('Faculty')){
+                        window.location.href = "/faculty/dashboard"
+                    }
+                    else if(role.includes('Checker')){
+                        window.location.href = "/checker/dashboard"
+                    }
+                    else{
+                        window.location.href = "/"
+                    }
+
                 },
                 error: function(error){
                     console.log(error)

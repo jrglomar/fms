@@ -27,7 +27,8 @@ class Meeting extends Model
             "agenda",
             "description",
             "status",
-            "meeting_types_id"
+            "meeting_types_id",
+            "is_required"
         ];
 
         protected $dates = ['deleted_at'];
@@ -37,10 +38,10 @@ class Meeting extends Model
 
 
     // [Declare relationships here]
-    public function meeting_type()
-    {
-        return $this->belongsTo(MeetingType::class)->withDefault();
-    }
+        public function meeting_type()
+        {
+            return $this->belongsTo(MeetingType::class, 'meeting_types_id')->withDefault();
+        }
 
     // End of [Declare relationships here]
 
@@ -54,6 +55,8 @@ class Meeting extends Model
     {
         return $this->belongsTo(User::class,'updated_by');
     }
+
+    protected $with = ['meeting_type','created_by_user','updated_by_user'];
 
     // [Added for UUID Incrementation]      - Default
     public $incrementing = false;

@@ -27,13 +27,13 @@
                     success: function(data){
                         localStorage.removeItem('API_TOKEN');
                         localStorage.removeItem('USER_DATA');
-                        alert('You are logged out');
                         window.location.href = APP_URL+'/login';
                     },
                     error: function(error){
                         console.log(error)
                         console.log(`message: ${error.responseJSON.message}`)
                         console.log(`status: ${error.status}`)
+                        window.location.href = APP_URL+'/login';
                     }
                 // ajax closing tag
                 })

@@ -45,6 +45,8 @@ class Activity extends Model
         return $this->belongsTo(User::class,'updated_by');
     }
 
+    protected $with = ['activity_type','created_by_user','updated_by_user'];
+
     // ADDED FOR UUID INCREMENT ERROR
     public $incrementing = false;
 

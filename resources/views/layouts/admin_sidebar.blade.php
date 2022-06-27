@@ -29,12 +29,17 @@
 
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
-                        <li class=""><a class="nav-link" href="/dashboard"><i class="fas fa-th-large"></i>
+                        <li class="{{ Request::segment(2) == 'dashboard' ? 'active' : ''}}">
+                            <a class="nav-link" href="/admin/dashboard"><i class="fas fa-th-large"></i>
                                 <span>Dashboard</span></a></li>
 
                         <li class="menu-header">System Setup</li>
                         <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                        <li class="dropdown {{ Request::segment(2) == 'role' || 'user_role' || 'designation' || 'academic_rank' || 'faculty_type' ? 'active' : ''}}">
+                        <li class="dropdown {{ Request::segment(2) == 'role' ||
+                                                Request::segment(2) == 'designation' ||
+                                                Request::segment(2) == 'academic_rank' ||
+                                                Request::segment(2) == 'faculty_type'
+                                            ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
                                 <span>Account</span></a>
@@ -43,10 +48,6 @@
                                 <li class="{{ Request::segment(2) == 'role' ? 'active' : ''}}">
                                     <a class="nav-link" href="/admin/role">
                                         <span>Roles</span></a>
-                                </li>
-                                <li class="{{ Request::segment(2) == 'user_role' ? 'active' : ''}}">
-                                    <a class="nav-link" href="admin/user_role">
-                                        <span>User Roles</span></a>
                                 </li>
                                 <li class="{{ Request::segment(2) == 'designation' ? 'active' : ''}}">
                                     <a class="nav-link" href="/admin/designation">
@@ -62,7 +63,13 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="dropdown {{ Request::segment(2) == 'requirement_type' ? 'active' : ''}}">
+
+                        <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 
+                                                Request::segment(2) == 'requirement_bin' ||
+                                                Request::segment(2) == 'requirement_list_type' 
+                                                
+
+                                            ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
                                 <span>SRD</span></a>
@@ -72,9 +79,20 @@
                                     <a class="nav-link" href="/admin/requirement_type">
                                         <span>Requirement Types</span></a>
                                 </li>
+                                <li class="{{ Request::segment(2) == 'requirement_bin' || 
+                                                Request::segment(2) == 'requirement_list_type' 
+                                                
+                                                ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/requirement_bin">
+                                        <span>Requirement Bins</span></a>
+                                </li>
                             </ul>
                         </li>
-                        <li class="dropdown {{ Request::segment(2) == 'meeting_type' ? 'active' : ''}}">
+
+                        <li class="dropdown {{ Request::segment(2) == 'meeting_type' || 
+                                                Request::segment(2) == 'meeting'
+
+                                            ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
                                 <span>Meeting</span></a>
@@ -83,6 +101,10 @@
                                 <li class="{{ Request::segment(2) == 'meeting_type' ? 'active' : ''}}">
                                     <a class="nav-link" href="/admin/meeting_type">
                                         <span>Meeting Types</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'meeting' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/meeting">
+                                        <span>Meetings</span></a>
                                 </li>
                             </ul>
                         </li>
@@ -96,24 +118,26 @@
                                     <a class="nav-link" href="/admin/activity_type">
                                         <span>Activity Types</span></a>
                                 </li>
-                                <li class="{{ Request::segment(2) == 'activity' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/admin/activity">
-                                        <span>Activity</span></a>
-                                </li>
                             </ul>
                         </li>
 
-
                         <li class="menu-header">Account Management</li>
-                        <li class="dropdown {{ Request::segment(2) == 'user' ? 'active' : ''}}">
+                        <li class="dropdown {{ Request::segment(2) == 'user' ||
+                                                Request::segment(2) == 'user_role'
+                                            ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
                                 <span>Account</span></a>
-                            <ul class="dropdown-menu">  
+                            <ul class="dropdown-menu">
                                 <li class="{{ Request::segment(2) == 'user' ? 'active' : ''}}" >
                                     <a class="nav-link" href="/admin/user">
-                                        <span>Users</span></a></li> 
+                                        <span>Users</span></a></li>
+                                <li class="{{ Request::segment(2) == 'user_role' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/user_role">
+                                        <span>User Roles</span></a>
+                                </li>
                             </ul>
+
                         </li>
 
                     </ul>
@@ -133,4 +157,4 @@
             </div>
     </div>
 
-    
+

@@ -19,7 +19,6 @@ class Faculty extends Model
         use HasFactory, SoftDeletes;
         // [Modify this fillable base on tables]      - Can be modified
             protected $fillable = [
-                'image',
                 'salutation',
                 'first_name',
                 'middle_name',
@@ -28,7 +27,6 @@ class Faculty extends Model
                 'birthdate',
                 'birthplace',
                 'hire_date',
-                'email',
                 'phone_number',
                 'province',
                 'city',
@@ -82,6 +80,8 @@ class Faculty extends Model
         {
             return $this->belongsTo(User::class,'updated_by');
         }
+
+        protected $with = ['academic_rank', 'designation', 'faculty_type', 'user','created_by_user','updated_by_user'];
 
 
         // [Added for UUID Incrementation]      - Default

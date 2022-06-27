@@ -29,11 +29,12 @@ class RequirementListType extends Model
 
         // [Declare relationships here]
             public function requirement_bin(){
-                return $this->belongsTo(RequirementBin::class)->withDefault();
+                return $this->belongsTo(RequirementBin::class, 'requirement_bin_id')->without('requirement_bin');
+                // return $this->belongsTo(RequirementBin::class)->withDefault();
             }
 
             public function requirement_type(){
-                return $this->belongsTo(RequirementType::class)->withDefault();
+                return $this->belongsTo(RequirementType::class, "requirement_type_id");
             }
         // End of [Declare relationships here]
 
@@ -47,6 +48,8 @@ class RequirementListType extends Model
         {
             return $this->belongsTo(User::class,'updated_by');
         }
+
+        protected $with = ['requirement_bin', 'requirement_type','created_by_user','updated_by_user'];
 
         // [Added for UUID Incrementation]      - Default
         public $incrementing = false;

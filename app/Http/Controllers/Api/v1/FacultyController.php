@@ -51,7 +51,6 @@ class FacultyController extends Controller
         //
 
         $request->validate([
-            'image' => 'required',
             'salutation' => 'required',
             'first_name' => 'required',
             'last_name' => 'required',
@@ -59,7 +58,6 @@ class FacultyController extends Controller
             'birthdate' => 'required',
             'birthplace' => 'required',
             'hire_date' => 'required',
-            'email' => 'required',
             'phone_number' => 'required',
             'province' => 'required',
             'city' => 'required',
@@ -86,6 +84,22 @@ class FacultyController extends Controller
         // return Faculty::find($id);
 
         return Faculty::with('user', 'created_by_user')->find($id);
+    }
+
+    
+    public function check_user_exist($id)
+    {
+        $faculties = Faculty::all();
+
+        $users = array();
+
+        foreach($faculties as $faculty){
+            array_push($users, $faculty->user->id);
+        }
+
+        if (in_array($id, $users)){
+            return True;
+        }
     }
 
     /**

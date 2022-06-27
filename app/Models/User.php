@@ -27,6 +27,7 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
+        'status'
     ];
 
     /**
@@ -39,6 +40,16 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+        public function user_role()
+        {
+            return $this->hasMany(UserRole::class)->without('user');;
+        }
+
+        public function faculty()
+        {
+            return $this->hasOne(Faculty::class)->without('user', 'created_by_user', 'updated_by_user', 'academic_rank', 'designation', 'faculty_type');;
+        }
+
     /**
      * The attributes that should be cast.
      *
@@ -47,6 +58,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $with = ['user_role', 'faculty'];
 
     // ADDED FOR UUID INCREMENT ERROR
     public $incrementing = false;

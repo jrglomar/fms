@@ -22,8 +22,8 @@ class CreateFacultiesTable extends Migration
             $table->foreignUuid('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade'); 
 
             // Fillables
-            $table->string('image');
-            $table->string('salutation');
+            $table->string('image')->nullable();
+            $table->string('salutation')->nullable();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
@@ -31,7 +31,6 @@ class CreateFacultiesTable extends Migration
             $table->string('birthdate');
             $table->string('birthplace');
             $table->string('hire_date');
-            $table->string('email');
             $table->string('phone_number');
             $table->string('province');
             $table->string('city');
