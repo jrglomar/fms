@@ -5,7 +5,7 @@
                         <a href="index.html">PUPQCFMS</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">SS</a>
+                        <a href="index.html">FMS</a>
                     </div>
                     <div class="p-3 hide-sidebar-mini">
                         <div class="media">
