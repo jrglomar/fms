@@ -32,6 +32,22 @@
                         <li class=""><a class="nav-link" href="/faculty/dashboard"><i class="fas fa-th-large"></i>
                                 <span>Dashboard</span></a></li>
 
+                            {{-- MEETING MANAGEMENT --}}
+                            <li class="menu-header">Meeting Management</li>
+                            <li class="dropdown {{ Request::segment(2) == 'meeting'
+                                                ? 'active' : ''}}">
+                                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                        class="fas fa-book-reader"></i>
+                                <span>Meeting</span></a>
+                                <ul class="dropdown-menu">
+                                    <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                    <li class="{{ Request::segment(2) == 'meeting' ? 'active' : ''}}">
+                                        <a class="nav-link" href="/faculty/meeting">
+                                            <span>Meetings</span></a>
+                                    </li>
+                                </ul>
+                            </li>        
+
                         <li class="menu-header">Account Management</li>
                         <li class="dropdown {{ Request::segment(2) == 'role' ||
                                                 Request::segment(2) == 'user_role'
@@ -46,8 +62,8 @@
                             </ul>
 
                         </li>
-
                     </ul>
+
 
                     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
                         <button type="button" class="btn btn-danger btn-lg btn-block btn-icon-split logout-btn" onclick="location.href='/logout'"

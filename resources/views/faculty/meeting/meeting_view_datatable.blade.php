@@ -3,11 +3,9 @@
         <div class="col-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4 class="text-dark">List of Meeting</h4>
+                    <h4 class="text-dark">Required Faculty List</h4>
                     <div class="card-header-action">
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
-                        aria-expanded="false" aria-controls="create_card">New Meeting <i
-                        class="fas fa-plus"></i></button>
+                        <button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -16,18 +14,14 @@
                         </div>
                     </div>
 
-                    <table class="table table-sm" id="dataTable" style="width:100%">
+                    <table class="table table-sm" id="requiredFacultyDatatable" style="width:100%">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Title</th>
-                                <th>Meeting Type</th>
-                                <th width="10%">Agenda</th>
-                                <th>Location</th>
-                                <th>Date</th>
-                                <th width="5%">Required</th>
-                                <th>Status</th>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Status / Progress</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

@@ -22,15 +22,11 @@
 
             {{-- DETAILS --}}
             @include('acad_head/meeting/meeting_view_content')
-
-            {{-- FORM --}}
-            @include('acad_head/meeting/meeting_form')
-
+            
             {{-- DATATABLE --}}
-            @include('acad_head/meeting/meeting_datatable')
+            @include('acad_head/meeting/meeting_view_datatable')
+
     @endsection
-
-
 
 {{-- FOOTER --}}
 @section('footer')
@@ -39,5 +35,5 @@
 
 
 @section('script')
-    @include('acad_head/meeting/meeting_scripts')
+    @include('acad_head/meeting/meeting_view_scripts')
 @endsection
