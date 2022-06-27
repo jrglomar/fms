@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-8 col-sm-8 col-lg-8">
-        <div class="card-primary">
+        <div class="card card-primary">
             <div class="card-header">
                 <div class="align-items-start">
                         <h3 class="text-primary card-title"><i class="fa fa-briefcase" aria-hidden="true"></i> <span id="title"></span></h3>
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="col-4 col-sm-4 col-lg-4">
-        <div class="card-primary">
+        <div class="card card-primary">
             <div class="card-header">
                 <div class="align-items-start">
                     <h4 class="text-primary card-title"><i class="fa fa-info-circle"></i> Activity Details</h4>
@@ -61,9 +61,9 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <div class="card collapse" id="memo_card">
+        <div class="card card-primary collapse" id="memo_card">
             <div class="card-header">
-                <h2 class="text-primary">Memorandum</h2>
+                <h4 class="text-primary">Memorandum</h4>
             </div>
             <div class="card-body" id="if_memo">
                 
