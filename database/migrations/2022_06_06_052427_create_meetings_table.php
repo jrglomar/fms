@@ -27,10 +27,12 @@ class CreateMeetingsTable extends Migration
              $table->time('end_time');
              $table->string('agenda')->nullable();
              $table->longText('description')->nullable();
+             $table->boolean('is_required')->nullable();
              $table->string('status');
 
              // Relationship sample
              $table->foreignUuid('meeting_types_id')->constrained('meeting_types')->onDelete('cascade')->onUpdate('cascade'); 
+
         });
     }
 

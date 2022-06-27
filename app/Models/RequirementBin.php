@@ -29,6 +29,10 @@ class RequirementBin extends Model
         // protected $with = ['users','created_by_user','updated_by_user'];
 
         // [Declare relationships here]
+            public function requirement_list_type()
+            {
+                return $this->hasMany(RequirementListType::class)->without('requirement_bin');;
+            }
         // End of [Declare relationships here]
 
         // [Default relationship]       - Default
@@ -41,6 +45,8 @@ class RequirementBin extends Model
         {
             return $this->belongsTo(User::class,'updated_by');
         }
+
+        protected $with = ['requirement_list_type'];
 
         // [Added for UUID Incrementation]      - Default
         public $incrementing = false;
