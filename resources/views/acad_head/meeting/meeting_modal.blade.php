@@ -117,8 +117,7 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="required-input">Description</label>
-                                <input type="text" class="form-control" id="description_edit" name="description_edit"
-                                placeholder="Description" tabindex="1" required>
+                                <textarea class="form-control" rows="4" cols="50" id="description_edit" name="description_edit" form="updateForm" placeholder="Description" tabindex="1" required></textarea>
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="required-input">Start Time</label>

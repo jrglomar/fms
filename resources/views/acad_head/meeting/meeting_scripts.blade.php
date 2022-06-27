@@ -23,12 +23,14 @@
                     { data: "title"},
                     { data: "meeting_type.title"},
                     { data: "agenda"},
-                    { data: "description"}, // remove this column
-                    { data: "start_time"}, // merge date (to be add), start_time, end_time
-                    { data: "end_time"},
+                    { data: "start_time", render: function(data, type, row){
+                        console.log("0000-00-00 "+data)
+                        console.log(row.date)
+                        return `${moment(row.date).format('LL')} <br> ${moment("2022-06-27 "+data).format('LT')} - ${moment("2022-06-27 "+row.end_time).format('LT')}`
+                    }}, // merge date (to be add), start_time, end_time
                     { data: "is_required", render: function (data, type, row) { // required
                           console.log(data)
-                          if(data == 0)
+                          if(data == true)
                           {
                             return `<p>No</p>`
                           }

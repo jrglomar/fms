@@ -27,9 +27,11 @@
                     console.log(responseData.title)
                     var title = responseData.title;
                     var deadline = responseData.deadline
+                    var description = responseData.description
 
                     $("#page_title").append(title);
                     $("#deadline").append("Deadline: " + deadline);
+                    $("#description_paragraph").append(description);
                 },
                 error: function ({ responseJSON }) {},
             });

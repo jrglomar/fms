@@ -36,7 +36,10 @@
 
                         return requirement_list_type;
                     }},
-                    { data: "deadline"},
+                    { data: "deadline", render: function(data, type, row){
+                        console.log(data)
+                        return `${moment(data).format('LLL')}`
+                    }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
                                     return `<div class="text-center dropdown">
