@@ -23,6 +23,7 @@ class Meeting extends Model
             'updated_by',
             "title",
             "date",
+            "location",
             "start_time",
             "end_time",
             "agenda",
