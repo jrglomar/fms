@@ -184,7 +184,6 @@
                     // $("input[name=gender]").val(data.faculty.gender);
                     $("input[name=gender][value=" + data.faculty.gender + "]").attr('checked', 'checked');
 
-
                     $('#faculty_type_id').val(data.faculty.faculty_type_id);
                     $('#academic_rank_id').val(data.faculty.academic_rank_id);
                     $('#designation_id').val(data.faculty.designation_id);
@@ -243,6 +242,7 @@
                 },
                 error: function(error){
                     console.log(error)
+                    alert(error.status)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
                 }
@@ -262,7 +262,7 @@
             let form_data = {
                 "user_id": USER_ID
             }
-            
+
             $.each(form, function(){
                 form_data[[this.name]] = this.value;
             })
@@ -306,6 +306,7 @@
                         // CREATE FOR
                         console.log('create')
                         // ajax opening tag
+                        console.log(form_data)
                         $.ajax({
                             url: create_form_url,
                             method: "POST",
@@ -318,7 +319,7 @@
                             },
                             success: function(data){
                                 console.log('Create Success')
-                                // location.reload();
+                                location.reload();
                             },
                             error: function(error){
                                 console.log(error)
@@ -349,7 +350,7 @@
             var form = $("#updateUserForm").serializeArray();
             let form_data = {}
             let role_id_input = [];
-            
+
             $("input[name='role_id_input[]']").each(function() {
                 if(this.checked == true){
                     role_id_input.push($(this).val())
@@ -436,7 +437,7 @@
         getRoleList()
         getFacultyTypeList()
         getAcademicRankList()
-        getDesignationList()    
+        getDesignationList()
         getUserDetails()
 
     // END OF JQUERY FUNCTIONS

@@ -25,3 +25,7 @@
     @include('layouts.admin_footer')
 @endsection
 
+@section('script')
+    @include('admin.dashboard.dashboard_scripts')
+@endsection
+
