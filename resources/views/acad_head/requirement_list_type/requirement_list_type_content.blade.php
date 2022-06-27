@@ -1,20 +1,22 @@
 <div class="row">
-    <div class="col-5 col-sm-5 col-lg-5">
-        <div class="card">
+    <div class="col-8 col-sm-8 col-lg-8">
+        <div class="card card-info">
             <div class="card-header">
-                <div class="align-items-start">
+                <div class="col-12">
                         <h3 class="text-primary card-title"><i class="fa fa-folder-open" aria-hidden="true"></i> <span id="title"></span></h3>
                         <span id="created_by"></span>
-                        <span>• Due</span>
-                        <span id="created_at"></span>
+                        <div class="text-dark float-right">
+                            <span>Due</span>
+                            <span id="created_at"></span>
+                        </div>
                 </div>
             </div>
             <div class="card-body">
-                <span style="color:black; white:space: pre-line" id="description"></h3>
+                <span class="text-dark" style="white-space: pre-line" id="description"></h3>
             </div>
         </div>
     </div>
-    <div class="col-3 col-sm-3 col-lg-3">
+    {{-- <div class="col-3 col-sm-3 col-lg-3">
         <div class="card">
             <div class="card-header">
                 <div class="align-items-center">
@@ -32,32 +34,23 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="col-4 col-sm-4 col-lg-4">
-        <div class="card">
+        <div class="card card-success">
             <div class="card-header">
-                <div class="align-items-center">
-                    <div class="row">
-                        <span class="text-primary text-lg" style="padding-left:10px; font-size:18pt"> Faculty Lists</span>
-                    </div>
+                <h4 class="text-dark"> Required Document List</h4>
+                <div class="card-header-action">
+                    <button id="createRequiredDocument" type="button" class="btn btn-info btn-sm">Edit Required List <i class="fa fa-edit" aria-hidden="true"></i></button>
                 </div>
             </div>
             <div class="card-body">
-                <ul >
-                    <li style="padding-bottom:10px">
-                        <span class="text-primary">John Raven Glomar</span> - &nbsp;
-                        <button type="button" class="btn btn-info btn-sm">Check Files</button>
-                    </li>
-                    <li style="padding-bottom:10px">
-                        <span class="text-primary">Joshua Ferrer</span> - &nbsp;
-                        <button type="button" class="btn btn-danger btn-sm">No Uploaded Files</button>
-                    </li>
-                    <li style="padding-bottom:10px">
-                        <span class="text-primary">Eugene Kyle Cancio</span> - &nbsp;
-                        <button type="button" class="btn btn-info btn-sm">Check Files</button>
+                <ul id="requiredDocumentList" class="list-group overflow-auto">
+                    <li class="list-group-item d-flex justify-content-between" disabled>
+                        <span class="text-primary"><strong>Document Type</strong></span>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
+
 </div>

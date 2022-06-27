@@ -85,6 +85,7 @@
             crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <!-- Libraries -->
         <script src="{{ asset('vendors/parsley/js/parsley.min.js') }}"></script>
@@ -110,7 +111,6 @@
                 var APP_URL = {!! json_encode(url('/')) !!}
                 var API_TOKEN = localStorage.getItem("API_TOKEN")
                 var USER_DATA = localStorage.getItem("USER_DATA")
-                console.log(JSON.parse(USER_DATA))
                 let new_user_data = (JSON.parse(USER_DATA))
                 let middle_name = ''
                 let user_role = ''

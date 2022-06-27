@@ -1,5 +1,5 @@
 {{-- CREATE FORM --}}
-<div class="row">
+{{-- <div class="row">
     <div class="col-md-12 collapse" id="create_card">
         <div class="card card-primary">
             <div class="card-header">
@@ -32,6 +32,6 @@
             </form>
         </div>
     </div>
-</div>
+</div> --}}
 {{-- END OF CREATE FORM --}}
 

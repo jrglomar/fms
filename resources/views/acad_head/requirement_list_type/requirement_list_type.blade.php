@@ -29,7 +29,7 @@
             @include('acad_head/requirement_list_type/requirement_list_type_form')
 
             {{-- DATATABLE --}}
-            @include('acad_head/requirement_list_type/requirement_list_type_datatable')
+            @include('acad_head/requirement_list_type/required_faculty_list_datatable')
     @endsection
 
 
@@ -42,4 +42,5 @@
 
 @section('script')
     @include('acad_head/requirement_list_type/requirement_list_type_scripts')
+    @include('acad_head/requirement_list_type/required_faculty_list_scripts')
 @endsection
