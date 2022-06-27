@@ -6,6 +6,7 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
+        var BASE_API = APP_URL + '/api/v1/meeting/'
         console.log(API_TOKEN)
         console.log(JSON.parse(USER_DATA))
         // END OF GLOBAL VARIABLE
@@ -14,7 +15,7 @@
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
-                    url: "http://127.0.0.1:8000/api/v1/meeting/", 
+                    url: BASE_API, 
                     dataSrc: ''
                 },
                 "columns": [
@@ -73,7 +74,7 @@
 
         // REFRESH DATATABLE FUNCTION
         function refresh(){
-            let url = APP_URL+'/api/v1/meeting/'
+            let url = BASE_API;
 
             dataTable.ajax.url(url).load()
         }
@@ -114,7 +115,7 @@
         $('#createForm').on('submit', function(e){
             e.preventDefault();
 
-            var form_url = APP_URL+'/api/v1/meeting/'
+            var form_url = BASE_API;
             var form = $("#createForm").serializeArray();
             let data = {}
 
@@ -166,7 +167,7 @@
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var id = this.id;
-            let form_url =APP_URL+'/api/v1/meeting/'+id
+            let form_url = BASE_API+id
 
             $.ajax({
                 url: form_url,
@@ -210,7 +211,7 @@
         // EDIT FUNCTION
         $(document).on("click", ".btnEdit", function(){
             var id = this.id;
-            let form_url = APP_URL+'/api/v1/meeting/'+id
+            let form_url = BASE_API+id
 
             $.ajax({
                 url: form_url,
@@ -246,7 +247,7 @@
         $('#updateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_edit').val();
-            var form_url = APP_URL+'/api/v1/meeting/'+id
+            var form_url = BASE_API+id
 
             let data = {
                 "title": $('#title_edit').val(),
@@ -289,7 +290,7 @@
         // DEACTIVATE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = APP_URL+'/api/v1/meeting/'+id
+            let form_url = BASE_API+id
 
             $.ajax({
                 url: form_url,
@@ -327,7 +328,7 @@
         $('#deactivateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_delete').val();
-            var form_url = APP_URL+'/api/v1/meeting/destroy/'+id
+            var form_url = BASE_API+'destroy/'+id
 
             $.ajax({
                 url: form_url,

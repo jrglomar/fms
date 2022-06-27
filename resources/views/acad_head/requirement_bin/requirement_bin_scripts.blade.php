@@ -275,7 +275,7 @@
         $('#deactivateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_delete').val();
-            var form_url = BASE_API+'/destroy/'+id
+            var form_url = BASE_API+'destroy/'+id
 
             $.ajax({
                 url: form_url,

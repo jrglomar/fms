@@ -9,6 +9,7 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
+        var BASE_API = APP_URL + '/api/v1/requirement_list_type/'
         console.log(API_TOKEN)
         console.log(JSON.parse(USER_DATA))
 
@@ -32,6 +33,8 @@
                     $("#page_title").append(title);
                     $("#deadline").append("Deadline: " + deadline);
                     $("#description_paragraph").append(description);
+                    // $("#left_card").append(left_card);
+                    // $("#right_card").append(right_card);
                 },
                 error: function ({ responseJSON }) {},
             });
@@ -44,7 +47,7 @@
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
-                    url: "http://127.0.0.1:8000/api/v1/requirement_list_type/search/" + R_BIN_ID, 
+                    url: BASE_API+'search/' + R_BIN_ID, 
                     dataSrc: ''
                 },
                 "columns": [
@@ -84,7 +87,7 @@
 
         // REFRESH DATATABLE FUNCTION
         function refresh(){
-            let url = APP_URL+'/api/v1/requirement_list_type/search/' + R_BIN_ID;
+            let url = BASE_API+'search/' + R_BIN_ID;
 
             dataTable.ajax.url(url).load()
         }
@@ -128,7 +131,7 @@
 
             document.getElementById('requirement_bin_id').value = R_BIN_ID;
 
-            var form_url = APP_URL+'/api/v1/requirement_list_type/'
+            var form_url = BASE_API
             var form = $("#createForm").serializeArray();
             let data = {}
 
@@ -142,7 +145,7 @@
             console.log(data)
 
             $.ajax({
-                url: APP_URL+'/api/v1/requirement_list_type/search_existing/' + requirement_bin_id + '/' + requirement_type_id,
+                url: BASE_API + 'search_existing/' + requirement_bin_id + '/' + requirement_type_id,
                 type: "GET",
                 dataType: "JSON",
                 success: function (responseData) 
@@ -187,7 +190,7 @@
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var id = this.id;
-            let form_url =APP_URL+'/api/v1/requirement_list_type/'+id
+            let form_url = BASE_API + id
 
             $.ajax({
                 url: form_url,
@@ -217,7 +220,7 @@
         // EDIT FUNCTION
         $(document).on("click", ".btnEdit", function(){
             var id = this.id;
-            let form_url = APP_URL+'/api/v1/requirement_list_type/'+id
+            let form_url = BASE_API + id
 
             $.ajax({
                 url: form_url,
@@ -250,7 +253,7 @@
         $('#updateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_edit').val();
-            var form_url = APP_URL+'/api/v1/requirement_list_type/'+id
+            var form_url = BASE_API + id
 
             let data = {
                 "requirement_bin_id": $('#requirement_bin_id_edit').val(),
@@ -287,7 +290,7 @@
         // DEACTIVATE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = APP_URL+'/api/v1/requirement_list_type/'+id
+            let form_url = BASE_API + id
 
             $.ajax({
                 url: form_url,
@@ -319,7 +322,7 @@
         $('#deactivateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_delete').val();
-            var form_url = APP_URL+'/api/v1/requirement_list_type/destroy/'+id
+            var form_url = BASE_API + 'destroy/' + id
 
             $.ajax({
                 url: form_url,
