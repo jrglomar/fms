@@ -24,10 +24,8 @@
                                 <th>Title</th>
                                 <th>Meeting Type</th>
                                 <th>Agenda</th>
-                                <th>Description</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>isRequired</th>
+                                <th>Date</th>
+                                <th width="5%">Required</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>

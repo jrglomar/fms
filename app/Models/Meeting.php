@@ -22,6 +22,7 @@ class Meeting extends Model
             'created_by',
             'updated_by',
             "title",
+            "date",
             "start_time",
             "end_time",
             "agenda",

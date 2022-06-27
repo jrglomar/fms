@@ -30,24 +30,26 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label class="required-input">Description</label>
-                            <input type="text" class="form-control" id="description" name="description"
-                            placeholder="Description" tabindex="1" required>
+                            <textarea class="form-control" rows="4" cols="50" id="description" name="description" form="createForm" placeholder="Description" tabindex="1" required></textarea>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-4">
+                            <label class="required-input">Date</label>
+                            <input type="date" class="form-control" id="date" name="date"
+                            placeholder="date" tabindex="1" required>
+                        </div>
+                        <div class="form-group col-md-4">
                             <label class="required-input">Start Time</label>
                             <input type="time" class="form-control" id="start_time" name="start_time"
                             placeholder="Start Time" tabindex="1" required>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-4">
                             <label class="required-input">End Time</label>
                             <input type="time" class="form-control" id="end_time" name="end_time"
                             placeholder="End Time" tabindex="1" required>
                         </div>
-                    </div> 
+                    </div>
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label class="required-input">Is Required</label> 

@@ -36,7 +36,10 @@
 
                         return requirement_list_type;
                     }},
-                    { data: "deadline"},
+                    { data: "deadline", render: function(data, type, row){
+                        console.log(data)
+                        return `${moment(data).format('LLL')}`
+                    }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
                                     return `<div class="text-center dropdown">
@@ -272,7 +275,7 @@
         $('#deactivateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_delete').val();
-            var form_url = BASE_API+'/destroy/'+id
+            var form_url = BASE_API+'destroy/'+id
 
             $.ajax({
                 url: form_url,
