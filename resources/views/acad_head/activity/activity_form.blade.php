@@ -1,4 +1,5 @@
 {{-- CREATE FORM --}}
+
 <div class="row">
     <div class="col-md-12 collapse" id="create_card">
         <div class="card card-primary">
@@ -6,7 +7,9 @@
                 <h4 class="text-dark"> <span id="create_card_title">Create </span>{{ $page_title }}</h4>
             </div>
 
-            <form id="createForm" class="needs-validation" novalidate="">
+            <form id="createForm" class="needs-validation" novalidate=""
+            enctype="multipart/form-data">
+            {{ csrf_field() }}
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-md-6">
@@ -16,8 +19,8 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label class="required-input">Activity Type</label>
-                            <select class="form-control select2" id="activity_type_form"
-                                name="activity_type_form" required
+                            <select class="form-control select2" id="activity_type_id"
+                                name="activity_type_id" required
                                 data-parsley-errors-container="#activity-type-errors">
                             </select>
                             <ul class="parsley-err-msg">
@@ -47,8 +50,27 @@
                                 <li id="activity-type-errors"></li>
                             </ul>
                         </div>
+                        <div class="form-group col-md-6">
+                            <label class="required-input">Required to attend</label>
+                            <select class="form-control select2" id="is_required"
+                                name="is_required" required
+                                data-parsley-errors-container="#activity-type-errors">
+                                <option value="1">Yes</option>
+                                <option selected="selected" value="0">No</option>
+                            </select>
+                            <ul class="parsley-err-msg">
+                                <li id="activity-type-errors"></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="row additional-form">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="required-input">Memorandum</label>
+                            <input type="file" class="form-control" id="memorandum_file_directory" name="memorandum_file_directory"
+                            tabindex="1" required>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer text-right">
