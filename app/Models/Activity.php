@@ -20,6 +20,7 @@ class Activity extends Model
         "active_status",
         "title",
         "memorandum_file_directory",
+        "location",
         "description",
         "status",
         "start_datetime",

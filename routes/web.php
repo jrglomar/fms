@@ -166,6 +166,11 @@ Route::group(['middleware' => ['role.acadhead'],
         return view('acad_head/activity/activity', ['page_title' => 'Activity']);
     })->name('Activity');
 
+    // --------------ACTIVITY VIEW----------------- //
+    Route::get('/activity_view/{id}', function ($id) {
+        return view('acad_head/activity_view/activity_view', ['page_title' => 'Activity', 'activity_id'=> $id]);
+    })->name('ActivityView');
+
 });
 
 

@@ -23,6 +23,7 @@ class CreateActivitiesTable extends Migration
 
             $table->string('title');
             $table->string('memorandum_file_directory');
+            $table->string('location');
             $table->longText('description');
             $table->string('status');
             $table->dateTime('start_datetime');

@@ -36,6 +36,13 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="">Location</label>
+                            <input type="text" class="form-control" id="location" name="location"
+                            placeholder="Location" tabindex="1" required>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-md-6">
                             <label class="required-input">Status</label>
                             <select class="form-control select2" id="status"
@@ -67,7 +74,7 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="required-input">Memorandum</label>
+                            <label class="">Memorandum</label>
                             <input type="file" class="form-control" id="memorandum_file_directory" name="memorandum_file_directory"
                             tabindex="1" required>
                         </div>
