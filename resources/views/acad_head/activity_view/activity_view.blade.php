@@ -14,20 +14,12 @@
     <h1>{{ $page_title }}</h1>
 @endsection
 
-    {{-- MODAL --}}
-    @include('acad_head/meeting/meeting_modal')
-
     {{-- CONTENT --}}
     @section('content')
 
-            {{-- DETAILS --}}
-            @include('acad_head/meeting/meeting_view_content')
-
             {{-- FORM --}}
-            @include('acad_head/meeting/meeting_form')
+            @include('acad_head/activity_view/activity_view_content')
 
-            {{-- DATATABLE --}}
-            @include('acad_head/meeting/meeting_datatable')
     @endsection
 
 
@@ -39,5 +31,5 @@
 
 
 @section('script')
-    @include('acad_head/meeting/meeting_scripts')
+    @include('acad_head/activity_view/activity_view_scripts')
 @endsection

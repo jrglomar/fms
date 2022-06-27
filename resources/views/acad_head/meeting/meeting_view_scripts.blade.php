@@ -11,7 +11,202 @@
         console.log(JSON.parse(USER_DATA))
 
         var USER_ROLE = JSON.parse(USER_DATA)
+
+
+        let MEETING_ID = "{{ $meeting_id }}"
         // END OF GLOBAL VARIABLE
+
+        // FUNCTION TO CHANGE CONTENT
+        function getMeetingDetails(){
+            $.ajax({
+                url: BASE_API + MEETING_ID,
+                type: "GET",
+                dataType: "JSON",
+                success: function (responseData) 
+                {   
+                    console.log(responseData)
+
+                    var isRequired = responseData.is_required
+                    var status = responseData.status
+                    
+
+                    // Changing Boolean value of is_required to text
+                    if(isRequired == true)
+                    {
+                        isRequired = 'Yes'
+                    }
+                    else
+                    {
+                        isRequired = 'No'
+                    } 
+
+                    // IF Else Condition to specify if the Status is Done or Pending
+                    if(status == "Pending")
+                    {
+                        status = '<span class="badge badge-warning">' + responseData.status + '</span>'
+                    }
+                    else if(status == "Done")
+                    {
+                        status = '<span class="badge badge-success">' + responseData.status + '</span>'
+                    } 
+
+
+                    // For meeting_view_content> div#row_left
+                    var row_left = '<div class="card card-info">' +
+                                        '<div class="card-header">' +
+                                            '<div class="col-12">' +
+                                                '<h3 class="text-primary card-title"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + 
+                                                    '<span>' + responseData.title + '</span>' +
+                                                '</h3>' +
+                                                '<span style="color:black"><b>' + responseData.meeting_type.title + '</b></span>' +
+                                                '<div class="float-right">' +
+                                                    status +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                        '<div class="card-body">' +
+                                            '<div class="col-md-12">' +
+                                                '<span style="color:black"><b>Agenda: </b>' +
+                                            '</div>' +
+                                            '<div class="col-md-12">' +
+                                                '<span style="white:space: pre-line; color:black; text-align: justify; display:block;">&emsp;' +responseData.agenda +   
+                                            '</div>' + 
+                                            '<br>' + 
+                                            '<div class="col-md-12">' +
+                                                '<span style="color:black"><b>Description: </b>' +
+                                            '</div>' +
+                                            '<div class="col-md-12">' +
+                                                '<span style="white:space: pre-line; color:black; text-align: justify; display:block;">&emsp;' +responseData.description +   
+                                            '</div>' + 
+                                        '</div>' + 
+                                    '</div>' ;
+
+                    // CHECK THE USER ROLE
+                    if(USER_ROLE.user_role[0].role.title == "Academic Head")
+                    {
+                        // For meeting_view_content> div#row_right - card bottom
+                        var row_right_bottom = '<div class="card card-success">' +
+                                            '<div class="card-body">' +
+                                                '<div class="align-items-start">' +
+                                                    '<h5 class="text-primary card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> ' + 
+                                                        '<span>Meeting Details: </span>' +
+                                                    '</h5>' +
+                                                '</div>' +
+                                                '<div class="text-dark">' + 
+                                                    '<div class="col-md-12">' +
+                                                        '<b>Date: </b>' +
+                                                    '</div>' +
+                                                    '<div class="col-md-12"> -- ' +
+                                                        moment(responseData.date).format('dddd, MMMM D, YYYY') +   
+                                                    '</div>' +  
+                                                    '<div class="col-md-12">' +
+                                                        '<b>Location: </b>' +
+                                                    '</div>' +
+                                                    '<div class="col-md-12"> -- ' +
+                                                        responseData.location +   
+                                                    '</div>' + 
+                                                    '<div class="row">' +
+                                                        '<div class="col-md-7">' +
+                                                            '<div class="col-md-12">' +
+                                                                '<b>From: </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                moment("2022-06-27 "+responseData.start_time ).format('LT') +   
+                                                            '</div>' + 
+                                                        '</div>' +
+                                                        '<div class="col-md-5">' +
+                                                            '<div class="col-md-12">' +
+                                                                '<b>To: </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                moment("2022-06-27 "+responseData.end_time ).format('LT') +   
+                                                            '</div>' + 
+                                                        '</div>' +
+                                                    '</div> ' +
+                                                    '<div class="col-md-12">' +
+                                                        '<b>Required? </b>' +
+                                                    '</div>' +
+                                                    '<div class="col-md-12"> -- ' +
+                                                        isRequired +
+                                                    '</div>' +  
+                                                '</div>' + 
+                                            '</div>' + 
+                                        '</div>' ;
+                                    
+                        $("#row_left").html(row_left);
+                        $("#row_right").html(row_right_bottom);
+                    }
+                    else if (USER_ROLE.user_role[0].role.title == "Faculty")
+                    {
+                        // For meeting_view_content> div#row_right - button top
+                        var row_right_top = '<div class="col-12">' +
+                                                '<a href="#" class="btn btn-icon icon-left btn-success btn-lg button-block"><i class="fas fa-check"></i> Time in</a>' +
+                                            '</div>' +
+                                            '<br>';
+
+                        // For meeting_view_content> div#row_right - card bottom
+                        var row_right_bottom = '<div class="card card-success">' +
+                                            '<div class="card-body">' +
+                                                '<div class="align-items-start">' +
+                                                    '<h5 class="text-primary card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> ' + 
+                                                        '<span>Meeting Details: </span>' +
+                                                    '</h5>' +
+                                                '</div>' +
+                                                '<div class="text-dark">' + 
+                                                    '<div class="col-md-12">' +
+                                                        '<b>Date: </b>' +
+                                                    '</div>' +
+                                                    '<div class="col-md-12"> -- ' +
+                                                        moment(responseData.date).format('dddd, MMMM D, YYYY') +   
+                                                    '</div>' +  
+                                                    '<div class="row">' +
+                                                        '<div class="col-md-7">' +
+                                                            '<div class="col-md-12">' +
+                                                                '<b>From: </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                moment("2022-06-27 "+responseData.start_time ).format('LT') +   
+                                                            '</div>' + 
+                                                        '</div>' +
+                                                        '<div class="col-md-5">' +
+                                                            '<div class="col-md-12">' +
+                                                                '<b>To: </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                moment("2022-06-27 "+responseData.end_time ).format('LT') +   
+                                                            '</div>' + 
+                                                        '</div>' +
+                                                    '</div> ' +
+                                                    '<div class="col-md-12">' +
+                                                        '<b>Required? </b>' +
+                                                    '</div>' +
+                                                    '<div class="col-md-12"> -- ' +
+                                                        isRequired +
+                                                    '</div>' +  
+                                                '</div>' + 
+                                            '</div>' + 
+                                        '</div>' ;
+                                    
+                        $("#row_left").html(row_left);
+                        $("#row_right").html(row_right_top);
+                        $("#row_right").append(row_right_bottom);
+                    }
+
+                },
+                error: function ({ responseJSON }) {},
+            });
+        };
+
+        getMeetingDetails();
+        // END FUNCTION TO CHANGE CONTENT
+
+        // FUNCTION FOR REQUIRED FACULTY DATATABLE
+        function requiredFacultyDatatable(){
+            requiredFacultyDatatable = $('#requiredFacultyDatatable').DataTable()
+        }
+
+        requiredFacultyDatatable()
+        // END FUNCTION FOR REQUIRED FACULTY DATATABLE
 
         // DATA TABLES FUNCTION
         function dataTable(){

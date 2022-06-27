@@ -150,26 +150,11 @@
 
             console.log(fd)
 
-            $.ajax({
-                url: form_url,
-                method: "POST",
-                data: fd,
-                dataType: "JSON",
-                processData: false,
-                contentType: false,
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    
-                },
-                success: function(data){
-                    //console.log(data)
-                    form_url = BASE_API
+            if (files == null){
+                form_url = BASE_API
 
                     var form = $("#createForm").serializeArray();
                     let formdata = {}
-
-                    formdata['memorandum_file_directory'] = data.path
 
                     $.each(form, function(){
                         formdata[[this.name]] = this.value;
@@ -201,15 +186,68 @@
                         }
                     //ajax closing tag
                     })
+            }
 
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            })
+            else{
+                $.ajax({
+                    url: form_url,
+                    method: "POST",
+                    data: fd,
+                    dataType: "JSON",
+                    processData: false,
+                    contentType: false,
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        
+                    },
+                    success: function(data){
+                        //console.log(data)
+                        form_url = BASE_API
 
+                        var form = $("#createForm").serializeArray();
+                        let formdata = {}
+
+                        formdata['memorandum_file_directory'] = data.path
+
+                        $.each(form, function(){
+                            formdata[[this.name]] = this.value;
+                        })
+
+                        console.log(formdata)
+
+                        //ajax opening tag
+                        $.ajax({
+                            url: form_url,
+                            method: "POST",
+                            data: JSON.stringify(formdata),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data){
+                                console.log(data)
+                                $("#createForm").trigger("reset")
+                                $("#create_card").collapse("hide")
+                                refresh();
+                            },
+                            error: function(error){
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        //ajax closing tag
+                        })
+                    },
+                    error: function(error){
+                        console.log(error)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                })
+            }
             
         });
         // END OF SUBMIT FUNCTION
@@ -217,48 +255,51 @@
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var id = this.id;
-            let form_url =BASE_API+id
 
-            $.ajax({
-                url: form_url,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
+            window.location.replace(APP_URL+"/acad_head/activity_view/"+id);
 
-                success: function(data){
-                    let created_at = moment(data.created_at).format('LLL');
-                    let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
-                    let is_required_view = ""
+            //let form_url =BASE_API+id
 
-                    $('#id_view').html(data.id);
-                    $('#title_view').html(data.title);
-                    $('#description_view').html(data.description);
-                    $('#start_time_view').html(data.start_datetime);
-                    $('#end_time_view').html(data.end_datetime);
-                    $('#activity_type_view').html(data.activity_type.title); 
-                    console.log(data.activity_type)  
+            // $.ajax({
+            //     url: form_url,
+            //     method: "GET",
+            //     headers: {
+            //         "Accept": "application/json",
+            //         "Authorization": API_TOKEN,
+            //         "Content-Type": "application/json"
+            //     },
 
-                    if(data.is_required == 0){
-                        is_required_view = "No"
-                    } else{
-                        is_required_view = "Yes"
-                    }
+            //     success: function(data){
+            //         let created_at = moment(data.created_at).format('LLL');
+            //         let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
+            //         let is_required_view = ""
 
-                    $('#status_view').html(data.status);
-                    $('#is_required_view').html(is_required_view);
-                    //$('#created_at_view').html(created_at);
+            //         $('#id_view').html(data.id);
+            //         $('#title_view').html(data.title);
+            //         $('#description_view').html(data.description);
+            //         $('#start_time_view').html(data.start_datetime);
+            //         $('#end_time_view').html(data.end_datetime);
+            //         $('#activity_type_view').html(data.activity_type.title); 
+            //         console.log(data.activity_type)  
 
-                    //console.log(data.memorandum_file_directory)
-                    document.getElementById("memorandum_view").src="http://127.0.0.1:8000/" + data.memorandum_file_directory;
-                    //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
+            //         if(data.is_required == 0){
+            //             is_required_view = "No"
+            //         } else{
+            //             is_required_view = "Yes"
+            //         }
 
-                    $('#viewModal').modal('show');
-                }
-            // ajax closing tag
-            })
+            //         $('#status_view').html(data.status);
+            //         $('#is_required_view').html(is_required_view);
+            //         //$('#created_at_view').html(created_at);
+
+            //         //console.log(data.memorandum_file_directory)
+            //         document.getElementById("memorandum_view").src="http://127.0.0.1:8000/" + data.memorandum_file_directory;
+            //         //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
+
+            //         $('#viewModal').modal('show');
+            //     }
+            // // ajax closing tag
+            // })
         });
         // END OF VIEW FUNCTION
 
@@ -290,6 +331,7 @@
                     $('#status_edit').val(data.status);
 
                     $('#is_required_edit').val(data.is_required);
+                    $('#location_edit').val(data.location);
                     $('#memorandum_path').val(data.memorandum_file_directory);
                     //console.log(data.is_required)
 
@@ -325,6 +367,7 @@
                 let data_form = {
                     "title": $('#title_edit').val(),
                     "description": $('#description_edit').val(),
+                    "location": $('#location_edit').val(),
                     "activity_type_id": $('#activity_type_id_edit').val(),
                     "status": $('#status_edit').val(),
                     "is_required": $('#is_required_edit').val(),
@@ -390,6 +433,7 @@
                         let data_form = {
                             "title": $('#title_edit').val(),
                             "description": $('#description_edit').val(),
+                            "location": $('#location_edit').val(),
                             "activity_type_id": $('#activity_type_id_edit').val(),
                             "status": $('#status_edit').val(),
                             "is_required": $('#is_required_edit').val(),

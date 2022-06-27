@@ -42,10 +42,8 @@ class ActivityController extends Controller
         //
         $request->validate([
             'title' => 'required',
-            'memorandum_file_directory' => 'required',
             'status' => 'required',
-            'start_datetime' => 'required',
-            'end_datetime' => 'required',
+            'is_required' => 'required',
             'activity_type_id' => 'required'
         ]);
 

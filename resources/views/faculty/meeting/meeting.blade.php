@@ -2,12 +2,12 @@
 
 {{-- NAVBAR --}}
 @section('navbar')
-    @include('layouts.acad_head_navbar')
+    @include('layouts.faculty_navbar')
 @endsection
 
 {{-- SIDEBAR --}}
 @section('sidebar')
-    @include('layouts.acad_head_sidebar')
+    @include('layouts.faculty_sidebar')
 @endsection
 
 @section('section_header')
@@ -15,29 +15,29 @@
 @endsection
 
     {{-- MODAL --}}
-    @include('acad_head/meeting/meeting_modal')
+    @include('faculty/meeting/meeting_modal')
 
     {{-- CONTENT --}}
     @section('content')
 
             {{-- DETAILS --}}
-            @include('acad_head/meeting/meeting_view_content')
+            @include('faculty/meeting/meeting_view_content')
 
             {{-- FORM --}}
-            @include('acad_head/meeting/meeting_form')
+            @include('faculty/meeting/meeting_form')
 
             {{-- DATATABLE --}}
-            @include('acad_head/meeting/meeting_datatable')
+            @include('faculty/meeting/meeting_datatable')
     @endsection
 
 
 
 {{-- FOOTER --}}
 @section('footer')
-    @include('layouts.acad_head_footer')
+    @include('layouts.faculty_footer')
 @endsection
 
 
 @section('script')
-    @include('acad_head/meeting/meeting_scripts')
+    @include('faculty/meeting/meeting_scripts')
 @endsection

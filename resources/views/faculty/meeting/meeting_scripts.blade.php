@@ -170,7 +170,7 @@
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var meeting_id = this.id;
-            window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id);
+            window.location.replace(APP_URL + '/faculty/meeting/'+meeting_id);
 
             // $.ajax({
             //     url: form_url,
