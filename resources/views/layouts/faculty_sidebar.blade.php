@@ -15,8 +15,8 @@
                                 <i class="avatar-presence online"></i>
                             </figure>
                             <div class="media-body">
-                                <h6 class="mt-1 mb-0"> Faculty Name</h6>
-                                <p class="mb-0">Faculty</p>
+                                <h6 class="mt-1 mb-0" id="userNameSidebar"></h6>
+                                <p class="mb-0" id="userRoleSidebar"></p>
                             </div>
                         </div>
                     </div>

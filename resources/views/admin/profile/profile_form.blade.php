@@ -28,7 +28,7 @@
                     {{-- USER ROLE --}}
                     <div class="form-row">
                         <div class="form-group col-md-1">
-                            <label class="required-input">User Role</label>
+                            <label class="required-input">User Role (This feature on maintenance)</label>
                         </div>
                         <div class="form-group col-md-10" id="role_id">
                             

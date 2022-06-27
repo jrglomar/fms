@@ -5,7 +5,7 @@
             <div class="login-brand">
                 <img src="https://cdn.pup.edu.ph/img/symbols/logo88x88.png" alt="logo" width="100"
                 class="shadow-light rounded-circle">
-                <h4>PUPQCSS</h4>
+                <h4>PUPQCFMS</h4>
             </div>
             <div class="card card-primary" id="login_card">
                 <div class="card-header">
