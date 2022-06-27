@@ -25,22 +25,23 @@
                 dataType: "JSON",
                 success: function (responseData) 
                 {   
-                    console.log(responseData.title)
+                    console.log(responseData)
                     var title = responseData.title;
                     var deadline = responseData.deadline
                     var description = responseData.description
-
-                    $("#page_title").append(title);
-                    $("#deadline").append("Deadline: " + deadline);
-                    $("#description_paragraph").append(description);
-                    // $("#left_card").append(left_card);
-                    // $("#right_card").append(right_card);
+                    
+                    $("#created_by").html(`${responseData.created_by_user.faculty.first_name} ${responseData.created_by_user.faculty.last_name}` );
+                    $("#created_at").html(moment(responseData.deadline).format('MMM DD'));
+                    $("#title").html(title);
+                    // $("#deadline").html("Deadline: " + deadline);
+                    $("#description").html(description);
                 },
                 error: function ({ responseJSON }) {},
             });
         };
 
         getRequirementBinDetails();
+        getRequirementBinDetails()
         // END FUNCTION TO CHANGE PAGE HEADER/TITLE
 
         // DATA TABLES FUNCTION
