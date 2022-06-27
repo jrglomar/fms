@@ -82,61 +82,7 @@
                                     '</div>' ;
 
                     // CHECK THE USER ROLE
-                    if(USER_ROLE.user_role[0].role.title == "Academic Head")
-                    {
-                        // For meeting_view_content> div#row_right - card bottom
-                        var row_right_bottom = '<div class="card card-success">' +
-                                            '<div class="card-body">' +
-                                                '<div class="align-items-start">' +
-                                                    '<h5 class="text-primary card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> ' + 
-                                                        '<span>Meeting Details: </span>' +
-                                                    '</h5>' +
-                                                '</div>' +
-                                                '<div class="text-dark">' + 
-                                                    '<div class="col-md-12">' +
-                                                        '<b>Date: </b>' +
-                                                    '</div>' +
-                                                    '<div class="col-md-12"> -- ' +
-                                                        moment(responseData.date).format('dddd, MMMM D, YYYY') +   
-                                                    '</div>' +  
-                                                    '<div class="col-md-12">' +
-                                                        '<b>Location: </b>' +
-                                                    '</div>' +
-                                                    '<div class="col-md-12"> -- ' +
-                                                        responseData.location +   
-                                                    '</div>' + 
-                                                    '<div class="row">' +
-                                                        '<div class="col-md-7">' +
-                                                            '<div class="col-md-12">' +
-                                                                '<b>From: </b>' +
-                                                            '</div>' +
-                                                            '<div class="col-md-12"> -- ' +
-                                                                moment("2022-06-27 "+responseData.start_time ).format('LT') +   
-                                                            '</div>' + 
-                                                        '</div>' +
-                                                        '<div class="col-md-5">' +
-                                                            '<div class="col-md-12">' +
-                                                                '<b>To: </b>' +
-                                                            '</div>' +
-                                                            '<div class="col-md-12"> -- ' +
-                                                                moment("2022-06-27 "+responseData.end_time ).format('LT') +   
-                                                            '</div>' + 
-                                                        '</div>' +
-                                                    '</div> ' +
-                                                    '<div class="col-md-12">' +
-                                                        '<b>Required? </b>' +
-                                                    '</div>' +
-                                                    '<div class="col-md-12"> -- ' +
-                                                        isRequired +
-                                                    '</div>' +  
-                                                '</div>' + 
-                                            '</div>' + 
-                                        '</div>' ;
-                                    
-                        $("#row_left").html(row_left);
-                        $("#row_right").html(row_right_bottom);
-                    }
-                    else if (USER_ROLE.user_role[0].role.title == "Faculty")
+                    if (USER_ROLE.user_role[0].role.title == "Faculty")
                     {
                         // For meeting_view_content> div#row_right - button top
                         var row_right_top = '<div class="col-12">' +

@@ -23,8 +23,8 @@
             {{-- DETAILS --}}
             @include('faculty/meeting/meeting_view_content')
             
-            {{-- DATATABLE --}}
-            @include('faculty/meeting/meeting_view_datatable')
+            <!-- {{-- DATATABLE --}}
+            @include('faculty/meeting/meeting_view_datatable') -->
 
     @endsection
 
