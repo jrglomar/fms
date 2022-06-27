@@ -115,10 +115,6 @@ Route::group(['middleware' => ['role.admin'],
             return view('admin/requirement_list_type/requirement_list_type', ['page_title' => 'Requirement List Type']);
         })->name('admin_requirement_list_type');
 
-        //ACTIVITY
-        Route::get('/activity', function () {
-            return view('admin/activity/activity', ['page_title' => 'Activity']);
-        })->name('Activity');
 });
 
 
@@ -164,6 +160,11 @@ Route::group(['middleware' => ['role.acadhead'],
     Route::get('/requirement_list_type/{id}', function ($id) {
         return view('acad_head/requirement_list_type/requirement_list_type', ['page_title' => 'Requirements Bin', 'requirement_bin_id' => $id]);
     })->name('acad_head_requirement_list_type');
+
+    // -----------------ACTIVITY------------------ //
+    Route::get('/activity', function () {
+        return view('acad_head/activity/activity', ['page_title' => 'Activity']);
+    })->name('Activity');
 
 });
 
