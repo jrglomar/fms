@@ -74,6 +74,23 @@
                         </ul>
                     </li>
 
+                    {{-- ACTIVITY MANAGEMENT --}}
+                    <li class="menu-header">Activity Management</li>
+                    <li class="dropdown {{ Request::segment(2) == 'activity_type' || 
+                                            Request::segment(2) == 'activity'
+                                        ? 'active' : ''}}">
+                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                class="fas fa-book-reader"></i>
+                        <span>Activity</span></a>
+                        <ul class="dropdown-menu">
+                            <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                            <li class="{{ Request::segment(2) == 'activity' ? 'active' : ''}}">
+                                <a class="nav-link" href="/acad_head/activity">
+                                    <span>Activities</span></a>
+                            </li>
+                        </ul>
+                    </li>
+
                     </ul>
 
                     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
