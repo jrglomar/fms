@@ -1,36 +1,18 @@
 
 <script>
 
-    // FUNCTION TO GET ID ON URL
-    function _GET(param)
-    {
-        var vars = {};
-        window.location.href.replace( location.hash, '' ).replace( 
-            /[?&]+([^=&]+)=?([^&]*)?/gi, // regexp
-            function( m, key, value ) { // callback
-                vars[key] = value !== undefined ? value : '';
-            }
-        );
-
-        if ( param ) {
-            return vars[param] ? vars[param] : null;	
-        }
-        return vars;
-    }
-    // END FUNCTION TO GET ID ON URL 
     
 
     $(document).ready(function(){
 
         // GLOBAL VARIABLE
-        var R_BIN_ID = _GET('requirement_bin')
-        console.log(R_BIN_ID)
-
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
         console.log(API_TOKEN)
         console.log(JSON.parse(USER_DATA))
+
+        let R_BIN_ID = "{{ $requirement_bin_id }}"
         // END OF GLOBAL VARIABLE
 
 
@@ -367,6 +349,7 @@
         });
         // END OF ACTIVATE FUNCTION
 
+        removeLoader()
     // END OF JQUERY FUNCTIONS
     });
 </script>

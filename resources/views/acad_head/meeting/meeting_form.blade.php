@@ -16,18 +16,16 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                             <label class="required-input">Meeting Type</label>
                             <select class="form-control js-example-basic-single" id="meeting_types_id" name="meeting_types_id">
                             </select>
-                        </div>                       
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-12">
+                        </div>       
+                        <div class="form-group col-md-6">
                             <label class="required-input">Agenda</label>
                             <input type="text" class="form-control" id="agenda" name="agenda"
                             placeholder="Agenda" tabindex="1" required>
-                        </div>
+                        </div>                
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
@@ -52,7 +50,7 @@
                     </div> 
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="required-input">Is Required</label>
+                            <label class="required-input">Is Required</label> 
                             <select class="form-control js-example-basic-single" id="is_required" name="is_required">
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>

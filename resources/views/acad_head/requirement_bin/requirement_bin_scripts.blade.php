@@ -6,6 +6,7 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
+        var BASE_API = APP_URL + '/api/v1/requirement_bin/'
         console.log(API_TOKEN)
         console.log(JSON.parse(USER_DATA))
         // END OF GLOBAL VARIABLE
@@ -14,14 +15,27 @@
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
-                    url: "http://127.0.0.1:8000/api/v1/requirement_bin/", 
+                    url: BASE_API, 
                     dataSrc: ''
                 },
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
                     { data: "title"},
-                    { data: "description"},
+                    { data: "requirement_list_type", render: function(data, type, row){
+                        let requirement_list_type = ''
+
+                        $.each(data, function(i){
+                            if(i < (data.length) - 1){
+                                requirement_list_type += data[i].requirement_type.title + ', '
+                            }
+                            else{
+                                requirement_list_type += data[i].requirement_type.title
+                            }
+                        })
+
+                        return requirement_list_type;
+                    }},
                     { data: "deadline"},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
@@ -34,13 +48,13 @@
                                                         <div style="width: 2rem">
                                                             <i class="fas fa-eye"></i>
                                                         </div>
-                                                        <div>View Requirement Bin</div>
+                                                        <div> View Requirement Bin</div>
                                                     </div>
                                                     <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
                                                         <div style="width: 2rem">
                                                             <i class="fas fa-edit"></i>
                                                         </div>
-                                                        <div>Edit Requirement Bin</div>
+                                                        <div> Edit Requirement Bin</div>
                                                     </div>
                                                     <div class="dropdown-divider"</div>
                                                 </div>
@@ -48,7 +62,7 @@
                                                     <div style="width: 2rem">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </div>
-                                                    <div style="color: red">Delete Requirement Bin</div>
+                                                    <div style="color: red"> Delete Requirement Bin</div>
                                                 </div>
                                             </div>
                                         </div>`;
@@ -70,7 +84,7 @@
 
         // REFRESH DATATABLE FUNCTION
         function refresh(){
-            let url = APP_URL+'/api/v1/requirement_bin/'
+            let url = BASE_API
 
             dataTable.ajax.url(url).load()
         }
@@ -81,7 +95,7 @@
         $('#createForm').on('submit', function(e){
             e.preventDefault();
 
-            var form_url = APP_URL+'/api/v1/requirement_bin/'
+            var form_url = BASE_API
             var form = $("#createForm").serializeArray();
             let data = {}
 
@@ -122,8 +136,7 @@
             var requirement_bin_id = this.id;
             // let form_url =APP_URL+'/api/v1/requirement_bin/'+requirement_bin_id
 
-            window.location.replace(APP_URL + '/admin/requirement_list_type?requirement_bin='+requirement_bin_id);
-            console.log(requirement_bin_id);
+            window.location.replace(APP_URL + '/acad_head/requirement_list_type/'+requirement_bin_id);
 
             // $.ajax({
             //     url: form_url,
@@ -154,7 +167,7 @@
         // EDIT FUNCTION
         $(document).on("click", ".btnEdit", function(){
             var id = this.id;
-            let form_url = APP_URL+'/api/v1/requirement_bin/'+id
+            let form_url = BASE_API+id
 
             $.ajax({
                 url: form_url,
@@ -188,7 +201,7 @@
         $('#updateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_edit').val();
-            var form_url = APP_URL+'/api/v1/requirement_bin/'+id
+            var form_url = BASE_API+id
 
             let data = {
                 "title": $('#title_edit').val(),
@@ -226,7 +239,7 @@
         // DEACTIVATE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = APP_URL+'/api/v1/requirement_bin/'+id
+            let form_url = BASE_API+id
 
             $.ajax({
                 url: form_url,
@@ -259,7 +272,7 @@
         $('#deactivateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_delete').val();
-            var form_url = APP_URL+'/api/v1/requirement_bin/destroy/'+id
+            var form_url = BASE_API+'/destroy/'+id
 
             $.ajax({
                 url: form_url,

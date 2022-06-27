@@ -22,7 +22,7 @@
                                 <th>ID</th>
                                 <th>Created at</th>
                                 <th>Title</th>
-                                <th>Description</th>
+                                <th>Requirement List Type</th>
                                 <th>Deadline</th>
                                 <th>Action</th>
                             </tr>

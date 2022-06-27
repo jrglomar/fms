@@ -2,12 +2,12 @@
 
 {{-- NAVBAR --}}
 @section('navbar')
-    @include('layouts.admin_navbar')
+    @include('layouts.acad_head_navbar')
 @endsection
 
 {{-- SIDEBAR --}}
 @section('sidebar')
-    @include('layouts.admin_sidebar')
+    @include('layouts.acad_head_sidebar')
 @endsection
 
 @section('section_header')
@@ -15,26 +15,26 @@
 @endsection
 
     {{-- MODAL --}}
-    @include('admin/requirement_bin/requirement_bin_modal')
+    @include('acad_head/meeting/meeting_modal')
 
     {{-- CONTENT --}}
     @section('content')
 
             {{-- FORM --}}
-            @include('admin/requirement_bin/requirement_bin_form')
+            @include('acad_head/meeting/meeting_form')
 
             {{-- DATATABLE --}}
-            @include('admin/requirement_bin/requirement_bin_datatable')
+            @include('acad_head/meeting/meeting_datatable')
     @endsection
 
 
 
 {{-- FOOTER --}}
 @section('footer')
-    @include('layouts.admin_footer')
+    @include('layouts.acad_head_footer')
 @endsection
 
 
 @section('script')
-    @include('admin/requirement_bin/requirement_bin_scripts')
+    @include('acad_head/meeting/meeting_scripts')
 @endsection

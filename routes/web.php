@@ -100,11 +100,6 @@ Route::group(['middleware' => ['role.admin'],
             return view('admin/activity_type/activity_type', ['page_title' => 'Activity Type']);
         })->name('admin_activity_type');
 
-        //MEETING
-        Route::get('/meeting', function () {
-            return view('admin/meeting/meeting', ['page_title' => 'Meeting']);
-        })->name('admin_meeting');
-
         //MEETING TYPE
         Route::get('/meeting_type', function () {
             return view('admin/meeting_type/meeting_type', ['page_title' => 'Meeting Type']);
@@ -114,11 +109,6 @@ Route::group(['middleware' => ['role.admin'],
         Route::get('/requirement_type', function () {
             return view('admin/requirement_type/requirement_type', ['page_title' => 'Requirement Type']);
         })->name('admin_requirement_type');
-
-        //REQUIREMENT BIN
-        Route::get('/requirement_bin', function () {
-            return view('admin/requirement_bin/requirement_bin', ['page_title' => 'Requirement Bin']);
-        })->name('admin_requirement_bin');
 
         //REQUIREMENT LIST TYPE
         Route::get('/requirement_list_type', function () {
@@ -146,5 +136,46 @@ Route::group(['middleware' => ['role.faculty'],
         Route::get('/profile', function () {
             return view('faculty/profile/profile', ['page_title' => 'Profile']);
         })->name('faculty_profile');
+
+});
+
+
+//-------------ACADEMIC HEAD----------------//
+
+Route::group(['middleware' => ['role.acadhead'],
+    'prefix' => '/acad_head',], function(){
+        
+    // ------------DASHBOARD--------------- //
+    Route::get('/dashboard', function () {
+        return view('acad_head/dashboard/dashboard', ['page_title' => 'Dashboard']);
+    })->name('acad_head_dashboard');
+
+    // ------------MEETING--------------- //
+    Route::get('/meeting', function () {
+        return view('acad_head/meeting/meeting', ['page_title' => 'Meeting']);
+    })->name('acad_head_meeting');
+
+    // ------------REQUIREMENTS BIN--------------- //
+    Route::get('/requirement_bin', function () {
+        return view('acad_head/requirement_bin/requirement_bin', ['page_title' => 'Requirements Bin']);
+    })->name('acad_head_requirement_bin');
+
+    // ------------REQUIREMENTS BIN--------------- //
+    Route::get('/requirement_list_type/{id}', function ($id) {
+        return view('acad_head/requirement_list_type/requirement_list_type', ['page_title' => 'Requirements Bin', 'requirement_bin_id' => $id]);
+    })->name('acad_head_requirement_list_type');
+
+});
+
+
+//-------------CHECKER----------------//
+
+Route::group(['middleware' => ['role.checker'],
+    'prefix' => '/checker',], function(){
+        
+    // ------------DASHBOARD--------------- //
+    Route::get('/dashboard', function () {
+        return view('checker/dashboard/dashboard', ['page_title' => 'Dashboard']);
+    })->name('checker_dashboard');
 
 });

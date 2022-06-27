@@ -23,10 +23,10 @@
                     { data: "title"},
                     { data: "meeting_type.title"},
                     { data: "agenda"},
-                    { data: "description"},
-                    { data: "start_time"},
+                    { data: "description"}, // remove this column
+                    { data: "start_time"}, // merge date (to be add), start_time, end_time
                     { data: "end_time"},
-                    { data: "is_required", render: function (data, type, row) {
+                    { data: "is_required", render: function (data, type, row) { // required
                           console.log(data)
                           if(data == 0)
                           {
@@ -186,11 +186,11 @@
                     $('#description_view').html(data.description);
                     $('#start_time_view').html(data.start_time);
                     $('#end_time_view').html(data.end_time);
-                    if(data.is_required == 0)
+                    if(data.is_required == 0) // true
                     {
                         data.is_required = "No"
                     }
-                    else if(data.is_required == 0)
+                    else
                     {
                         data.is_required = "Yes"
                     }

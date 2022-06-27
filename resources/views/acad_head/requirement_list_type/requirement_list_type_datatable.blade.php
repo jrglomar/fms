@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<div>
+<div hidden>
     <div class="row">
         <div class="col-12">
             <div class="card card-primary">
