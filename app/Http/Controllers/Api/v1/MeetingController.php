@@ -21,11 +21,11 @@ class MeetingController extends Controller
      */
     public function index()
     {
-        /* Fetching w/o relationship */
-            return Meeting::all();
+        // /* Fetching w/o relationship */
+        // return Meeting::all();
 
         /* Fetching w/ relationship */
-        // return Meeting::with('user', 'created_by_user')->get();
+        return Meeting::with('meeting_type')->get();
     }
 
     /**
@@ -76,7 +76,7 @@ class MeetingController extends Controller
         // Default
         return Meeting::find($id);
 
-        // return Meeting::with('user', 'created_by_user')->find($id);
+        // return Meeting::with('meeting_type')->find($id);
     }
 
     /**

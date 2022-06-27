@@ -29,11 +29,12 @@ class RequirementListType extends Model
 
         // [Declare relationships here]
             public function requirement_bin(){
-                return $this->belongsTo(RequirementBin::class)->withDefault();
+                return $this->belongsTo(RequirementBin::class, 'requirement_bin_id')->without('requirement_bin');
+                // return $this->belongsTo(RequirementBin::class)->withDefault();
             }
 
             public function requirement_type(){
-                return $this->belongsTo(RequirementType::class)->withDefault();
+                return $this->belongsTo(RequirementType::class, "requirement_type_id");
             }
         // End of [Declare relationships here]
 

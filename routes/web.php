@@ -100,6 +100,11 @@ Route::group(['middleware' => ['role.admin'],
             return view('admin/activity_type/activity_type', ['page_title' => 'Activity Type']);
         })->name('admin_activity_type');
 
+        //MEETING
+        Route::get('/meeting', function () {
+            return view('admin/meeting/meeting', ['page_title' => 'Meeting']);
+        })->name('admin_meeting');
+
         //MEETING TYPE
         Route::get('/meeting_type', function () {
             return view('admin/meeting_type/meeting_type', ['page_title' => 'Meeting Type']);
@@ -110,7 +115,17 @@ Route::group(['middleware' => ['role.admin'],
             return view('admin/requirement_type/requirement_type', ['page_title' => 'Requirement Type']);
         })->name('admin_requirement_type');
 
-        //REQUIREMENT TYPE
+        //REQUIREMENT BIN
+        Route::get('/requirement_bin', function () {
+            return view('admin/requirement_bin/requirement_bin', ['page_title' => 'Requirement Bin']);
+        })->name('admin_requirement_bin');
+
+        //REQUIREMENT LIST TYPE
+        Route::get('/requirement_list_type', function () {
+            return view('admin/requirement_list_type/requirement_list_type', ['page_title' => 'Requirement List Type']);
+        })->name('admin_requirement_list_type');
+
+        //ACTIVITY
         Route::get('/activity', function () {
             return view('admin/activity/activity', ['page_title' => 'Activity']);
         })->name('Activity');
