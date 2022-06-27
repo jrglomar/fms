@@ -16,6 +16,13 @@
         let MEETING_ID = "{{ $meeting_id }}"
         // END OF GLOBAL VARIABLE
 
+        // TIME IN BUTTON FUNCTION
+        timeIn = () => 
+        {
+            alert("Under Construction!");
+        }
+        // END TIME IN BUTTON FUNCTION
+
         // FUNCTION TO CHANGE CONTENT
         function getMeetingDetails(){
             $.ajax({
@@ -86,7 +93,7 @@
                     {
                         // For meeting_view_content> div#row_right - button top
                         var row_right_top = '<div class="col-12">' +
-                                                '<a href="#" class="btn btn-icon icon-left btn-success btn-lg button-block"><i class="fas fa-check"></i> Time in</a>' +
+                                                '<button type="button" onClick="return timeIn()" class="btn btn-icon icon-left btn-success btn-lg button-block"><i class="fas fa-check"></i> Time in</button>' +
                                             '</div>' +
                                             '<br>';
 
@@ -142,7 +149,6 @@
                 error: function ({ responseJSON }) {},
             });
         };
-
         getMeetingDetails();
         // END FUNCTION TO CHANGE CONTENT
 
