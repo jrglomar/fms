@@ -77,7 +77,8 @@
                     {{-- ACTIVITY MANAGEMENT --}}
                     <li class="menu-header">Activity Management</li>
                     <li class="dropdown {{ Request::segment(2) == 'activity_type' || 
-                                            Request::segment(2) == 'activity'
+                                            Request::segment(2) == 'activity' ||
+                                            Request::segment(2) == 'activity_view'
                                         ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
