@@ -21,7 +21,7 @@ class DesignationsSeeder extends Seeder
     {
         // \App\Models\Designation::factory(10)->create();
         DB::table('designations')->insert([
-            'id' => Str::uuid(),
+            'id' => 'dc7c6ba9-da51-4c2d-aacc-43c8f13b6af8',
             'created_at' => '2022-06-22 16:33:33',
             'updated_at' => '2022-06-22 16:33:33',
             'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',
@@ -29,7 +29,7 @@ class DesignationsSeeder extends Seeder
             'description' => 'Research Professor'
         ]);
         DB::table('designations')->insert([
-            'id' => Str::uuid(),
+            'id' => 'fdd1cd40-1da3-4773-81c7-6be2131a73f2',
             'created_at' => '2022-06-22 16:33:33',
             'updated_at' => '2022-06-22 16:33:33',
             'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',

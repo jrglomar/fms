@@ -119,6 +119,7 @@
                 var API_TOKEN = localStorage.getItem("API_TOKEN")
                 var USER_DATA = localStorage.getItem("USER_DATA")
                 let new_user_data = (JSON.parse(USER_DATA))
+                console.log(new_user_data)
                 let middle_name = ''
                 let user_role = ''
 
@@ -128,7 +129,7 @@
                     $('#userNameNavbar').html('Not set')
                 }
                 else{
-      
+                    $('#sidebar_icon').attr("src", APP_URL + "/" + new_user_data.faculty.image)
                     if(new_user_data.faculty.middle_name == null){
                         middle_name = ''
                     }

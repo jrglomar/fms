@@ -31,21 +31,21 @@ class RolesSeeder extends Seeder
             'title' => 'Admin',
         ]);
         DB::table('roles')->insert([
-            'id' => Str::uuid(),
+            'id' => 'b386fdb9-5197-4ac2-b198-6384323af036',
             'created_at' => '2022-06-22 16:33:28',
             'updated_at' => '2022-06-22 16:33:28',
             'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',
             'title' => 'Faculty',
         ]);
         DB::table('roles')->insert([
-            'id' => Str::uuid(),
+            'id' => 'da39b66a-9fcb-405f-a79e-60defd788ea8',
             'created_at' => '2022-06-22 16:33:28',
             'updated_at' => '2022-06-22 16:33:28',
             'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',
             'title' => 'Checker',
         ]);
         DB::table('roles')->insert([
-            'id' => Str::uuid(),
+            'id' => 'd2a81b5a-0228-48e2-8ccc-1a4820e26fa9',
             'created_at' => '2022-06-22 16:33:28',
             'updated_at' => '2022-06-22 16:33:28',
             'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',

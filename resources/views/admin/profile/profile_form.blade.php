@@ -1,16 +1,17 @@
 {{-- CREATE FORM --}}
 <div class="row">
     <div class="col-md-4">
-        <div class="card card-primary">
+        <div class="card card-success">
             <div class="card-header">
                 <h4 class="text-dark"> <span id="create_card_title">User </span>Settings</h4>
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-center">
                     <button class="btn" id="uploadImage" data-toggle="tooltip" data-placement="bottom" title="Upload Image">
-                        <img alt="image" src="https://demo.getstisla.com/assets/img/avatar/avatar-3.png" style="width:120px" class="rounded-circle profile-widget-picture">
+                        <img alt="faculty_image" src="{{ URL::to('/')}}/images/faculty_images/admin.jpg" style="width:120px" class="rounded-circle profile-widget-picture">
                     </button>                  
                   </div>
+
                 <form id="updateUserForm" class="needs-validation" novalidate="">
                     {{-- EMAIL --}}
                     <div class="form-row">

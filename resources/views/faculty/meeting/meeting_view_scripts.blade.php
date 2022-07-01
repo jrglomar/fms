@@ -19,7 +19,7 @@
         // TIME IN BUTTON FUNCTION
         timeIn = () => 
         {
-            alert("Under Construction!");
+            swalAlert('warning', 'This function is under maintenance!')
         }
         // END TIME IN BUTTON FUNCTION
 
@@ -88,8 +88,12 @@
                                         '</div>' + 
                                     '</div>' ;
 
+                    let arrayOfUserRole = []
+                    $.each(USER_ROLE.user_role, function(i){
+                        arrayOfUserRole.push(USER_ROLE.user_role[i].role.title)
+                    })
                     // CHECK THE USER ROLE
-                    if (USER_ROLE.user_role[0].role.title == "Faculty")
+                    if(jQuery.inArray("Faculty", arrayOfUserRole) !== -1)
                     {
                         // For meeting_view_content> div#row_right - button top
                         var row_right_top = '<div class="col-12">' +

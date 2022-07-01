@@ -82,7 +82,14 @@
                                     '</div>' ;
 
                     // CHECK THE USER ROLE
-                    if(USER_ROLE.user_role[0].role.title == "Academic Head")
+
+                    let arrayOfUserRole = []
+                    $.each(USER_ROLE.user_role, function(i){
+                        arrayOfUserRole.push(USER_ROLE.user_role[i].role.title)
+                        console.log('test')
+                    })
+                    // if(USER_ROLE.user_role[0].role.title == "Academic Head")
+                    if(jQuery.inArray("Academic Head", arrayOfUserRole) !== -1)
                     {
                         // For meeting_view_content> div#row_right - card bottom
                         var row_right_bottom = '<div class="card card-success">' +

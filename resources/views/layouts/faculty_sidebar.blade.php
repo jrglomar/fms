@@ -10,7 +10,7 @@
                     <div class="p-3 hide-sidebar-mini">
                         <div class="media">
                             <figure class="avatar mr-2 avatar">
-                                <!-- <img class="mr-3 rounded-circle" src="../../public/img/avatar/avatar-1.png" -->
+                                <img id="sidebar_icon" class="mr-3 rounded-circle" src="" alt="Avatar image"> 
                                     <!-- alt="Avatar image"> -->
                                 <i class="avatar-presence online"></i>
                             </figure>
@@ -37,7 +37,7 @@
                             <li class="dropdown {{ Request::segment(2) == 'meeting'
                                                 ? 'active' : ''}}">
                                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                                        class="fas fa-book-reader"></i>
+                                        class="fas fa-calendar"></i>
                                 <span>Meeting</span></a>
                                 <ul class="dropdown-menu">
                                     <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->

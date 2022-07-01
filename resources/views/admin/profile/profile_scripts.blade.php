@@ -182,8 +182,9 @@
                     }
 
                     // $("input[name=gender]").val(data.faculty.gender);
-                    $("input[name=gender][value=" + data.faculty.gender + "]").attr('checked', 'checked');
+                    $("input[name=gender][value=" + data.faculty.gender + "]").attr('checked', 'checked')
 
+                    $('#faculty_image').attr("src", APP_URL + "/" + data.faculty.image)
                     $('#faculty_type_id').val(data.faculty.faculty_type_id);
                     $('#academic_rank_id').val(data.faculty.academic_rank_id);
                     $('#designation_id').val(data.faculty.designation_id);
