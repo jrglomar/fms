@@ -16,12 +16,15 @@
 
     {{-- CONTENT --}}
     @section('content')
-
+        @include('admin.dashboard.dashboard_content')
     @endsection
-
 
 {{-- FOOTER --}}
 @section('footer')
     @include('layouts.faculty_footer')
+@endsection
+
+@section('script')
+    @include('admin.dashboard.dashboard_scripts')
 @endsection
 

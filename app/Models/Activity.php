@@ -20,11 +20,13 @@ class Activity extends Model
         "active_status",
         "title",
         "memorandum_file_directory",
+        "location",
         "description",
         "status",
         "start_datetime",
         "end_datetime",
-        "activity_type_id"
+        "activity_type_id",
+        "is_required"
     ];
 
     protected $dates = ['deleted_at'];

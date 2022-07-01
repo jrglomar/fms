@@ -23,10 +23,14 @@ class CreateActivitiesTable extends Migration
 
             $table->string('title');
             $table->string('memorandum_file_directory');
+            $table->string('location');
             $table->longText('description');
             $table->string('status');
             $table->dateTime('start_datetime');
             $table->dateTime('end_datetime');
+
+            //Addditional column
+            $table->boolean('is_required');
 
             $table->foreignUuid('activity_type_id')->nullable();
             $table->foreign('activity_type_id')->references('id')->on('activity_types');

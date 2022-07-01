@@ -100,11 +100,6 @@ Route::group(['middleware' => ['role.admin'],
             return view('admin/activity_type/activity_type', ['page_title' => 'Activity Type']);
         })->name('admin_activity_type');
 
-        //MEETING
-        Route::get('/meeting', function () {
-            return view('admin/meeting/meeting', ['page_title' => 'Meeting']);
-        })->name('admin_meeting');
-
         //MEETING TYPE
         Route::get('/meeting_type', function () {
             return view('admin/meeting_type/meeting_type', ['page_title' => 'Meeting Type']);
@@ -115,20 +110,11 @@ Route::group(['middleware' => ['role.admin'],
             return view('admin/requirement_type/requirement_type', ['page_title' => 'Requirement Type']);
         })->name('admin_requirement_type');
 
-        //REQUIREMENT BIN
-        Route::get('/requirement_bin', function () {
-            return view('admin/requirement_bin/requirement_bin', ['page_title' => 'Requirement Bin']);
-        })->name('admin_requirement_bin');
-
         //REQUIREMENT LIST TYPE
         Route::get('/requirement_list_type', function () {
             return view('admin/requirement_list_type/requirement_list_type', ['page_title' => 'Requirement List Type']);
         })->name('admin_requirement_list_type');
 
-        //ACTIVITY
-        Route::get('/activity', function () {
-            return view('admin/activity/activity', ['page_title' => 'Activity']);
-        })->name('Activity');
 });
 
 
@@ -146,5 +132,71 @@ Route::group(['middleware' => ['role.faculty'],
         Route::get('/profile', function () {
             return view('faculty/profile/profile', ['page_title' => 'Profile']);
         })->name('faculty_profile');
+
+    // ------------MEETING--------------- //
+    Route::get('/meeting', function () {
+        return view('faculty/meeting/meeting', ['page_title' => 'Meeting']);
+    })->name('faculty_meeting');
+
+        // ------------MEETING - VIEW --------------- //
+        Route::get('/meeting/{id}', function ($id) {
+            return view('faculty/meeting/meeting_view', ['page_title' => 'Meeting', 'meeting_id' => $id]);
+        })->name('faculty_meeting_view');    
+
+});
+
+
+//-------------ACADEMIC HEAD----------------//
+
+Route::group(['middleware' => ['role.acadhead'],
+    'prefix' => '/acad_head',], function(){
+        
+    // ------------DASHBOARD--------------- //
+    Route::get('/dashboard', function () {
+        return view('acad_head/dashboard/dashboard', ['page_title' => 'Dashboard']);
+    })->name('acad_head_dashboard');
+
+    // ------------MEETING--------------- //
+    Route::get('/meeting', function () {
+        return view('acad_head/meeting/meeting', ['page_title' => 'Meeting']);
+    })->name('acad_head_meeting');
+
+        // ------------MEETING - VIEW --------------- //
+        Route::get('/meeting/{id}', function ($id) {
+            return view('acad_head/meeting/meeting_view', ['page_title' => 'Meeting', 'meeting_id' => $id]);
+        })->name('acad_head_meeting_view');
+
+    // ------------REQUIREMENTS BIN--------------- //
+    Route::get('/requirement_bin', function () {
+        return view('acad_head/requirement_bin/requirement_bin', ['page_title' => 'Requirements Bin']);
+    })->name('acad_head_requirement_bin');
+
+    // ------------REQUIREMENTS LIST TYPE--------------- //
+    Route::get('/requirement_list_type/{id}', function ($id) {
+        return view('acad_head/requirement_list_type/requirement_list_type', ['page_title' => 'Requirements Bin', 'requirement_bin_id' => $id]);
+    })->name('acad_head_requirement_list_type');
+
+    // -----------------ACTIVITY------------------ //
+    Route::get('/activity', function () {
+        return view('acad_head/activity/activity', ['page_title' => 'Activity']);
+    })->name('Activity');
+
+    // --------------ACTIVITY VIEW----------------- //
+    Route::get('/activity_view/{id}', function ($id) {
+        return view('acad_head/activity_view/activity_view', ['page_title' => 'Activity', 'activity_id'=> $id]);
+    })->name('ActivityView');
+
+});
+
+
+//-------------CHECKER----------------//
+
+Route::group(['middleware' => ['role.checker'],
+    'prefix' => '/checker',], function(){
+        
+    // ------------DASHBOARD--------------- //
+    Route::get('/dashboard', function () {
+        return view('checker/dashboard/dashboard', ['page_title' => 'Dashboard']);
+    })->name('checker_dashboard');
 
 });

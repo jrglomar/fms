@@ -2,10 +2,10 @@
         <div class="main-sidebar sidebar-style-2">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="index.html">PUPQCSS</a>
+                        <a href="index.html">PUPQCFMS</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">SS</a>
+                        <a href="index.html">FMS</a>
                     </div>
                     <div class="p-3 hide-sidebar-mini">
                         <div class="media">
@@ -15,8 +15,8 @@
                                 <i class="avatar-presence online"></i>
                             </figure>
                             <div class="media-body">
-                                <h6 class="mt-1 mb-0"> Faculty Name</h6>
-                                <p class="mb-0">Faculty</p>
+                                <h6 class="mt-1 mb-0" id="userNameSidebar"></h6>
+                                <p class="mb-0" id="userRoleSidebar"></p>
                             </div>
                         </div>
                     </div>
@@ -32,6 +32,22 @@
                         <li class=""><a class="nav-link" href="/faculty/dashboard"><i class="fas fa-th-large"></i>
                                 <span>Dashboard</span></a></li>
 
+                            {{-- MEETING MANAGEMENT --}}
+                            <li class="menu-header">Meeting Management</li>
+                            <li class="dropdown {{ Request::segment(2) == 'meeting'
+                                                ? 'active' : ''}}">
+                                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                        class="fas fa-book-reader"></i>
+                                <span>Meeting</span></a>
+                                <ul class="dropdown-menu">
+                                    <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                    <li class="{{ Request::segment(2) == 'meeting' ? 'active' : ''}}">
+                                        <a class="nav-link" href="/faculty/meeting">
+                                            <span>Meetings</span></a>
+                                    </li>
+                                </ul>
+                            </li>        
+
                         <li class="menu-header">Account Management</li>
                         <li class="dropdown {{ Request::segment(2) == 'role' ||
                                                 Request::segment(2) == 'user_role'
@@ -46,8 +62,8 @@
                             </ul>
 
                         </li>
-
                     </ul>
+
 
                     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
                         <button type="button" class="btn btn-danger btn-lg btn-block btn-icon-split logout-btn" onclick="location.href='/logout'"

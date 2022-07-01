@@ -23,6 +23,8 @@ class CreateMeetingsTable extends Migration
  
              // Fillables
              $table->string('title');
+             $table->string('location');
+             $table->date('date');
              $table->time('start_time');
              $table->time('end_time');
              $table->string('agenda')->nullable();
