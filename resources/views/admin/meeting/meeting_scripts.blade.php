@@ -14,7 +14,7 @@
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
-                    url: "http://127.0.0.1:8000/api/v1/meeting/", 
+                    url: "http://127.0.0.1:8000/api/v1/meeting/",
                     dataSrc: ''
                 },
                 "columns": [
@@ -39,7 +39,7 @@
                         }
                     },
                     { data: "status"},
-                    { data: "deleted_at", render: function(data, type, row){    
+                    { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
                                     return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
                                     <div class="dropdown-menu dropdown-menu-right">
@@ -83,9 +83,9 @@
                 url: APP_URL+'/api/v1/meeting_type/',
                 type: "GET",
                 dataType: "JSON",
-                success: function (responseData) 
-                {   
-                    $.each(responseData, function (i, dataOptions) 
+                success: function (responseData)
+                {
+                    $.each(responseData, function (i, dataOptions)
                     {
                         var options = "";
 
@@ -99,7 +99,7 @@
                         $("#meeting_types_id").append(options);
                         $("#meeting_types_id_edit").append(options);
                     });
-                    
+
                 },
                 error: function ({ responseJSON }) {},
             });
@@ -357,6 +357,8 @@
         });
         // END OF ACTIVATE FUNCTION
 
+
+        removeLoader()
     // END OF JQUERY FUNCTIONS
     });
 </script>
