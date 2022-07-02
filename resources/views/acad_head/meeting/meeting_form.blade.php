@@ -68,11 +68,14 @@
                             <label class="required-input">Is Required</label> 
                             <select class="form-control js-example-basic-single" id="is_required" name="is_required"
                                 required
-                                data-parsley-errors-container="#meeting-type-errors">
+                                data-parsley-errors-container="#is-required-errors">
                                     <option disabled selected>Choose between Yes or No</option>>
                                     <option value="0">No</option>
                                     <option value="1">Yes</option>
                             </select>
+                            <ul class="parsley-err-msg">
+                                <li id="is-required-errors"></li>
+                            </ul>
                         </div>                       
                     </div>
                     <div class="row">
