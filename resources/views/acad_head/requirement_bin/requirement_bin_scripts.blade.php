@@ -37,7 +37,6 @@
                         return requirement_list_type;
                     }},
                     { data: "deadline", render: function(data, type, row){
-                        console.log(data)
                         return `${moment(data).format('LLL')}`
                     }},
                     { data: "deleted_at", render: function(data, type, row){
@@ -119,13 +118,14 @@
                     "Content-Type": "application/json"
                 },
                 success: function(data){
-                    console.log(data)
+                    notification('success', 'Requirement Bin')
                     $("#createForm").trigger("reset")
                     $("#create_card").collapse("hide")
                     refresh();
                 },
                 error: function(error){
                     console.log(error)
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
                 }
@@ -191,6 +191,7 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -224,10 +225,12 @@
                 },
 
                 success: function(data){
+                    notification('info', 'Requirement Bin')
                     refresh()
                     $('#editModal').modal('hide');
                 },
                 error: function(error){
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -262,6 +265,7 @@
                     $('#deactivateModal').modal('show');
                 },
                 error: function(error){
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -287,11 +291,13 @@
                 },
 
                 success: function(data){
+                    notification('error', 'Requirement Bin')
                     refresh()
                     $('#deactivateModal').modal('hide');
                 },
                 error: function(error){
                     console.log(error)
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
                 }

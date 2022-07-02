@@ -36,15 +36,15 @@
                     { data: "status", render: function(data, type, row){
                         if(data == 'Inactive'){
                             return `</div>
-                                        <button type="button" class="btn btn-sm btn-warning btnViewDetails" id="${row.id}">
-                                        <div>Inactive / Update User Details</div>
-                                    </button>`
+                                        <span class="badge badge-warning" id="${row.id}">
+                                        <div>Inactive</div>
+                                    </span>`
                         }
                         else{
                             return `</div>
-                                        <button type="button" class="btn btn-sm  btn-success btnViewDetails" id="${row.id}">
-                                        <div>Active / Update User Details</div>
-                                    </button>`
+                                        <span class="badge badge-success" id="${row.id}">
+                                        <div>Active</div>
+                                    </sp>`
                         }
                     }},
                     { data: "deleted_at", render: function(data, type, row){
@@ -53,16 +53,16 @@
                                     <div class="text-center dropdown">
                                         <div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
+                                            <div class="dropdown-item d-flex btnViewDetails" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                            <div>View User</div></div>
+                                            <div>View</div></div>
                                             <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
                                                 <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                                <div>Edit User</div></div>
+                                                <div>Edit</div></div>
                                                 <div class="dropdown-divider"</div></div>
                                                 <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
                                                 <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                                <div style="color: red">Delete User</div>
+                                                <div style="color: red">Delete</div>
                                             </div>
                                     </div>`;
                                 }
@@ -124,12 +124,14 @@
                     "Content-Type": "application/json"
                 },
                 success: function(data){
+                    notification('success', 'User')
                     $("#createForm").trigger("reset")
                     $("#create_card").collapse("hide")
                     refresh();
                 },
                 error: function(error){
                     console.log(error)
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
                 }
@@ -161,6 +163,12 @@
                     $('#status_view').html(data.status);
 
                     $('#viewModal').modal('show');
+                },
+                error: function(error){
+                    swalAlert('warning', error.responseJSON.message)
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
                 }
             // ajax closing tag
             })
@@ -189,6 +197,7 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -220,10 +229,12 @@
                 },
 
                 success: function(data){
+                    notification('info', 'User')
                     refresh()
                     $('#editModal').modal('hide');
                 },
                 error: function(error){
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -256,6 +267,7 @@
                     $('#deactivateModal').modal('show');
                 },
                 error: function(error){
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -269,7 +281,7 @@
         $('#deactivateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_delete').val();
-            var form_url = BASE_API+'/destroy'+id
+            var form_url = BASE_API+'destroy/'+id
 
             $.ajax({
                 url: form_url,
@@ -281,10 +293,12 @@
                 },
 
                 success: function(data){
+                    notification('error', 'User')
                     refresh()
                     $('#deactivateModal').modal('hide');
                 },
                 error: function(error){
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)

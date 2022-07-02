@@ -36,5 +36,6 @@
 
 
 @section('script')
+    @include('layouts/global_custom_scripts')
     @include('admin/role/role_scripts')
 @endsection

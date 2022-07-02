@@ -8,9 +8,32 @@
             icon: icon,
             text: text
         })
-    }
+    };
 
+    function notification(type, name){
+        if(type == 'success'){
+            return toastr[type](`${name} added successfully.`)
+        }
+        else if(type == 'info'){
+            return toastr[type](`${name} updated sucessfully.`)
+        }
+        else if(type == 'error'){
+            return toastr[type](`${name} removed.`)
+        }
+        else if(type == 'custom'){
+            return toastr['success'](`${name}`)
+        }
+    }
+    
     $(document).ready(function(){
+
+        // FUNCTION TO RESET FORM WHEN CANCEL BUTTON CLICKED
+        $("#create_cancel_btn").on('click', function() {
+            $("#createForm").trigger("reset")
+            $("#create_card").collapse("hide")
+            $('#createForm').parsley().reset();
+        });
+
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
@@ -43,5 +66,11 @@
             $('#userRoleSidebar').html(user_role)
             $('#userNameNavbar').html(new_user_data.faculty.first_name)
         }
+
+        $("#create_cancel_btn").on('click', function() {
+            $("#createForm").trigger("reset")
+            $("#create_card").collapse("hide")
+            $('#createForm').parsley().reset();
+        });
     })
 </script>
