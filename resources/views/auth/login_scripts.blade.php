@@ -5,10 +5,13 @@
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
+        var IS_LOGGED_IN = "{{ Auth::check() }}"
         // END OF GLOBAL VARIABLE
 
+        console.log("{{ Auth::check() }}")
+
         function checkLoggedIn(){
-            if(localStorage.getItem("USER_DATA") != null){
+            if(IS_LOGGED_IN == true){
                 let USER_DATA = localStorage.getItem("USER_DATA")
                 let new_user_data = (JSON.parse(USER_DATA))
                 console.log(new_user_data)
@@ -39,7 +42,7 @@
                 removeLoader()
             }
         }
-        
+        // removeLoader()
         checkLoggedIn()
 
         $('#loginForm').on('submit', function(e){
@@ -53,7 +56,6 @@
                 data[[this.name]] = this.value;
             })
 
-            console.log(JSON.stringify(data))
             // ajax opening tag
             $.ajax({
                 url: form_url,
@@ -74,8 +76,10 @@
                     $.each(data.user.user_role, function(i){
                         role.push(data.user.user_role[i].role.title)
                     })
+
+                    notification('custom', 'Login Success')
                     
-                    toastr.success('Login Success')
+                    // toastr.success('Login Success')
                     setInterval(function(){
                         if(role.includes('Admin')){
                         window.location.href = "/admin/dashboard"
@@ -95,7 +99,7 @@
                     }, 2000)
                 },
                 error: function(error){
-                    swalAlert('warning', `${error.responseJSON.message}`)
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)

@@ -292,10 +292,14 @@
                                 "Content-Type": "application/json"
                             },
                             success: function(data){
+                                notification('info', 'Faculty Details')
                                 console.log('Update Success')
-                                location.reload();
+                                setInterval(() => {
+                                    location.reload();
+                                }, 1500);
                             },
                             error: function(error){
+                                swalAlert('warning', error.responseJSON.message)
                                 console.log(error)
                                 console.log(`message: ${error.responseJSON.message}`)
                                 console.log(`status: ${error.status}`)
@@ -319,10 +323,14 @@
                                 "Content-Type": "application/json"
                             },
                             success: function(data){
+                                notification('success', 'Faculty Details')
                                 console.log('Create Success')
-                                location.reload();
+                                setInterval(() => {
+                                    location.reload();
+                                }, 1500);
                             },
                             error: function(error){
+                                swalAlert('warning', error.responseJSON.message)
                                 console.log(error)
                                 console.log(`message: ${error.responseJSON.message}`)
                                 console.log(`status: ${error.status}`)
@@ -332,6 +340,7 @@
                     }
                 },
                 error: function(error){
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)

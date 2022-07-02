@@ -53,7 +53,7 @@
             </div>
             <div class="card-body">
 
-                <form id="updateForm" class="needs-validation" novalidate="">
+                <form id="updateForm" data-parsley-validate>
                     
 
                     {{-- DESIGNATION, ACAD RANK, FACULTY TYPES --}}
