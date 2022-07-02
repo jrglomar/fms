@@ -9,13 +9,6 @@
         var BASE_API = APP_URL + '/api/v1/activity_type/'
         // END OF GLOBAL VARIABLE
 
-
-        // TOASTER NOTIF
-        function notification(type, message){
-            return toastr[type](message);
-        }
-        //
-        
         // DATA TABLES FUNCTION
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
