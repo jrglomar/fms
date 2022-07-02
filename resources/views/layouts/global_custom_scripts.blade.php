@@ -8,7 +8,7 @@
             icon: icon,
             text: text
         })
-    }
+    };
 
     function notification(type, name){
         if(type == 'success'){
@@ -24,8 +24,16 @@
             return toastr['success'](`${name}`)
         }
     }
-
+    
     $(document).ready(function(){
+
+        // FUNCTION TO RESET FORM WHEN CANCEL BUTTON CLICKED
+        $("#create_cancel_btn").on('click', function() {
+            $("#createForm").trigger("reset")
+            $("#create_card").collapse("hide")
+            $('#createForm').parsley().reset();
+        });
+
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
