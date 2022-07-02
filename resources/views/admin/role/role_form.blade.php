@@ -6,7 +6,7 @@
                 <h4 class="text-dark"> <span id="create_card_title">Create </span>{{ $page_title }}</h4>
             </div>
 
-            <form id="createForm">
+            <form id="createForm" data-parsley-validate>
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-md-12">

@@ -119,7 +119,6 @@
                             <div class="form-group col-md-12">
                                 <label class="required-input">Meeting Type</label>
                                 <select class="form-control js-example-basic-single select2" id="meeting_types_id_edit" name="meeting_types_id_edit">
-                                    <option disabled selected>List of Meeting/s</option>
                                 </select>
                             </div>   
                             <div class="form-group col-md-12">

@@ -28,7 +28,7 @@
                             <select class="form-control js-example-basic-single select2" id="meeting_types_id" name="meeting_types_id" 
                                 required
                                 data-parsley-errors-container="#meeting-type-errors">
-                                <option disabled selected>List of Meeting/s</option>
+                                    <option disabled selected>List of Meeting/s</option>
                             </select>
                             <ul class="parsley-err-msg">
                                 <li id="meeting-type-errors"></li>
@@ -66,9 +66,12 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label class="required-input">Is Required</label> 
-                            <select class="form-control js-example-basic-single" id="is_required" name="is_required">
-                                <option value="0">No</option>
-                                <option value="1">Yes</option>
+                            <select class="form-control js-example-basic-single" id="is_required" name="is_required"
+                                required
+                                data-parsley-errors-container="#meeting-type-errors">
+                                    <option disabled selected>Choose between Yes or No</option>>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
                             </select>
                         </div>                       
                     </div>
