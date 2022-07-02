@@ -98,7 +98,7 @@
                     $("#create_card").collapse("hide")
                     refresh();
 
-                    notification("success", "New activity type added")
+                    notification("success", "Activity Type")
                     
                 },
                 error: function(error){
@@ -201,7 +201,7 @@
                     refresh()
                     $('#editModal').modal('hide');
 
-                    notification("success", "Edited successfully")
+                    notification("info", "Activity Type")
                 },
                 error: function(error){
                     console.log(error)
@@ -269,7 +269,7 @@
                     refresh()
                     $('#deactivateModal').modal('hide');
 
-                    notification("info", "Deleted successfully")
+                    notification("error", "Activity Type")
                 },
                 error: function(error){
                     console.log(error)

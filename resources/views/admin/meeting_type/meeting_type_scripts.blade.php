@@ -96,7 +96,7 @@
                     $("#create_card").collapse("hide")
                     refresh();
 
-                    notification("success", "New meeting type added")
+                    notification("success", "Meeting Type")
                 },
                 error: function(error){
                     console.log(error)
@@ -198,7 +198,7 @@
                     refresh()
                     $('#editModal').modal('hide');
 
-                    notification("success", "Edited successfully")
+                    notification("info", "Meeting Type")
                 },
                 error: function(error){
                     console.log(error)
@@ -264,7 +264,7 @@
                     refresh()
                     $('#deactivateModal').modal('hide');
 
-                    notification("info", "Deleted successfully")
+                    notification("error", "Meeting Type")
                 },
                 error: function(error){
                     console.log(error)

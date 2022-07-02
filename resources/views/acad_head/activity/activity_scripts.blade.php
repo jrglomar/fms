@@ -178,11 +178,15 @@
                             $("#createForm").trigger("reset")
                             $("#create_card").collapse("hide")
                             refresh();
+
+                            notification("success", "Activity")
                         },
                         error: function(error){
                             console.log(error)
                             console.log(`message: ${error.responseJSON.message}`)
                             console.log(`status: ${error.status}`)
+
+                            swalAlert('warning', error.responseJSON.message)
                         }
                     //ajax closing tag
                     })
@@ -232,11 +236,15 @@
                                 $("#createForm").trigger("reset")
                                 $("#create_card").collapse("hide")
                                 refresh();
+
+                                notification("success", "Activity")
                             },
                             error: function(error){
                                 console.log(error)
                                 console.log(`message: ${error.responseJSON.message}`)
                                 console.log(`status: ${error.status}`)
+
+                                swalAlert('warning', error.responseJSON.message)
                             }
                         //ajax closing tag
                         })
@@ -245,6 +253,8 @@
                         console.log(error)
                         console.log(`message: ${error.responseJSON.message}`)
                         console.log(`status: ${error.status}`)
+
+                        swalAlert('warning', error.responseJSON.message)
                     }
                 })
             }
@@ -390,11 +400,15 @@
                     success: function(data){
                         refresh()
                         $('#editModal').modal('hide');
+
+                        notification("info", "Activity")
                     },
                     error: function(error){
                         console.log(error)
                         console.log(`message: ${error.responseJSON.message}`)
                         console.log(`status: ${error.status}`)
+
+                        swalAlert('warning', error.responseJSON.message)
                     }
 
                 })
@@ -456,11 +470,15 @@
                             success: function(data){
                                 refresh()
                                 $('#editModal').modal('hide');
+
+                                notification("info", "Activity")
                             },
                             error: function(error){
                                 console.log(error)
                                 console.log(`message: ${error.responseJSON.message}`)
                                 console.log(`status: ${error.status}`)
+
+                                swalAlert('warning', error.responseJSON.message)
                             }
 
                         })
@@ -521,11 +539,15 @@
                 success: function(data){
                     refresh()
                     $('#deactivateModal').modal('hide');
+
+                    notification("error", "Activity")
                 },
                 error: function(error){
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+
+                    swalAlert('warning', error.responseJSON.message)
                 }
             // ajax closing tag
             })

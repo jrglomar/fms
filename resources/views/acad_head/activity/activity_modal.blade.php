@@ -155,7 +155,7 @@
                             <div class="form-group col-md-12">
                                 <label class="required-input">Memorandum</label>
                                 <input hidden type="text" id="memorandum_path">
-                                <input type="file" class="form-control" id="memorandum_file_directory_edit" name="memorandum_file_directory_edit"
+                                <input type="file" accept=".jpg, .png, .jpeg, .pdf" class="form-control" id="memorandum_file_directory_edit" name="memorandum_file_directory_edit"
                                 tabindex="1" required>
                             </div>
                         </div>

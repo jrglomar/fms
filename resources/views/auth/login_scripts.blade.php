@@ -40,7 +40,7 @@
             }
         }
         
-        checkLoggedIn()
+        //checkLoggedIn()
 
         $('#loginForm').on('submit', function(e){
             e.preventDefault()
@@ -105,6 +105,7 @@
         })
 
     // END OF JQUERY FUNCTIONS
+    removeLoader()
     });
 </script>
 
