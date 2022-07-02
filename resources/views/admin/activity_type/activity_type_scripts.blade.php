@@ -9,6 +9,13 @@
         var BASE_API = APP_URL + '/api/v1/activity_type/'
         // END OF GLOBAL VARIABLE
 
+
+        // TOASTER NOTIF
+        function notification(type, message){
+            return toastr[type](message);
+        }
+        //
+        
         // DATA TABLES FUNCTION
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
@@ -90,8 +97,12 @@
                     $("#createForm").trigger("reset")
                     $("#create_card").collapse("hide")
                     refresh();
+
+                    notification("success", "New activity type added")
+                    
                 },
                 error: function(error){
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -189,11 +200,15 @@
                 success: function(data){
                     refresh()
                     $('#editModal').modal('hide');
+
+                    notification("success", "Edited successfully")
                 },
                 error: function(error){
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+
+                    swalAlert('warning', error.responseJSON.message)
                 }
             // ajax closing tag
             })
@@ -227,6 +242,8 @@
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+
+                    swalAlert('warning', error.responseJSON.message)
                 }
             // ajax closing tag
             })
@@ -251,11 +268,15 @@
                 success: function(data){
                     refresh()
                     $('#deactivateModal').modal('hide');
+
+                    notification("info", "Deleted successfully")
                 },
                 error: function(error){
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+
+                    swalAlert('warning', error.responseJSON.message)
                 }
             // ajax closing tag
             })
