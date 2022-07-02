@@ -18,8 +18,8 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label class="required-input">Description</label>
-                            <input type="text" class="form-control" id="description" name="description"
-                            placeholder="Description" tabindex="1" required>
+                            <textarea class="form-control" id="description" name="description"
+                            placeholder="Description" tabindex="1" required></textarea>
                         </div>
                     </div>
                     <div class="row">

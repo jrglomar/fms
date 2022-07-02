@@ -10,12 +10,9 @@
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/requirement_list_type/'
-        console.log(API_TOKEN)
-        console.log(JSON.parse(USER_DATA))
 
         let R_BIN_ID = "{{ $requirement_bin_id }}"
         // END OF GLOBAL VARIABLE
-
 
         // FUNCTION TO CHANGE PAGE HEADER/TITLE
         function getRequirementBinDetails(){
@@ -25,13 +22,26 @@
                 dataType: "JSON",
                 success: function (responseData) 
                 {   
-                    console.log(responseData)
                     var title = responseData.title;
                     var deadline = responseData.deadline
                     var description = responseData.description
-                    
+
+                    let requiredDocumentList = `<li class="list-group-item d-flex justify-content-between" disabled>
+                                                    <span class="text-primary"><strong>Document Type</strong></span>
+                                                </li>`
+
+                    $.each(responseData.requirement_list_type, function(i){
+                        let requiredDocumentTitle = responseData.requirement_list_type[i].requirement_type.title 
+                        requiredDocumentList += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <span class="text-primary">${requiredDocumentTitle}</span>
+                                                    <button type="button" class="btn btn-danger btnDeactivate" id="${responseData.requirement_list_type[i].requirement_type.id}"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                                </li>`
+                    })
+
+
+                    $('#requiredDocumentList').html(requiredDocumentList)
                     $("#created_by").html(`${responseData.created_by_user.faculty.first_name} ${responseData.created_by_user.faculty.last_name}` );
-                    $("#created_at").html(moment(responseData.deadline).format('MMM DD'));
+                    $("#created_at").html(moment(responseData.deadline).format('LL'));
                     $("#title").html(title);
                     // $("#deadline").html("Deadline: " + deadline);
                     $("#description").html(description);
@@ -41,7 +51,6 @@
         };
 
         getRequirementBinDetails();
-        getRequirementBinDetails()
         // END FUNCTION TO CHANGE PAGE HEADER/TITLE
 
         // DATA TABLES FUNCTION
@@ -102,20 +111,26 @@
                 dataType: "JSON",
                 success: function (responseData) 
                 {   
+
+                    console.log(responseData)
+                    let html = ""
                     $.each(responseData, function (i, dataOptions) 
                     {
-                        var options = "";
-
-                        options =
+                        console.log(responseData)
+                        html +=
                             "<option value='" +
                             dataOptions.id +
                             "'>" +
                             dataOptions.title +
                             "</option>";
 
-                        $("#requirement_type_id").append(options);
-                        $("#requirement_type_id_edit").append(options);
+                        
                     });
+
+                    $("#requirement_type_id").html(html);
+                    $("#requirement_type_id_edit").html(html);
+                    $("#requirement_type_id2").html(html);
+                    $("#requirement_type_id_edit2").html(html);
                     
                 },
                 error: function ({ responseJSON }) {},
@@ -124,6 +139,10 @@
 
         loadRequirementTypes();
         // END LOAD REQUIREMENT TYPES
+
+        $('#createRequiredDocument').on('click', function(){
+            $('#createRequiredDocumentModal').modal('show')
+        })
 
         // SUBMIT FUNCTION
         $('#createForm').on('submit', function(e){
@@ -143,7 +162,6 @@
             var requirement_bin_id = R_BIN_ID
             var requirement_type_id = data.requirement_type_id
 
-            console.log(data)
 
             $.ajax({
                 url: BASE_API + 'search_existing/' + requirement_bin_id + '/' + requirement_type_id,
@@ -165,10 +183,9 @@
                                 "Content-Type": "application/json"
                             },
                             success: function(data){
-                                console.log(data)
                                 $("#createForm").trigger("reset")
-                                $("#create_card").collapse("hide")
-                                refresh();
+                                $('#createRequiredDocumentModal').modal('hide')
+                                location.reload()
                             },
                             error: function(error){
                                 console.log(error)
@@ -293,29 +310,34 @@
             var id = this.id;
             let form_url = BASE_API + id
 
-            $.ajax({
-                url: form_url,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-
-                success: function(data){
-                    $('#id_delete').val(data.id);
-                    $('#requirement_bin_id_delete').html(data.requirement_bin_id);
-                    $('#requirement_type_id_delete').html(data.requirement_type_id);
-
-                    $('#deactivateModal').modal('show');
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            // ajax closing tag
+            Swal.fire({
+                icon: 'warning',
+                text: 'This feature is still under development'
             })
+
+            // $.ajax({
+            //     url: form_url,
+            //     method: "GET",
+            //     headers: {
+            //         "Accept": "application/json",
+            //         "Authorization": API_TOKEN,
+            //         "Content-Type": "application/json"
+            //     },
+
+            //     success: function(data){
+            //         $('#id_delete').val(data.id);
+            //         $('#requirement_bin_id_delete').html(data.requirement_bin_id);
+            //         $('#requirement_type_id_delete').html(data.requirement_type_id);
+
+            //         $('#deactivateModal').modal('show');
+            //     },
+            //     error: function(error){
+            //         console.log(error)
+            //         console.log(`message: ${error.responseJSON.message}`)
+            //         console.log(`status: ${error.status}`)
+            //     }
+            // // ajax closing tag
+            // })
         });
         // END OF DEACTIVATE FUNCTION
 
@@ -324,6 +346,7 @@
             e.preventDefault()
             var id = $('#id_delete').val();
             var form_url = BASE_API + 'destroy/' + id
+            console.log(id)
 
             $.ajax({
                 url: form_url,
@@ -351,7 +374,6 @@
         // ACTIVATE FUNCTION
         $(document).on("click", ".btnActivate", function(){
             var id = this.id;
-            console.log(id)
         });
         // END OF ACTIVATE FUNCTION
 

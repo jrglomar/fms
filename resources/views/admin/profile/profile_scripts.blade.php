@@ -182,8 +182,9 @@
                     }
 
                     // $("input[name=gender]").val(data.faculty.gender);
-                    $("input[name=gender][value=" + data.faculty.gender + "]").attr('checked', 'checked');
+                    $("input[name=gender][value=" + data.faculty.gender + "]").attr('checked', 'checked')
 
+                    $('#faculty_image').attr("src", APP_URL + "/" + data.faculty.image)
                     $('#faculty_type_id').val(data.faculty.faculty_type_id);
                     $('#academic_rank_id').val(data.faculty.academic_rank_id);
                     $('#designation_id').val(data.faculty.designation_id);
@@ -339,9 +340,15 @@
             })
         });
 
+        $('#uploadImage').on('click', function(){
+            swalAlert('warning', 'This feature is still under development')
+        })
+
         // FORM SUBMIT
         $('#updateUserForm').on('submit', function(e){
             e.preventDefault()
+
+            swalAlert('warning', 'This feature is still under development')
 
             var check_form_url = APP_URL+'/api/v1/faculty/check_user_exist/'+USER_ID;
             var create_form_url = BASE_API

@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "laravel-mix-blade-reload": "^3.0.0",
-        "moment": "^2.29.3"
+        "moment": "^2.29.3",
+        "sweetalert2": "^11.4.19"
     }
 }

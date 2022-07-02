@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AcademicRanksSeeder::class);
         $this->call(DesignationsSeeder::class);
         $this->call(FacultyTypesSeeder::class);
-        // $this->call(FacultiesSeeder::class);
+        $this->call(FacultiesSeeder::class);
         $this->call(RolesSeeder::class);
         $this->call(UserRolesSeeder::class);
         // $this->call(ObservationsSeeder::class);

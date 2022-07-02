@@ -59,7 +59,7 @@
 
                     //$('#created_at_view').html(created_at);
 
-                    //console.log(data.memorandum_file_directory)
+                    // console.log(data.memorandum_file_directory)
                     //document.getElementById("memorandum_view").src=APP_URL + data.memorandum_file_directory;
                     //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
 

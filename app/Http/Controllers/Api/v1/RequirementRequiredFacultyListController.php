@@ -80,7 +80,7 @@ class RequirementRequiredFacultyListController extends Controller
         // Default
         // return RequirementRequiredFacultyList::find($id);
 
-        return RequirementListType::with('user', 'created_by_user')->find($id);
+        return RequirementRequiredFacultyList::with('user', 'created_by_user')->find($id);
     }
 
     /**
@@ -130,6 +130,7 @@ class RequirementRequiredFacultyListController extends Controller
 
     public function search($id)
     {
-        return RequirementRequiredFacultyList::where('id', 'like', '%'.$id.'%')->get();
+        // return RequirementRequiredFacultyList::where('id', 'like', '%'.$id.'%')->get();
+        return RequirementRequiredFacultyList::where('requirement_bin_id', 'like', '%'.$id.'%')->get();
     }
 }
