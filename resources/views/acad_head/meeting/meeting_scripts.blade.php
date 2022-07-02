@@ -1,7 +1,6 @@
 
 <script>
     $(document).ready(function(){
-
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
@@ -51,14 +50,14 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View Meeting</div></div>
+                                        <div>View</div></div>
                                         <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit Meeting</div></div>
+                                            <div>Edit</div></div>
                                             <div class="dropdown-divider"</div></div>
                                             <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete Meeting</div></div></div></div>`;
+                                            <div style="color: red">Delete</div></div></div></div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -131,83 +130,58 @@
             var endTime = $('#end_time').val();
 
             console.log(startTime);
-            console.log(endTime);
+            console.log(endTime);   
+            var meeting_type = $("#meeting_types_id").val()
 
-            if(endTime < startTime)
-            {
-                alert("The meeting End Time is Less than to your Start Time. Please pick time properly")
-            }
-            else
-            {
-                // ajax opening tag
-                $.ajax({
-                    url: form_url,
-                    method: "POST",
-                    data: JSON.stringify(data),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        "Content-Type": "application/json"
-                    },
-                    success: function(data){
-                        console.log(data)
-                        $("#createForm").trigger("reset")
-                        $("#create_card").collapse("hide")
-                        refresh();
-                    },
-                    error: function(error){
-                        console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
-                // ajax closing tag
-                })
-            }
+            console.log(meeting_type)
+
+            // if (meeting_type == null)
+            // {
+            //     swalAlert('warning', "Please choose meeting Type")
+            // }
+            // else
+            // {
+                if(endTime < startTime)
+                {
+                    swalAlert('warning', "The meeting End Time is Less than to your Start Time. Please pick time properly")
+                }
+                else
+                {
+                    // ajax opening tag
+                    $.ajax({
+                        url: form_url,
+                        method: "POST",
+                        data: JSON.stringify(data),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+                        success: function(data){
+                            console.log(data)
+                            notification("success", "Meeting");
+                            $("#createForm").trigger("reset")
+                            $("#create_card").collapse("hide")
+                            refresh();
+                        },
+                        error: function(error){
+                            console.log(error)
+                            swalAlert('warning', error.responseJSON.message)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        }
+                    // ajax closing tag
+                    })
+                }
+            // }
         });
         // END OF SUBMIT FUNCTION
 
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var meeting_id = this.id;
-            window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id);
-
-            // $.ajax({
-            //     url: form_url,
-            //     method: "GET",
-            //     headers: {
-            //         "Accept": "application/json",
-            //         "Authorization": API_TOKEN,
-            //         "Content-Type": "application/json"
-            //     },
-
-            //     success: function(data){
-            //         let created_at = moment(data.created_at).format('LLL');
-            //         let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
-
-            //         $('#id_view').html(data.id);
-            //         $('#title_view').html(data.title);
-            //         $('#meeting_types_id_view').html(data.meeting_type.title);
-            //         $('#agenda_view').html(data.agenda);
-            //         $('#description_view').html(data.description);
-            //         $('#start_time_view').html(data.start_time);
-            //         $('#end_time_view').html(data.end_time);
-            //         if(data.is_required == 0) // true
-            //         {
-            //             data.is_required = "No"
-            //         }
-            //         else
-            //         {
-            //             data.is_required = "Yes"
-            //         }
-            //         $('#is_required_view').html(data.is_required);
-            //         $('#status_view').html(data.status);
-            //         $('#created_at_view').html(created_at);
-
-            //         $('#viewModal').modal('show');
-            //     }
-            // // ajax closing tag
-            // })
+            setInterval(window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id), 1500);
         });
         // END OF VIEW FUNCTION
 
@@ -279,11 +253,13 @@
                 },
 
                 success: function(data){
+                    notification("success", "Meeting");
                     refresh()
                     $('#editModal').modal('hide');
                 },
                 error: function(error){
                     console.log(error)
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
                 }
@@ -349,6 +325,7 @@
                 },
 
                 success: function(data){
+                    notification("error", "Meeting")
                     refresh()
                     $('#deactivateModal').modal('hide');
                 },

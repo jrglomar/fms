@@ -36,5 +36,6 @@
 
 
 @section('script')
+    @include('layouts/global_custom_scripts')
     @include('admin/faculty_type/faculty_type_scripts')
 @endsection

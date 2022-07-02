@@ -6,7 +6,7 @@
                 <h4 class="text-dark"> <span id="create_card_title">Create </span>{{ $page_title }}</h4>
             </div>
 
-            <form id="createForm" class="needs-validation" novalidate="">
+            <form id="createForm" data-parsley-validate>
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-md-12">
@@ -25,8 +25,14 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label class="required-input">Meeting Type</label>
-                            <select class="form-control js-example-basic-single" id="meeting_types_id" name="meeting_types_id">
+                            <select class="form-control js-example-basic-single select2" id="meeting_types_id" name="meeting_types_id" 
+                                required
+                                data-parsley-errors-container="#meeting-type-errors">
+                                <option disabled selected>List of Meeting/s</option>
                             </select>
+                            <ul class="parsley-err-msg">
+                                <li id="meeting-type-errors"></li>
+                            </ul>
                         </div>       
                         <div class="form-group col-md-6">
                             <label class="required-input">Agenda</label>

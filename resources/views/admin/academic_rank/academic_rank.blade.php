@@ -36,5 +36,6 @@
 
 
 @section('script')
+    @include('layouts/global_custom_scripts')
     @include('admin/academic_rank/academic_rank_scripts')
 @endsection

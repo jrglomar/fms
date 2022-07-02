@@ -39,5 +39,6 @@
 
 
 @section('script')
+    @include('layouts/global_custom_scripts')
     @include('acad_head/meeting/meeting_scripts')
 @endsection
