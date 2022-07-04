@@ -14,7 +14,7 @@
             </div>
             <div class="card-footer">
                 <button type="button" class="btn btn-primary"
-                data-toggle="collapse" href="#memo_card" role="button" aria-expanded="false" aria-controls="memo_card"
+                data-toggle="modal" data-target="#memo_card" role="button" aria-expanded="false" aria-controls="memo_card"
                 >View Memo</button>
             </div>
         </div>
@@ -59,15 +59,6 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card card-primary collapse" id="memo_card">
-            <div class="card-header">
-                <h4 class="text-primary">Memorandum</h4>
-            </div>
-            <div class="card-body" id="if_memo">
-                
-            </div>
-        </div>
-    </div>
-</div>
+
+
+{{-- END OF VIEW MODAL --}}

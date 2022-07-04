@@ -14,6 +14,9 @@
     <h1>{{ $page_title }}</h1>
 @endsection
 
+{{-- MODAL --}}
+@include('acad_head/activity_view/activity_view_modal')
+
     {{-- CONTENT --}}
     @section('content')
 
