@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\RequirementRequiredFacultyList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RequirementRequiredFacultyListController extends Controller
 {
@@ -132,5 +133,20 @@ class RequirementRequiredFacultyListController extends Controller
     {
         // return RequirementRequiredFacultyList::where('id', 'like', '%'.$id.'%')->get();
         return RequirementRequiredFacultyList::where('requirement_bin_id', 'like', '%'.$id.'%')->get();
+    }
+
+    public function multi_insert(Request $request)
+    {
+
+        $data = $request->all();
+
+        for($i=0; $i < count($data); $i++) {
+            RequirementRequiredFacultyList::create($data[$i]);
+        }
+
+        return [
+            'message' => 'Multiple Insert Success.'
+        ];
+        
     }
 }

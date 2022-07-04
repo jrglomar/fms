@@ -315,6 +315,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/requirement_required_faculty_list/{id}', [RequirementRequiredFacultyListController::class, 'update']);
         Route::delete('/requirement_required_faculty_list/destroy/{id}', [RequirementRequiredFacultyListController::class, 'destroy']);
         Route::put('/requirement_required_faculty_list/restore/{id}', [RequirementRequiredFacultyListController::class, 'restore']);
+        Route::post('/requirement_required_faculty_list/multi_insert', [RequirementRequiredFacultyListController::class, 'multi_insert']);
 
         // Submitted Requirements Folder
         Route::post('/submitted_requirement_folder', [SubmittedRequirementFolderController::class, 'store']);

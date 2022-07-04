@@ -24,7 +24,7 @@
                     { data: "description"},
                     { data: "status"},
                     { data: "start_datetime", render: function(data, row){
-                        return `${moment(data).format('LLL')} - ${moment(row.end_datetime).format('LLL')}` 
+                        return `<span class="badge badge-info">${moment(data).format('LLL')} - ${moment(row.end_datetime).format('LLL')}</span>` 
                     }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
@@ -32,14 +32,14 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View activity type</div></div>
+                                        <div>View</div></div>
                                         <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit activity type</div></div>
+                                            <div>Edit</div></div>
                                             <div class="dropdown-divider"</div></div>
                                             <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete activity type</div></div></div></div>`;
+                                            <div style="color: red">Delete</div></div></div></div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';

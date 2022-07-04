@@ -58,7 +58,7 @@ class ActivityController extends Controller
         $data = array();
 
         $validator = $request->validate([
-            'file' => 'required|mimes:pdf'
+            'file' => 'required|mimes:pdf,jpg,jpeg,png'
         ]);
 
             $data['success'] = 1;
@@ -80,7 +80,7 @@ class ActivityController extends Controller
         $data = array();
 
         $validator = $request->validate([
-            'file' => 'required|mimes:pdf'
+            'file' => 'required|mimes:pdf,jpg,jpeg,png'
         ]);
 
             $data['success'] = 1;

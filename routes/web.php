@@ -123,26 +123,35 @@ Route::group(['middleware' => ['role.admin'],
 Route::group(['middleware' => ['role.faculty'],
  'prefix' => '/faculty',], function(){
 
-    // ------------DASHBOARD--------------- //
+        // ------------DASHBOARD--------------- //
         Route::get('/dashboard', function () {
             return view('faculty/dashboard/dashboard', ['page_title' => 'Dashboard']);
         })->name('faculty_dashboard');
 
-    // ------------ACCOUNT MANAGEMENT--------------- //
-        Route::get('/profile', function () {
-            return view('faculty/profile/profile', ['page_title' => 'Profile']);
+        // ------------ACCOUNT MANAGEMENT--------------- //
+        Route::get('/profile/{id}', function ($id) {
+            return view('faculty/profile/profile', ['page_title' => 'Profile', 'user_id' => $id]);
         })->name('faculty_profile');
 
-    // ------------MEETING--------------- //
-    Route::get('/meeting', function () {
-        return view('faculty/meeting/meeting', ['page_title' => 'Meeting']);
-    })->name('faculty_meeting');
+        // ------------MEETING--------------- //
+        Route::get('/meeting', function () {
+            return view('faculty/meeting/meeting', ['page_title' => 'Meeting']);
+        })->name('faculty_meeting');
 
         // ------------MEETING - VIEW --------------- //
         Route::get('/meeting/{id}', function ($id) {
             return view('faculty/meeting/meeting_view', ['page_title' => 'Meeting', 'meeting_id' => $id]);
         })->name('faculty_meeting_view');    
 
+         // ------------REQUIREMENTS BIN--------------- //
+        Route::get('/requirement_bin', function () {
+            return view('faculty/requirement_bin/requirement_bin', ['page_title' => 'Requirements Bin']);
+        })->name('faculty_requirement_bin');
+
+        // ------------REQUIREMENTS LIST TYPE--------------- //
+        Route::get('/requirement_list_type/{id}', function ($id) {
+            return view('faculty/requirement_list_type/requirement_list_type', ['page_title' => 'Requirements Bin', 'requirement_bin_id' => $id]);
+        })->name('faculty_requirement_list_type');
 });
 
 

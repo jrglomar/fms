@@ -3,30 +3,30 @@
     <div class="col-md-12 collapse" id="create_card">
         <div class="card card-primary">
             <div class="card-header">
-                <h4 class="text-dark"> <span id="create_card_title">Add</span> {{ $page_title }}</h4>
+                <h4 class="text-dark"> <span id="create_card_title">Create </span>{{ $page_title }}</h4>
             </div>
 
             <form id="createForm" data-parsley-validate>
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="required-input">Email</label>
-                            <input type="email" class="form-control" id="email" name="email"
-                            placeholder="Email" tabindex="1" required>
+                            <label class="required-input">Title</label>
+                            <input type="text" class="form-control" id="title" name="title"
+                            placeholder="Title" tabindex="1" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="required-input">Password</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                            placeholder="Password" tabindex="1" required>
+                            <label class="required-input">Description</label>
+                            <textarea class="form-control" id="description" name="description"
+                            placeholder="Description" tabindex="1" required></textarea>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label class="required-input">Password Confirmation</label>
-                            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
-                            placeholder="Password Confirmation" tabindex="1" required>
+                            <label class="required-input">Deadline</label>
+                            <input type="datetime-local" class="form-control" id="deadline" name="deadline"
+                            placeholder="Deadline" tabindex="1" required>
                         </div>
                     </div>
                 </div>

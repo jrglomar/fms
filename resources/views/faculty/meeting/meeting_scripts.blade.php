@@ -33,7 +33,9 @@
                     { data: "start_time", render: function(data, type, row){
                         console.log("0000-00-00 "+data)
                         console.log(row.date)
-                        return `${moment(row.date).format('LL')} <br> ${moment("2022-06-27 "+data).format('LT')} - ${moment("2022-06-27 "+row.end_time).format('LT')}`
+                        return `<span class="badge badge-info">${moment(row.date).format('LL')}, 
+                            ${moment("2022-06-27 "+data).format('LT')} - ${moment("2022-06-27 "+row.end_time).format('LT')
+                            }</span>`
                     }}, // merge date (to be add), start_time, end_time
                     { data: "is_required", render: function (data, type, row) { // required
                         console.log(data)
@@ -69,7 +71,7 @@
                             }
                         }
                     ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
+                    "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 3, 4, 5, 7, 8] }],
                 "order": [[1, "desc"]]
                 })
         }
