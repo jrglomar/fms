@@ -20,8 +20,10 @@
     {{-- CONTENT --}}
     @section('content')
 
-            {{-- FORM --}}
+            {{-- MAIN CONTENT --}}
             @include('acad_head/activity_view/activity_view_content')
+            &nbsp;
+            @include('acad_head/activity_view/required_faculty_list_view_datatable')
 
     @endsection
 
