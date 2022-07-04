@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-9 ">
+    <div class="col-12">
         <div class="hero bg-success text-white">
             <div class="hero-inner">
                 <div class="col-12">
@@ -45,7 +45,7 @@
             </div>
         </div> --}}
 
-        <div class="col-3">
+        <div class="col-12">
             <div class="hero bg-white text-dark">
                 <div class="hero-inner">
                     <div class="align-items-center">
@@ -55,11 +55,15 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex justify-content-center" style="padding-bottom:10px;">
+                    <div class="d-flex justify-content-center">
                         {{-- <button id="btnUpload" type="button" class="btn btn-outline-primary"><i class="fa fa-plus" aria-hidden="true"></i> Upload</button> --}}
-                        <form action="#" class="dropzone dz-clickable" id="mydropzone">
-                      
-                            <div class="dz-default dz-message"><span>Drop files here to upload</span></div></form>
+                        <div class="col-12">
+                            <form class="dz-progress dropzone dz-clickable" id="mydropzone" style="border-color:blue">
+                                <div class="dz-default dz-message">
+                                    <span>Drop files here to upload</span>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div id="btnDone" class="d-flex justify-content-center">
                         <button type="button" class="btn btn-warning">Mark as Done</button>

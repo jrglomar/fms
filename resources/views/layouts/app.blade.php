@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="{{ asset('vendors/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/datatable/css/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/parsley/css/custom-parsley.css') }}">
+    <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/dropzonejs/dropzone.css">
 
     <!-- Template CSS -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800" rel="stylesheet">
@@ -94,6 +95,8 @@
         <script src="{{ asset('vendors/jquery-cookie/jquery-cookie.js') }}"></script>
         <script src="{{ asset('vendors/select2/js/select2.min.js') }}"></script>
         <script src="{{ asset('vendors/datatable/js/datatables.min.js') }}"></script>
+        <script src="https://demo.getstisla.com/assets/modules/dropzonejs/min/dropzone.min.js"></script>
+        <script src="https://demo.getstisla.com/assets/js/page/components-multiple-upload.js"></script>
 
         <!-- Template JS File -->
         <script src="{{ asset('stisla/js/stisla.js') }}"></script>
