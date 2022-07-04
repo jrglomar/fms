@@ -23,6 +23,7 @@ class RequirementRequiredFacultyList extends Model
                 "faculty_id"
             ];
 
+
         protected $dates = ['deleted_at'];
 
         // protected $with = ['users','created_by_user','updated_by_user'];

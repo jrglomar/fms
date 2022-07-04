@@ -1,13 +1,13 @@
+{{-- 
+
 <div>
     <div class="row">
         <div class="col-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4 class="text-dark">List of Requirement Bin</h4>
+                    <h4 class="text-dark">Required Faculty List</h4>
                     <div class="card-header-action">
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
-                        aria-expanded="false" aria-controls="create_card">New Requirement Bin <i
-                        class="fas fa-plus"></i></button>
+                        <button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -16,15 +16,15 @@
                         </div>
                     </div>
 
-                    <table class="table table-hover table-sm" id="dataTable" style="width:100%">
+                    <table class="table table-sm" id="requiredFacultyDatatable" style="width:100%">
                         <thead>
-                            <tr class="bg-primary text-light">
+                            <tr>
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th width="25%">Title</th>
-                                <th width="35%">Requirements</th>
-                                <th width="20%">Deadline</th>
-                                <th width="10%" class="text-center">Action</th>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Status / Progress</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -36,3 +36,4 @@
         </div>
     </div>
 </div>
+     --}}

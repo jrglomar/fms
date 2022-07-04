@@ -7,8 +7,8 @@
                 <h4 class="text-dark"> <span id="create_card_title">Create </span>{{ $page_title }}</h4>
             </div>
 
-            <form id="createForm" class="needs-validation" novalidate=""
-            enctype="multipart/form-data" data-parsley-validate>
+            <form id="createForm" data-parsley-validate
+            enctype="multipart/form-data">
             {{ csrf_field() }}
                 <div class="card-body">
                     <div class="row">

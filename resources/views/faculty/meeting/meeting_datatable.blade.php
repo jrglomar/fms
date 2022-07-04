@@ -16,19 +16,19 @@
                         </div>
                     </div>
 
-                    <table class="table table-sm" id="dataTable" style="width:100%">
+                    <table class="table table-hover table-sm" id="dataTable" style="width:100%">
                         <thead>
-                            <tr>
+                            <tr class="bg-primary text-light">
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Title</th>
-                                <th>Meeting Type</th>
+                                <th width="50%">Title</th>
+                                <th width="10%">Meeting Type</th>
                                 <th width="10%">Agenda</th>
-                                <th>Location</th>
-                                <th>Date</th>
+                                <th width="10%">Location</th>
+                                <th width="40%">Date</th>
                                 <th width="5%">Required</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th width="5%">Status</th>
+                                <th width="10%" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -49,7 +49,10 @@
             $('#userNameNavbar').html('Not set')
         }
         else{
-            $('#sidebar_icon').attr("src", APP_URL + "/" + new_user_data.faculty.image)
+
+            if(new_user_data.faculty.image != null){
+                $('#sidebar_icon').attr("src", APP_URL + "/" + new_user_data.faculty.image)
+            }
             if(new_user_data.faculty.middle_name == null){
                 middle_name = ''
             }

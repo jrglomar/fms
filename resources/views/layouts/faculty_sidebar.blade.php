@@ -10,7 +10,7 @@
                     <div class="p-3 hide-sidebar-mini">
                         <div class="media">
                             <figure class="avatar mr-2 avatar">
-                                <img id="sidebar_icon" class="mr-3 rounded-circle" src="" alt="Avatar image"> 
+                                <img id="sidebar_icon" class="mr-3 rounded-circle" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png" alt="Avatar image"> 
                                     <!-- alt="Avatar image"> -->
                                 <i class="avatar-presence online"></i>
                             </figure>
@@ -31,6 +31,30 @@
                         <li class="menu-header">Dashboard</li>
                         <li class=""><a class="nav-link" href="/faculty/dashboard"><i class="fas fa-th-large"></i>
                                 <span>Dashboard</span></a></li>
+
+                        <li class="{{ Request::segment(2) == 'profile' ? 'active' : ''}}" >
+                            <a class="nav-link" href="/faculty/profile/{{ Auth::user()->id }}">
+                        <i class="fas fa-user"></i><span>Profile</span></a></li>
+
+                            {{-- SRD MANAGEMENT --}}
+                            <li class="menu-header">SRD Management</li>
+                            <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 
+                                                    Request::segment(2) == 'requirement_bin' ||
+                                                    Request::segment(2) == 'requirement_list_type' 
+                                                    ? 'active' : ''}}">
+                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                    class="fas fa-book-reader"></i>
+                            <span>SRD</span></a>
+                            <ul class="dropdown-menu">
+                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                <li class="{{ Request::segment(2) == 'requirement_bin' || 
+                                                Request::segment(2) == 'requirement_list_type' 
+                                                
+                                                ? 'active' : ''}}">
+                                    <a class="nav-link" href="/faculty/requirement_bin">
+                                        <span>Requirement Bins</span></a>
+                                </li>
+                            </ul>
 
                             {{-- MEETING MANAGEMENT --}}
                             <li class="menu-header">Meeting Management</li>
@@ -57,7 +81,7 @@
                                 <span>Account</span></a>
                             <ul class="dropdown-menu">
                                 <li class="{{ Request::segment(2) == 'profile' ? 'active' : ''}}" >
-                                    <a class="nav-link" href="/faculty/profile">
+                                    <a class="nav-link" href="/faculty/profile/{{ Auth::user()->id }}">
                                         <span>Profile</span></a></li>
                             </ul>
 
