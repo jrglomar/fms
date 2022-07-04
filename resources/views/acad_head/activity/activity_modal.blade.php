@@ -83,7 +83,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="updateForm" class="needs-validation" novalidate="">
+                <form id="updateForm" class="needs-validation" novalidate="" data-parsley-validate>
                     <div class="card-body">
                         <div class="form-group col-md-12" hidden>
                             <label class="required-input">ID</label>
@@ -126,26 +126,26 @@
                                 <label class="required-input">Status</label>
                                 <select class="form-control" id="status_edit"
                                     name="status_edit" required
-                                    data-parsley-errors-container="#activity-type-errors">
+                                    data-parsley-errors-container="#status-edit-errors">
                                     <option value="" disabled>-- Select Status --</option>
                                     <option value="Pending">Pending</option>
                                     <option value="Ongoing">Ongoing</option>
                                     <option value="Ended">Ended</option>
                                 </select>
                                 <ul class="parsley-err-msg">
-                                    <li id="activity-type-errors"></li>
+                                    <li id="status-edit-errors"></li>
                                 </ul>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="required-input">Required to attend</label>
                                 <select class="form-control" id="is_required_edit"
                                     name="is_required_edit" required
-                                    data-parsley-errors-container="#activity-type-errors">
+                                    data-parsley-errors-container="#req-edit-errors">
                                     <option value="1">Yes</option>
                                     <option value="0">No</option>
                                 </select>
                                 <ul class="parsley-err-msg">
-                                    <li id="activity-type-errors"></li>
+                                    <li id="req-edit-errors"></li>
                                 </ul>
                             </div>
                         </div>
