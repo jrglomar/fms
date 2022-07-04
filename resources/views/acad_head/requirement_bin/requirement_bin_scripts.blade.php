@@ -37,7 +37,7 @@
                         return requirement_list_type;
                     }},
                     { data: "deadline", render: function(data, type, row){
-                        return `${moment(data).format('LLL')}`
+                        return `<span class="badge badge-info">${moment(data).format('LLL')}</span>`
                     }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){

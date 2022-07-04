@@ -169,9 +169,10 @@
             </div>
             <div class="modal-body">
                 <form id="updateRequiredFacultyForm">
-                            <table class="table table-hover table-sm" id="requiredFacultyDatatableModal" style="width:100%">
-                                <thead>
-                                    <tr class="bg-primary text-light">
+                    <div class="card-body">
+                        <table class="table table-sm" id="requiredFacultyDatatableModal" style="width:100%">
+                            <thead>
+                                <tr>
                                     <th>ID</th>
                                     <th>Created at</th>
                                     <th>Email</th>

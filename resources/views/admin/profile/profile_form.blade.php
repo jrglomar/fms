@@ -8,7 +8,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-center">
                     <button class="btn" id="uploadImage" data-toggle="tooltip" data-placement="bottom" title="Upload Image">
-                        <img alt="faculty_image" src="{{ URL::to('/')}}/images/faculty_images/admin.jpg" style="width:120px" class="rounded-circle profile-widget-picture">
+                        <img alt="faculty_image" id="faculty_image" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png" style="width:120px" class="rounded-circle profile-widget-picture">
                     </button>                  
                   </div>
 

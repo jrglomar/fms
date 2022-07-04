@@ -10,7 +10,7 @@
                     <div class="p-3 hide-sidebar-mini">
                         <div class="media">
                             <figure class="avatar mr-2 avatar">
-                                <img id="sidebar_icon" class="mr-3 rounded-circle" src="" alt="Avatar image"> 
+                                <img id="sidebar_icon" class="mr-3 rounded-circle" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png" alt="Avatar image"> 
                                 <i class="avatar-presence online"></i>
                             </figure>
                             <div class="media-body">

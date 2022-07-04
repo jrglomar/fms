@@ -10,7 +10,7 @@
                     <div class="p-3 hide-sidebar-mini">
                         <div class="media">
                             <figure class="avatar mr-2 avatar">
-                               <img id="sidebar_icon" class="mr-3 rounded-circle" src=""
+                               <img id="sidebar_icon" class="mr-3 rounded-circle" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png"
                                     alt="Avatar image">
                                 <i class="avatar-presence online"></i>
                             </figure>
@@ -85,7 +85,9 @@
                         <span>Activity</span></a>
                         <ul class="dropdown-menu">
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                            <li class="{{ Request::segment(2) == 'activity' ? 'active' : ''}}">
+                            <li class="{{ Request::segment(2) == 'activity' ||
+                                        Request::segment(2) == 'activity_view'
+                            ? 'active' : ''}}">
                                 <a class="nav-link" href="/acad_head/activity">
                                     <span>Activities</span></a>
                             </li>
