@@ -169,21 +169,20 @@
             </div>
             <div class="modal-body">
                 <form id="updateRequiredFacultyForm">
-                            <table class="table table-hover table-sm" id="requiredFacultyDatatableModal" style="width:100%">
-                                <thead>
-                                    <tr class="bg-primary text-light">
-                                    <th>ID</th>
-                                    <th>Created at</th>
-                                    <th>Email</th>
-                                    <th>Name</th>
-                                    <th>Required</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-    
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="table table-hover table-sm" id="requiredFacultyDatatableModal" style="width:100%">
+                        <thead>
+                            <tr class="bg-primary text-light">
+                            <th>ID</th>
+                            <th>Created at</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

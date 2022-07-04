@@ -40,6 +40,14 @@
                 });
         };
 
+        // REFRESH DATATABLE FUNCTION
+        function refresh(){
+            let url = BASE_API+'search/' + R_BIN_ID;
+
+            requiredFacultyDatatable.ajax.url(url).load()
+        }
+        // REFRESH DATATABLE FUNCTION
+
         // LOAD REQUIREMENT TYPES
         function loadRequirementTypes(){
             $.ajax({
@@ -59,10 +67,31 @@
             let form_url = APP_URL+'/api/v1/faculty/'
 
             $('#requiredFacultyDatatableModal').DataTable().destroy()
-            requiredFacultyDatatable = $('#requiredFacultyDatatableModal').DataTable({
+            requiredFacultyDatatableModal = $('#requiredFacultyDatatableModal').DataTable({
                 "ajax": {
                     url: form_url,
-                    dataSrc: ''
+                    dataSrc: function(json){
+                        var rows = [];
+                        $.each(json, function(i){
+                            console.log(json[i])
+                            if(json[i].requirement_required_faculty_list.length != 0){ // to check if faculty don't have any required requirement bin
+                                $.each(json[i].requirement_required_faculty_list, function(j){ // to check if requirement_required_faculty_list of this faculty has requirement bin id
+                                    if(jQuery.inArray(R_BIN_ID, json[i].requirement_required_faculty_list !== -1)){
+                                        // selected
+                                    }
+                                    else{
+                                        rows.push(json[i]);
+                                    }
+                                })
+                            }
+                            else{
+                                // unselected
+                                rows.push(json[i]);
+                            }
+                        })
+                        console.log(rows)
+                        return rows;
+                    },
                 },
                 "async": true,
                 "columns": [
@@ -78,7 +107,7 @@
                     }},
                     { data: "id", render: function(data, type, row){
                         return `<div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input faculty_status" id="${row.id}" checked>
+                                    <input type="checkbox" name="faculty_required[]" class="custom-control-input faculty_status" id="${row.id}" value="${row.id}" checked>
                                     <label id="status_label" class="custom-control-label" for="${row.id}">Yes</label>
                                 </div>`
                     }}
@@ -107,10 +136,47 @@
 
         $('#updateRequiredFacultyForm').on('submit', function(e){
             e.preventDefault()
-            Swal.fire({
-                icon: 'warning',
-                text: 'This feature is still under development'
-            })
+            // Swal.fire({
+            //     icon: 'warning',
+            //     text: 'This feature is still under development'
+            // })
+
+            let required_faculty = $("input[name='faculty_required[]']:checked")
+              .map(function(){
+                return {
+                "requirement_bin_id": R_BIN_ID,
+                "faculty_id": $(this).val()
+                }
+            }).get();
+
+            let form_url = BASE_API+"multi_insert"
+
+
+             // ajax opening tag
+             $.ajax({
+                            url: form_url,
+                            method: "POST",
+                            data: JSON.stringify(required_faculty),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data){
+                                console.log(data)
+                                notification('success', 'Required Faculty')
+                                $('#editRequiredFacultyModal').modal('hide');
+                                refresh()
+                            },
+                            error: function(error){
+                                console.log(error)
+                                swalAlert('warning', error.responseJSON.message)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                    })
         })
 
         loadRequirementTypes();

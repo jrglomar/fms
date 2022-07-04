@@ -16,7 +16,7 @@
                         </div>
                     </div>
 
-                    <table class="table table-hover table-sm" id="dataTable" style="width:100%">
+                    <table class="table table-hover table-sm" id="requiredFacultyDatatable" style="width:100%">
                         <thead>
                             <tr class="bg-primary text-light">
                                 <th>ID</th>
