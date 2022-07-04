@@ -103,6 +103,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/meeting/{id}', [MeetingController::class, 'show']);
         Route::get('/meeting/search/{name}', [MeetingController::class, 'search']);
         Route::get('/meeting/show_soft_deleted/{all}', [MeetingController::class, 'show_soft_deleted']);
+        Route::get('/meeting/get_specific_meeting_of_faculty/{faculty_id}', [MeetingController::class, 'get_specific_meeting_of_faculty']); // FOR FACULTY CONTROLLER
 
         // Meeting Attendance Required Faculty List
         Route::get('/meeting_attendance_required_faculty_list', [MeetingAttendanceRequiredFacultyListController::class, 'index']);
@@ -146,6 +147,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/submitted_requirement/{id}', [SubmittedRequirementController::class, 'show']);
         Route::get('/submitted_requirement/search/{title}', [SubmittedRequirementController::class, 'search']);
         Route::get('/submitted_requirement/show_soft_deleted/{all}', [SubmittedRequirementController::class, 'show_soft_deleted']);
+
         // Observations
         Route::get('/observation', [ObservationController::class, 'index']);
         Route::get('/observation/{id}', [ObservationController::class, 'show']);
