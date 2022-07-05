@@ -74,13 +74,14 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $faculty_id)
     {
         //
-        $ActivityAttendanceRequiredFacultyList = ActivityAttendanceRequiredFacultyList::find($id);
+        $ActivityAttendanceRequiredFacultyList = ActivityAttendanceRequiredFacultyList::where('activity_id', 'like', '%'.$id.'%')
+        ->where('faculty_id', 'like', '%'.$faculty_id.'%');
         $ActivityAttendanceRequiredFacultyList->update($request->all());
 
-        return $ActivityAttendanceRequiredFacultyList;
+        return $request;
     }
 
     public function edit($id)

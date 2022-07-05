@@ -152,6 +152,16 @@ Route::group(['middleware' => ['role.faculty'],
         Route::get('/requirement_list_type/{id}', function ($id) {
             return view('faculty/requirement_list_type/requirement_list_type', ['page_title' => 'Requirements Bin', 'requirement_bin_id' => $id]);
         })->name('faculty_requirement_list_type');
+
+        // -------------------ACTIVITY---------------------- //
+        Route::get('/activity', function () {
+            return view('faculty/activity/activity', ['page_title' => 'Activity']);
+        })->name('faculty_activity');
+
+        // ------------------ACTIVITY VIEW------------------ //
+        Route::get('/activity/{id}', function ($id) {
+            return view('faculty/activity_view/activity_view', ['page_title' => 'Activity', 'activity_id' => $id]);
+        })->name('faculty_activity_view');
 });
 
 
@@ -191,7 +201,7 @@ Route::group(['middleware' => ['role.acadhead'],
     })->name('Activity');
 
     // --------------ACTIVITY VIEW----------------- //
-    Route::get('/activity_view/{id}', function ($id) {
+    Route::get('/activity/{id}', function ($id) {
         return view('acad_head/activity_view/activity_view', ['page_title' => 'Activity', 'activity_id'=> $id]);
     })->name('ActivityView');
 
