@@ -133,4 +133,16 @@ class RequirementBinController extends Controller
     {
         return RequirementBin::where('title', 'like', '%'.$title.'%')->get();
     }
+
+    
+
+    public function get_required_requirement_bin($faculty_id)
+    {
+        $requirement_bin = RequirementBin::select()
+        // ->join("requirement_bin_required_faculty_lists", "requirement_bin_required_faculty_lists.requirement_bin_id", "=", "requirement_bins.id") 
+        // ->where('faculty_id', $faculty_id)
+        ->get();
+
+        return $requirement_bin;
+    }
 }

@@ -115,6 +115,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/requirement_bin/{id}', [RequirementBinController::class, 'show']);
         Route::get('/requirement_bin/search/{title}', [RequirementBinController::class, 'search']);
         Route::get('/requirement_bin/show_soft_deleted/{all}', [RequirementBinController::class, 'show_soft_deleted']);
+        Route::get('/requirement_bin/get_required_requirement_bin/{id}', [RequirementBinController::class, 'get_required_requirement_bin']);
 
         // Requirement Type
         Route::get('/requirement_type', [RequirementTypeController::class, 'index']);

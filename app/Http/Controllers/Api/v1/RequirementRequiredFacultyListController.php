@@ -149,4 +149,16 @@ class RequirementRequiredFacultyListController extends Controller
         ];
         
     }
+
+
+    // Get Faculties does not on specific meeting.
+    public function get_unrequired_faculty($meeting_id)
+    {
+        $faculties_per_meeting = MeetingAttendanceRequiredFacultyList::select()
+        ->where('meeting_id', "!=", $meeting_id)
+        ->get("*");
+
+        return $faculties_per_meeting;
+    }
+
 }

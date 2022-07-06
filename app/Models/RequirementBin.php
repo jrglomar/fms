@@ -33,6 +33,10 @@ class RequirementBin extends Model
             {
                 return $this->hasMany(RequirementListType::class)->without('requirement_bin');;
             }
+
+            public function requirement_bin_required_faculty_lists(){
+                return $this->hasMany(RequirementRequiredFacultyList::class)->without('requirement_bin');;
+            }
         // End of [Declare relationships here]
 
         // [Default relationship]       - Default
@@ -46,7 +50,7 @@ class RequirementBin extends Model
             return $this->belongsTo(User::class,'updated_by');
         }
 
-        protected $with = ['requirement_list_type', 'created_by_user'];
+        protected $with = ['requirement_list_type', 'created_by_user', 'requirement_bin_required_faculty_lists'];
 
         // [Added for UUID Incrementation]      - Default
         public $incrementing = false;
