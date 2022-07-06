@@ -72,24 +72,27 @@
                     url: form_url,
                     dataSrc: function(json){
                         var rows = [];
+                        console.log(json)
                         $.each(json, function(i){
-                            console.log(json[i])
+                            var counter = 0
                             if(json[i].requirement_required_faculty_list.length != 0){ // to check if faculty don't have any required requirement bin
                                 $.each(json[i].requirement_required_faculty_list, function(j){ // to check if requirement_required_faculty_list of this faculty has requirement bin id
-                                    if(jQuery.inArray(R_BIN_ID, json[i].requirement_required_faculty_list !== -1)){
-                                        // selected
+                                    if(json[i].requirement_required_faculty_list[j].requirement_bin_id == R_BIN_ID){
+                                        // skipped
                                     }
                                     else{
-                                        rows.push(json[i]);
+                                        counter ++
                                     }
                                 })
+                                if(counter == 0){
+                                    rows.push(json[i]);
+                                }
                             }
                             else{
                                 // unselected
                                 rows.push(json[i]);
                             }
                         })
-                        console.log(rows)
                         return rows;
                     },
                 },
@@ -104,6 +107,19 @@
                         let html = ''
                         html += row.first_name + ' ' + row.last_name
                         return html
+                    }},
+                    { data: "user_id", render: function(data, type, row){
+                        let user_role = ''
+                        
+                        $.each(row.user.user_role, function(i){
+                            if(i < (row.user.user_role.length) - 1){
+                                user_role += row.user.user_role[i].role.title + ', '
+                            }
+                            else{
+                                user_role += row.user.user_role[i].role.title
+                            }
+                        })
+                        return user_role
                     }},
                     { data: "id", render: function(data, type, row){
                         return `<div class="custom-control custom-switch">
@@ -177,6 +193,21 @@
                             }
                         // ajax closing tag
                     })
+        })
+
+        
+        $('#btn_select_all').on('change', function(){
+
+            let status = $('#btn_select_all').is(":checked")
+
+            if(status == true){
+                $('#select_all_label').html('Unselect all')
+                $("input[name='faculty_required[]']").prop('checked', true)
+            }
+            else{
+                $('#select_all_label').html('Select all')
+                $("input[name='faculty_required[]']").prop('checked', false)
+            }
         })
 
         loadRequirementTypes();

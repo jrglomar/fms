@@ -161,6 +161,5 @@ class FacultyController extends Controller
 
         return Faculty::where('email', 'like', '%'.$title.'%')->get();
     }
-
     
 }

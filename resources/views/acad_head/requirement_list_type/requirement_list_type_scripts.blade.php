@@ -125,7 +125,6 @@
                             dataOptions.title +
                             "</option>";
 
-                        
                     });
 
                     $("#requirement_type_id").html(html);

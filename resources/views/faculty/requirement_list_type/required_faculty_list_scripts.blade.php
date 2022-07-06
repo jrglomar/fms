@@ -91,6 +91,7 @@
             $('#editRequiredFacultyModal').modal('show');
         })
 
+
         $(document).on("click", ".faculty_status", function(){
             Swal.fire({
                 icon: 'warning',
@@ -115,5 +116,7 @@
 
         loadRequirementTypes();
         // requiredFacultyDatatable();
+
+
     })
 </script>
