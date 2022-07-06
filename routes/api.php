@@ -263,7 +263,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
         // Activity Attendance
         Route::post('/activity_attendance', [ActivityAttendanceRequiredFacultyListController::class, 'store']);
-        Route::put('/activity_attendance/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'update']);
+        Route::put('/activity_attendance/{id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'update']);
         Route::delete('/activity_attendance/destroy/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'destroy']);
         Route::put('/activity_attendance/restore/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'restore']);
         Route::post('/activity_attendance/multi_insert', [ActivityAttendanceRequiredFacultyListController::class, 'multi_insert']);

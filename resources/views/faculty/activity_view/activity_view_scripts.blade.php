@@ -9,6 +9,8 @@
         var BASE_API = APP_URL + '/api/v1/activity_view/'
         var ATTENDANCE_API = APP_URL + '/api/v1/activity_attendance/'
         var ACTIVITY_ID = "{{$activity_id}}"
+
+        var USER_ROLE = JSON.parse(USER_DATA)
         // END OF GLOBAL VARIABLE
 
         removeLoader()
@@ -84,6 +86,21 @@
                         
                         document.getElementById("memo").src=APP_URL + "/" +data.memorandum_file_directory;
                     }
+
+                    //console.log(USER_ROLE)
+                    let arrayOfUserRole = []
+                    $.each(USER_ROLE.user_role, function(i){
+                        arrayOfUserRole.push(USER_ROLE.user_role[i].role.title)
+                    })
+                    // CHECK THE USER ROLE
+                    if(jQuery.inArray("Faculty", arrayOfUserRole) !== -1)
+                    {
+
+                        var row_right_top = '<button type="button" class="btn time_in_btn btn-icon icon-left btn-primary btn-lg button-block float-right" id="{{$activity_id}}"><i class="fas fa-check"></i> Time in</button>';
+                                    
+                        $("#time_button").append(row_right_top);
+                        
+                    }
                 }
             // ajax closing tag
             })
@@ -130,7 +147,6 @@
             requiredFacultyDatatable.ajax.url(url).load()
         }
         // REFRESH DATATABLE FUNCTION
-        
 
         $('#btnEditRequiredFaculty').on('click', function(){
             let form_url = APP_URL+'/api/v1/faculty/'
@@ -247,7 +263,47 @@
                 // ajax closing tag
             })
         })
-        
 
+    
+        $(document).on("click", ".time_in_btn", function(){
+
+            activity_id = this.id
+            
+            //console.log(new Date())
+            date = new Date()
+
+            console.log(moment(date).format('YYYY-MM-DD HH:mm:ss'))
+
+            let data = {
+            "time_in": moment(date).format('HH:mm:ss'),
+            "attendance_status": "Attended"
+            }
+
+            $.ajax({
+                url: ATTENDANCE_API + activity_id + "/" +USER_ROLE.faculty.id,
+                method: "PUT",
+                data: JSON.stringify(data),
+                dataType: "JSON",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    "Content-Type": "application/json"
+                },
+
+                success: function(data){
+
+                    notification("info", "Activity Attended")
+                },
+                error: function(error){
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+
+                    swalAlert('warning', error.responseJSON.message)
+                }
+            // ajax closing tag
+            })
+
+        });
     });
 </script>
