@@ -1,6 +1,6 @@
     <div class="container">
         <div class="navbar-bg" 
-        style="background-image: url({{ URL::to('/images/designs/req_bin_card_blue.png') }});"></div>
+        style="background-image: url({{ URL::to('/images/designs/navbar_red.png') }});"></div>
 
             <nav class="navbar navbar-expand-lg main-navbar" >
                 <form class="form-inline mr-auto">
