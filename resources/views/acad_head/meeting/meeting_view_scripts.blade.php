@@ -54,34 +54,38 @@
 
 
                     // For meeting_view_content> div#row_left
-                    var row_left = '<div class="card card-info">' +
-                                        '<div class="card-header">' +
-                                            '<div class="col-12">' +
-                                                '<h3 class="text-primary card-title"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + 
-                                                    '<span>' + responseData.title + '</span>' +
-                                                '</h3>' +
-                                                '<span style="color:black"><b>' + responseData.meeting_type.title + '</b></span>' +
-                                                '<div class="float-right">' +
-                                                    status +
+                    var row_left = '<div class="col-12 col-sm-12 col-lg-12">' +
+                                        '<div class="hero bg-success text-white">' +
+                                            '<div class="hero-inner">' +
+                                                '<div class="col-12">' +
+                                                    '<h3 class="card-title text-center"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + 
+                                                        '<span>' + responseData.title + '</span>' +
+                                                    '</h3>' +
+                                                    
+                                                    '<span class="badge badge-info" style="color:black"><b>' + responseData.meeting_type.title + '</b></span>' +
+                                                    '<div class="float-right"><b>' +
+                                                        status +
+                                                    '</b></div>' +
                                                 '</div>' +
                                             '</div>' +
+                                            '<div class="card-body">' +
+                                                '<div class="col-md-12">' +
+                                                    '<span><b>Agenda: </b>' +
+                                                '</div>' +
+                                                '<div class="col-md-12">' +
+                                                    '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;' +responseData.agenda +   
+                                                '</div>' + 
+                                                '<br>' + 
+                                                '<div class="col-md-12">' +
+                                                    '<span><b>Description: </b>' +
+                                                '</div>' +
+                                                '<div class="col-md-12">' +
+                                                    '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;' +responseData.description +   
+                                                '</div>' + 
+                                            '</div>' + 
                                         '</div>' +
-                                        '<div class="card-body">' +
-                                            '<div class="col-md-12">' +
-                                                '<span style="color:black"><b>Agenda: </b>' +
-                                            '</div>' +
-                                            '<div class="col-md-12">' +
-                                                '<span style="white:space: pre-line; color:black; text-align: justify; display:block;">&emsp;' +responseData.agenda +   
-                                            '</div>' + 
-                                            '<br>' + 
-                                            '<div class="col-md-12">' +
-                                                '<span style="color:black"><b>Description: </b>' +
-                                            '</div>' +
-                                            '<div class="col-md-12">' +
-                                                '<span style="white:space: pre-line; color:black; text-align: justify; display:block;">&emsp;' +responseData.description +   
-                                            '</div>' + 
-                                        '</div>' + 
-                                    '</div>' ;
+                                    '</div>' +
+                                    '<br>';
 
                     // CHECK THE USER ROLE
 
@@ -95,52 +99,52 @@
                     {
                         // For meeting_view_content> div#row_right - card bottom
                         var row_right_bottom = '<div class="card card-success">' +
-                                            '<div class="card-body">' +
-                                                '<div class="align-items-start">' +
-                                                    '<h5 class="text-primary card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> ' + 
-                                                        '<span>Meeting Details: </span>' +
-                                                    '</h5>' +
-                                                '</div>' +
-                                                '<div class="text-dark">' + 
-                                                    '<div class="col-md-12">' +
-                                                        '<b>Date: </b>' +
-                                                    '</div>' +
-                                                    '<div class="col-md-12"> -- ' +
-                                                        moment(responseData.date).format('dddd, MMMM D, YYYY') +   
-                                                    '</div>' +  
-                                                    '<div class="col-md-12">' +
-                                                        '<b>Location: </b>' +
-                                                    '</div>' +
-                                                    '<div class="col-md-12"> -- ' +
-                                                        responseData.location +   
+                                                    '<div class="card-body">' +
+                                                        '<div class="align-items-start">' +
+                                                            '<h5 class="text-primary card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> ' + 
+                                                                '<span>Meeting Details: </span>' +
+                                                            '</h5>' +
+                                                        '</div>' +
+                                                        '<div class="text-dark">' + 
+                                                            '<div class="col-md-12">' +
+                                                                '<b>Date: </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                moment(responseData.date).format('dddd, MMMM D, YYYY') +   
+                                                            '</div>' +  
+                                                            '<div class="col-md-12">' +
+                                                                '<b>Location: </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                responseData.location +   
+                                                            '</div>' + 
+                                                            '<div class="row">' +
+                                                                '<div class="col-md-7">' +
+                                                                    '<div class="col-md-12">' +
+                                                                        '<b>From: </b>' +
+                                                                    '</div>' +
+                                                                    '<div class="col-md-12"> -- ' +
+                                                                        moment("2022-06-27 "+responseData.start_time ).format('LT') +   
+                                                                    '</div>' + 
+                                                                '</div>' +
+                                                                '<div class="col-md-5">' +
+                                                                    '<div class="col-md-12">' +
+                                                                        '<b>To: </b>' +
+                                                                    '</div>' +
+                                                                    '<div class="col-md-12"> -- ' +
+                                                                        moment("2022-06-27 "+responseData.end_time ).format('LT') +   
+                                                                    '</div>' + 
+                                                                '</div>' +
+                                                            '</div> ' +
+                                                            '<div class="col-md-12">' +
+                                                                '<b>Required? </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                isRequired +
+                                                            '</div>' +  
+                                                        '</div>' + 
                                                     '</div>' + 
-                                                    '<div class="row">' +
-                                                        '<div class="col-md-7">' +
-                                                            '<div class="col-md-12">' +
-                                                                '<b>From: </b>' +
-                                                            '</div>' +
-                                                            '<div class="col-md-12"> -- ' +
-                                                                moment("2022-06-27 "+responseData.start_time ).format('LT') +   
-                                                            '</div>' + 
-                                                        '</div>' +
-                                                        '<div class="col-md-5">' +
-                                                            '<div class="col-md-12">' +
-                                                                '<b>To: </b>' +
-                                                            '</div>' +
-                                                            '<div class="col-md-12"> -- ' +
-                                                                moment("2022-06-27 "+responseData.end_time ).format('LT') +   
-                                                            '</div>' + 
-                                                        '</div>' +
-                                                    '</div> ' +
-                                                    '<div class="col-md-12">' +
-                                                        '<b>Required? </b>' +
-                                                    '</div>' +
-                                                    '<div class="col-md-12"> -- ' +
-                                                        isRequired +
-                                                    '</div>' +  
-                                                '</div>' + 
-                                            '</div>' + 
-                                        '</div>' ;
+                                                '</div>' ;
                                     
                         $("#row_left").html(row_left);
                         $("#row_right").html(row_right_bottom);
@@ -157,7 +161,7 @@
 
         // FUNCTION FOR REQUIRED FACULTY DATATABLE
         function requiredFacultyDatatable(){
-                dataTable = $('#requiredFacultyDatatable').DataTable({
+            dataTable = $('#requiredFacultyDatatable').DataTable({
                 "ajax": {
                     url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search/' + MEETING_ID, 
                     dataSrc: ''
@@ -233,15 +237,54 @@
 
 // ------------------------------------------------------------------------------------------------- //
 
+    // REFRESH DATATABLE FUNCTION
+    function refresh(){
+                let url = APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search/' + MEETING_ID;
+
+                dataTable.ajax.url(url).load()
+            }
+    // END REFRESH DATATABLE FUNCTION
+
+// ------------------------------------------------------------------------------------------------- //
+
         // FUNCTION ON EDIT REQUIRED FACULTY LIST BUTTON
         $('#btnEditRequiredFaculty').on('click', function(){
             let form_url = APP_URL+'/api/v1/faculty/'
 
             $('#requiredFacultyDatatableModal').DataTable().destroy()
-            requiredFacultyDatatable = $('#requiredFacultyDatatableModal').DataTable({
+            requiredFacultyDatatableModal = $('#requiredFacultyDatatableModal').DataTable({
                 "ajax": {
                     url: form_url,
-                    dataSrc: ''
+                    dataSrc: function(json){
+                        var rows = [];
+                        $.each(json, function(i){
+                            counter = 0
+                            console.log(json[i])
+                            if(json[i].meeting_attendance_required_faculty_list.length != 0){ // to check if faculty don't have any meeting
+                                $.each(json[i].meeting_attendance_required_faculty_list, function(j){ // to check if meeting_attendance_required_faculty_list of this faculty has meeting id
+                                    if(jQuery.inArray(MEETING_ID, json[i].meeting_attendance_required_faculty_list !== -1)){
+                                        console.log('selected'+i)
+                                    }
+                                    else{
+                                        counter ++
+                                        
+                                    }
+                                })
+                                if(counter == 0)
+                                {
+                                    rows.push(json[i]);
+                                }
+                            }
+                            else{
+                                // unselected
+                                rows.push(json[i]);
+                                console.log(counter)
+                                console.log('unselected'+i)
+                            }
+                        })
+                        console.log(rows)
+                        return rows;
+                    },
                 },
                 "async": true,
                 "columns": [
@@ -257,7 +300,7 @@
                     }},
                     { data: "id", render: function(data, type, row){
                         return `<div class="custom-control custom-switch">
-                                    <input type="checkbox" class="custom-control-input faculty_status" id="${row.id}" checked>
+                                    <input type="checkbox" name="faculty_required[]" class="custom-control-input faculty_status" id="${row.id}" value="${row.id}" checked>
                                     <label id="status_label" class="custom-control-label" for="${row.id}">Yes</label>
                                 </div>`
                     }}
@@ -270,13 +313,6 @@
             $('#editRequiredFacultyModal').modal('show');
         })
 
-        $(document).on("click", ".faculty_status", function(){
-            Swal.fire({
-                icon: 'warning',
-                text: 'This feature is still under development'
-            })
-        });
-
         $(document).on("click", ".btnViewDetails", function(){
             Swal.fire({
                 icon: 'warning',
@@ -286,110 +322,49 @@
 
         $('#updateRequiredFacultyForm').on('submit', function(e){
             e.preventDefault()
-            Swal.fire({
-                icon: 'warning',
-                text: 'This feature is still under development'
+            // Swal.fire({
+            //     icon: 'warning',
+            //     text: 'This feature is still under development'
+            // })
+
+            let required_faculty = $("input[name='faculty_required[]']:checked")
+              .map(function(){
+                return {
+                "meeting_id": MEETING_ID,
+                "faculty_id": $(this).val()
+                }
+            }).get();
+
+            let form_url = APP_URL + '/api/v1/meeting_attendance_required_faculty_list/multi_insert'
+
+
+             // ajax opening tag
+             $.ajax({
+                url: form_url,
+                method: "POST",
+                data: JSON.stringify(required_faculty),
+                dataType: "JSON",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    "Content-Type": "application/json"
+                },
+                success: function(data){
+                    console.log(data)
+                    notification('success', 'Required Faculty');
+                    $('#editRequiredFacultyModal').modal('hide');
+                    refresh();
+                },
+                error: function(error){
+                    console.log(error)
+                    swalAlert('warning', error.responseJSON.message)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
             })
+            // ajax closing tag
         })
         // ENDFUNCTION ON EDIT REQUIRED FACULTY LIST BUTTON
-
-// ------------------------------------------------------------------------------------------------- //
-        
-        // REFRESH DATATABLE FUNCTION
-        function refresh(){
-            let url = APP_URL + '/api/v1/meeting_attendace_required_faculty_list/search/' + MEETING_ID;
-
-            dataTable.ajax.url(url).load()
-        }
-        // END REFRESH DATATABLE FUNCTION
-
-// ------------------------------------------------------------------------------------------------- //
-
-        // LOAD MEETING TYPES
-        function loadMeetingTypes(){
-            $.ajax({
-                url: APP_URL+'/api/v1/meeting_type/',
-                type: "GET",
-                dataType: "JSON",
-                success: function (responseData) 
-                {   
-                    $.each(responseData, function (i, dataOptions) 
-                    {
-                        var options = "";
-
-                        options =
-                            "<option value='" +
-                            dataOptions.id +
-                            "'>" +
-                            dataOptions.title +
-                            "</option>";
-
-                        $("#meeting_types_id").append(options);
-                        $("#meeting_types_id_edit").append(options);
-                    });
-                    
-                },
-                error: function ({ responseJSON }) {},
-            });
-        };
-
-        loadMeetingTypes();
-        // END LOAD MEETING TYPES
-
-// ------------------------------------------------------------------------------------------------- //
-
-        // SUBMIT FUNCTION
-        $('#createForm').on('submit', function(e){
-            e.preventDefault();
-
-            var form_url = BASE_API;
-            var form = $("#createForm").serializeArray();
-            let data = {}
-
-            $.each(form, function(){
-                data[[this.name]] = this.value;
-            })
-            console.log(JSON.stringify(data))
-
-            var startTime = $('#start_time').val();
-            var endTime = $('#end_time').val();
-
-            console.log(startTime);
-            console.log(endTime);
-
-            if(endTime < startTime)
-            {
-                alert("The meeting End Time is Less than to your Start Time. Please pick time properly")
-            }
-            else
-            {
-                // ajax opening tag
-                $.ajax({
-                    url: form_url,
-                    method: "POST",
-                    data: JSON.stringify(data),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        "Content-Type": "application/json"
-                    },
-                    success: function(data){
-                        console.log(data)
-                        $("#createForm").trigger("reset")
-                        $("#create_card").collapse("hide")
-                        refresh();
-                    },
-                    error: function(error){
-                        console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
-                // ajax closing tag
-                })
-            }
-        });
-        // END OF SUBMIT FUNCTION
 
 // ------------------------------------------------------------------------------------------------- //
 

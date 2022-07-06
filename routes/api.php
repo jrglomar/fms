@@ -54,6 +54,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/user/{id}', [UserController::class, 'show']);
         Route::get('/user/search/{name}', [UserController::class, 'search']);
         Route::get('/user/show_soft_deleted/{all}', [UserController::class, 'show_soft_deleted']);
+        Route::get('/user/get_faculty_for_required_list/{role_id}', [UserController::class, 'get_faculty_for_required_list']); // FOR USER CONTROLLER
 
         // Faculty Type
         Route::get('/faculty_type', [FacultyTypeController::class, 'index']);
@@ -110,6 +111,8 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/meeting_attendance_required_faculty_list/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'show']);
         Route::get('/meeting_attendance_required_faculty_list/search/{name}', [MeetingAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/meeting_attendance_required_faculty_list/show_soft_deleted/{all}', [MeetingAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
+        // Route::get('/meeting_attendance_required_faculty_list/get_all_faculties_per_meeting/{meeting_id}', [MeetingAttendanceRequiredFacultyListController::class, 'get_all_faculties_per_meeting']); //
+        Route::get('/meeting_attendance_required_faculty_list/get_all_faculties_that_does_not_on_meeting/{meeting_id}', [MeetingAttendanceRequiredFacultyListController::class, 'get_all_faculties_that_does_not_on_meeting']); //  
 
         // Requirement Bin
         Route::get('/requirement_bin', [RequirementBinController::class, 'index']);
@@ -253,6 +256,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/meeting_attendance_required_faculty_list/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'update']);
         Route::delete('/meeting_attendance_required_faculty_list/destroy/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'destroy']);
         Route::put('/meeting_attendance_required_faculty_list/restore/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'restore']);
+        Route::post('/meeting_attendance_required_faculty_list/multi_insert', [MeetingAttendanceRequiredFacultyListController::class, 'multi_insert']);
         
         // Observation
         Route::post('/observation', [ObservationController::class, 'store']);

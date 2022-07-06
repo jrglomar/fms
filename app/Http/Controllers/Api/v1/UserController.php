@@ -128,4 +128,14 @@ class UserController extends Controller
 
         return User::where('email', 'like', '%'.$title.'%')->get();
     }
+
+    public function get_faculty_for_required_list($role_id)
+    {
+        $faculty_list = User::join("faculties", "faculties.user_id", "=", "users.id")
+        ->join("user_roles", "user_roles.user_id", "=", "users.id")
+        ->where('user_roles.role_id', $role_id)
+        ->get('users.*', 'faculties.id');
+
+        return $faculty_list;
+    }
 }

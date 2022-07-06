@@ -167,4 +167,6 @@ class MeetingController extends Controller
 
         return $meetings;
     }
+
+    
 }

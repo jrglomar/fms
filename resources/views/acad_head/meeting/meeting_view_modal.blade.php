@@ -1,4 +1,4 @@
-{{-- EDIT REQUIRED FACULTY MODAL --}}
+{{-- EDIT REQUIRED FACULTY --}}
 <div id="editRequiredFacultyModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
         <div class="modal-content">
@@ -10,22 +10,20 @@
             </div>
             <div class="modal-body">
                 <form id="updateRequiredFacultyForm">
-                    <div class="card-body">
-                        <table class="table table-sm" id="requiredFacultyDatatableModal" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Created at</th>
-                                    <th>Email</th>
-                                    <th>Name</th>
-                                    <th>Required</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-    
-                            </tbody>
-                        </table>
-                    </div>
+                    <table class="table table-hover table-sm" id="requiredFacultyDatatableModal" style="width:100%">
+                        <thead>
+                            <tr class="bg-primary text-light">
+                            <th>ID</th>
+                            <th>Created at</th>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>Required</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

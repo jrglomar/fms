@@ -141,4 +141,45 @@ class MeetingAttendanceRequiredFacultyListController extends Controller
 
         return MeetingAttendanceRequiredFacultyList::where('meeting_id', 'like', '%'.$meeting_id.'%')->get();
     }
+
+    public function multi_insert(Request $request)
+    {
+
+        $data = $request->all();
+
+        for($i=0; $i < count($data); $i++) {
+            MeetingAttendanceRequiredFacultyList::create($data[$i]);
+        }
+
+        return [
+            'message' => 'Multiple Insert Success.'
+        ];
+        
+    }
+
+    // public function get_all_faculties_per_meeting($meeting_id)
+    // {
+    //     $faculties_per_meeting = MeetingAttendanceRequiredFacultyList::select(
+    //         "meeting_attendance_required_faculty_lists.id", 
+    //         "meeting_attendance_required_faculty_lists.faculty_id",
+    //         "meeting_attendance_required_faculty_lists.meeting_id"
+    //     )
+    //     ->where('meeting_id', $meeting_id)
+    //     ->get();
+
+    //     return $faculties_per_meeting;
+    // }
+
+    public function get_all_faculties_that_does_not_on_meeting($meeting_id)
+    {
+        $faculties_per_meeting = MeetingAttendanceRequiredFacultyList::select(
+            "meeting_attendance_required_faculty_lists.id", 
+            "meeting_attendance_required_faculty_lists.faculty_id",
+            "meeting_attendance_required_faculty_lists.meeting_id"
+        )
+        ->where('meeting_id', "!=", $meeting_id)
+        ->get();
+
+        return $faculties_per_meeting;
+    }
 }
