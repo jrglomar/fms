@@ -80,7 +80,7 @@ class Faculty extends Model
 
             public function meeting_attendance_required_faculty_list()
             {
-                return $this->hasMany(MeetingAttendanceRequiredFacultyList::class)->without('faculty', 'created_by_user', 'updated_by_user', 'requirement_bin');
+                return $this->hasMany(MeetingAttendanceRequiredFacultyList::class)->without('faculty', 'created_by_user', 'updated_by_user', 'meeting');
             }
 
         // End of [Declare relationships here]

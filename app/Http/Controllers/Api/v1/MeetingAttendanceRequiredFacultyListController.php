@@ -57,11 +57,10 @@ class MeetingAttendanceRequiredFacultyListController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'time_in' => 'required',
-            'time_out' => 'required',
-            'proof_of_attendance_file_directory' => 'required',
-            'proof_of_attendance_file_link' => 'required',
+            'time_in',
+            'time_out',
+            'proof_of_attendance_file_directory',
+            'proof_of_attendance_file_link',
             'faculty_id' => 'required',
             "meeting_id" => 'required'
         ]);
@@ -137,10 +136,50 @@ class MeetingAttendanceRequiredFacultyListController extends Controller
         return $meeting_attendance_required_faculty_lists;
     }
 
-    public function search($title)
+    public function search($meeting_id)
     {
 
-        return MeetingAttendanceRequiredFacultyList::where('title', 'like', '%'.$title.'%')->get();
+        return MeetingAttendanceRequiredFacultyList::where('meeting_id', 'like', '%'.$meeting_id.'%')->get();
     }
 
+    public function multi_insert(Request $request)
+    {
+
+        $data = $request->all();
+
+        for($i=0; $i < count($data); $i++) {
+            MeetingAttendanceRequiredFacultyList::create($data[$i]);
+        }
+
+        return [
+            'message' => 'Multiple Insert Success.'
+        ];
+        
+    }
+
+    // public function get_all_faculties_per_meeting($meeting_id)
+    // {
+    //     $faculties_per_meeting = MeetingAttendanceRequiredFacultyList::select(
+    //         "meeting_attendance_required_faculty_lists.id", 
+    //         "meeting_attendance_required_faculty_lists.faculty_id",
+    //         "meeting_attendance_required_faculty_lists.meeting_id"
+    //     )
+    //     ->where('meeting_id', $meeting_id)
+    //     ->get();
+
+    //     return $faculties_per_meeting;
+    // }
+
+    public function get_all_faculties_that_does_not_on_meeting($meeting_id)
+    {
+        $faculties_per_meeting = MeetingAttendanceRequiredFacultyList::select(
+            "meeting_attendance_required_faculty_lists.id", 
+            "meeting_attendance_required_faculty_lists.faculty_id",
+            "meeting_attendance_required_faculty_lists.meeting_id"
+        )
+        ->where('meeting_id', "!=", $meeting_id)
+        ->get();
+
+        return $faculties_per_meeting;
+    }
 }

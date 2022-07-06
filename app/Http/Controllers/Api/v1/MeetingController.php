@@ -139,4 +139,34 @@ class MeetingController extends Controller
         return Meeting::where('title', 'like', '%'.$title.'%')->get();
     }
 
+// ---------------------------------------------- FACULTY CONTROLLER ---------------------------------------------- //
+    public function get_specific_meeting_of_faculty($faculty_id)
+    {
+        $meetings = Meeting::select(
+            "meetings.id", 
+            "meetings.created_at",
+            "meetings.created_by",
+            "meetings.updated_at",
+            "meetings.updated_by",
+            "meetings.deleted_at",
+            "meetings.title",
+            "meetings.location",
+            "meetings.date",
+            "meetings.start_time",
+            "meetings.end_time",
+            "meetings.agenda",
+            "meetings.description",
+            "meetings.is_required",
+            "meetings.status",
+            "meetings.meeting_types_id",
+            "meeting_attendance_required_faculty_lists.faculty_id as f_id" 
+        )
+        ->join("meeting_attendance_required_faculty_lists", "meeting_attendance_required_faculty_lists.meeting_id", "=", "meetings.id")
+        ->where('faculty_id', $faculty_id)
+        ->get();
+
+        return $meetings;
+    }
+
+    
 }

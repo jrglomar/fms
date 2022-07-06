@@ -43,7 +43,7 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label class="required-input">Description</label>
-                            <textarea class="form-control" rows="4" cols="50" id="description" name="description" form="createForm" placeholder="Description" tabindex="1" required></textarea>
+                            <textarea class="form-control summernote-simple" rows="4" cols="50" id="description" name="description" form="createForm" placeholder="Description" tabindex="1" required></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -97,4 +97,5 @@
     </div>
 </div>
 {{-- END OF CREATE FORM --}}
+
 

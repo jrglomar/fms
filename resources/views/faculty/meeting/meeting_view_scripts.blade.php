@@ -96,10 +96,52 @@
                     if(jQuery.inArray("Faculty", arrayOfUserRole) !== -1)
                     {
                         // For meeting_view_content> div#row_right - button top
-                        var row_right_top = '<div class="col-12">' +
-                                                '<button type="button" onClick="return timeIn()" class="btn btn-icon icon-left btn-success btn-lg button-block"><i class="fas fa-check"></i> Time in</button>' +
-                                            '</div>' +
-                                            '<br>';
+                        var row_right_top = "";
+
+                        var current_time = new Date(); // current time
+                        var hours = current_time.getHours();
+                        var mins = current_time.getMinutes();
+                        var day = current_time.getDay();
+
+
+                        var moment_current_time = moment(current_time).format('LT');
+                        var moment_current_date = moment(current_time).format('LL')
+                        var now = hours+":"+mins+":00";
+                        var moment_end_time = moment("2022-06-27 " + responseData.end_time).format('LT');
+                        var moment_start_time = moment("2022-06-27 " + responseData.start_time).format('LT');
+                        var moment_meeting_date = moment(responseData.date).format('LL')
+
+                        var remainMins = "";
+
+                        console.log("The meeting Date is "+ moment_meeting_date + " and The Current Date is " + moment_current_date);
+
+                        if (moment_meeting_date == moment_current_date)
+                        {
+                            remainMins = moment().startOf('hour').fromNow();
+                        }
+                        else if(moment_meeting_date < moment_current_date)
+                        {
+                            remainMins = moment().startOf('day').fromNow();
+                        }
+                        
+                         
+                        if(now >= moment_start_time && moment_end_time <= now) 
+                        {
+                            console.log("Yes Current time is between " + moment_start_time + " to " + moment_end_time + ", and " + remainMins + " mins left to be time " + moment_end_time);
+                            row_right_top +=    '<div class="col-12">' +
+                                                    '<button type="button" onClick="return timeIn()" class="btn btn-icon icon-left btn-success btn-lg button-block"><i class="fas fa-check"></i> Time in</button>' +
+                                                '</div>' +
+                                                '<br>';
+                        }
+                        else 
+                        {
+                            row_right_top +=    '<div class="col-12">' +
+                                                    '<disabled button type="button" class="btn btn-icon icon-left btn-secondary btn-lg button-block">Done<br>'+ remainMins +'</button>' +
+                                                '</div>' +
+                                                '<br>';
+                            
+                        }
+                        
 
                         // For meeting_view_content> div#row_right - card bottom
                         var row_right_bottom = '<div class="card card-success">' +

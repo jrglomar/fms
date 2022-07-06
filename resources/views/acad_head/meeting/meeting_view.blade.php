@@ -14,8 +14,8 @@
     <h1>{{ $page_title }}</h1>
 @endsection
 
-    {{-- MODAL --}}
-    @include('acad_head/meeting/meeting_modal')
+    {{-- MODAL DATATABLE --}}
+    @include('acad_head/meeting/meeting_view_modal')
 
     {{-- CONTENT --}}
     @section('content')
@@ -24,7 +24,7 @@
             @include('acad_head/meeting/meeting_view_content')
             
             {{-- DATATABLE --}}
-            @include('acad_head/meeting/meeting_view_datatable')
+            @include('acad_head/meeting/meeting_view_faculty_attendance_datatable')
 
     @endsection
 

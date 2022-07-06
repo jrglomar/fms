@@ -54,6 +54,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/user/{id}', [UserController::class, 'show']);
         Route::get('/user/search/{name}', [UserController::class, 'search']);
         Route::get('/user/show_soft_deleted/{all}', [UserController::class, 'show_soft_deleted']);
+        Route::get('/user/get_faculty_for_required_list/{role_id}', [UserController::class, 'get_faculty_for_required_list']); // FOR USER CONTROLLER
 
         // Faculty Type
         Route::get('/faculty_type', [FacultyTypeController::class, 'index']);
@@ -103,12 +104,15 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/meeting/{id}', [MeetingController::class, 'show']);
         Route::get('/meeting/search/{name}', [MeetingController::class, 'search']);
         Route::get('/meeting/show_soft_deleted/{all}', [MeetingController::class, 'show_soft_deleted']);
+        Route::get('/meeting/get_specific_meeting_of_faculty/{faculty_id}', [MeetingController::class, 'get_specific_meeting_of_faculty']); // FOR FACULTY CONTROLLER
 
         // Meeting Attendance Required Faculty List
         Route::get('/meeting_attendance_required_faculty_list', [MeetingAttendanceRequiredFacultyListController::class, 'index']);
         Route::get('/meeting_attendance_required_faculty_list/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'show']);
         Route::get('/meeting_attendance_required_faculty_list/search/{name}', [MeetingAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/meeting_attendance_required_faculty_list/show_soft_deleted/{all}', [MeetingAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
+        // Route::get('/meeting_attendance_required_faculty_list/get_all_faculties_per_meeting/{meeting_id}', [MeetingAttendanceRequiredFacultyListController::class, 'get_all_faculties_per_meeting']); //
+        Route::get('/meeting_attendance_required_faculty_list/get_all_faculties_that_does_not_on_meeting/{meeting_id}', [MeetingAttendanceRequiredFacultyListController::class, 'get_all_faculties_that_does_not_on_meeting']); //  
 
         // Requirement Bin
         Route::get('/requirement_bin', [RequirementBinController::class, 'index']);
@@ -147,6 +151,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/submitted_requirement/{id}', [SubmittedRequirementController::class, 'show']);
         Route::get('/submitted_requirement/search/{title}', [SubmittedRequirementController::class, 'search']);
         Route::get('/submitted_requirement/show_soft_deleted/{all}', [SubmittedRequirementController::class, 'show_soft_deleted']);
+
         // Observations
         Route::get('/observation', [ObservationController::class, 'index']);
         Route::get('/observation/{id}', [ObservationController::class, 'show']);
@@ -241,6 +246,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/meeting_attendance_required_faculty_list/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'update']);
         Route::delete('/meeting_attendance_required_faculty_list/destroy/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'destroy']);
         Route::put('/meeting_attendance_required_faculty_list/restore/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'restore']);
+        Route::post('/meeting_attendance_required_faculty_list/multi_insert', [MeetingAttendanceRequiredFacultyListController::class, 'multi_insert']);
         
         // Observation
         Route::post('/observation', [ObservationController::class, 'store']);

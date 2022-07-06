@@ -10,14 +10,17 @@
         console.log(API_TOKEN)
         console.log(JSON.parse(USER_DATA))
 
-        var USER_ROLE = JSON.parse(USER_DATA)
+        var USERDATA = JSON.parse(USER_DATA)
+        var FACULTY_ID = USERDATA.faculty.id
+
+        console.log(FACULTY_ID)
         // END OF GLOBAL VARIABLE
 
         // DATA TABLES FUNCTION
         function dataTable(){
-                dataTable = $('#dataTable').DataTable({
+            dataTable = $('#dataTable').DataTable({
                 "ajax": {
-                    url: BASE_API, 
+                    url: BASE_API+"get_specific_meeting_of_faculty/"+FACULTY_ID, 
                     dataSrc: ''
                 },
                 "columns": [
@@ -35,15 +38,15 @@
                             }</span>`
                     }}, // merge date (to be add), start_time, end_time
                     { data: "is_required", render: function (data, type, row) { // required
-                          console.log(data)
-                          if(data == true)
-                          {
+                        console.log(data)
+                        if(data == true)
+                        {
                             return `<p>Yes</p>`
-                          }
-                          else
-                          {
+                        }
+                        else
+                        {
                             return `<p>No</p>`
-                          }
+                        }
                         }
                     },
                     { data: "status"},

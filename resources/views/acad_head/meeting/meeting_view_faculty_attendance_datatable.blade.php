@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4 class="text-dark">Required Faculty List</h4>
+                    <h4 class="text-dark">Attendance / Required Faculty List</h4>
                     <div class="card-header-action">
                         <button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>
                     </div>
@@ -19,10 +19,12 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Email</th>
-                                <th>Name</th>
-                                <th>Status / Progress</th>
-                                <th>Action</th>
+                                <th>Faculty Name</th>
+                                <th>Time In</th>
+                                <th>Time Out</th>
+                                <th>Attendance Status</th>
+                                <th>Proof of Attendance File Directory</th>
+                                <th>Proof of Attendance File Link</th>
                             </tr>
                         </thead>
                         <tbody>
