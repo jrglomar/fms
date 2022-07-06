@@ -50,7 +50,7 @@ class RequirementBin extends Model
             return $this->belongsTo(User::class,'updated_by');
         }
 
-        protected $with = ['requirement_list_type', 'created_by_user', 'requirement_bin_required_faculty_lists'];
+        protected $with = ['requirement_list_type', 'created_by_user'];
 
         // [Added for UUID Incrementation]      - Default
         public $incrementing = false;

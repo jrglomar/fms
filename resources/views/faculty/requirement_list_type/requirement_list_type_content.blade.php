@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-12">
-        <div class="hero bg-success text-white">
+        <div class="hero text-white hero-bg-image hero-bg-parallax"
+        style="background-image: url({{ URL::to('/images/designs/req_bin_card_yellow.png') }})">
             <div class="hero-inner">
                 <div class="col-12">
                         <h3 class="text-center"><span id="title"></span></h3>
@@ -21,11 +22,12 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body">
+            &nbsp;
+            <div class="hero-inner text-center">
                 <span class="" style="white-space: pre-line" id="description">
             </div>
         </div>
-    </div>
+    </div>&nbsp;
 
 
         {{-- <div class="col-6">
@@ -46,7 +48,8 @@
         </div> --}}
 
         <div class="col-12">
-            <div class="hero bg-white text-dark">
+            <div class="hero text-white hero-bg-image hero-bg-parallax"
+            style="background-image: url({{ URL::to('/images/designs/req_bin_card_blue.png') }})">
                 <div class="hero-inner">
                     <div class="align-items-center">
                         <div class="row">
@@ -54,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="hero-inner">
                     <div class="d-flex justify-content-center">
                         {{-- <button id="btnUpload" type="button" class="btn btn-outline-primary"><i class="fa fa-plus" aria-hidden="true"></i> Upload</button> --}}
                         <div class="col-12">

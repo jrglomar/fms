@@ -119,7 +119,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/requirement_bin/{id}', [RequirementBinController::class, 'show']);
         Route::get('/requirement_bin/search/{title}', [RequirementBinController::class, 'search']);
         Route::get('/requirement_bin/show_soft_deleted/{all}', [RequirementBinController::class, 'show_soft_deleted']);
-        Route::get('/requirement_bin/get_required_requirement_bin/{id}', [RequirementBinController::class, 'get_required_requirement_bin']);
+        Route::get('/requirement_bin/get_required_requirement_bin/{id}', [RequirementBinController::class, 'get_required_requirement_bin']); // FOR FACULTY CONTROLLER
 
         // Requirement Type
         Route::get('/requirement_type', [RequirementTypeController::class, 'index']);
@@ -139,6 +139,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/requirement_required_faculty_list/{id}', [RequirementRequiredFacultyListController::class, 'show']);
         Route::get('/requirement_required_faculty_list/search/{title}', [RequirementRequiredFacultyListController::class, 'search']);
         Route::get('/requirement_required_faculty_list/show_soft_deleted/{all}', [RequirementRequiredFacultyListController::class, 'show_soft_deleted']);
+        Route::get('/requirement_required_faculty_list/get_unrequired_faculty/{id}', [RequirementRequiredFacultyListController::class, 'get_unrequired_faculty']);
 
         // Submitted Requirements Folder
         Route::get('/submitted_requirement_folder', [SubmittedRequirementFolderController::class, 'index']);
