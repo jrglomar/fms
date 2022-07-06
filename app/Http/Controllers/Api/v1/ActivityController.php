@@ -112,7 +112,7 @@ class ActivityController extends Controller
     public function show($id)
     {
         //
-         return Activity::with('activity_type')->find($id);
+         return Activity::with('activity_type', 'created_by_user')->find($id);
 
         //return Activity::with('user', 'created_by_user')->find($id);
     }

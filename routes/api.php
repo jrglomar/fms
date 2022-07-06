@@ -172,20 +172,9 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         // Activity Attendance
         Route::get('/activity_attendance', [ActivityAttendanceRequiredFacultyListController::class, 'index']);
         Route::get('/activity_attendance/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'show']);
-        Route::get('/activity_attendance/search/{name}', [ActivityAttendanceRequiredFacultyListController::class, 'search']);
+        Route::get('/activity_attendance/search/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/activity_attendance/show_soft_deleted/{all}', [ActivityAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
 
-        // Room
-        Route::get('/room', [RoomController::class, 'index']);
-        Route::get('/room/{id}', [RoomController::class, 'show']);
-        Route::get('/room/search/{name}', [RoomController::class, 'search']);
-        Route::get('/room/show_soft_deleted/{all}', [RoomController::class, 'show_soft_deleted']);
-
-        // Class Schedule
-        Route::get('/class_schedule', [ClassScheduleController::class, 'index']);
-        Route::get('/class_schedule/{id}', [ClassScheduleController::class, 'show']);
-        Route::get('/class_schedule/search/{name}', [ClassScheduleController::class, 'search']);
-        Route::get('/class_schedule/show_soft_deleted/{all}', [ClassScheduleController::class, 'show_soft_deleted']);
     });
 
 
@@ -280,9 +269,11 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
         // Activity Attendance
         Route::post('/activity_attendance', [ActivityAttendanceRequiredFacultyListController::class, 'store']);
-        Route::put('/activity_attendance/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'update']);
+        Route::put('/activity_attendance/{id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'update']);
         Route::delete('/activity_attendance/destroy/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'destroy']);
         Route::put('/activity_attendance/restore/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'restore']);
+        Route::post('/activity_attendance/multi_insert', [ActivityAttendanceRequiredFacultyListController::class, 'multi_insert']);
+
 
         // Room
         Route::post('/room', [RoomController::class, 'store']);

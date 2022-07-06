@@ -2,12 +2,12 @@
 
 {{-- NAVBAR --}}
 @section('navbar')
-    @include('layouts.acad_head_navbar')
+    @include('layouts.faculty_navbar')
 @endsection
 
 {{-- SIDEBAR --}}
 @section('sidebar')
-    @include('layouts.acad_head_sidebar')
+    @include('layouts.faculty_sidebar')
 @endsection
 
 @section('section_header')
@@ -15,15 +15,15 @@
 @endsection
 
 {{-- MODAL --}}
-@include('acad_head/activity_view/activity_view_modal')
+@include('faculty/activity_view/activity_view_modal')
 
     {{-- CONTENT --}}
     @section('content')
 
             {{-- MAIN CONTENT --}}
-            @include('acad_head/activity_view/activity_view_content')
+            @include('faculty/activity_view/activity_view_content')
             &nbsp;
-            @include('acad_head/activity_view/required_faculty_list_view_datatable')
+            @include('faculty/activity_view/required_faculty_list_view_datatable')
 
     @endsection
 
@@ -31,10 +31,10 @@
 
 {{-- FOOTER --}}
 @section('footer')
-    @include('layouts.acad_head_footer')
+    @include('layouts.faculty_footer')
 @endsection
 
 
 @section('script')
-    @include('acad_head/activity_view/activity_view_scripts')
+    @include('faculty/activity_view/activity_view_scripts')
 @endsection

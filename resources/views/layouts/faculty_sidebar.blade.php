@@ -70,7 +70,27 @@
                                             <span>Meetings</span></a>
                                     </li>
                                 </ul>
-                            </li>        
+                            </li>       
+                            
+                             {{-- ACTIVITY MANAGEMENT --}}
+                            <li class="menu-header">Activity Management</li>
+                            <li class="dropdown {{ Request::segment(2) == 'activity_type' || 
+                                                    Request::segment(2) == 'activity' ||
+                                                    Request::segment(2) == 'activity_view'
+                                                ? 'active' : ''}}">
+                                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                        class="fas fa-clipboard"></i>
+                                <span>Activity</span></a>
+                                <ul class="dropdown-menu">
+                                    <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                    <li class="{{ Request::segment(2) == 'activity' ||
+                                                Request::segment(2) == 'activity_view'
+                                    ? 'active' : ''}}">
+                                        <a class="nav-link" href="/faculty/activity">
+                                            <span>Activities</span></a>
+                                    </li>
+                                </ul>
+                            </li>
 
                         <li class="menu-header">Account Management</li>
                         <li class="dropdown {{ Request::segment(2) == 'role' ||

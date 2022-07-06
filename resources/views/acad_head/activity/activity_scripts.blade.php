@@ -266,7 +266,7 @@
         $(document).on("click", ".btnView", function(){
             var id = this.id;
 
-            window.location.replace(APP_URL+"/acad_head/activity_view/"+id);
+            window.location.replace(APP_URL+"/acad_head/activity/"+id);
 
             //let form_url =BASE_API+id
 

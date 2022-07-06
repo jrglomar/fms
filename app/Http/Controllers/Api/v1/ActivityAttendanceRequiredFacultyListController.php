@@ -24,10 +24,10 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         // return ActivityAttendanceRequiredFacultyList::where('active_status', 'Active')->get();
 
         // All data
-        // return ActivityAttendanceRequiredFacultyList::all();
+        return ActivityAttendanceRequiredFacultyList::all();
 
         // Return with relationships
-        return ActivityAttendanceRequiredFacultyListController::with('user', 'created_by_user')->get();
+        //return ActivityAttendanceRequiredFacultyList::with('user', 'created_by_user')->get();
     }
 
     /**
@@ -64,7 +64,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         //
         return ActivityAttendanceRequiredFacultyList::find($id);
 
-        return ActivityAttendanceRequiredFacultyListController::with('user', 'created_by_user')->find($id);
+        return ActivityAttendanceRequiredFacultyList::with('user', 'created_by_user')->find($id);
     }
 
     /**
@@ -74,34 +74,35 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $faculty_id)
     {
         //
-        $ActivityAttendanceRequiredFacultyList = ActivityAttendanceRequiredFacultyList::find($id);
+        $ActivityAttendanceRequiredFacultyList = ActivityAttendanceRequiredFacultyList::where('activity_id', 'like', '%'.$id.'%')
+        ->where('faculty_id', 'like', '%'.$faculty_id.'%');
         $ActivityAttendanceRequiredFacultyList->update($request->all());
 
-        return $ActivityAttendanceRequiredFacultyList;
+        return $request;
     }
 
     public function edit($id)
     {
         // Default
-        // return ActivityAttendanceRequiredFacultyListController::find($id);
+        // return ActivityAttendanceRequiredFacultyList::find($id);
 
-        return ActivityAttendanceRequiredFacultyListController::with('user', 'created_by_user')->find($id);
+        return ActivityAttendanceRequiredFacultyList::with('user', 'created_by_user')->find($id);
     }
 
-    public function restore(ActivityAttendanceRequiredFacultyListController $ActivityAttendance, $id)
+    public function restore(ActivityAttendanceRequiredFacultyList $ActivityAttendance, $id)
     {
         //
-        $ActivityAttendance = ActivityAttendanceRequiredFacultyListController::onlyTrashed()->where('id', $id)->restore();
-        return ActivityAttendanceRequiredFacultyListController::find($id);
+        $ActivityAttendance = ActivityAttendanceRequiredFacultyList::onlyTrashed()->where('id', $id)->restore();
+        return ActivityAttendanceRequiredFacultyList::find($id);
     }
 
-    public function destroy(ActivityAttendanceRequiredFacultyListController $ActivityAttendance, $id)
+    public function destroy(ActivityAttendanceRequiredFacultyList $ActivityAttendance, $id)
     {
         //if the model soft deleted
-        $ActivityAttendance = ActivityAttendanceRequiredFacultyListController::find($id);
+        $ActivityAttendance = ActivityAttendanceRequiredFacultyList::find($id);
 
         $ActivityAttendance->delete();
         return $ActivityAttendance;
@@ -109,14 +110,29 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
 
     public function show_soft_deleted($all)
     {
-        $ActivityAttendance = ActivityAttendanceRequiredFacultyListController::onlyTrashed()->get();
+        $ActivityAttendance = ActivityAttendanceRequiredFacultyList::onlyTrashed()->get();
 
         return $ActivityAttendance;
     }
 
-    public function search($title)
+    public function search($id)
     {
 
-        return ActivityAttendanceRequiredFacultyListController::where('email', 'like', '%'.$title.'%')->get();
+        return ActivityAttendanceRequiredFacultyList::where('activity_id', 'like', '%'.$id.'%')->get();
+    }
+
+    public function multi_insert(Request $request)
+    {
+
+        $data = $request->all();
+
+        for($i=0; $i < count($data); $i++) {
+            ActivityAttendanceRequiredFacultyList::create($data[$i]);
+        }
+
+        return [
+            'message' => 'Multiple Insert Success.'
+        ];
+        
     }
 }
