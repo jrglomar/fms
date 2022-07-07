@@ -133,34 +133,13 @@
         
 
         $('#btnEditRequiredFaculty').on('click', function(){
-            let form_url = APP_URL+'/api/v1/faculty/'
+            let form_url = ATTENDANCE_API + "unrequired_faculty/" + ACTIVITY_ID
 
             $('#requiredFacultyDatatableModal').DataTable().destroy()
             requiredFacultyDatatableModal = $('#requiredFacultyDatatableModal').DataTable({
                 "ajax": {
                     url: form_url,
-                    dataSrc: function(json){
-                        var rows = [];
-                        $.each(json, function(i){
-                            console.log(json[i])
-                            if(json[i].activity_attendance_required_faculty_list.length != 0){ // to check if faculty don't have any required requirement bin
-                                $.each(json[i].activity_attendance_required_faculty_list, function(j){ // to check if activity_attendance_required_faculty_list of this faculty has requirement bin id
-                                    if(jQuery.inArray(ACTIVITY_ID, json[i].activity_attendance_required_faculty_list !== -1)){
-                                        // selected
-                                    }
-                                    else{
-                                        rows.push(json[i]);
-                                    }
-                                })
-                            }
-                            else{
-                                // unselected
-                                rows.push(json[i]);
-                            }
-                        })
-                        console.log(rows)
-                        return rows;
-                    },
+                    dataSrc: ""
                 },
                 "async": true,
                 "columns": [
