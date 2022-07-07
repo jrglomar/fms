@@ -7,17 +7,25 @@
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-center">
-                    <button class="btn" id="uploadImage" data-toggle="tooltip" data-placement="bottom" title="Upload Image">
-                        <img alt="faculty_image" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png" style="width:120px" class="rounded-circle profile-widget-picture">
+                    <button class="btn" id="btnUploadImage" data-toggle="tooltip" data-placement="bottom" title="Upload Image">
+                        <img alt="faculty_image" id="faculty_image" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png" style="width:120px" class="rounded-circle profile-widget-picture">
                     </button>                  
+                    
+                    <input hidden type="file" id="uploadImage" name="uploadImage" accept="image/*" size="20" class="form-control-file">
                   </div><br><br>
 
                 <form id="updateUserForm" class="needs-validation" novalidate="">
                     {{-- EMAIL --}}
                     <div class="form-row text-center">
-                        <div class="form-group col-md-12">
-                            <label class="text-dark" for="email">Email: </label>
-                            <label class="text-lg" id="email"></label>
+                        <div class="col-md-12">
+                            <h6 class="text-sm" for="email">Email: 
+                            <label class="text-dark" id="email"></label></h6>
+                            
+                            {{-- <label disabled type="email" class="form-control" id="email"> --}}
+                        </div>
+                        <div class="col-md-12">
+                            <h6 class="text-sm" for="user_role">Role: 
+                            <label class="text-dark" id="user_role"></label></h6>
                             {{-- <label disabled type="email" class="form-control" id="email"> --}}
                         </div>
                         <div class="form-group col-md-2"></div>

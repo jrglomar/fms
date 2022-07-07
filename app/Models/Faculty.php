@@ -35,6 +35,7 @@ class Faculty extends Model
                 'house_number',
                 'created_by',
                 'updated_by',
+                'image',
                 // FK
                 'user_id',
                 'academic_rank_id',

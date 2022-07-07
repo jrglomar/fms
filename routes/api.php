@@ -216,6 +216,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/faculty/{id}', [FacultyController::class, 'update']);
         Route::delete('/faculty/destroy/{id}', [FacultyController::class, 'destroy']);
         Route::put('/faculty/restore/{id}', [FacultyController::class, 'restore']);
+        Route::post('/faculty/faculty_image_upload', [FacultyController::class, 'faculty_image_upload']);
 
         // Role
         Route::post('/role', [RoleController::class, 'store']);

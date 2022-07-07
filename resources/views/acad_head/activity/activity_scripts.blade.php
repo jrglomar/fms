@@ -148,6 +148,7 @@
 
             var form_url = BASE_API +'upload'
 
+            console.log(files)
             console.log(fd)
 
             if (files == null){

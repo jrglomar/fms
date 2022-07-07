@@ -72,6 +72,27 @@ class FacultyController extends Controller
         return Faculty::create($request->all());
     }
 
+    public function faculty_image_upload(Request $request){
+        $data = array();
+
+        $validator = $request->validate([
+            'file' => 'required|mimes:pdf,jpg,jpeg,png'
+        ]);
+
+            $data['success'] = 1;
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName();
+
+            $unique_name = md5($filename . microtime());
+            $extension = $request->file('file')->extension();
+
+            $file->move('images/faculty_images/', $unique_name.'.'.$extension);
+
+            $data['path'] = 'images/faculty_images/'.$unique_name.'.'.$extension;
+
+        return $data;
+    }
+
     /**
      * Display the specified resource.
      *
