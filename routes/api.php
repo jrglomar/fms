@@ -80,6 +80,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/faculty/search/{name}', [FacultyController::class, 'search']);
         Route::get('/faculty/show_soft_deleted/{all}', [FacultyController::class, 'show_soft_deleted']);
         Route::get('/faculty/check_user_exist/{id}', [FacultyController::class, 'check_user_exist']);
+        Route::get('/faculty/get_all_faculties_that_does_not_on_meeting/{meeting_id}', [FacultyController::class, 'get_all_faculties_that_does_not_on_meeting']); //  
 
         // Role
         Route::get('/role', [RoleController::class, 'index']);
@@ -111,14 +112,14 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/meeting_attendance_required_faculty_list/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'show']);
         Route::get('/meeting_attendance_required_faculty_list/search/{name}', [MeetingAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/meeting_attendance_required_faculty_list/show_soft_deleted/{all}', [MeetingAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
-        // Route::get('/meeting_attendance_required_faculty_list/get_all_faculties_per_meeting/{meeting_id}', [MeetingAttendanceRequiredFacultyListController::class, 'get_all_faculties_per_meeting']); //
-        Route::get('/meeting_attendance_required_faculty_list/get_all_faculties_that_does_not_on_meeting/{meeting_id}', [MeetingAttendanceRequiredFacultyListController::class, 'get_all_faculties_that_does_not_on_meeting']); //  
+        Route::get('/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/{meeting_id}/{faculty_id}', [MeetingAttendanceRequiredFacultyListController::class, 'search_specific_meeting_and_faculty']); //
 
         // Requirement Bin
         Route::get('/requirement_bin', [RequirementBinController::class, 'index']);
         Route::get('/requirement_bin/{id}', [RequirementBinController::class, 'show']);
         Route::get('/requirement_bin/search/{title}', [RequirementBinController::class, 'search']);
         Route::get('/requirement_bin/show_soft_deleted/{all}', [RequirementBinController::class, 'show_soft_deleted']);
+        Route::get('/requirement_bin/get_specific_rb_of_faculty/{faculty_id}', [RequirementBinController::class, 'get_specific_rb_of_faculty']);
 
         // Requirement Type
         Route::get('/requirement_type', [RequirementTypeController::class, 'index']);

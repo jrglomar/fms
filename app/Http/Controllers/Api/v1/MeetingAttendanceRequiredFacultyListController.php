@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 
 use App\Models\MeetingAttendanceRequiredFacultyList;
+use App\Models\Faculty;
 use Illuminate\Http\Request;
 
 class MeetingAttendanceRequiredFacultyListController extends Controller
@@ -157,29 +158,11 @@ class MeetingAttendanceRequiredFacultyListController extends Controller
         
     }
 
-    // public function get_all_faculties_per_meeting($meeting_id)
-    // {
-    //     $faculties_per_meeting = MeetingAttendanceRequiredFacultyList::select(
-    //         "meeting_attendance_required_faculty_lists.id", 
-    //         "meeting_attendance_required_faculty_lists.faculty_id",
-    //         "meeting_attendance_required_faculty_lists.meeting_id"
-    //     )
-    //     ->where('meeting_id', $meeting_id)
-    //     ->get();
-
-    //     return $faculties_per_meeting;
-    // }
-
-    public function get_all_faculties_that_does_not_on_meeting($meeting_id)
+    public function search_specific_meeting_and_faculty($meeting_id, $faculty_id)
     {
-        $faculties_per_meeting = MeetingAttendanceRequiredFacultyList::select(
-            "meeting_attendance_required_faculty_lists.id", 
-            "meeting_attendance_required_faculty_lists.faculty_id",
-            "meeting_attendance_required_faculty_lists.meeting_id"
-        )
-        ->where('meeting_id', "!=", $meeting_id)
+        return MeetingAttendanceRequiredFacultyList::where('meeting_id', 'like', '%'.$meeting_id.'%')
+        ->where('faculty_id', 'like', '%'.$faculty_id.'%')
         ->get();
-
-        return $faculties_per_meeting;
     }
+
 }

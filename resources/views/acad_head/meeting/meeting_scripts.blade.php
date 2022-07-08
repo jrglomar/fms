@@ -29,6 +29,7 @@
                     { data: "start_time", render: function(data, type, row){
                         console.log("0000-00-00 "+data)
                         console.log(row.date)
+                        
                         return `<span class="badge badge-info">${moment(row.date).format('LL')}, 
                             ${moment("2022-06-27 "+data).format('LT')} - ${moment("2022-06-27 "+row.end_time).format('LT')
                             }</span>`
@@ -137,17 +138,12 @@
 
             console.log(meeting_type)
 
-            // if (meeting_type == null)
-            // {
-            //     swalAlert('warning', "Please choose meeting Type")
-            // }
-            // else
-            // {
                 if(endTime < startTime)
                 {
                     swalAlert('warning', "The meeting End Time is Less than to your Start Time. Please pick time properly")
                 }
-                else
+
+                else (endTime > startTime)
                 {
                     // ajax opening tag
                     $.ajax({
@@ -191,7 +187,7 @@
         $(document).on("click", ".btnEdit", function(){
             var id = this.id;
             let form_url = BASE_API+id
-
+            
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -227,48 +223,54 @@
         // UPDATE FUNCTION
         $('#updateForm').on('submit', function(e){
             e.preventDefault()
-            var id = $('#id_edit').val();
-            var form_url = BASE_API+id
-
-            let data = {
-                "title": $('#title_edit').val(),
-                "meeting_types_id": $('#meeting_types_id_edit').val(),
-                "description": $('#description_edit').val(),
-                "agenda": $('#agenda_edit').val(),
-                "location": $('#location_edit').val(),
-                "date": $('#date_edit').val(),
-                "start_time": $('#start_time_edit').val(),
-                "end_time": $('#end_time_edit').val(),
-                "is_required": $('#is_required_edit').val(),
-                "status": $('#status_edit').val(),
-            }
-
-            $.ajax({
-                url: form_url,
-                method: "PUT",
-                data: JSON.stringify(data),
-                dataType: "JSON",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-
-                success: function(data){
-                    notification("success", "Meeting");
-                    refresh()
-                    $('#editModal').modal('hide');
-                },
-                error: function(error){
-                    console.log(error)
-                    swalAlert('warning', error.responseJSON.message)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+            if ($(this).parsley().isValid()) 
+            {
+                var id = $('#id_edit').val();
+                var form_url = BASE_API+id
+                
+                let data = {
+                    "title": $('#title_edit').val(),
+                    "meeting_types_id": $('#meeting_types_id_edit').val(),
+                    "description": $('#description_edit').val(),
+                    "agenda": $('#agenda_edit').val(),
+                    "location": $('#location_edit').val(),
+                    "date": $('#date_edit').val(),
+                    "start_time": $('#start_time_edit').val(),
+                    "end_time": $('#end_time_edit').val(),
+                    "is_required": $('#is_required_edit').val(),
+                    "status": $('#status_edit').val(),
                 }
-            // ajax closing tag
-            })
 
+                $.ajax({
+                    url: form_url,
+                    method: "PUT",
+                    data: JSON.stringify(data),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
 
+                    success: function(data){
+                        notification("success", "Meeting");
+                        refresh()
+                        $('#editModal').modal('hide');
+                    },
+                    error: function(error){
+                        console.log(error)
+                        swalAlert('warning', error.responseJSON.message)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                // ajax closing tag
+                })
+            }
+            else
+            {
+                $('#updateForm').parsley().reset();
+                swalAlert('warning', "Please put a valid input!");
+            }
         });
         // END OF UPDATE FUNCTION
 

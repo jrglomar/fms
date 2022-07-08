@@ -239,52 +239,23 @@
 
     // REFRESH DATATABLE FUNCTION
     function refresh(){
-                let url = APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search/' + MEETING_ID;
+        let url = APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search/' + MEETING_ID;
 
-                dataTable.ajax.url(url).load()
-            }
+        dataTable.ajax.url(url).load()
+    }
     // END REFRESH DATATABLE FUNCTION
 
 // ------------------------------------------------------------------------------------------------- //
 
         // FUNCTION ON EDIT REQUIRED FACULTY LIST BUTTON
         $('#btnEditRequiredFaculty').on('click', function(){
-            let form_url = APP_URL+'/api/v1/faculty/'
+            let form_url = APP_URL+'/api/v1/faculty/get_all_faculties_that_does_not_on_meeting/' + MEETING_ID
 
             $('#requiredFacultyDatatableModal').DataTable().destroy()
             requiredFacultyDatatableModal = $('#requiredFacultyDatatableModal').DataTable({
                 "ajax": {
                     url: form_url,
-                    dataSrc: function(json){
-                        var rows = [];
-                        $.each(json, function(i){
-                            counter = 0
-                            console.log(json[i])
-                            if(json[i].meeting_attendance_required_faculty_list.length != 0){ // to check if faculty don't have any meeting
-                                $.each(json[i].meeting_attendance_required_faculty_list, function(j){ // to check if meeting_attendance_required_faculty_list of this faculty has meeting id
-                                    if(jQuery.inArray(MEETING_ID, json[i].meeting_attendance_required_faculty_list !== -1)){
-                                        console.log('selected'+i)
-                                    }
-                                    else{
-                                        counter ++
-                                        
-                                    }
-                                })
-                                if(counter == 0)
-                                {
-                                    rows.push(json[i]);
-                                }
-                            }
-                            else{
-                                // unselected
-                                rows.push(json[i]);
-                                console.log(counter)
-                                console.log('unselected'+i)
-                            }
-                        })
-                        console.log(rows)
-                        return rows;
-                    },
+                    dataSrc: "",
                 },
                 "async": true,
                 "columns": [

@@ -34,6 +34,10 @@
             $('#createForm').parsley().reset();
         });
 
+        $('#editModal').on('show.bs.modal', function() {
+            $('#updateForm').parsley().reset();
+        });
+
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")

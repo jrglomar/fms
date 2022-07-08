@@ -98,7 +98,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="updateForm" class="needs-validation" novalidate="">
+                <form id="updateForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12" hidden>

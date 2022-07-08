@@ -11,188 +11,432 @@
         console.log(JSON.parse(USER_DATA))
 
         var USER_ROLE = JSON.parse(USER_DATA)
+        var DATA_USER = JSON.parse(USER_DATA)
 
 
         let MEETING_ID = "{{ $meeting_id }}"
+        let FACULTY_ID = DATA_USER.faculty.id
         // END OF GLOBAL VARIABLE
 
         // TIME IN BUTTON FUNCTION
         timeIn = () => 
         {
-            swalAlert('warning', 'This function is under maintenance!')
+            Swal.fire(
+            {
+                title: "Are you sure you?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: !0,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Yes!",
+            })
+            .then(function (t) 
+            {
+                // if user clickes yes.
+                if (t.value) 
+                {
+                    $.ajax(
+                    {
+                        url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (data) 
+                        {
+                            var current_time = new Date(); // current time
+                            var hours = current_time.getHours();
+                            var mins = current_time.getMinutes();
+                            if(mins < 10)
+                            {
+                                mins = "0"+mins
+                            }
+                            else
+                            {
+                                mins = mins;
+                            }
+                            var moment_current_date = moment(current_time).format('LL')
+                            var now = hours+":"+mins+":00";
+
+                            var time_in = data[0].time_in
+                            var time_out = data[0].time_out
+                            var attendance_status = data[0].attendance_status
+                            var proof_of_attendance_file_directory = data[0].proof_of_attendance_file_directory
+                            var proof_of_attendance_file_link = data[0].proof_of_attendance_file_link
+                            var faculty_id = FACULTY_ID
+                            var meeting_id = MEETING_ID
+                            var id = data[0].id
+
+                            console.log(id)
+
+                            $.ajax(
+                            {
+                                url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/' + id,
+                                type: "PUT",
+                                data: JSON.stringify(
+                                {		
+                                    "time_in": now,
+                                    "time_out": time_out,
+                                    "attendance_status": "Present",
+                                    "proof_of_attendance_file_directory": proof_of_attendance_file_directory,
+                                    "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                                    "faculty_id": faculty_id,
+                                    "meeting_id": meeting_id,
+                                }),
+                                dataType: "JSON",
+                                contentType: 'application/json',
+                                processData: false,
+                                cache: false,
+                                success: function (responseJSON) 
+                                {
+                                    console.log(responseJSON)
+                                    notification("success", "Success!");  
+                                    setInterval(() => {
+                                        location.reload()
+                                    }, 1000);                         
+                                },
+                                error: function ({ responseJSON }) 
+                                {
+                                    
+                                },
+                            }); 
+                        },
+                        error: function (data) {},
+                    });
+                }
+            });
         }
         // END TIME IN BUTTON FUNCTION
+
+        // TIME OUT BUTTON FUNCTION
+        timeOut = () => 
+        {
+            Swal.fire(
+            {
+                title: "Are you sure you?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: !0,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Yes!",
+            })
+            .then(function (t) 
+            {
+                // if user clickes yes.
+                if (t.value) 
+                {
+                    $.ajax(
+                    {
+                        url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (data) 
+                        {
+                            var current_time = new Date(); // current time
+                            var hours = current_time.getHours();
+                            var mins = current_time.getMinutes();
+                            if(mins < 10)
+                            {
+                                mins = "0"+mins
+                            }
+                            else
+                            {
+                                mins = mins;
+                            }
+                            var moment_current_date = moment(current_time).format('LL')
+                            var now = hours+":"+mins+":00";
+
+                            var time_in = data[0].time_in
+                            var time_out = data[0].time_out
+                            var attendance_status = data[0].attendance_status
+                            var proof_of_attendance_file_directory = data[0].proof_of_attendance_file_directory
+                            var proof_of_attendance_file_link = data[0].proof_of_attendance_file_link
+                            var faculty_id = FACULTY_ID
+                            var meeting_id = MEETING_ID
+                            var id = data[0].id
+
+                            console.log(id)
+
+                            $.ajax(
+                            {
+                                url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/' + id,
+                                type: "PUT",
+                                data: JSON.stringify(
+                                {		
+                                    "time_in": time_in,
+                                    "time_out": now,
+                                    "attendance_status": attendance_status,
+                                    "proof_of_attendance_file_directory": proof_of_attendance_file_directory,
+                                    "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                                    "faculty_id": faculty_id,
+                                    "meeting_id": meeting_id,
+                                }),
+                                dataType: "JSON",
+                                contentType: 'application/json',
+                                processData: false,
+                                cache: false,
+                                success: function (responseJSON) 
+                                {
+                                    console.log(responseJSON)
+                                    notification("success", "Success!");
+                                    setInterval(() => {
+                                        location.reload()
+                                    }, 1000);                           
+                                },
+                                error: function ({ responseJSON }) 
+                                {
+                                    
+                                },
+                            }); 
+                        },
+                        error: function (data) {},
+                    });
+                }
+            });
+        }
+        // END TIME OUT BUTTON FUNCTION
 
         // FUNCTION TO CHANGE CONTENT
         function getMeetingDetails(){
             $.ajax({
-                url: BASE_API + MEETING_ID,
+                url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
                 type: "GET",
-                dataType: "JSON",
-                success: function (responseData) 
-                {   
-                    console.log(responseData)
+                dataType: "json",
+                success: function (marfData) 
+                {
+                    console.log(marfData)
+                    $.ajax({
+                        url: BASE_API + MEETING_ID,
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function (responseData) 
+                        {   
+                            console.log(responseData)
 
-                    var isRequired = responseData.is_required
-                    var status = responseData.status
-                    
-
-                    // Changing Boolean value of is_required to text
-                    if(isRequired == true)
-                    {
-                        isRequired = 'Yes'
-                    }
-                    else
-                    {
-                        isRequired = 'No'
-                    } 
-
-                    // IF Else Condition to specify if the Status is Done or Pending
-                    if(status == "Pending")
-                    {
-                        status = '<span class="badge badge-warning">' + responseData.status + '</span>'
-                    }
-                    else if(status == "Done")
-                    {
-                        status = '<span class="badge badge-success">' + responseData.status + '</span>'
-                    } 
-
-
-                    // For meeting_view_content> div#row_left
-                    var row_left = '<div class="card card-info">' +
-                                        '<div class="card-header">' +
-                                            '<div class="col-12">' +
-                                                '<h3 class="text-primary card-title"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + 
-                                                    '<span>' + responseData.title + '</span>' +
-                                                '</h3>' +
-                                                '<span style="color:black"><b>' + responseData.meeting_type.title + '</b></span>' +
-                                                '<div class="float-right">' +
-                                                    status +
-                                                '</div>' +
-                                            '</div>' +
-                                        '</div>' +
-                                        '<div class="card-body">' +
-                                            '<div class="col-md-12">' +
-                                                '<span style="color:black"><b>Agenda: </b>' +
-                                            '</div>' +
-                                            '<div class="col-md-12">' +
-                                                '<span style="white:space: pre-line; color:black; text-align: justify; display:block;">&emsp;' +responseData.agenda +   
-                                            '</div>' + 
-                                            '<br>' + 
-                                            '<div class="col-md-12">' +
-                                                '<span style="color:black"><b>Description: </b>' +
-                                            '</div>' +
-                                            '<div class="col-md-12">' +
-                                                '<span style="white:space: pre-line; color:black; text-align: justify; display:block;">&emsp;' +responseData.description +   
-                                            '</div>' + 
-                                        '</div>' + 
-                                    '</div>' ;
-
-                    let arrayOfUserRole = []
-                    $.each(USER_ROLE.user_role, function(i){
-                        arrayOfUserRole.push(USER_ROLE.user_role[i].role.title)
-                    })
-                    // CHECK THE USER ROLE
-                    if(jQuery.inArray("Faculty", arrayOfUserRole) !== -1)
-                    {
-                        // For meeting_view_content> div#row_right - button top
-                        var row_right_top = "";
-
-                        var current_time = new Date(); // current time
-                        var hours = current_time.getHours();
-                        var mins = current_time.getMinutes();
-                        var day = current_time.getDay();
-
-
-                        var moment_current_time = moment(current_time).format('LT');
-                        var moment_current_date = moment(current_time).format('LL')
-                        var now = hours+":"+mins+":00";
-                        var moment_end_time = moment("2022-06-27 " + responseData.end_time).format('LT');
-                        var moment_start_time = moment("2022-06-27 " + responseData.start_time).format('LT');
-                        var moment_meeting_date = moment(responseData.date).format('LL')
-
-                        var remainMins = "";
-
-                        console.log("The meeting Date is "+ moment_meeting_date + " and The Current Date is " + moment_current_date);
-
-                        if (moment_meeting_date == moment_current_date)
-                        {
-                            remainMins = moment().startOf('hour').fromNow();
-                        }
-                        else if(moment_meeting_date < moment_current_date)
-                        {
-                            remainMins = moment().startOf('day').fromNow();
-                        }
-                        
-                         
-                        if(now >= moment_start_time && moment_end_time <= now) 
-                        {
-                            console.log("Yes Current time is between " + moment_start_time + " to " + moment_end_time + ", and " + remainMins + " mins left to be time " + moment_end_time);
-                            row_right_top +=    '<div class="col-12">' +
-                                                    '<button type="button" onClick="return timeIn()" class="btn btn-icon icon-left btn-success btn-lg button-block"><i class="fas fa-check"></i> Time in</button>' +
-                                                '</div>' +
-                                                '<br>';
-                        }
-                        else 
-                        {
-                            row_right_top +=    '<div class="col-12">' +
-                                                    '<disabled button type="button" class="btn btn-icon icon-left btn-secondary btn-lg button-block">Done<br>'+ remainMins +'</button>' +
-                                                '</div>' +
-                                                '<br>';
+                            var isRequired = responseData.is_required
+                            var status = responseData.status
                             
-                        }
-                        
 
-                        // For meeting_view_content> div#row_right - card bottom
-                        var row_right_bottom = '<div class="card card-success">' +
-                                            '<div class="card-body">' +
-                                                '<div class="align-items-start">' +
-                                                    '<h5 class="text-primary card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> ' + 
-                                                        '<span>Meeting Details: </span>' +
-                                                    '</h5>' +
+                            // Changing Boolean value of is_required to text
+                            if(isRequired == true)
+                            {
+                                isRequired = 'Yes'
+                            }
+                            else
+                            {
+                                isRequired = 'No'
+                            } 
+
+                            // IF Else Condition to specify if the Status is Done or Pending
+                            if(status == "Pending")
+                            {
+                                status = '<span class="badge badge-warning">' + responseData.status + '</span>'
+                            }
+                            else if(status == "Done")
+                            {
+                                status = '<span class="badge badge-success">' + responseData.status + '</span>'
+                            } 
+
+
+                            // For meeting_view_content> div#row_left
+                            var row_left = '<div class="col-12 col-sm-12 col-lg-12">' +
+                                                '<div class="hero bg-success text-white">' +
+                                                    '<div class="hero-inner">' +
+                                                        '<div class="col-12">' +
+                                                            '<h3 class="card-title text-center"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + 
+                                                                '<span>' + responseData.title + '</span>' +
+                                                            '</h3>' +
+                                                            
+                                                            '<span class="badge badge-info" style="color:black"><b>' + responseData.meeting_type.title + '</b></span>' +
+                                                            '<div class="float-right"><b>' +
+                                                                status +
+                                                            '</b></div>' +
+                                                        '</div>' +
+                                                    '</div>' +
+                                                    '<div class="card-body">' +
+                                                        '<div class="col-md-12">' +
+                                                            '<span><b>Agenda: </b>' +
+                                                        '</div>' +
+                                                        '<div class="col-md-12">' +
+                                                            '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;' +responseData.agenda +   
+                                                        '</div>' + 
+                                                        '<br>' + 
+                                                        '<div class="col-md-12">' +
+                                                            '<span><b>Description: </b>' +
+                                                        '</div>' +
+                                                        '<div class="col-md-12">' +
+                                                            '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;' +responseData.description +   
+                                                        '</div>' + 
+                                                    '</div>' + 
                                                 '</div>' +
-                                                '<div class="text-dark">' + 
-                                                    '<div class="col-md-12">' +
-                                                        '<b>Date: </b>' +
-                                                    '</div>' +
-                                                    '<div class="col-md-12"> -- ' +
-                                                        moment(responseData.date).format('dddd, MMMM D, YYYY') +   
-                                                    '</div>' +  
-                                                    '<div class="row">' +
-                                                        '<div class="col-md-7">' +
-                                                            '<div class="col-md-12">' +
-                                                                '<b>From: </b>' +
-                                                            '</div>' +
-                                                            '<div class="col-md-12"> -- ' +
-                                                                moment("2022-06-27 "+responseData.start_time ).format('LT') +   
-                                                            '</div>' + 
-                                                        '</div>' +
-                                                        '<div class="col-md-5">' +
-                                                            '<div class="col-md-12">' +
-                                                                '<b>To: </b>' +
-                                                            '</div>' +
-                                                            '<div class="col-md-12"> -- ' +
-                                                                moment("2022-06-27 "+responseData.end_time ).format('LT') +   
-                                                            '</div>' + 
-                                                        '</div>' +
-                                                    '</div> ' +
-                                                    '<div class="col-md-12">' +
-                                                        '<b>Required? </b>' +
-                                                    '</div>' +
-                                                    '<div class="col-md-12"> -- ' +
-                                                        isRequired +
-                                                    '</div>' +  
-                                                '</div>' + 
-                                            '</div>' + 
-                                        '</div>' ;
-                                    
-                        $("#row_left").html(row_left);
-                        $("#row_right").html(row_right_top);
-                        $("#row_right").append(row_right_bottom);
-                    }
+                                            '</div>' +
+                                        '<br>';
 
-                },
-                error: function ({ responseJSON }) {},
+                            let arrayOfUserRole = []
+                            $.each(USER_ROLE.user_role, function(i){
+                                arrayOfUserRole.push(USER_ROLE.user_role[i].role.title)
+                            })
+                            // CHECK THE USER ROLE
+                            if(jQuery.inArray("Faculty", arrayOfUserRole) !== -1)
+                            {
+                                // For meeting_view_content> div#row_right - button top
+                                var row_right_top = "";
+
+                                var current_time = new Date(); // current time
+                                var hours = current_time.getHours();
+                                var mins = current_time.getMinutes();
+                                if(mins < 10)
+                                {
+                                    mins = "0"+mins
+                                }
+                                else
+                                {
+                                    mins = mins;
+                                }
+                                console.log(mins)
+                                
+
+                                var moment_current_date = moment(current_time).format('LL')
+                                var moment_meeting_date = moment(responseData.date).format('LL');
+
+                                var now = hours+":"+mins+":00";
+                                console.log("NOW: "+ now + "|| Start Time: " +responseData.start_time + "|| End Time: " + responseData.end_time + "")
+                                
+                                if(marfData[0].time_in == null)
+                                {
+                                    //20:07        //19:38               //19:51           //20:38             
+                                    if(moment_meeting_date == moment_current_date && now >= responseData.start_time &&  now <= responseData.end_time) 
+                                    {
+                                        row_right_top +=    '<div class="col-12">' +
+                                                                '<button type="button" onClick="return timeIn()" class="btn btn-icon icon-left btn-success btn-lg button-block"><i class="fas fa-check"></i> Time in</button>' +
+                                                            '</div>' +
+                                                            '<br>';
+                                    }
+                                    else if(moment_meeting_date == moment_current_date && now < responseData.start_time &&  now < responseData.end_time) 
+                                    {
+                                        row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                '<div class="alert-body text-center">' +
+                                                                    '<b>Meeting is not yet started, please wait.</b>' +
+                                                                '</div>' +
+                                                            '</div>' +
+                                                            '<br>';
+                                    }
+                                    else if(moment_meeting_date < moment_current_date && now < responseData.start_time &&  now < responseData.end_time) 
+                                    {
+                                        row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                '<div class="alert-body text-center">' +
+                                                                    '<b>Meeting is not yet started, please wait.</b>' +
+                                                                '</div>' +
+                                                            '</div>' +
+                                                            '<br>';
+                                    }
+                                    else if(moment_meeting_date < moment_current_date || now > responseData.start_time &&  now > responseData.end_time) 
+                                    {
+                                        row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                '<div class="alert-body text-center">' +
+                                                                    '<b>Meeting was already done</b>' +
+                                                                '</div>' +
+                                                            '</div>' +
+                                                            '<br>';
+                                    }
+                                }
+                                else
+                                {
+                                    if(marfData[0].time_out == null)
+                                    {
+                                        if(now >= responseData.start_time &&  now <= responseData.end_time && moment_meeting_date == moment_current_date)
+                                        {
+                                            row_right_top +=    '<div class="alert alert-info alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        'You already Time In. Please wait for the meeting to end. <b>Note: </b> Please time out within 10 mins after the meeting!' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                        }
+                                        else if(now > responseData.start_time &&  now > responseData.end_time || moment_meeting_date < moment_current_date)
+                                        {
+                                            row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="far fa-lightbulb"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        '<b>Note: </b> Please time out within 10 mins after the meeting!' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<div class="col-12">' +
+                                                                    '<disbled button type="button" onClick="return timeOut()" class="btn btn-icon icon-left btn-success btn-lg button-block"><b>Time Out</b></button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if(now > responseData.start_time &&  now > responseData.end_time || moment_meeting_date < moment_current_date)
+                                        {
+                                            row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        'You already Time Out and Meeting was already done.' +
+                                                                    '</div>' +
+                                                                '</div>' 
+                                                                '<br>';
+                                        }
+                                    }
+                                }
+                                // For meeting_view_content> div#row_right - card bottom
+                                var row_right_bottom = '<div class="card card-success">' +
+                                                    '<div class="card-body">' +
+                                                        '<div class="align-items-start">' +
+                                                            '<h5 class="text-primary card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> ' + 
+                                                                '<span>Meeting Details: </span>' +
+                                                            '</h5>' +
+                                                        '</div>' +
+                                                        '<div class="text-dark">' + 
+                                                            '<div class="col-md-12">' +
+                                                                '<b>Date: </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                moment(responseData.date).format('dddd, MMMM D, YYYY') +   
+                                                            '</div>' +  
+                                                            '<div class="row">' +
+                                                                '<div class="col-md-7">' +
+                                                                    '<div class="col-md-12">' +
+                                                                        '<b>From: </b>' +
+                                                                    '</div>' +
+                                                                    '<div class="col-md-12"> -- ' +
+                                                                        moment("2022-06-27 "+responseData.start_time ).format('LT') +   
+                                                                    '</div>' + 
+                                                                '</div>' +
+                                                                '<div class="col-md-5">' +
+                                                                    '<div class="col-md-12">' +
+                                                                        '<b>To: </b>' +
+                                                                    '</div>' +
+                                                                    '<div class="col-md-12"> -- ' +
+                                                                        moment("2022-06-27 "+responseData.end_time ).format('LT') +   
+                                                                    '</div>' + 
+                                                                '</div>' +
+                                                            '</div> ' +
+                                                            '<div class="col-md-12">' +
+                                                                '<b>Required? </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                isRequired +
+                                                            '</div>' +  
+                                                        '</div>' + 
+                                                    '</div>' + 
+                                                '</div>' ;
+                                            
+                                $("#row_left").html(row_left);
+                                $("#row_right").html(row_right_top);
+                                $("#row_right").append(row_right_bottom);
+                            }
+
+                        },
+                        error: function ({ responseJSON }) {},
+                    });
+                }
             });
         };
         getMeetingDetails();
@@ -244,14 +488,7 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View Meeting</div></div>
-                                        <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit Meeting</div></div>
-                                            <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete Meeting</div></div></div></div>`;
+                                        <div>View</div></div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -364,43 +601,6 @@
         $(document).on("click", ".btnView", function(){
             var meeting_id = this.id;
             window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id);
-
-            // $.ajax({
-            //     url: form_url,
-            //     method: "GET",
-            //     headers: {
-            //         "Accept": "application/json",
-            //         "Authorization": API_TOKEN,
-            //         "Content-Type": "application/json"
-            //     },
-
-            //     success: function(data){
-            //         let created_at = moment(data.created_at).format('LLL');
-            //         let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
-
-            //         $('#id_view').html(data.id);
-            //         $('#title_view').html(data.title);
-            //         $('#meeting_types_id_view').html(data.meeting_type.title);
-            //         $('#agenda_view').html(data.agenda);
-            //         $('#description_view').html(data.description);
-            //         $('#start_time_view').html(data.start_time);
-            //         $('#end_time_view').html(data.end_time);
-            //         if(data.is_required == 0) // true
-            //         {
-            //             data.is_required = "No"
-            //         }
-            //         else
-            //         {
-            //             data.is_required = "Yes"
-            //         }
-            //         $('#is_required_view').html(data.is_required);
-            //         $('#status_view').html(data.status);
-            //         $('#created_at_view').html(created_at);
-
-            //         $('#viewModal').modal('show');
-            //     }
-            // // ajax closing tag
-            // })
         });
         // END OF VIEW FUNCTION
 
