@@ -157,10 +157,10 @@
                             "Content-Type": "application/json"
                         },
                         success: function(data){
-                            console.log(data)
+                            console.log(data);
                             notification("success", "Meeting");
-                            $("#createForm").trigger("reset")
-                            $("#create_card").collapse("hide")
+                            $("#createForm").trigger("reset");
+                            $("#create_card").collapse("hide");
                             refresh();
                         },
                         error: function(error){

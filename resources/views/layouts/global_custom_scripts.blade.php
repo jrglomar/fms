@@ -38,6 +38,22 @@
             $('#updateForm').parsley().reset();
         });
 
+        // FOR AJAX BUTTON
+            // FOR DISABLING SUBMIT BUTTON ON CREATE FORM
+            $(document).ajaxStart(function() {
+                $("#create_btn").prop('disabled', true);
+            }).ajaxStop(function() {
+                $("#create_btn").prop('disabled', false);
+            });
+
+            // FOR DISABLING UPDATE CHANGES BUTTON ON UPDATE FORM
+            $(document).ajaxStart(function() {
+                $(".btnUpdate").prop('disabled', true);
+            }).ajaxStop(function() {
+                $(".btnUpdate").prop('disabled', false);
+            });
+        // END FOR AJAX BUTTON
+
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
