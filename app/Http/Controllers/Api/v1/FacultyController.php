@@ -76,7 +76,7 @@ class FacultyController extends Controller
         $data = array();
 
         $validator = $request->validate([
-            'file' => 'required|mimes:pdf,jpg,jpeg,png'
+            'file' => 'required|mimes:gif,svg,jpg,jpeg,png|max:2048'
         ]);
 
             $data['success'] = 1;

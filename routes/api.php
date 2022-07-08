@@ -230,6 +230,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/user_role/{id}', [UserRoleController::class, 'update']);
         Route::delete('/user_role/destroy/{id}', [UserRoleController::class, 'destroy']);
         Route::put('/user_role/restore/{id}', [UserRoleController::class, 'restore']);
+        Route::post('/user_role/multi_insert', [UserRoleController::class, 'multi_insert']);
 
         // Meeting Type
         Route::post('/meeting_type', [MeetingTypeController::class, 'store']);

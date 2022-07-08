@@ -370,6 +370,8 @@
             // $("#uploadImage").click();
         })
 
+        
+
         // FORM SUBMIT
         $('#updateUserForm').on('submit', function(e){
             e.preventDefault()

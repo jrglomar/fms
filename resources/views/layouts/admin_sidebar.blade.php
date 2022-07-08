@@ -120,10 +120,10 @@
                                 <li class="{{ Request::segment(2) == 'user' ? 'active' : ''}}" >
                                     <a class="nav-link" href="/admin/user">
                                         <span>Users</span></a></li>
-                                <li class="{{ Request::segment(2) == 'user_role' ? 'active' : ''}}">
+                                {{-- <li class="{{ Request::segment(2) == 'user_role' ? 'active' : ''}}">
                                     <a class="nav-link" href="/admin/user_role">
                                         <span>User Roles</span></a>
-                                </li>
+                                </li> --}}
                             </ul>
 
                         </li>

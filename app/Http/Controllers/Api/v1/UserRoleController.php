@@ -132,4 +132,20 @@ class UserRoleController extends Controller
 
         return UserRole::where('title', 'like', '%'.$title.'%')->get();
     }
+
+    public function multi_insert(Request $request)
+    {
+
+        $data = $request->all();
+        $user = UserRole::where('user_id', $data[0]['user_id'])->delete();
+
+        for($i=0; $i < count($data); $i++) {
+            UserRole::create($data[$i]);
+        }
+
+        return [
+            'message' => 'Multiple Insert Success.'
+        ];
+        
+    }
 }

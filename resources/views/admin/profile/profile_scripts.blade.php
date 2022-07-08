@@ -362,91 +362,130 @@
         $("#uploadImage").on('change', function(){
             let uploadImage = $('#uploadImage')[0].files[0]
             let imgUrl = URL.createObjectURL(uploadImage)
-            console.log(imgUrl)
             $('#faculty_image').attr("src", imgUrl)
         });
+        
 
         // FORM SUBMIT
         $('#updateUserForm').on('submit', function(e){
             e.preventDefault()
 
             var uploadImage = $('#uploadImage')[0].files[0]
+            var Extension;
             // var files = $('#memorandum_file_directory')[0].files[0]
-            var Extension = uploadImage.name.substring(
+            console.log(uploadImage)
+            
+
+            let role_id_input = $("input[name='role_id_input[]']:checked")
+              .map(function(){
+                return {
+                "role_id": $(this).val(),
+                "user_id": USER_ID
+                }
+            }).get();
+
+
+            let role_form_url = APP_URL + '/api/v1/user_role/multi_insert' 
+            console.log(role_id_input)
+
+            $.ajax({
+                    url: role_form_url,
+                    method: "POST",
+                    data: JSON.stringify(role_id_input),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        notification('info', 'User Role')
+                    },
+                    error: function(error){
+                        console.log(error)
+                        swalAlert('warning', error.responseJSON.message)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                // ajax closing tag
+            })
+
+
+            if (uploadImage != null){
+                Extension = uploadImage.name.substring(
                 uploadImage.name.lastIndexOf('.') + 1).toLowerCase();
 
-            // let form_data = new FormData();
-            // form_data.append('file', uploadImage)
-            // console.log(form_data)
+                let form_data = new FormData();
+                form_data.append('file', uploadImage)
+                console.log(form_data)
 
-            // if (Extension == "png" || Extension == "jpeg" || Extension == "jpg") {
-            //     if($('#uploadImage').val() == ''){
-            //             swalAlert('warning', 'Please select an image')
-            //     }
-            //     else{
-            //         let upload_form_url = BASE_API + 'faculty_image_upload'
-            //         $.ajax({
-            //                 url: upload_form_url,
-            //                 method: "POST",
-            //                 data: form_data,
-            //                 dataType: "JSON",
-            //                 processData: false,
-            //                 contentType: false,
-            //                 headers: {
-            //                     "Accept": "application/json",
-            //                     "Authorization": API_TOKEN,
-            //                 },
-            //                 success: function(data){
-            //                     notification('success', 'Image Update Successfully')
+                if (Extension == "png" || Extension == "jpeg" || Extension == "jpg") {
+                    if($('#uploadImage').val() == ''){
+                            swalAlert('warning', 'Please select an image')
+                    }
+                    else{
+                        let upload_form_url = BASE_API + 'faculty_image_upload'
+                        $.ajax({
+                                url: upload_form_url,
+                                method: "POST",
+                                data: form_data,
+                                dataType: "JSON",
+                                processData: false,
+                                contentType: false,
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                },
+                                success: function(data){
+                                    notification('success', 'Image Update Successfully')
+                                    
+                                    let update_data = {}
+                                    update_data['image'] = data.path
+                                    var update_form_url = BASE_API+FACULTY_ID
+                                    console.log(JSON.stringify(update_data))
+                                    console.log(JSON.stringify(update_form_url))
 
-
-            //                     let update_data = {}
-            //                     update_data['image'] = data.path
-            //                     var update_form_url = BASE_API+FACULTY_ID
-            //                     console.log(JSON.stringify(update_data))
-            //                     console.log(JSON.stringify(update_form_url))
-
-            //                     // UPDATE IMAGE PATH IN DB
-            //                     $.ajax({
-            //                         url: update_form_url,
-            //                         method: "PUT",
-            //                         data: JSON.stringify(update_data),
-            //                         dataType: "JSON",
-            //                         headers: {
-            //                             "Accept": "application/json",
-            //                             "Authorization": API_TOKEN,
-            //                             "Content-Type": "application/json"
-            //                         },
-            //                         success: function(data){
-            //                             notification('info', 'Faculty Details')
-            //                             console.log('Update Success')
-            //                             console.log(data)
-            //                             setInterval(() => {
-            //                                 location.reload();
-            //                             }, 1500);
-            //                         },
-            //                         error: function(error){
-            //                             swalAlert('warning', error.responseJSON.message)
-            //                             console.log(error)
-            //                             console.log(`message: ${error.responseJSON.message}`)
-            //                             console.log(`status: ${error.status}`)
-            //                         }
-            //                     // ajax closing tag
-            //                     })
-            //                 },
-            //                 error: function(error){
-            //                     swalAlert('warning', error.responseJSON.message)
-            //                     console.log(error)
-            //                     console.log(`message: ${error.responseJSON.message}`)
-            //                     console.log(`status: ${error.status}`)
-            //                 }
-            //             // ajax closing tag
-            //             })
-            //     }
-            // }
-            // else{
-            //     swalAlert('warning', 'Invalid file extension. File must be png, jpeg, jpg');
-            // }
+                                    // UPDATE IMAGE PATH IN DB
+                                    $.ajax({
+                                        url: update_form_url,
+                                        method: "PUT",
+                                        data: JSON.stringify(update_data),
+                                        dataType: "JSON",
+                                        headers: {
+                                            "Accept": "application/json",
+                                            "Authorization": API_TOKEN,
+                                            "Content-Type": "application/json"
+                                        },
+                                        success: function(data){
+                                            // notification('info', 'Faculty Details')
+                                            setInterval(() => {
+                                                location.reload();
+                                            }, 1500);
+                                        },
+                                        error: function(error){
+                                            swalAlert('warning', error.responseJSON.message)
+                                            console.log(error)
+                                            console.log(`message: ${error.responseJSON.message}`)
+                                            console.log(`status: ${error.status}`)
+                                        }
+                                    // ajax closing tag
+                                    })
+                                },
+                                error: function(error){
+                                    swalAlert('warning', error.responseJSON.message)
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                    }
+                }
+                else{
+                    swalAlert('warning', 'Invalid file extension. File must be png, jpeg, jpg');
+                }
+            }
+            // END OF UPLOAD IMAGE
 
         });
 
