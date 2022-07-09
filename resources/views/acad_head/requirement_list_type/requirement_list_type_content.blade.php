@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-8 col-sm-8 col-lg-8">
-        <div class="hero bg-success text-white">
+        <div class="hero text-white hero-bg-image hero-bg-parallax"
+        style="background-image: url({{ URL::to('/images/designs/req_bin_card_yellow.png') }})">
             <div class="hero-inner">
                 <div class="col-12">
                         <h3 class="text-center"><span id="title"></span></h3>
@@ -15,8 +16,9 @@
                         </div>
                 </div>
             </div>
-            <div class="card-body">
-                <span class="" style="white-space: pre-line" id="description"></h3>
+            &nbsp;
+            <div class="hero-inner">
+                <span class="text-white" style="white-space: pre-line" id="description"><span>
             </div>
         </div>
     </div>
@@ -40,7 +42,8 @@
         </div>
     </div> --}}
     <div class="col-4 col-sm-4 col-lg-4">
-        <div class="hero bg-info text-white">
+        <div class="hero text-white hero-bg-image hero-bg-parallax"
+        style="background-image: url({{ URL::to('/images/designs/req_bin_card_blue.png') }})">
             <div class="hero-inner">
                 <div class="d-flex justify-content-between">
                     <h5> Required Document List</h5>
@@ -50,7 +53,8 @@
                 </div>
                 
             </div>
-            <div class="card-body">
+            &nbsp;
+            <div class="hero-inner">
                 <ul id="requiredDocumentList" class="list-group overflow-auto">
                     <li class="list-group-item d-flex justify-content-between" disabled>
                         <span class="text-primary"><strong>Document Type</strong></span>

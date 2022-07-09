@@ -1,7 +1,8 @@
     <div class="container">
-        <div class="navbar-bg"></div>
+        <div class="navbar-bg" 
+        style="background-image: url({{ URL::to('/images/designs/navbar_red.png') }});"></div>
 
-            <nav class="navbar navbar-expand-lg main-navbar">
+            <nav class="navbar navbar-expand-lg main-navbar" >
                 <form class="form-inline mr-auto">
                     <ul class="navbar-nav mr-3">
                         <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i

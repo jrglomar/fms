@@ -96,11 +96,33 @@
                     if(jQuery.inArray("Faculty", arrayOfUserRole) !== -1)
                     {
 
-                        var row_right_top = '<button type="button" class="btn time_in_btn btn-icon icon-left btn-primary btn-lg button-block float-right" id="{{$activity_id}}"><i class="fas fa-check"></i> Time in</button>';
+                        var row_right_top = '<button id="time_in_button" type="button" class="btn time_in_btn btn-icon icon-left btn-primary btn-lg button-block float-right" id="{{$activity_id}}"><i class="fas fa-check"></i> Time in</button>';
                                     
                         $("#time_button").append(row_right_top);
                         
                     }
+
+
+                    // CHECK STATUS OF ATTENDANCE AND OR IF INCLUDED
+                    let arrayOfActivity = []
+                    $.each(USER_ROLE.faculty.activity_attendance_required_faculty_list, function(i){
+                        arrayOfActivity.push({"activity_id":USER_ROLE.faculty.activity_attendance_required_faculty_list[i].activity_id,
+                                            "status":USER_ROLE.faculty.activity_attendance_required_faculty_list[i].attendance_status})
+                    })
+
+                    //console.log(jQuery.inArray(ACTIVITY_ID, arrayOfActivity))
+
+                    for (var i=0; i < arrayOfActivity.length; i++) {
+                        if (arrayOfActivity[i].activity_id === ACTIVITY_ID) {
+                            if(arrayOfActivity[i].status == "Attended"){
+                                $("#time_in_button").remove();
+                                var row_right_top = '<button id="time_in_button" type="button" class="btn time_in_btn btn-icon icon-left btn-primary btn-lg button-block float-right" id="{{$activity_id}}"><i class="fas fa-check"></i> Time out</button>';
+                                $("#time_button").append(row_right_top);
+                            }
+                        }
+                    }
+                    //
+
                 }
             // ajax closing tag
             })
@@ -139,130 +161,6 @@
         };
 
         requiredFacultyDatatable()
-
-        // REFRESH DATATABLE FUNCTION
-        function refresh(){
-            let url = ATTENDANCE_API+'search/' + ACTIVITY_ID;
-
-            requiredFacultyDatatable.ajax.url(url).load()
-        }
-        // REFRESH DATATABLE FUNCTION
-
-        $('#btnEditRequiredFaculty').on('click', function(){
-            let form_url = APP_URL+'/api/v1/faculty/'
-
-            $('#requiredFacultyDatatableModal').DataTable().destroy()
-            requiredFacultyDatatableModal = $('#requiredFacultyDatatableModal').DataTable({
-                "ajax": {
-                    url: form_url,
-                    dataSrc: function(json){
-                        var rows = [];
-                        $.each(json, function(i){
-                            console.log(json[i])
-                            if(json[i].activity_attendance_required_faculty_list.length != 0){ // to check if faculty don't have any required requirement bin
-                                $.each(json[i].activity_attendance_required_faculty_list, function(j){ // to check if activity_attendance_required_faculty_list of this faculty has requirement bin id
-                                    if(jQuery.inArray(ACTIVITY_ID, json[i].activity_attendance_required_faculty_list !== -1)){
-                                        // selected
-                                    }
-                                    else{
-                                        rows.push(json[i]);
-                                    }
-                                })
-                            }
-                            else{
-                                // unselected
-                                rows.push(json[i]);
-                            }
-                        })
-                        console.log(rows)
-                        return rows;
-                    },
-                },
-                "async": true,
-                "columns": [
-                    { data: "id"},
-                    { data: "created_at"},
-                    { data: "user.email", render: function(data, type, row){
-                        return data
-                    }},
-                    { data: "first_name", render: function(data, type, row){
-                        let html = ''
-                        html += row.first_name + ' ' + row.last_name
-                        return html
-                    }},
-                    { data: "id", render: function(data, type, row){
-                        return `<div class="custom-control custom-switch">
-                                    <input type="checkbox" name="faculty_required[]" class="custom-control-input faculty_status" id="${row.id}" value="${row.id}" checked>
-                                    <label id="status_label" class="custom-control-label" for="${row.id}">Yes</label>
-                                </div>`
-                    }}
-                ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
-                "order": [[1, "desc"]],
-                "bPaginate": false,
-            });
-
-            $('#editRequiredFacultyModal').modal('show');
-        })
-
-        $(document).on("click", ".faculty_status", function(){
-            Swal.fire({
-                icon: 'warning',
-                text: 'This feature is still under development'
-            })
-        });
-
-        $(document).on("click", ".btnViewDetails", function(){
-            Swal.fire({
-                icon: 'warning',
-                text: 'This feature is still under development'
-            })
-        });
-
-        $('#updateRequiredFacultyForm').on('submit', function(e){
-            e.preventDefault()
-            // Swal.fire({
-            //     icon: 'warning',
-            //     text: 'This feature is still under development'
-            // })
-
-            let required_faculty = $("input[name='faculty_required[]']:checked")
-              .map(function(){
-                return {
-                "activity_id": ACTIVITY_ID,
-                "faculty_id": $(this).val()
-                }
-            }).get();
-
-            let form_url = ATTENDANCE_API+"multi_insert"
-
-
-             // ajax opening tag
-             $.ajax({
-                    url: form_url,
-                    method: "POST",
-                    data: JSON.stringify(required_faculty),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        "Content-Type": "application/json"
-                    },
-                    success: function(data){
-                        console.log(data)
-                        notification('success', 'Required Faculty')
-                        $('#editRequiredFacultyModal').modal('hide');
-                        refresh()
-                    },
-                    error: function(error){
-                        console.log(error)
-                        swalAlert('warning', error.responseJSON.message)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
-                // ajax closing tag
-            })
-        })
 
     
         $(document).on("click", ".time_in_btn", function(){

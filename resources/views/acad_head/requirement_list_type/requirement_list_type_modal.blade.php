@@ -168,16 +168,24 @@
                 </button>
             </div>
             <div class="modal-body">
+                
+                <div class="col-12 d-flex justify-content-end">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" id="btn_select_all" class="custom-control-input" checked>
+                        <label id="select_all_label" class="custom-control-label" for="btn_select_all">Unselect All</label>
+                    </div>
+                </div>
                 <form id="updateRequiredFacultyForm">
                     <table class="table table-hover table-sm" id="requiredFacultyDatatableModal" style="width:100%">
                         <thead>
                             <tr class="bg-primary text-light">
-                            <th>ID</th>
-                            <th>Created at</th>
-                            <th>Email</th>
-                            <th>Name</th>
-                            <th>Required</th>
-                        </tr>
+                                <th>ID</th>
+                                <th>Created at</th>
+                                <th width="10%">Email</th>
+                                <th width="10%">Name</th>
+                                <th width="35%">Role</th>
+                                <th width="10%">Required</th>
+                            </tr>
                         </thead>
                         <tbody>
 

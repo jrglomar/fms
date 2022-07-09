@@ -69,7 +69,6 @@
             $('#userNameNavbar').html('Not set')
         }
         else{
-
             if(new_user_data.faculty.image != null){
                 $('#sidebar_icon').attr("src", APP_URL + "/" + new_user_data.faculty.image)
             }

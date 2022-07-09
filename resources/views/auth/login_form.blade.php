@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-body">
                 {{-- <p>Login using your email and password.</p> --}}
-                <form id="loginForm" class="needs-validation" novalidate="">
+                <form id="loginForm" data-parsley-validate>
                     <div class="form-group">
                     <label for="email">Email</label>
                     <input id="email" type="email" class="form-control" name="email" placeholder="Email"

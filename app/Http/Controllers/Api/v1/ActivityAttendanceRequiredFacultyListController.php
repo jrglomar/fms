@@ -9,6 +9,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 
 use App\Models\ActivityAttendanceRequiredFacultyList;
+use App\Models\Faculty;
 use Illuminate\Http\Request;
 
 class ActivityAttendanceRequiredFacultyListController extends Controller
@@ -134,5 +135,16 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
             'message' => 'Multiple Insert Success.'
         ];
         
+    }
+
+    public function get_unrequired_faculty($activity_id)
+    {
+        $faculties_per_meeting = Faculty::select("*")
+        ->whereNotIn('faculties.id', ActivityAttendanceRequiredFacultyList::select("activity_attendance_required_faculty_lists.faculty_id")
+        ->rightJoin('faculties', 'faculties.id', '=', 'activity_attendance_required_faculty_lists.faculty_id')
+        ->where('activity_attendance_required_faculty_lists.activity_id', $activity_id))
+        ->get();
+
+        return $faculties_per_meeting;
     }
 }
