@@ -183,5 +183,16 @@ class FacultyController extends Controller
 
         return Faculty::where('email', 'like', '%'.$title.'%')->get();
     }
+
+    public function get_all_faculties_that_does_not_on_meeting($meeting_id)
+    {
+        $faculties_per_meeting = Faculty::select("*")
+        ->whereNotIn('faculties.id', MeetingAttendanceRequiredFacultyList::select("meeting_attendance_required_faculty_lists.faculty_id")
+        ->rightJoin('faculties', 'faculties.id', '=', 'meeting_attendance_required_faculty_lists.faculty_id')
+        ->where('meeting_attendance_required_faculty_lists.meeting_id', $meeting_id))
+        ->get();
+
+        return $faculties_per_meeting;
+    }
     
 }

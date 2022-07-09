@@ -55,7 +55,8 @@
 
                     // For meeting_view_content> div#row_left
                     var row_left = '<div class="col-12 col-sm-12 col-lg-12">' +
-                                        '<div class="hero bg-success text-white">' +
+                                        '<div class="hero text-white hero-bg-image hero-bg-parallax"' +
+                                        'style="background-image: url({{ URL::to("/images/designs/meeting_card_lightblue.png") }})">' +
                                             '<div class="hero-inner">' +
                                                 '<div class="col-12">' +
                                                     '<h3 class="card-title text-center"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + 
@@ -68,7 +69,8 @@
                                                     '</b></div>' +
                                                 '</div>' +
                                             '</div>' +
-                                            '<div class="card-body">' +
+                                            '<br>' +
+                                            '<div class="hero-inner">' +
                                                 '<div class="col-md-12">' +
                                                     '<span><b>Agenda: </b>' +
                                                 '</div>' +
