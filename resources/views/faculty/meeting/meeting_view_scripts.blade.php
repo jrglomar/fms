@@ -18,6 +18,38 @@
         let FACULTY_ID = DATA_USER.faculty.id
         // END OF GLOBAL VARIABLE
 
+        // UPLOAD FILES MODAL TABS
+        $(".tabs").click(function(){
+            
+            $(".tabs").removeClass("active");
+            $(".tabs h6").removeClass("font-weight-bold");    
+            $(".tabs h6").addClass("text-muted");    
+            $(this).children("h6").removeClass("text-muted");
+            $(this).children("h6").addClass("font-weight-bold");
+            $(this).addClass("active");
+
+            current_fs = $(".active");
+
+            next_fs = $(this).attr('id');
+            next_fs = "#" + next_fs + "1";
+
+            $("fieldset").removeClass("show");
+            $(next_fs).addClass("show");
+
+            current_fs.animate({}, {
+                step: function() {
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({
+                        'display': 'block'
+                    });
+                }
+            });
+        });
+        // END UPLOAD FILES MODAL TABS
+
         // TIME IN BUTTON FUNCTION
         timeIn = () => 
         {
@@ -89,14 +121,14 @@
                                 success: function (responseJSON) 
                                 {
                                     console.log(responseJSON)
-                                    notification("success", "Success!");  
+                                    notification("success", "Success!"); 
+                                    $(".button-block").prop('disabled', true); // disable button
                                     setInterval(() => {
                                         location.reload()
                                     }, 1000);                         
                                 },
                                 error: function ({ responseJSON }) 
                                 {
-                                    
                                 },
                             }); 
                         },
@@ -241,7 +273,7 @@
                             // For meeting_view_content> div#row_left
                             var row_left = '<div class="col-12 col-sm-12 col-lg-12">' +
                                                 '<div class="hero text-white hero-bg-image hero-bg-parallax"' +
-                                                'style="background-image: url({{ URL::to("/images/designs/req_bin_card_yellow.png") }})">' +
+                                                'style="background-image: url({{ URL::to("/images/designs/meeting_card_orange.png") }})">' +
                                                     '<div class="hero-inner">' +
                                                         '<div class="col-12">' +
                                                             '<h3 class="card-title text-center"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + 
@@ -254,6 +286,7 @@
                                                             '</b></div>' +
                                                         '</div>' +
                                                     '</div>' +
+                                                    '<br>' +
                                                     '<div class="hero-inner">' +
                                                         '<div class="col-md-12">' +
                                                             '<span><b>Agenda: </b>' +
@@ -283,6 +316,7 @@
                                 // For meeting_view_content> div#row_right - button top
                                 var row_right_top = "";
 
+                                
                                 var current_time = new Date(); // current time
                                 var hours = current_time.getHours();
                                 var mins = current_time.getMinutes();
@@ -297,14 +331,17 @@
                                 console.log(mins)
                                 
 
-                                var moment_current_date = moment(current_time).format('LL')
-                                var moment_meeting_date = moment(responseData.date).format('LL');
+                                var moment_current_date = moment(current_time).format('L')
+                                var moment_meeting_date = moment(responseData.date).format('L');
 
                                 var now = hours+":"+mins+":00";
                                 console.log("NOW: "+ now + "|| Start Time: " +responseData.start_time + "|| End Time: " + responseData.end_time + "")
                                 
                                 if(marfData[0].time_in == null)
                                 {
+                                    console.log("TIME IN NULL")
+                                    console.log(moment_meeting_date)
+                                    console.log(moment_current_date)
                                     //20:07        //19:38               //19:51           //20:38             
                                     if(moment_meeting_date == moment_current_date && now >= responseData.start_time &&  now <= responseData.end_time) 
                                     {
@@ -323,7 +360,7 @@
                                                             '</div>' +
                                                             '<br>';
                                     }
-                                    else if(moment_meeting_date < moment_current_date && now < responseData.start_time &&  now < responseData.end_time) 
+                                    else if(moment_meeting_date > moment_current_date) 
                                     {
                                         row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
                                                                 '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
@@ -333,7 +370,17 @@
                                                             '</div>' +
                                                             '<br>';
                                     }
-                                    else if(moment_meeting_date < moment_current_date || now > responseData.start_time &&  now > responseData.end_time) 
+                                    else if(moment_meeting_date < moment_current_date) 
+                                    {
+                                        row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                '<div class="alert-body text-center">' +
+                                                                    '<b>Meeting was already done</b>' +
+                                                                '</div>' +
+                                                            '</div>' +
+                                                            '<br>';
+                                    }
+                                    else if(moment_meeting_date > moment_current_date || now > responseData.start_time &&  now > responseData.end_time) 
                                     {
                                         row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
                                                                 '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
@@ -346,44 +393,69 @@
                                 }
                                 else
                                 {
+                                    console.log("TIME IN NOT NULL")
+                                    console.log(moment_meeting_date)
+                                    console.log(moment_current_date)
                                     if(marfData[0].time_out == null)
                                     {
-                                        if(now >= responseData.start_time &&  now <= responseData.end_time && moment_meeting_date == moment_current_date)
+                                        // console.log("TIME IN NOT NULL - TIME OUT NULL")
+                                        if(moment_meeting_date == moment_current_date && now >= responseData.start_time &&  now <= responseData.end_time)
                                         {
                                             row_right_top +=    '<div class="alert alert-info alert-has-icon">' +
                                                                     '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
                                                                     '<div class="alert-body text-center">' +
-                                                                        'You already Time In. Please wait for the meeting to end. <b>Note: </b> Please time out within 10 mins after the meeting!' +
+                                                                        'You already Time In. Please wait for the meeting to end. <b>Note: </b> Please time out within 10 mins after the meeting, and upload your proof of attendance.' +
                                                                     '</div>' +
                                                                 '</div>' +
                                                                 '<br>';
                                         }
-                                        else if(now > responseData.start_time &&  now > responseData.end_time || moment_meeting_date < moment_current_date)
+                                        else if(moment_meeting_date == moment_current_date && now > responseData.start_time &&  now > responseData.end_time)
                                         {
                                             row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
                                                                     '<div class="alert-icon"><i class="far fa-lightbulb"></i></div>' +
                                                                     '<div class="alert-body text-center">' +
-                                                                        '<b>Note: </b> Please time out within 10 mins after the meeting!' +
+                                                                        '<b>Note: </b> Please time out within 10 mins after the meeting, and upload your proof of attendance.' +
                                                                     '</div>' +
                                                                 '</div>' +
                                                                 '<div class="col-12">' +
-                                                                    '<disbled button type="button" onClick="return timeOut()" class="btn btn-icon icon-left btn-success btn-lg button-block"><b>Time Out</b></button>' +
+                                                                    '<button type="button" onClick="return timeOut()" class="btn btn-icon icon-left btn-success btn-lg button-block"><b>Time Out</b></button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                        }
+                                        else if(moment_meeting_date < moment_current_date)
+                                        {
+                                            row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="far fa-lightbulb"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        '<b>Note: </b> Please time out, and upload your proof of attendance.' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<div class="col-12">' +
+                                                                    '<button type="button" onClick="return timeOut()" class="btn btn-icon icon-left btn-success btn-lg button-block"><b>Time Out</b></button>' +
                                                                 '</div>' +
                                                                 '<br>';
                                         }
                                     }
                                     else
                                     {
-                                        if(now > responseData.start_time &&  now > responseData.end_time || moment_meeting_date < moment_current_date)
+                                        if(marfData[0].proof_of_attendance_file_directory == null || marfData[0].proof_of_attendance_file_link == null)
                                         {
+                                            console.log("TIME IN NOT NULL - TIME OUT NOT NULL")
                                             row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
-                                                                    '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
-                                                                    '<div class="alert-body text-center">' +
-                                                                        'You already Time Out and Meeting was already done.' +
-                                                                    '</div>' +
-                                                                '</div>' 
-                                                                '<br>';
+                                                                '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
+                                                                '<div class="alert-body text-center">' +
+                                                                    'You already Time Out and Meeting was already done.' +
+                                                                '</div>' +
+                                                            '</div>' +
+                                                            '<div class="col-12">' +
+                                                                '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Upload a Proof of Attendance</b></button>' +
+                                                            '</div>' +
+                                                            '<br>';
                                         }
+                                        else
+                                        {
+                                            console.log("The Faculty has uploaded a proof of attendance")
+                                        }   
                                     }
                                 }
                                 // For meeting_view_content> div#row_right - card bottom
@@ -400,9 +472,15 @@
                                                             '</div>' +
                                                             '<div class="col-md-12"> -- ' +
                                                                 moment(responseData.date).format('dddd, MMMM D, YYYY') +   
+                                                            '</div>' + 
+                                                            '<div class="col-md-12">' +
+                                                                '<b>Location: </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                responseData.location +   
                                                             '</div>' +  
                                                             '<div class="row">' +
-                                                                '<div class="col-md-7">' +
+                                                                '<div class="col-md-6">' +
                                                                     '<div class="col-md-12">' +
                                                                         '<b>From: </b>' +
                                                                     '</div>' +
@@ -410,7 +488,7 @@
                                                                         moment("2022-06-27 "+responseData.start_time ).format('LT') +   
                                                                     '</div>' + 
                                                                 '</div>' +
-                                                                '<div class="col-md-5">' +
+                                                                '<div class="col-md-6">' +
                                                                     '<div class="col-md-12">' +
                                                                         '<b>To: </b>' +
                                                                     '</div>' +

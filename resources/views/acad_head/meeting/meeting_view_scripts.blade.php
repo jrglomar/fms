@@ -121,7 +121,7 @@
                                                                 responseData.location +   
                                                             '</div>' + 
                                                             '<div class="row">' +
-                                                                '<div class="col-md-7">' +
+                                                                '<div class="col-md-6">' +
                                                                     '<div class="col-md-12">' +
                                                                         '<b>From: </b>' +
                                                                     '</div>' +
@@ -129,7 +129,7 @@
                                                                         moment("2022-06-27 "+responseData.start_time ).format('LT') +   
                                                                     '</div>' + 
                                                                 '</div>' +
-                                                                '<div class="col-md-5">' +
+                                                                '<div class="col-md-6">' +
                                                                     '<div class="col-md-12">' +
                                                                         '<b>To: </b>' +
                                                                     '</div>' +

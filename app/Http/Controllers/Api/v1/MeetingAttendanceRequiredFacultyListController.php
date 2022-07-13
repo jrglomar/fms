@@ -40,8 +40,6 @@ class MeetingAttendanceRequiredFacultyListController extends Controller
             'title' => 'required',
             'time_in' => 'required',
             'time_out' => 'required',
-            'proof_of_attendance_file_directory' => 'required',
-            'proof_of_attendance_file_link' => 'required',
             'faculty_id' => 'required',
             "meeting_id" => 'required'
         ]);
@@ -60,8 +58,6 @@ class MeetingAttendanceRequiredFacultyListController extends Controller
         $request->validate([
             'time_in',
             'time_out',
-            'proof_of_attendance_file_directory',
-            'proof_of_attendance_file_link',
             'faculty_id' => 'required',
             "meeting_id" => 'required'
         ]);

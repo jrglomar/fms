@@ -143,7 +143,7 @@
                     swalAlert('warning', "The meeting End Time is Less than to your Start Time. Please pick time properly")
                 }
 
-                else (endTime > startTime)
+                else if(endTime > startTime)
                 {
                     // ajax opening tag
                     $.ajax({
@@ -161,6 +161,7 @@
                             notification("success", "Meeting");
                             $("#createForm").trigger("reset");
                             $("#create_card").collapse("hide");
+                            $('.select2').val('').trigger("change");
                             refresh();
                         },
                         error: function(error){
