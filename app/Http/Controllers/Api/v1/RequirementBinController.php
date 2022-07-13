@@ -137,7 +137,7 @@ class RequirementBinController extends Controller
     public function get_required_requirement_bin($faculty_id)
     {
         $requirement_bin = RequirementBin::select("*")
-        ->join("requirement_required_faculty_lists", "requirement_required_faculty_lists.requirement_bin_id", "=", "requirement_bins.id") 
+        ->join("requirement_required_faculty_lists", "requirement_required_faculty_lists.requirement_bin_id", "=", "requirement_bins.id")
         ->where('faculty_id', $faculty_id)
         ->get();
 

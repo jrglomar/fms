@@ -42,7 +42,7 @@ class FacultiesSeeder extends Seeder
             'faculty_type_id' => '00515f7c-b267-4f4e-870e-5cc9a9e84a43',
             'academic_rank_id' => 'c77357e3-66a5-4f67-8b41-4cc6bc19ef7a',
             'designation_id' => 'fdd1cd40-1da3-4773-81c7-6be2131a73f2',
-            'image' => 'images/faculty_images/admin.jpg'
+            'image' => 'images/faculty_images/4f3e4b88313e821b0876f52c864be226.png'
         ]);
     }
 }

@@ -50,7 +50,7 @@ class SubmittedRequirementController extends Controller
         $request->validate([
             'file_name' => 'required',
             'file_link_directory' => 'required',
-            'submitted_requirement_folder_id' => 'required',
+            'rr_faculty_list_id' => 'required',
         ]);
 
         return SubmittedRequirement::create($request->all());
@@ -169,7 +169,7 @@ class SubmittedRequirementController extends Controller
         }
 
         return [
-            'status' => 'success'
+            'message' => 'Multiple Insert Success.'
         ];
         
     }

@@ -22,6 +22,7 @@
             acceptedFiles: '.xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf',
             addRemoveLinks: true,
             autoProcessQueue: false,
+            parallelUploads: 10,
             // renameFile: function (file) {
             //     let file_name = file.name.substr(0, file.name.lastIndexOf('.')) || file.name;
             //     file_name = file_name.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
@@ -30,6 +31,7 @@
 
             //     return file_name + '_' + FACULTY_LAST_NAME + '_' + new Date().getTime() + '.' + ext;
             // },
+
             init: function () {
 
                 var myDropzone = this;
@@ -39,19 +41,59 @@
                     e.preventDefault();
                     myDropzone.processQueue();
                 });
+
+                $.ajax({
+                    url: APP_URL+'/api/v1/requirement_required_faculty_list/' + RR_FACULTY_LIST_ID ,
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (data) 
+                    {   
+                        $.each(data.submitted_requirements, function(i){
+                            let mockFile = { name: data.submitted_requirements[i].file_name,
+                                             id: data.submitted_requirements[i].id,
+                                             path: APP_URL + "/" + data.submitted_requirements[i].file_link_directory
+                                            };
+                            myDropzone.files.push(mockFile)
+                            myDropzone.emit("addedfile", mockFile);
+                            myDropzone.emit("complete", mockFile); 
+                        })
+                    },
+                    error: function ({ responseJSON }) {},
+                });
+
+                myDropzone.on("complete", function(file) {
+                    
+                    file.previewElement.querySelector('.dz-size').innerHTML = '';
+                    file.previewElement.querySelector('.dz-image').innerHTML = `<img src="${APP_URL + '/images/designs/file_upload.png'}">`;
+
+                    file.previewElement.addEventListener("click", function() {
+                        // console.log(file)
+                        window.open(file.path);
+                    });
+                });
+
+                myDropzone.on("addedfile", function(file) {
+                    // file.previewElement.querySelector('.dz-size').innerHTML = '';
+                    // file.previewElement.querySelector('.dz-image').innerHTML = `<img src="${APP_URL + '/images/designs/file_upload.png'}">`;
+
+                    file.previewElement.addEventListener("click", function() {
+                        // console.log(file)
+                    });
+                });
+
                 
             },
 
-            success: function(response, data){
+            success: function(response, data, file){
 
-                let submission_data = [{
+                let submission_data = {
                     "rr_faculty_list_id": RR_FACULTY_LIST_ID,
                     "file_link_directory": data,
                     "file_name": response.upload.filename
-                }]
+                }
                 // ajax opening tag
                         $.ajax({
-                            url: APP_URL + '/api/v1/submitted_requirement/multi_insert',
+                            url: APP_URL + '/api/v1/submitted_requirement/',
                             method: "POST",
                             data: JSON.stringify(submission_data),
                             dataType: "JSON",
@@ -64,6 +106,9 @@
                                 if(data.status == "success"){
                                     notification('success', response.upload.filename)
                                 }
+                                console.log(data)
+                                response.path = APP_URL+ '/' + data.file_link_directory
+                                response.id = data.id
                             },
                             error: function(error){
                                 console.log(error)
@@ -75,6 +120,44 @@
                     // ajax closing tag
 
             },
+
+            removedfile: function(file) {
+                Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't able to remove this.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes, remove it!",
+                    }).then((result) => {
+                        if (file.id != null && result.isConfirmed) {
+                            $.ajax({
+                                url: APP_URL+'/api/v1/submitted_requirement/destroy/' + file.id,
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+
+                                success: function(data){
+                                    notification('error', 'Submitted Requirement')
+                                    file.previewElement.remove();
+                                },
+                                error: function(error){
+                                    console.log(error)
+                                    swalAlert('warning', error.responseJSON.message)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                        else if(result.isConfirmed){
+                            file.previewElement.remove();
+                        }
+                    });
+            }
         });
 
         $('#btnDone').on('click', function(){
@@ -92,7 +175,6 @@
                 dataType: "JSON",
                 success: function (responseData) 
                 {   
-                    console.log(responseData)
                     var title = responseData.title;
                     var deadline = responseData.deadline
                     var description = responseData.description

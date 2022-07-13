@@ -60,8 +60,10 @@
                 <div class="hero-inner">
                     <div class="d-flex justify-content-center">
                         <div class="col-12">
-                            <form class="dropzone"
+                            <form class="dropzone" style="border: 2px dashed #a6c4ff"
                                     id="fileupload">
+
+                                    
                             </form>
                         </div>
                     </div>
