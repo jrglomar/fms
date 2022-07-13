@@ -8,9 +8,11 @@
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/activity_view/'
         var ATTENDANCE_API = APP_URL + '/api/v1/activity_attendance/'
+        var ATTENDANCE_PROOF = APP_URL + '/api/v1/activity_submitted_proof/'
         var ACTIVITY_ID = "{{$activity_id}}"
 
         var USER_ROLE = JSON.parse(USER_DATA)
+        var AA_FACULTY_ID = ""
         // END OF GLOBAL VARIABLE
 
         removeLoader()
@@ -20,6 +22,38 @@
 
             requiredFacultyDatatable.ajax.url(url).load()
         }
+
+        // UPLOAD FILES MODAL TABS
+        $(".tabs").click(function(){
+            
+            $(".tabs").removeClass("active");
+            $(".tabs h6").removeClass("font-weight-bold");    
+            $(".tabs h6").addClass("text-muted");    
+            $(this).children("h6").removeClass("text-muted");
+            $(this).children("h6").addClass("font-weight-bold");
+            $(this).addClass("active");
+
+            current_fs = $(".active");
+
+            next_fs = $(this).attr('id');
+            next_fs = "#" + next_fs + "1";
+
+            $("fieldset").removeClass("show");
+            $(next_fs).addClass("show");
+
+            current_fs.animate({}, {
+                step: function() {
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({
+                        'display': 'block'
+                    });
+                }
+            });
+        });
+        // END UPLOAD FILES MODAL TABS
         
         function getActivity(){
             $.ajax({
@@ -83,7 +117,7 @@
                     //document.getElementById("memorandum_view").src=APP_URL + data.memorandum_file_directory;
                     //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
 
-                    if(data.memorandum_file_directory == null){
+                    if(data.memorandum_file_directory == "NA"){
                         $('#if_memo').html("<span>No Memorandum uploaded</span>")
                     }
                     else{
@@ -137,7 +171,8 @@
             if (arrayOfActivity[i].activity_id === ACTIVITY_ID) {
 
                 attendance_id = arrayOfActivity[i].attendance_id
-                
+                AA_FACULTY_ID = attendance_id
+
                 $.ajax({
                 url: ATTENDANCE_API + attendance_id,
                 method: "GET",
@@ -256,26 +291,65 @@
 
         });
 
-        $('#select_upload').change(function(){
-            if(this.value == "link") {
-                html = '<div class="form-group col-md-12 additional-input">' +
-                            '<label class="required-input">URL link</label>' +
-                            '<input type="text" class="form-control" id="url_link" name="url_link"' +
-                            'tabindex="1" required>' +
-                        '</div>'
-                $('.way-of-proof').html(html);
-            }
-            else if(this.value == "upload"){
-                html = '<div class="form-group col-md-12 additional-input">' +
-                            '<label class="required-input">URL link</label>' +
-                            '<input type="file" accept=".jpg, .png, .jpeg, .pdf" class="form-control" id="file_proof" name="file_proof"' +
-                            'tabindex="1" required>' +
-                        '</div>'
-                $('.way-of-proof').html(html);
-            }
-            else{
-                $(".additional-input").remove()
-            }
+        $("#proof_upload").dropzone({ 
+            url: ATTENDANCE_PROOF + 'file_uploads',
+            acceptedFiles: '.xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf',
+            method: "POST",
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            // renameFile: function (file) {
+            //     let file_name = file.name.substr(0, file.name.lastIndexOf('.')) || file.name;
+            //     file_name = file_name.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
+
+            //     ext = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+
+            //     return file_name + '_' + FACULTY_LAST_NAME + '_' + new Date().getTime() + '.' + ext;
+            // },
+            init: function () {
+
+                var myDropzone = this;
+
+                // Update selector to match your button
+                $("#btnUpload").click(function (e) {
+                    e.preventDefault();
+                    myDropzone.processQueue();
+                });
+                
+            },
+
+            success: function(response, data){
+
+                let submission_data = [{
+                    "aa_faculty_id": AA_FACULTY_ID,
+                    "file_link_directory": data,
+                    "file_name": response.upload.filename
+                }]
+                // ajax opening tag
+                        $.ajax({
+                            url: ATTENDANCE_PROOF + 'multi_insert',
+                            method: "POST",
+                            data: JSON.stringify(submission_data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data){
+                                if(data.status == "success"){
+                                    notification('success', response.upload.filename)
+                                }
+                            },
+                            error: function(error){
+                                console.log(error)
+                                swalAlert('warning', error.responseJSON.message)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                    })
+                    // ajax closing tag
+
+            },
         });
 
         /// TIME OUT SUBMIT FUNCTION

@@ -28,6 +28,7 @@ use App\Http\Controllers\Api\v1\ObservationController;
 use App\Http\Controllers\Api\v1\ActivityTypeController;
 use App\Http\Controllers\Api\v1\ActivityController;
 use App\Http\Controllers\Api\v1\ActivityAttendanceRequiredFacultyListController;
+use App\Http\Controllers\Api\v1\ActivityAttendanceSubmittedFileController;
 use App\Http\Controllers\Api\v1\RoomController;
 use App\Http\Controllers\Api\v1\ClassScheduleController;
 
@@ -268,6 +269,14 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/meeting_submitted_proof/restore/{id}', [MeetingSubmittedProofOfAttendanceController::class, 'restore']);
         Route::post('/meeting_submitted_proof/file_uploads', [MeetingSubmittedProofOfAttendanceController::class, 'file_uploads']);
         Route::post('/meeting_submitted_proof/multi_insert', [MeetingSubmittedProofOfAttendanceController::class, 'multi_insert']);
+
+        // Activity Submitted Proof
+        Route::post('/activity_submitted_proof', [ActivityAttendanceSubmittedFileController::class, 'store']);
+        Route::put('/activity_submitted_proof/{id}', [ActivityAttendanceSubmittedFileController::class, 'update']);
+        Route::delete('/activity_submitted_proof/destroy/{id}', [ActivityAttendanceSubmittedFileController::class, 'destroy']);
+        Route::put('/activity_submitted_proof/restore/{id}', [ActivityAttendanceSubmittedFileController::class, 'restore']);
+        Route::post('/activity_submitted_proof/file_uploads', [ActivityAttendanceSubmittedFileController::class, 'file_uploads']);
+        Route::post('/activity_submitted_proof/multi_insert', [ActivityAttendanceSubmittedFileController::class, 'multi_insert']);
 
         
         // Observation

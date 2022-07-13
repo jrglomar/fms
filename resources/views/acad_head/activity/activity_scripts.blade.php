@@ -135,97 +135,55 @@
         // REFRESH DATATABLE FUNCTION
 
 
-        // SUBMIT FUNCTION
-        $('#createForm').on('submit', function(e){
-            e.preventDefault();
+        $("#memo_upload").dropzone({ 
+            url: BASE_API +'upload',
+            acceptedFiles: 'image/*, .pdf',
+            maxFiles: 1,
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            // renameFile: function (file) {
+            //     let file_name = file.name.substr(0, file.name.lastIndexOf('.')) || file.name;
+            //     file_name = file_name.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
 
-            var fd = new FormData();
-            var files = $('#memorandum_file_directory')[0].files[0]
-            var form = $("#createForm").serializeArray();
-            let data = {}
+            //     ext = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
 
-            fd.append('file', files)
+            //     return file_name + '_' + FACULTY_LAST_NAME + '_' + new Date().getTime() + '.' + ext;
+            // },
+            init: function () {
 
-            var form_url = BASE_API +'upload'
+                var myDropzone = this;
 
-            console.log(files)
-            console.log(fd)
+                // Update selector to match your button
 
-            if (files == null){
-                form_url_no_memo = BASE_API
+                $('#createForm').on('submit', function(e){
 
-                    var form = $("#createForm").serializeArray();
-                    let formdata = {}
+                    e.preventDefault()
 
-                    $.each(form, function(){
-                        formdata[[this.name]] = this.value;
-                    })
+                   // myDropzone.processQueue();
 
-                    console.log(formdata)
+                    if (myDropzone.getQueuedFiles().length === 0){
 
-                    //ajax opening tag
-                    $.ajax({
-                        url: form_url_no_memo,
-                        method: "POST",
-                        data: JSON.stringify(formdata),
-                        dataType: "JSON",
-                        headers: {
-                            "Accept": "application/json",
-                            "Authorization": API_TOKEN,
-                            "Content-Type": "application/json"
-                        },
-                        success: function(data){
-                            console.log(data)
-                            $("#createForm").trigger("reset")
-                            $("#create_card").collapse("hide")
-                            refresh();
+                    form_url_no_memo = BASE_API
 
-                            notification("success", "Activity")
-                        },
-                        error: function(error){
-                            console.log(error)
-                            console.log(`message: ${error.responseJSON.message}`)
-                            console.log(`status: ${error.status}`)
+                    let data_form = {
+                        "title": $('#title').val(),
+                        "description": $('#description').val(),
+                        "location": $('#location').val(),
+                        "start_datetime": $('#start_datetime').val(),
+                        "end_datetime": $('#end_datetime').val(),
+                        "activity_type_id": $('#activity_type_id').val(),
+                        "status": $('#status').val(),
+                        "is_required": $('#is_required').val(),
+                        "memorandum_file_directory": "NA"
+                    }
 
-                            swalAlert('warning', error.responseJSON.message)
-                        }
-                    //ajax closing tag
-                    })
-            }
-
-            else{
-                $.ajax({
-                    url: form_url,
-                    method: "POST",
-                    data: fd,
-                    dataType: "JSON",
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        
-                    },
-                    success: function(data){
-                        //console.log(data)
-                        form_url = BASE_API
-
-                        var form = $("#createForm").serializeArray();
-                        let formdata = {}
-
-                        formdata['memorandum_file_directory'] = data.path
-
-                        $.each(form, function(){
-                            formdata[[this.name]] = this.value;
-                        })
-
-                        console.log(formdata)
+                    console.log(data_form)
 
                         //ajax opening tag
                         $.ajax({
-                            url: form_url,
+                            url: form_url_no_memo,
                             method: "POST",
-                            data: JSON.stringify(formdata),
+                            data: JSON.stringify(data_form),
                             dataType: "JSON",
                             headers: {
                                 "Accept": "application/json",
@@ -249,6 +207,49 @@
                             }
                         //ajax closing tag
                         })
+                    }
+                    else{
+                        //console.log(myDropzone)
+                        myDropzone.processQueue();
+                    }
+                })
+                
+            },
+
+            success: function(response, data){
+            
+                //console.log(data)
+                form_url = BASE_API
+
+                var form = $("#createForm").serializeArray();
+                let formdata = {}
+
+                formdata['memorandum_file_directory'] = data.path
+
+                $.each(form, function(){
+                    formdata[[this.name]] = this.value;
+                })
+
+                console.log(formdata)
+
+                //ajax opening tag
+                $.ajax({
+                    url: form_url,
+                    method: "POST",
+                    data: JSON.stringify(formdata),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        console.log(data)
+                        $("#createForm").trigger("reset")
+                        $("#create_card").collapse("hide")
+                        refresh();
+
+                        notification("success", "Activity")
                     },
                     error: function(error){
                         console.log(error)
@@ -257,11 +258,13 @@
 
                         swalAlert('warning', error.responseJSON.message)
                     }
+                //ajax closing tag
+
                 })
-            }
-            
+
+            },
         });
-        // END OF SUBMIT FUNCTION
+
 
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
@@ -269,48 +272,6 @@
 
             window.location.replace(APP_URL+"/acad_head/activity/"+id);
 
-            //let form_url =BASE_API+id
-
-            // $.ajax({
-            //     url: form_url,
-            //     method: "GET",
-            //     headers: {
-            //         "Accept": "application/json",
-            //         "Authorization": API_TOKEN,
-            //         "Content-Type": "application/json"
-            //     },
-
-            //     success: function(data){
-            //         let created_at = moment(data.created_at).format('LLL');
-            //         let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
-            //         let is_required_view = ""
-
-            //         $('#id_view').html(data.id);
-            //         $('#title_view').html(data.title);
-            //         $('#description_view').html(data.description);
-            //         $('#start_time_view').html(data.start_datetime);
-            //         $('#end_time_view').html(data.end_datetime);
-            //         $('#activity_type_view').html(data.activity_type.title); 
-            //         console.log(data.activity_type)  
-
-            //         if(data.is_required == 0){
-            //             is_required_view = "No"
-            //         } else{
-            //             is_required_view = "Yes"
-            //         }
-
-            //         $('#status_view').html(data.status);
-            //         $('#is_required_view').html(is_required_view);
-            //         //$('#created_at_view').html(created_at);
-
-            //         //console.log(data.memorandum_file_directory)
-            //         document.getElementById("memorandum_view").src="http://127.0.0.1:8000/" + data.memorandum_file_directory;
-            //         //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
-
-            //         $('#viewModal').modal('show');
-            //     }
-            // // ajax closing tag
-            // })
         });
         // END OF VIEW FUNCTION
 

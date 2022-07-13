@@ -73,10 +73,7 @@
                     <div class="row additional-form">
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-12">
-                            <label class="">Memorandum</label>
-                            <input type="file" accept=".jpg, .png, .jpeg, .pdf" class="form-control" id="memorandum_file_directory" name="memorandum_file_directory"
-                            tabindex="1" required>
+                        <div class="dropzone clsbox form-group col-md-12" id="memo_upload">
                         </div>
                     </div>
                 </div>
