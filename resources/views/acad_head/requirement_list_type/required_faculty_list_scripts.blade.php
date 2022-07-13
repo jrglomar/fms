@@ -112,12 +112,6 @@
             $('#editRequiredFacultyModal').modal('show');
         })
 
-        $(document).on("click", ".faculty_status", function(){
-            Swal.fire({
-                icon: 'warning',
-                text: 'This feature is still under development'
-            })
-        });
 
         $(document).on("click", ".btnViewDetails", function(){
             Swal.fire({
@@ -143,8 +137,10 @@
 
             let form_url = BASE_API+"multi_insert"
 
+            console.log(required_faculty)
 
-             // ajax opening tag
+
+            //  ajax opening tag
              $.ajax({
                             url: form_url,
                             method: "POST",

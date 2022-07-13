@@ -328,5 +328,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/submitted_requirement/{id}', [SubmittedRequirementController::class, 'update']);
         Route::delete('/submitted_requirement/destroy/{id}', [SubmittedRequirementController::class, 'destroy']);
         Route::put('/submitted_requirement/restore/{id}', [SubmittedRequirementController::class, 'restore']);;
+        Route::post('/submitted_requirement/file_uploads', [SubmittedRequirementController::class, 'file_uploads']);
+        Route::post('/submitted_requirement/multi_insert', [SubmittedRequirementController::class, 'multi_insert']);
         });
 });

@@ -149,8 +149,10 @@ Route::group(['middleware' => ['role.faculty'],
         })->name('faculty_requirement_bin');
 
         // ------------REQUIREMENTS LIST TYPE--------------- //
-        Route::get('/requirement_list_type/{id}', function ($id) {
-            return view('faculty/requirement_list_type/requirement_list_type', ['page_title' => 'Requirements Bin', 'requirement_bin_id' => $id]);
+        Route::get('/requirement_list_type/{r_bin_id}/{rr_faculty_list_id}', function ($r_bin_id, $rr_faculty_list_id) {
+            return view('faculty/requirement_list_type/requirement_list_type', ['page_title' => 'Requirements Bin', 
+                                                            'requirement_bin_id' => $r_bin_id, 
+                                                            'rr_faculty_list_id' => $rr_faculty_list_id]);
         })->name('faculty_requirement_list_type');
 
         // -------------------ACTIVITY---------------------- //

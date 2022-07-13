@@ -21,6 +21,8 @@ class CreateRequirementRequiredFacultyListsTable extends Migration
             $table->foreignUuid('created_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');   
             $table->foreignUuid('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade'); 
 
+            $table->string('remarks')->nullable();
+            $table->string('status')->nullable();
             $table->foreignUuid('requirement_bin_id')->nullable();
             $table->foreignUuid('faculty_id')->nullable();
 
