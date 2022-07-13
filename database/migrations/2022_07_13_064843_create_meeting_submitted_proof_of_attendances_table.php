@@ -30,8 +30,8 @@ class CreateMeetingSubmittedProofOfAttendancesTable extends Migration
             $table->string('proof_of_attendance_file_link')->nullable();
 
             // Relationship sample
-            $table->foreignUuid('mar_faculty_list_id')->nullable();
-            $table->foreign('mar_faculty_list_id')->references('id')->on('meeting_attendance_required_faculty_list');
+            $table->foreignUuid('marf_id')->nullable(); // Meeting Attendance Required Faculty List
+            $table->foreign('marf_id')->references('id')->on('meeting_attendance_required_faculty_lists');
 
             // Fillables
             // $table->string('proof_of_attendance_file_directory')->nullable();

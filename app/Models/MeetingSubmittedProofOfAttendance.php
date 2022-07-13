@@ -5,6 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+// ADDED FOR UUID INCREMENT ERROR       - Always add it to new model
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+// ADDED FOR CREATED AND UPDATED BY AUTOMATION
+use Illuminate\Support\Facades\Auth;
+
 class MeetingSubmittedProofOfAttendance extends Model
 {
     // -----  [[DEFAULT]]  -----  //
@@ -18,7 +25,7 @@ class MeetingSubmittedProofOfAttendance extends Model
             "file_name",
             "proof_of_attendance_file_link",
             "proof_of_attendance_file_directory",
-            "mar_faculty_list_id"
+            "marf_id"
         ];
 
         protected $dates = ['deleted_at'];

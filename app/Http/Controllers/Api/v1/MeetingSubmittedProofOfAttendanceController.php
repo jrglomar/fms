@@ -1,6 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+// Default
+// namespace App\Http\Controllers;
+
+// For versioning modified namespace        - Always add it to new controller
+namespace App\Http\Controllers\Api\v1;
+
+// For versioning controller        - Always add it to new controller
+use App\Http\Controllers\Controller;
 
 use App\Models\MeetingSubmittedProofOfAttendance;
 use Illuminate\Http\Request;
@@ -32,7 +39,7 @@ class MeetingSubmittedProofOfAttendanceController extends Controller
         'file_name' => 'required',
         'proof_of_attendance_file_directory' => 'required',
         'proof_of_attendance_file_link' => 'required',
-        'mar_faculty_list_id' => 'required',
+        'marf_id' => 'required',
         ]);
     }
 
@@ -49,7 +56,7 @@ class MeetingSubmittedProofOfAttendanceController extends Controller
             'file_name' => 'required',
             'proof_of_attendance_file_directory',
             'proof_of_attendance_file_link',
-            'mar_faculty_list_id' => 'required',
+            'marf_id' => 'required',
         ]);
     }
 

@@ -50,6 +50,87 @@
         });
         // END UPLOAD FILES MODAL TABS
 
+        // FILE UPLOADS
+        $.ajax(
+        {
+            url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
+            type: "GET",
+            dataType: "json",
+            success: function (marfData) 
+            {
+                console.log(marfData[0].id)
+
+                var marf_list_id = marfData[0].id
+                $("#fileupload").dropzone({ 
+                url: APP_URL+'/api/v1/submitted_requirement/file_uploads',
+                acceptedFiles: 'image/*,.pdf',
+                addRemoveLinks: true,
+                autoProcessQueue: false,
+                // renameFile: function (file) {
+                //     let file_name = file.name.substr(0, file.name.lastIndexOf('.')) || file.name;
+                //     file_name = file_name.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
+
+                //     ext = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
+
+                //     return file_name + '_' + FACULTY_LAST_NAME + '_' + new Date().getTime() + '.' + ext;
+                // },
+                init: function () {
+
+                    var myDropzone = this;
+
+                    // Update selector to match your button
+                    $("#btnUpload").click(function (e) {
+                        e.preventDefault();
+                        myDropzone.processQueue();
+                    });
+                    
+                },
+
+                success: function(response, data){
+                    console.log("Success Upload")
+
+                    let submission_data = [{
+                        "marf_id": marf_list_id,
+                        "proof_of_attendance_file_directory": data,
+                        "file_name": response.upload.filename
+                    }]
+                    // ajax opening tag
+                            $.ajax({
+                                url: APP_URL + '/api/v1/meeting_submitted_proof/multi_insert',
+                                method: "POST",
+                                data: JSON.stringify(submission_data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data){
+                                    if(data.status == "success"){
+                                        notification('success', response.upload.filename)
+                                    }
+                                },
+                                error: function(error){
+                                    console.log(error)
+                                    swalAlert('warning', error.responseJSON.message)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                        })
+                        // ajax closing tag
+
+                },
+            });
+                
+            },
+            error: function (data) {},
+        });
+
+        $('#btnDone').on('click', function(){
+            swalAlert('warning', 'This feature is under maintenance')
+        })
+        // END FILE UPLOADS
+
         // TIME IN BUTTON FUNCTION
         timeIn = () => 
         {
@@ -92,8 +173,6 @@
                             var time_in = data[0].time_in
                             var time_out = data[0].time_out
                             var attendance_status = data[0].attendance_status
-                            var proof_of_attendance_file_directory = data[0].proof_of_attendance_file_directory
-                            var proof_of_attendance_file_link = data[0].proof_of_attendance_file_link
                             var faculty_id = FACULTY_ID
                             var meeting_id = MEETING_ID
                             var id = data[0].id
@@ -109,8 +188,6 @@
                                     "time_in": now,
                                     "time_out": time_out,
                                     "attendance_status": "Present",
-                                    "proof_of_attendance_file_directory": proof_of_attendance_file_directory,
-                                    "proof_of_attendance_file_link": proof_of_attendance_file_link,
                                     "faculty_id": faculty_id,
                                     "meeting_id": meeting_id,
                                 }),
@@ -181,8 +258,6 @@
                             var time_in = data[0].time_in
                             var time_out = data[0].time_out
                             var attendance_status = data[0].attendance_status
-                            var proof_of_attendance_file_directory = data[0].proof_of_attendance_file_directory
-                            var proof_of_attendance_file_link = data[0].proof_of_attendance_file_link
                             var faculty_id = FACULTY_ID
                             var meeting_id = MEETING_ID
                             var id = data[0].id
@@ -198,8 +273,6 @@
                                     "time_in": time_in,
                                     "time_out": now,
                                     "attendance_status": attendance_status,
-                                    "proof_of_attendance_file_directory": proof_of_attendance_file_directory,
-                                    "proof_of_attendance_file_link": proof_of_attendance_file_link,
                                     "faculty_id": faculty_id,
                                     "meeting_id": meeting_id,
                                 }),

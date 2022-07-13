@@ -42,6 +42,7 @@
                         return `<span class="badge badge-info">${moment(data).format('LLL')}</span>`
                     }},
                     { data: "deleted_at", render: function(data, type, row){
+                        console.log(row);
                                 if (data == null){
                                     return `<div class="text-center dropdown">
                                                 <div class="btn btn-sm btn-default" data-toggle="dropdown" role="button">
