@@ -152,7 +152,7 @@
             console.log(fd)
 
             if (files == null){
-                form_url = BASE_API
+                form_url_no_memo = BASE_API
 
                     var form = $("#createForm").serializeArray();
                     let formdata = {}
@@ -165,7 +165,7 @@
 
                     //ajax opening tag
                     $.ajax({
-                        url: form_url,
+                        url: form_url_no_memo,
                         method: "POST",
                         data: JSON.stringify(formdata),
                         dataType: "JSON",

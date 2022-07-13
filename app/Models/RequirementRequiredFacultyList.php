@@ -36,6 +36,10 @@ class RequirementRequiredFacultyList extends Model
             public function requirement_bin(){
                 return $this->belongsTo(RequirementBin::class)->withDefault();
             }
+
+            public function submitted_requirements(){
+                return $this->hasMany(SubmittedRequirement::class, 'rr_faculty_list_id')->without('rr_faculty_lists', 'created_by_user', 'updated_by_user');
+            }
         // End of [Declare relationships here]
 
         // [Default relationship]       - Default
@@ -49,7 +53,7 @@ class RequirementRequiredFacultyList extends Model
             return $this->belongsTo(User::class,'updated_by');
         }
 
-        protected $with = ['faculty', 'requirement_bin', 'created_by_user','updated_by_user'];
+        protected $with = ['faculty', 'requirement_bin', 'created_by_user','updated_by_user', 'submitted_requirements'];
 
         // [Added for UUID Incrementation]      - Default
         public $incrementing = false;

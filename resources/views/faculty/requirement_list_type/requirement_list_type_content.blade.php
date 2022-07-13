@@ -59,15 +59,16 @@
                 </div>
                 <div class="hero-inner">
                     <div class="d-flex justify-content-center">
-                        {{-- <button id="btnUpload" type="button" class="btn btn-outline-primary"><i class="fa fa-plus" aria-hidden="true"></i> Upload</button> --}}
                         <div class="col-12">
-                            <form class="dz-progress dropzone dz-clickable" id="mydropzone" style="border-color:blue">
-                                <div class="dz-default dz-message">
-                                    <span>Drop files here to upload</span>
-                                </div>
+                            <form class="dropzone"
+                                    id="fileupload">
                             </form>
                         </div>
                     </div>
+                    <div id="btnUpload" class="d-flex justify-content-center">
+                        <button type="button" class="btn btn-success">Process Upload</button>
+                    </div>
+                    &nbsp;
                     <div id="btnDone" class="d-flex justify-content-center">
                         <button type="button" class="btn btn-warning">Mark as Done</button>
                     </div>

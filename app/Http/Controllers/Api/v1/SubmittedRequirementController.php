@@ -48,16 +48,14 @@ class SubmittedRequirementController extends Controller
     {
         //
         $request->validate([
-            'date_submitted' => 'required',
-            'status' => 'required',
-            'remarks' => 'required',
-            'file_link' => 'required',
+            'file_name' => 'required',
             'file_link_directory' => 'required',
             'submitted_requirement_folder_id' => 'required',
         ]);
 
         return SubmittedRequirement::create($request->all());
     }
+
 
     /**
      * Display the specified resource.
@@ -137,5 +135,42 @@ class SubmittedRequirementController extends Controller
     public function search($id)
     {
         return SubmittedRequirement::where('id', 'like', '%'.$id.'%')->get();
+    }
+
+    
+    public function file_uploads(Request $request){
+
+        $validator = $request->validate([
+            'file' => 'required|mimes:pdf,docx,jpg,jpeg,png'
+        ]);
+
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName();
+
+            $without_extension = pathinfo($filename, PATHINFO_FILENAME);
+            $unique_name = md5($without_extension . microtime());
+
+            $extension = $request->file('file')->extension();
+
+            $file->move('uploads/submission_bin/', $unique_name.'.'.$extension);
+
+            $data = 'uploads/submission_bin/'.$unique_name.'.'.$extension;
+
+        return $data;
+    }
+
+    public function multi_insert(Request $request)
+    {
+
+        $data = $request->all();
+
+        for($i=0; $i < count($data); $i++) {
+            SubmittedRequirement::create($data[$i]);
+        }
+
+        return [
+            'status' => 'success'
+        ];
+        
     }
 }

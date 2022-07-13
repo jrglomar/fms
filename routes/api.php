@@ -173,6 +173,8 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
 
         // Activity Attendance
         Route::get('/activity_attendance', [ActivityAttendanceRequiredFacultyListController::class, 'index']);
+        Route::put('/activity_attendance/timein/{id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'timein']);
+        Route::put('/activity_attendance/timeout/{id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'timeout']);
         Route::get('/activity_attendance/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'show']);
         Route::get('/activity_attendance/search/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/activity_attendance/show_soft_deleted/{all}', [ActivityAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
@@ -274,7 +276,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
         // Activity Attendance
         Route::post('/activity_attendance', [ActivityAttendanceRequiredFacultyListController::class, 'store']);
-        Route::put('/activity_attendance/{id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'update']);
         Route::delete('/activity_attendance/destroy/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'destroy']);
         Route::put('/activity_attendance/restore/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'restore']);
         Route::post('/activity_attendance/multi_insert', [ActivityAttendanceRequiredFacultyListController::class, 'multi_insert']);
@@ -328,5 +329,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/submitted_requirement/{id}', [SubmittedRequirementController::class, 'update']);
         Route::delete('/submitted_requirement/destroy/{id}', [SubmittedRequirementController::class, 'destroy']);
         Route::put('/submitted_requirement/restore/{id}', [SubmittedRequirementController::class, 'restore']);;
+        Route::post('/submitted_requirement/file_uploads', [SubmittedRequirementController::class, 'file_uploads']);
+        Route::post('/submitted_requirement/multi_insert', [SubmittedRequirementController::class, 'multi_insert']);
         });
 });

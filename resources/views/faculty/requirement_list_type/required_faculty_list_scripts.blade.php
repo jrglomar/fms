@@ -114,7 +114,7 @@
             })
         })
 
-        loadRequirementTypes();
+        // loadRequirementTypes();
         // requiredFacultyDatatable();
 
 

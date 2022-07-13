@@ -7,6 +7,8 @@
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/requirement_bin/'
+        var FACULTY_ID = JSON.parse(USER_DATA).faculty.id
+        console.log(FACULTY_ID)
         console.log(API_TOKEN)
         console.log(JSON.parse(USER_DATA))
         // END OF GLOBAL VARIABLE
@@ -15,7 +17,7 @@
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
-                    url: BASE_API, 
+                    url: BASE_API+'get_required_requirement_bin/'+FACULTY_ID, 
                     dataSrc: ''
                 },
                 "columns": [
@@ -46,13 +48,13 @@
                                                     <i class="fas fa-ellipsis-v"></i>
                                                 </div>
                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                    <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
+                                                    <div class="dropdown-item d-flex btnView" id="${row.requirement_bin_id}" data-value="${row.id}" role="button">
                                                         <div style="width: 2rem">
                                                             <i class="fas fa-eye"></i>
                                                         </div>
                                                         <div> View</div>
                                                     </div>
-                                                    <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
+                                                    <div class="dropdown-item d-flex btnEdit" id="${row.requirement_bin_id}"  role="button">
                                                         <div style="width: 2rem">
                                                             <i class="fas fa-edit"></i>
                                                         </div>
@@ -60,7 +62,7 @@
                                                     </div>
                                                     <div class="dropdown-divider"</div>
                                                 </div>
-                                                <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
+                                                <div class="dropdown-item d-flex btnDeactivate" id="${row.requirement_bin_id}" role="button">
                                                     <div style="width: 2rem">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </div>
@@ -137,9 +139,12 @@
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var requirement_bin_id = this.id;
+            var rr_faculty_list_id = $(this).attr('data-value')
+            console.log(requirement_bin_id)
+            console.log(rr_faculty_list_id)
             // let form_url =APP_URL+'/api/v1/requirement_bin/'+requirement_bin_id
 
-            window.location.replace(APP_URL + '/faculty/requirement_list_type/'+requirement_bin_id);
+            window.location.replace(APP_URL + '/faculty/requirement_list_type/'+requirement_bin_id+'/'+rr_faculty_list_id);
 
             // $.ajax({
             //     url: form_url,
