@@ -27,7 +27,21 @@
                         html += row.faculty.first_name + ' ' + row.faculty.last_name
                         return html
                     }},
-                    { data: "deleted_at"},
+                    { data: "status", render: function(data, row){
+                        if(data == "Approved"){
+                            return `<span class="badge badge-success">${data}</span>`
+                        }
+                        else if(data == "Declined"){
+                            return `<span class="badge badge-danger">${data}</span>`
+                        }
+                        else if(data == "For Revision"){
+                            return `<span class="badge badge-warning">${data}</span>`
+                        }
+                        else{
+                            return data;
+                        }
+
+                    }},
                     { data: "id", render: function(data, type, row){
                         return `</div>
                                     <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.id}">
@@ -35,7 +49,7 @@
                                 </button>`
                     }}
                 ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1,] }],
                 "order": [[1, "desc"]]
                 });
         };
@@ -151,6 +165,9 @@
                     })
 
                     // PASSING VAR DATA TO DOM
+                    $('#sr_id').val(data.id)
+                    $('#sr_status').val(data.status)
+                    $('#sr_remarks').html(data.remarks)
                     $('#fileModalHeader').html(header)
                     $('#fileModalBody').html(html)
                     $('#fileViewerModal').modal('show')
@@ -178,7 +195,7 @@
 
 
             //  ajax opening tag
-             $.ajax({
+                    $.ajax({
                             url: form_url,
                             method: "POST",
                             data: JSON.stringify(required_faculty),
@@ -217,6 +234,46 @@
                 $('#select_all_label').html('Select all')
                 $("input[name='faculty_required[]']").prop('checked', false)
             }
+        })
+
+
+        // FUNCTION FOR UPDATING SUBMITTED REQUIREMENTS
+        $('.btnSubmittedUpdate').on('click', function(e){
+            
+            let status = $('#sr_status').val()
+            let remarks = $('#sr_remarks').val()
+            let id = $('#sr_id').val()
+
+            let form_url = BASE_API + id
+            let form_data = {
+                "status": status,
+                "remarks": remarks
+            }
+
+            $.ajax({
+                    url: form_url,
+                    method: "PUT",
+                    data: JSON.stringify(form_data),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        console.log(data)
+                        notification('info', 'Submitted Requirement/s')
+                        $('#fileViewerModal').modal('hide');
+                        refresh()
+                    },
+                    error: function(error){
+                        console.log(error)
+                        swalAlert('warning', error.responseJSON.message)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                // ajax closing tag
+            })
         })
 
         loadRequirementTypes();

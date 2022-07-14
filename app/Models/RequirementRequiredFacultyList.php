@@ -20,7 +20,9 @@ class RequirementRequiredFacultyList extends Model
         // [Modify this fillable base on tables]      - Can be modified
             protected $fillable = [
                 "requirement_bin_id",
-                "faculty_id"
+                "faculty_id",
+                "remarks",
+                "status"
             ];
 
 
