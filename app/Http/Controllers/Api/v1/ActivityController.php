@@ -98,6 +98,8 @@ class ActivityController extends Controller
                 $data['message'] = "old memo deleted";
             }else{
                 $data['message'] = "old memo doesnt exist";
+                $data['path'] = 'uploads/memorandum/'.$unique_name.'.'.$extension;
+                $file->move('uploads/memorandum/', $unique_name.'.'.$extension);
             }
 
         return $data;

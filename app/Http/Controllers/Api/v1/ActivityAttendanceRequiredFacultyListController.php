@@ -41,11 +41,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
     {
         //
         $request->validate([
-            'time_in' => 'required',
-            'time_out' => 'required',
             'attendance_status' => 'required',
-            'proof_of_attendance_file_directory' => 'required',
-            'proof_of_attendance_file_link' => 'required',
             'activity_id' => 'required',
             'faculty_id' => 'required'
         ]);
@@ -65,7 +61,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         //
         return ActivityAttendanceRequiredFacultyList::find($id);
 
-        return ActivityAttendanceRequiredFacultyList::with('user', 'created_by_user')->find($id);
+        //return ActivityAttendanceRequiredFacultyList::with('user', 'created_by_user')->find($id);
     }
 
     /**
@@ -75,7 +71,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id, $faculty_id)
+    public function timein(Request $request, $id, $faculty_id)
     {
         //
         $ActivityAttendanceRequiredFacultyList = ActivityAttendanceRequiredFacultyList::where('activity_id', 'like', '%'.$id.'%')
@@ -83,6 +79,16 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         $ActivityAttendanceRequiredFacultyList->update($request->all());
 
         return $request;
+    }
+
+    public function timeout(Request $request, $id, $faculty_id)
+    {
+        //
+        $data = array();
+
+        $data["files"] = $request->file("file");
+
+        return $data;
     }
 
     public function edit($id)

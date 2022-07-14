@@ -12,22 +12,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 // ADDED FOR CREATED AND UPDATED BY AUTOMATION
 use Illuminate\Support\Facades\Auth;
 
-class MeetingAttendanceRequiredFacultyList extends Model
+class MeetingSubmittedProofOfAttendance extends Model
 {
-
     // -----  [[DEFAULT]]  -----  //
     use HasFactory, SoftDeletes;
 
     // [Modify this fillable base on tables]      - Can be modified
         protected $fillable = [
-            'created_by',
-            'updated_by',
-            "time_in",
-            "time_out",
-            "attendance_status",
-            "faculty_id",
-            "meeting_id",
-            "remarks"
+            "date_submitted",
+            "remarks",
+            "status",
+            "file_name",
+            "proof_of_attendance_file_link",
+            "proof_of_attendance_file_directory",
+            "marf_id"
         ];
 
         protected $dates = ['deleted_at'];
@@ -36,21 +34,10 @@ class MeetingAttendanceRequiredFacultyList extends Model
     // protected $with = ['users','created_by_user','updated_by_user'];
 
      // [Declare relationships here]
-     public function meeting()
-     {
-         return $this->belongsTo(Meeting::class)->withDefault();
-     }
-
-     public function faculty()
-     {
-         return $this->belongsTo(Faculty::class)->withDefault();
-     }
-
-     public function meeting_submitted()
-     {
-        return $this->hasMany(MeetingSubmittedProofOfAttendance::class, 'marf_id')->without('marf_faculty_lists', 'created_by_user', 'updated_by_user');
+    public function mar_faculty_lists()
+    {
+        return $this->belongsTo(MeetingAttendanceRequiredFacultyList::class)->withDefault();
     }
-
      // End of [Declare relationships here]
 
     // [Default relationship]       - Default
@@ -64,7 +51,7 @@ class MeetingAttendanceRequiredFacultyList extends Model
         return $this->belongsTo(User::class,'updated_by');
     }
 
-    protected $with = ['meeting_submitted','meeting', 'faculty','created_by_user','updated_by_user'];
+    protected $with = ['marf_faculty_lists','created_by_user','updated_by_user'];
 
     // [Added for UUID Incrementation]      - Default
     public $incrementing = false;
