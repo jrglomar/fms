@@ -56,7 +56,7 @@
                 dataType: "JSON",
                 success: function (data) 
                 {   
-                    console.log(data)
+                    // console.log(data)
                 },
                 error: function ({ data }) {},
             });
@@ -114,10 +114,48 @@
 
 
         $(document).on("click", ".btnViewDetails", function(){
-            Swal.fire({
-                icon: 'warning',
-                text: 'This feature is still under development'
-            })
+            var id = this.id
+            
+            $.ajax({
+                url: BASE_API + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function (data){   
+                    console.log(data)
+
+                    let html = `<li class="list-group-item d-flex justify-content-between" disabled="">
+                                                    <span class="text-primary"><strong>Submitted File/s</strong></span>
+                                                    <span class="text-primary"><strong>Date Submitted</strong></span>
+                                                </li>`
+
+                    let header = `<h5 class="text-dark">Faculty: ${data.faculty.last_name}, ${data.faculty.first_name}</h5>`
+
+                    // IF FACULTY DOES NOT HAVE ANY SUBMITTED REQUIREMENTS YET
+                    if(data.submitted_requirements.length == 0){
+                        html += `&nbsp;<div class="text-center">Empty Submission
+                            </div>`
+                    }
+
+                    // PASSING SUBMITTED REQUIREMENTS DATA INTO HTML VAR TO PASS IT TO DOM
+                    $.each(data.submitted_requirements, function(i){
+                        let file_id = data.submitted_requirements[i].id
+                        let file_link_directory = APP_URL + "/" + data.submitted_requirements[i].file_link_directory
+                        let file_name = data.submitted_requirements[i].file_name
+                        let date_submitted = data.submitted_requirements[i].date_submitted
+
+                        html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-info" onclick="window.open('${file_link_directory}')" target="_blank">${file_name}</button>
+                                    
+                                    <span class="badge badge-light">${moment(date_submitted).format('lll')}</span>
+                                 </li>`
+                    })
+
+                    // PASSING VAR DATA TO DOM
+                    $('#fileModalHeader').html(header)
+                    $('#fileModalBody').html(html)
+                    $('#fileViewerModal').modal('show')
+                },
+            });
         });
 
         $('#updateRequiredFacultyForm').on('submit', function(e){
@@ -137,7 +175,6 @@
 
             let form_url = BASE_API+"multi_insert"
 
-            console.log(required_faculty)
 
 
             //  ajax opening tag
@@ -152,7 +189,7 @@
                                 "Content-Type": "application/json"
                             },
                             success: function(data){
-                                console.log(data)
+                                // console.log(data)
                                 notification('success', 'Required Faculty')
                                 $('#editRequiredFacultyModal').modal('hide');
                                 refresh()

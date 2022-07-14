@@ -113,11 +113,9 @@
                 success: function (responseData) 
                 {   
 
-                    console.log(responseData)
                     let html = ""
                     $.each(responseData, function (i, dataOptions) 
                     {
-                        console.log(responseData)
                         html +=
                             "<option value='" +
                             dataOptions.id +
