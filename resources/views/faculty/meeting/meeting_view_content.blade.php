@@ -21,6 +21,8 @@
     margin: 200px auto;
 } */
 
+
+/* FOR UPLOADING MODAL - TABS */
 fieldset {
     display: none;
 }

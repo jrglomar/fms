@@ -17,9 +17,9 @@
                         <div class="bg-light">
                             <h5 class="text-center mb-4 mt-0 pt-4">Upload File</h5>
                             <div class="col-12">
-                                <div class="hero text-white hero-bg-image hero-bg-parallax"
+                                <!-- <div class="hero text-white hero-bg-image hero-bg-parallax"
                                 style="background-image: url({{ URL::to('/images/designs/meeting_card_red.png') }})">
-                                    <div class="hero-inner">
+                                    <div class="hero-inner"> -->
                                         <div class="d-flex justify-content-center">
                                             <div class="col-12">
                                                 <form class="dropzone"
@@ -28,10 +28,10 @@
                                             </div>
                                         </div>
                                         <div id="btnUpload" class="d-flex justify-content-center">
-                                            <button type="button" class="btn btn-success">Process Upload</button>
+                                            <button type="button" class="btn btn-success">Submit</button>
                                         </div>
-                                    </div>
-                                </div>
+                                    <!-- </div>
+                                </div> -->
                             </div>
                         </div>
                     </fieldset>
