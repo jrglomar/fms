@@ -155,7 +155,7 @@
                     }},
                     { data: "id", render: function(data, type, row){
                         return `<div class="custom-control custom-switch">
-                                    <input type="checkbox" name="faculty_required[]" class="custom-control-input faculty_status" id="${row.id}" value="${row.id}" checked>
+                                    <input type="checkbox" name="faculty_required[]" class="custom-control-input faculty_status" id="${row.id}" value="${row.id}">
                                     <label id="status_label" class="custom-control-label" for="${row.id}">Yes</label>
                                 </div>`
                     }}
@@ -168,12 +168,12 @@
             $('#editRequiredFacultyModal').modal('show');
         })
 
-        $(document).on("click", ".faculty_status", function(){
-            Swal.fire({
-                icon: 'warning',
-                text: 'This feature is still under development'
-            })
-        });
+        // $(document).on("click", ".faculty_status", function(){
+        //     Swal.fire({
+        //         icon: 'warning',
+        //         text: 'This feature is still under development'
+        //     })
+        // });
 
         $(document).on("click", ".btnViewDetails", function(){
             Swal.fire({

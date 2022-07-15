@@ -234,12 +234,17 @@
                         html += row.faculty.first_name + ' ' + row.faculty.last_name
                         return html
                     }},
-                    { data: "deleted_at"},
-                    { data: "id", render: function(data, type, row){
-                        return `</div>
+                    { data: "attendance_status"},
+                    { data: "faculty_id", render: function(data, type, row){
+                        if (data == USER_ROLE.faculty.id){
+                            return `</div>
                                     <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.id}">
                                     <div>Check Uploaded Files</div>
                                 </button>`
+                        }
+                        else{
+                            return ``
+                        }
                     }}
                 ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
@@ -264,7 +269,7 @@
             }
 
             $.ajax({
-                url: ATTENDANCE_API + "timein/" + ACTIVITY_ID + "/" +USER_ROLE.faculty.id,
+                url: ATTENDANCE_API + "time-in-out/" + ACTIVITY_ID + "/" +USER_ROLE.faculty.id,
                 method: "PUT",
                 data: JSON.stringify(data),
                 dataType: "JSON",
@@ -337,6 +342,40 @@
                             },
                             success: function(data){
                                 if(data.status == "success"){
+                                    date = new Date()
+
+                                    let data_form = {
+                                        "time_out": moment(date).format('HH:mm:ss'),
+                                        "attendance_status": "Attended",
+                                    }
+
+                                    $.ajax({
+                                        url: ATTENDANCE_API + "time-in-out/" + ACTIVITY_ID + "/" +USER_ROLE.faculty.id,
+                                        method: "PUT",
+                                        data: fd,
+                                        dataType: "JSON",
+                                        headers: {
+                                            "Accept": "application/json",
+                                            "Authorization": API_TOKEN,
+                                            "Content-Type": "application/json"
+                                        },
+
+                                        success: function(data){
+                                            console.log(data)
+                                            // refresh()
+                                            // $('#timeOutModal').modal('hide');
+
+                                            // notification("info", "Time out")
+                                        },
+                                        error: function(error){
+                                            console.log(error)
+                                            console.log(`message: ${error.responseJSON.message}`)
+                                            console.log(`status: ${error.status}`)
+
+                                            swalAlert('warning', error.responseJSON.message)
+                                        }
+                                        // ajax closing tag
+                                    })
                                     notification('success', response.upload.filename)
                                 }
                             },
@@ -381,35 +420,7 @@
 
             //console.log(JSON.stringify(fd))
             
-            $.ajax({
-                url: ATTENDANCE_API + "timeout/" + ACTIVITY_ID + "/" +USER_ROLE.faculty.id,
-                method: "PUT",
-                data: fd,
-                dataType: "JSON",
-                processData: false,
-                contentType: false,
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-
-                success: function(data){
-                    console.log(data)
-                    // refresh()
-                    // $('#timeOutModal').modal('hide');
-
-                    // notification("info", "Time out")
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-
-                    swalAlert('warning', error.responseJSON.message)
-                }
-                // ajax closing tag
-            })
+            
             
         });
         // END OF TIME OUT SUBMIT FUNCTION

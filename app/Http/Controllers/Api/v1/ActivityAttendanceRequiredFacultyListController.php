@@ -71,7 +71,7 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function timein(Request $request, $id, $faculty_id)
+    public function update(Request $request, $id, $faculty_id)
     {
         //
         $ActivityAttendanceRequiredFacultyList = ActivityAttendanceRequiredFacultyList::where('activity_id', 'like', '%'.$id.'%')
@@ -81,15 +81,6 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         return $request;
     }
 
-    public function timeout(Request $request, $id, $faculty_id)
-    {
-        //
-        $data = array();
-
-        $data["files"] = $request->file("file");
-
-        return $data;
-    }
 
     public function edit($id)
     {

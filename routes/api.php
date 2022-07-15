@@ -181,8 +181,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
 
         // Activity Attendance
         Route::get('/activity_attendance', [ActivityAttendanceRequiredFacultyListController::class, 'index']);
-        Route::put('/activity_attendance/timein/{id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'timein']);
-        Route::put('/activity_attendance/timeout/{id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'timeout']);
+        Route::put('/activity_attendance/time-in-out/{id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'update']);
         Route::get('/activity_attendance/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'show']);
         Route::get('/activity_attendance/search/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/activity_attendance/show_soft_deleted/{all}', [ActivityAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
