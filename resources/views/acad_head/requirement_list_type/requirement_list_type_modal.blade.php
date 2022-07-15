@@ -221,24 +221,28 @@
                 <div class="form-group">
                     <div class="form-group col-md-12">
                         <label class="required-input">Status</label>
-                        <select class="form-control js-example-basic-single" id="sr_remarks" name="sr_remarks">
-                            <option selected disabled>Choose status</option>
-                            <option>Approved</option>
-                            <option>Declined</option>
-                            <option>For Revision</option>
+                        <select class="form-control js-example-basic-single" id="sr_status" name="sr_status">
+                            <option selected disabled value="">Choose status</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Declined">Declined</option>
+                            <option value="For Revision">For Revision</option>
                         </select>
                     </div>
                     <div class="form-group col-md-12">
-                        <label class="required-input">Remarks</label>
+                        <label>Remarks</label>
                         <textarea class="form-control" id="sr_remarks" name="sr_remarks"
                         placeholder="Remarks" tabindex="1"></textarea>
+                    </div>
+                    <div class="form-group col-md-12" hidden>
+                        <label class="required-input">ID</label>
+                        <input class="form-control" id="sr_id" name="sr_id">
                     </div>
                 </div>
             </div>
             
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success">Update changes</button>
+                <button type="button" class="btn btn-success btnSubmittedUpdate">Update changes</button>
             </div>
         </div>
     </div>
