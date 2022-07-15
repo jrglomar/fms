@@ -10,13 +10,15 @@
                     <div class="tabs" id="tab02">
                         <h6 class="text-muted">Upload Link</h6>
                     </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
                 <div class="line"></div>
                 <div class="modal-body p-0">
                     <fieldset class="show" id="tab011">
                         <div class="bg-light">
                             <h5 class="text-center mb-4 mt-0 pt-4">Upload File</h5>
-                            <div class="col-12">
                                 <!-- <div class="hero text-white hero-bg-image hero-bg-parallax"
                                 style="background-image: url({{ URL::to('/images/designs/meeting_card_red.png') }})">
                                     <div class="hero-inner"> -->
@@ -30,29 +32,30 @@
                                         <div id="btnUpload" class="d-flex justify-content-center">
                                             <button type="button" class="btn btn-success">Submit</button>
                                         </div>
+                                        <div>
+                                            <br>
+                                        </div>
                                     <!-- </div>
                                 </div> -->
-                            </div>
                         </div>
                     </fieldset>
                     <fieldset id="tab021">
                         <div class="bg-light">
                             <h5 class="text-center mb-4 mt-0 pt-4">Upload Link</h5>
-                            <form>
+                            <form id="proofLinkForm" data-parsley-validate>
                                 <div class="form-group pb-2 px-3">
-                                    <input type="text" placeholder="Link" class="form-control">
+                                    <input type="text" class="form-control" id="proof_of_attendance_file_link" name="proof_of_attendance_file_link"
+                                    placeholder="Link" tabindex="1" required>
                                 </div>
-                                
                                 <div class="form-group pb-5 row justify-content-center">
-                                    <button type="button" id="createBtn" class="btn btn-primary px-3">Submit</button>
+                                    <button type="submit" id="proofCreateBtn" class="btn btn-success px-3"></button>
                                 </div>
                             </form>
                         </div>
                     </fieldset>
                 </div>
-                <div class="modal-footer d-flex flex-column justify-content-center border-0">
-                    <!-- <p class="text-muted">Can't find what you're looking for?</p>
-                    <button type="button" class="btn btn-primary">Contact Support Team</button> -->
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

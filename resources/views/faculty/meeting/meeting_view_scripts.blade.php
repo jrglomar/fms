@@ -753,6 +753,107 @@
         loadMeetingTypes();
         // END LOAD MEETING TYPES
 
+        // PROOF LINK - ON UPLOAD FILES MODAL
+        $.ajax(
+        {
+            url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
+            type: "GET",
+            dataType: "json",
+            success: function (data) 
+            {
+                if (data[0].proof_of_attendance_file_link == null)
+                { 
+                    var proofSubmitBtn = "Submit";
+                    $("#proofCreateBtn").html(proofSubmitBtn);
+
+                    $('#proofLinkForm').on('submit', function(e){
+                        e.preventDefault();
+
+                        var proof_of_attendance_link = $("#proof_of_attendance_file_link").val()
+                        console.log(proof_of_attendance_link);
+                        $.ajax(
+                        {
+                            url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
+                            type: "GET",
+                            dataType: "json",
+                            success: function (data) 
+                            { 
+                                var time_in = data[0].time_in
+                                var time_out = data[0].time_out
+                                var attendance_status = data[0].attendance_status
+                                var proof_of_attendance_file_link = proof_of_attendance_link
+                                var faculty_id = FACULTY_ID
+                                var meeting_id = MEETING_ID
+                                var id = data[0].id
+
+                                $.ajax(
+                                {
+                                    url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/' + id,
+                                    type: "PUT",
+                                    data: JSON.stringify(
+                                    {		
+                                        "time_in": time_in,
+                                        "time_out": time_out,
+                                        "attendance_status": attendance_status,
+                                        "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                                        "faculty_id": faculty_id,
+                                        "meeting_id": meeting_id,
+                                    }),
+                                    dataType: "JSON",
+                                    contentType: 'application/json',
+                                    processData: false,
+                                    cache: false,
+                                    success: function (responseJSON) 
+                                    {
+                                        notification("success", "Success!");
+                                        setInterval(() => {
+                                            location.reload()
+                                        }, 1000);                           
+                                    },
+                                    error: function ({ responseJSON }) 
+                                    {
+                                        
+                                    },
+                                }); 
+                            }
+                        })
+                    });
+                }
+                else
+                {
+                    console.log(data[0].proof_of_attendance_file_link)
+                    var proofSubmitBtn = "Update";
+                    $("#proofCreateBtn").html(proofSubmitBtn);
+                    $('#proof_of_attendance_file_link').val(data[0].proof_of_attendance_file_link);
+
+                    $('#proofLinkForm').on('submit', function(e){
+                        e.preventDefault();
+                        var proof_of_attendance_link = $("#proof_of_attendance_file_link").val()
+                        console.log(proof_of_attendance_link);
+                        $.ajax(
+                        {
+                            url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
+                            type: "GET",
+                            dataType: "json",
+                            success: function (data) 
+                            { 
+                                var time_in = data[0].time_in
+                                var time_out = data[0].time_out
+                                var attendance_status = data[0].attendance_status
+                                var proof_of_attendance_file_link = proof_of_attendance_link
+                                var faculty_id = FACULTY_ID
+                                var meeting_id = MEETING_ID
+                                var id = data[0].id
+                                notification("success", "Link");
+                                console.log(data)
+                            }
+                        });
+                    });
+                }
+            }
+        });
+        // END PROOF LINK - ON UPLOAD FILES MODAL
+
         // SUBMIT FUNCTION
         $('#createForm').on('submit', function(e){
             e.preventDefault();
