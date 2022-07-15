@@ -7,17 +7,19 @@
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/activity/'
+        var FACULTY_ID = JSON.parse(USER_DATA).faculty.id
+
         // END OF GLOBAL VARIABLE
 
         // DATA TABLES FUNCTION
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
-                    url: BASE_API, 
+                    url: BASE_API + 'get_required_activity/' + FACULTY_ID, 
                     dataSrc: ''
                 },
                 "columns": [
-                    { data: "id"},
+                    { data: "activity_id"},
                     { data: "created_at"},
                     { data: "title"},
                     { data: "activity_type.title"},
@@ -30,11 +32,11 @@
                                 if (data == null){
                                     return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
+                                        <div class="dropdown-item d-flex btnView" id="${row.activity_id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
                                         <div>View</div></div>
                                             <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
+                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.activity_id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
                                             <div style="color: red">Delete</div></div></div></div>`;
                                 }

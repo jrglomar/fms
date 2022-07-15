@@ -82,7 +82,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/faculty/search/{name}', [FacultyController::class, 'search']);
         Route::get('/faculty/show_soft_deleted/{all}', [FacultyController::class, 'show_soft_deleted']);
         Route::get('/faculty/check_user_exist/{id}', [FacultyController::class, 'check_user_exist']);
-        Route::get('/faculty/get_all_faculties_that_does_not_on_meeting/{meeting_id}', [FacultyController::class, 'get_all_faculties_that_does_not_on_meeting']); //  
+        Route::get('/faculty/get_all_faculties_that_does_not_on_meeting/{meeting_id}', [FacultyController::class, 'get_all_faculties_that_does_not_on_meeting']); // 
 
         // Role
         Route::get('/role', [RoleController::class, 'index']);
@@ -178,6 +178,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/activity/{id}', [ActivityController::class, 'show']);
         Route::get('/activity/search/{name}', [ActivityController::class, 'search']);
         Route::get('/activity/show_soft_deleted/{all}', [ActivityController::class, 'show_soft_deleted']);
+        Route::get('/activity/get_required_activity/{id}', [ActivityController::class, 'get_required_activity']); // FOR FACULTY CONTROLLER
 
         // Activity Attendance
         Route::get('/activity_attendance', [ActivityAttendanceRequiredFacultyListController::class, 'index']);
@@ -186,6 +187,12 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/activity_attendance/search/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/activity_attendance/show_soft_deleted/{all}', [ActivityAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
         Route::get('/activity_attendance/unrequired_faculty/{activity_id}', [ActivityAttendanceRequiredFacultyListController::class, 'get_unrequired_faculty']);
+
+        // Activity Submitted Proof
+        Route::get('/activity_submitted_proof', [ActivityAttendanceSubmittedFileController::class, 'index']);
+         Route::get('/activity_submitted_proof/{id}', [ActivityAttendanceSubmittedFileController::class, 'show']);
+         Route::get('/activity_submitted_proof/search/{title}', [ActivityAttendanceSubmittedFileController::class, 'search']);
+         Route::get('/activity_submitted_proof/show_soft_deleted/{all}', [ActivityAttendanceSubmittedFileController::class, 'show_soft_deleted']);
 
     });
 
@@ -276,7 +283,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/activity_submitted_proof/restore/{id}', [ActivityAttendanceSubmittedFileController::class, 'restore']);
         Route::post('/activity_submitted_proof/file_uploads', [ActivityAttendanceSubmittedFileController::class, 'file_uploads']);
         Route::post('/activity_submitted_proof/multi_insert', [ActivityAttendanceSubmittedFileController::class, 'multi_insert']);
-
         
         // Observation
         Route::post('/observation', [ObservationController::class, 'store']);

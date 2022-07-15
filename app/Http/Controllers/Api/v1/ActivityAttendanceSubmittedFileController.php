@@ -66,7 +66,9 @@ class ActivityAttendanceSubmittedFileController extends Controller
         // Default
         // return ActivityAttendanceSubmittedFile::find($id);
 
-        return ActivityAttendanceSubmittedFile::with('submitted_requirement_folder')->find($id);
+        $submitted_files = ActivityAttendanceSubmittedFile::select("*")->where('aa_faculty_id', $id)->get();
+
+        return $submitted_files;
         
         // return ActivityAttendanceSubmittedFile::with('user', 'created_by_user')->find($id);
     }
