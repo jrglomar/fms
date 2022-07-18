@@ -15,7 +15,7 @@
                 
                   </div>
 
-                <form id="updateUserForm" class="needs-validation" novalidate="">
+                <form id="updateUserForm" data-parsley-validate>
                     {{-- EMAIL --}}
                     <div class="form-row">
                         <div class="form-group col-md-6">

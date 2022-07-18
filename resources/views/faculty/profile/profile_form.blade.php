@@ -14,7 +14,7 @@
                     <input hidden type="file" id="uploadImage" name="uploadImage" accept="image/*" size="20" class="form-control-file">
                   </div><br><br>
 
-                <form id="updateUserForm" class="needs-validation" novalidate="">
+                <form id="updateUserForm" data-parsley-validate>
                     {{-- EMAIL --}}
                     <div class="form-row text-center">
                         <div class="col-md-12">
