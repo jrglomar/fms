@@ -187,7 +187,6 @@
                     "Content-Type": "application/json"
                 },
 
-
                 success: function(data){
                     $('#id_edit').val(data.id);
                     $('#title_edit').val(data.title);
