@@ -93,16 +93,16 @@
     <div role="document" class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header row d-flex justify-content-between mx-1 mx-sm-3 mb-0 pb-0 border-0">
-                <div class="tabs active" id="tab01">
+                <div class="tabs-2 active" id="tab03">
                     <h6 class="font-weight-bold">Upload File</h6>
                 </div>
-                <div class="tabs" id="tab02">
+                <div class="tabs-2" id="tab04">
                     <h6 class="text-muted">Upload Link</h6>
                 </div>
             </div>
             <div class="line"></div>
             <div class="modal-body p-0">
-                <fieldset class="show" id="tab011">
+                <fieldset class="show" id="tab031">
                     <div class="bg-light">
                         <h5 class="text-center mb-4 mt-0 pt-4">Upload File</h5>
                         <div class="col-12">
@@ -111,8 +111,7 @@
                                 <div class="hero-inner">
                                     <div class="d-flex justify-content-center">
                                         <div class="col-12">
-                                            <form class="dropzone proof_upload"
-                                                    id="proof_upload">
+                                            <form class="dropzone proof_upload">
                                             </form>
                                         </div>
                                     </div>
@@ -124,7 +123,7 @@
                         </div>
                     </div>
                 </fieldset>
-                <fieldset id="tab021">
+                <fieldset id="tab041">
                     <div class="bg-light">
                         <h5 class="text-center mb-4 mt-0 pt-4">Upload Link</h5>
                         <form id="link_form" data-parsley-validate>
@@ -148,21 +147,65 @@
 </div>
 
 <div id="viewSubmittedFiles" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div role="document" class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Uploaded Files</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="dropzone proof_upload" style="border: 2px dashed #a6c4ff"
-                id="fileupload">
-                </form>
-                <div id="btnUpload" class="d-flex justify-content-center">
-                    <button type="button" class="btn btn-success btnUpload">Process Upload</button>
+            <div class="modal-header row d-flex justify-content-between mx-1 mx-sm-3 mb-0 pb-0 border-0">
+                <div class="tabs active" id="tab01">
+                    <h6 class="font-weight-bold">Upload File</h6>
                 </div>
+                <div class="tabs" id="tab02">
+                    <h6 class="text-muted">Upload Link</h6>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="modal-body p-0">
+                <fieldset class="show" id="tab011">
+                    <div class="bg-light">
+                        <h5 class="text-center mb-4 mt-0 pt-4">Upload File</h5>
+                        <div class="col-12">
+                            <div class="hero text-white hero-bg-image hero-bg-parallax"
+                            style="background-image: url({{ URL::to('/images/designs/meeting_card_red.png') }})">
+                                <div class="hero-inner">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="col-12">
+                                            <form class="dropzone proof_upload">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div id="btnUpload" class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-success btnUpload">Process Upload</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset id="tab021">
+                    <div class="bg-light">
+                        <h5 class="text-center mb-4 mt-0 pt-4">Upload Link</h5>
+                        <form id="link_form" data-parsley-validate>
+                            <div class="form-group pb-2 px-3">
+                                <input type="text" id= "proof_link_view" placeholder="Link" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group pb-5 row justify-content-center">
+                                <button type="button" id="proof_link_edit" class="btn btn-primary px-3">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="modal-footer d-flex flex-column justify-content-center border-0">
+                <form action="">
+                    <div class="row">
+                        <label>Status</label>
+                        <span class="form-control" id="proof_status"></span>
+                    </div>
+                    <div class="row">
+                            <label>Remarks</label>
+                            <span class="form-control" id="proof_remarks"></span>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

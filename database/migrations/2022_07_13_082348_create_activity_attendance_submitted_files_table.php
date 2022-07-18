@@ -22,8 +22,6 @@ class CreateActivityAttendanceSubmittedFilesTable extends Migration
             $table->foreignUuid('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade'); 
 
             $table->timestamp('date_submitted')->useCurrent();
-            $table->longText('remarks')->nullable();
-            $table->string('status')->nullable();
             $table->string('file_name')->nullable();
             $table->string('file_link')->nullable();
             $table->string('file_link_directory')->nullable();

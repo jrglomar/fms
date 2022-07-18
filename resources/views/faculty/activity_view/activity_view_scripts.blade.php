@@ -53,6 +53,36 @@
                 }
             });
         });
+
+        $(".tabs-2").click(function(){
+            
+            $(".tabs-2").removeClass("active");
+            $(".tabs-2 h6").removeClass("font-weight-bold");    
+            $(".tabs-2 h6").addClass("text-muted");    
+            $(this).children("h6").removeClass("text-muted");
+            $(this).children("h6").addClass("font-weight-bold");
+            $(this).addClass("active");
+
+            current_fs = $(".active");
+
+            next_fs = $(this).attr('id');
+            next_fs = "#" + next_fs + "1";
+
+            $("fieldset").removeClass("show");
+            $(next_fs).addClass("show");
+
+            current_fs.animate({}, {
+                step: function() {
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({
+                        'display': 'block'
+                    });
+                }
+            });
+        });
         // END UPLOAD FILES MODAL TABS
         
         function getActivity(){
@@ -195,7 +225,7 @@
                     else if(data.attendance_status == "Attended"){
                     $("#time_in_button").remove();
                     $("#time_out_button").remove();
-                    var row_right_top = '<button id="time_out_button" type="button" class="btn time_out_btn btn-icon icon-left btn-primary btn-lg button-block float-right"'+
+                    var row_right_top = '<button id="time_out_button" type="button" class="btn time_out_btn btn-icon icon-left btn-primary btn-lg button-block float-right view-proof-btn"'+
                                         'data-toggle="modal" data-target="#viewSubmittedFiles"><i class="fas fa-check"></i> Check uploaded files</button>';
                     $("#time_button").append(row_right_top);
                     }
@@ -246,7 +276,7 @@
                     { data: "faculty_id", render: function(data, type, row){
                         if (data == USER_ROLE.faculty.id){
                             return `</div>
-                                    <button type="button" class="btn btn-sm btn-success" id="${row.id}"
+                                    <button type="button" class="btn btn-sm btn-success view-proof-btn" id="${row.id}"
                                     data-toggle="modal" data-target="#viewSubmittedFiles">
                                     <div>Check Uploaded Files</div>
                                 </button>`
@@ -290,7 +320,7 @@
 
                 success: function(data){
                     notification("info", "Activity Attended")
-                    reload()
+                    location.reload()
                 },
                 error: function(error){
                     console.log(error)
@@ -408,7 +438,7 @@
                                         $('#timeOutModal').modal('hide');
                                         notification("info", "Time out")
 
-                                        reload()
+                                        location.reload()
                                     },
                                     error: function(error){
                                         console.log(error)
@@ -438,7 +468,7 @@
             removedfile: function(file) {
                 Swal.fire({
                         title: "Are you sure?",
-                        text: "You won't able to remove this.",
+                        text: "You won't able to undo this.",
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "red",
@@ -485,6 +515,7 @@
             let data = {
             "time_out": moment(date).format('HH:mm:ss'),
             "attendance_status": "Attended",
+            "status": "For checking",
             "proof_of_attendance_file_link": $('#proof_link').val(),
             }
 
@@ -502,10 +533,10 @@
                     },
 
                     success: function(data){
-                        refresh()
-                        notification("info", "Activity Attended")
+                        $('#timeOutModal').modal('hide');
+                        notification("info", "Time out")
 
-                        reload()
+                        location.reload()
                     },
                     error: function(error){
                         console.log(error)
@@ -519,7 +550,85 @@
 
             });
 
-        
+            $(document).on("click", ".view-proof-btn", function(){
+
+                $.ajax({
+                    url: ATTENDANCE_API + AA_FACULTY_ID,
+                    method: "GET",
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+
+                    success: function(data){
+                        console.log(data)
+
+                        $("#proof_link_view").val(data.proof_of_attendance_file_link);
+                        $("#proof_status").html(data.status);
+
+                        if(data.remarks == null){
+                            $("#proof_remarks").html("No Remarks");
+                        }
+                        else{
+                            $("#proof_remarks").html(data.remarks);
+                        }
+                        
+                        // $('#timeOutModal').modal('hide');
+                        // notification("info", "Time out")
+
+                        // location.reload()
+                    },
+                    error: function(error){
+                        console.log(error)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+
+                        swalAlert('warning', error.responseJSON.message)
+                    }
+                // ajax closing tag
+                })
+
+            });
+
+            $(document).on("click", "#proof_link_edit", function(){
+
+                let data = {
+                "status": "For checking",
+                "proof_of_attendance_file_link": $('#proof_link_view').val(),
+                }
+
+                console.log(data)
+
+                    $.ajax({
+                        url: ATTENDANCE_API + "time-in-out/" + ACTIVITY_ID + "/" +USER_ROLE.faculty.id,
+                        method: "PUT",
+                        data: JSON.stringify(data),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+
+                        success: function(data){
+                            $('#timeOutModal').modal('hide');
+                            notification("info", "URL Edited")
+
+                            location.reload()
+                        },
+                        error: function(error){
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+
+                            swalAlert('warning', error.responseJSON.message)
+                        }
+                    // ajax closing tag
+                    })
+
+                });
 
 
     });

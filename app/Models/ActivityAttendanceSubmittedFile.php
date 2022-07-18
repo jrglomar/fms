@@ -21,8 +21,6 @@ class ActivityAttendanceSubmittedFile extends Model
         // [Modify this fillable base on tables]      - Can be modified
             protected $fillable = [
                 "date_submitted",
-                "remarks",
-                "status",
                 "file_name",
                 "file_link",
                 "file_link_directory",

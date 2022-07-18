@@ -24,7 +24,8 @@ class CreateActivityAttendanceRequiredFacultyListsTable extends Migration
             $table->time('time_out')->nullable();
 
             $table->string('attendance_status')->nullable();
-            $table->string('proof_of_attendance_file_directory')->nullable();
+            $table->longText('remarks')->nullable();
+            $table->string('status')->nullable();
             $table->string('proof_of_attendance_file_link')->nullable();
 
             $table->foreignUuid('activity_id')->nullable();
