@@ -173,43 +173,6 @@
             console.log(marf_list_id)
             console.log(meeting_id)
             window.location.replace(APP_URL + '/faculty/meeting/'+meeting_id);
-
-            // $.ajax({
-            //     url: form_url,
-            //     method: "GET",
-            //     headers: {
-            //         "Accept": "application/json",
-            //         "Authorization": API_TOKEN,
-            //         "Content-Type": "application/json"
-            //     },
-
-            //     success: function(data){
-            //         let created_at = moment(data.created_at).format('LLL');
-            //         let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
-
-            //         $('#id_view').html(data.id);
-            //         $('#title_view').html(data.title);
-            //         $('#meeting_types_id_view').html(data.meeting_type.title);
-            //         $('#agenda_view').html(data.agenda);
-            //         $('#description_view').html(data.description);
-            //         $('#start_time_view').html(data.start_time);
-            //         $('#end_time_view').html(data.end_time);
-            //         if(data.is_required == 0) // true
-            //         {
-            //             data.is_required = "No"
-            //         }
-            //         else
-            //         {
-            //             data.is_required = "Yes"
-            //         }
-            //         $('#is_required_view').html(data.is_required);
-            //         $('#status_view').html(data.status);
-            //         $('#created_at_view').html(created_at);
-
-            //         $('#viewModal').modal('show');
-            //     }
-            // // ajax closing tag
-            // })
         });
         // END OF VIEW FUNCTION
 

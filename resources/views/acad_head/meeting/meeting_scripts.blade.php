@@ -12,6 +12,30 @@
         var USER_ROLE = JSON.parse(USER_DATA)
         // END OF GLOBAL VARIABLE
 
+        // PAST DATE RESTRICTION ON INPUT="DATE"
+            // To set the minimum of date picker.....
+            FilterPastDate = () =>
+            {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+                
+                if (dd < 10) {
+                dd = '0' + dd;
+                }
+                
+                if (mm < 10) {
+                mm = '0' + mm;
+                } 
+                    
+                today = yyyy + '-' + mm + '-' + dd;
+                document.getElementById("date").setAttribute("min", today); // "min" or "max"
+                // document.getElementById("date").setAttribute("max", today); // "min" or "max"
+            }
+            FilterPastDate()
+        // END PAST DATE RESTRICTION ON INPUT="DATE"
+
         // DATA TABLES FUNCTION
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({

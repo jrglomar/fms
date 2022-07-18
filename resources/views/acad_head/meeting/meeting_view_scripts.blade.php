@@ -206,15 +206,12 @@
                             return data
                         }
                     }},
-                    { data: "proof_of_attendance_file_directory", render: function(data, type, row){
-                        if(data == null)
-                        {
-                            return "<p>No Proof Yet</p>"
-                        }
-                        else
-                        {
-                            return data
-                        }
+                    { data: "id", render: function(data, type, row){
+                        console.log(row)
+                        return `</div>
+                                <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.faculty_id}">
+                                    <div>Check Proof of Attendance</div>
+                                </button>`
                     }},
                     { data: "proof_of_attendance_file_link", render: function(data, type, row){
                         if(data == null)
@@ -236,6 +233,57 @@
             requiredFacultyDatatable()
 
         // END FUNCTION FOR REQUIRED FACULTY DATATABLE
+
+// ------------------------------------------------------------------------------------------------- //
+        
+    $(document).on("click", ".btnViewDetails", function(){
+        var faculty_id = this.id
+
+        console.log(MEETING_ID)
+        console.log(faculty_id)
+        
+        $.ajax({
+            url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + faculty_id,
+            type: "GET",
+            dataType: "JSON",
+            success: function (responseData)
+            {   
+                console.log(responseData)
+
+                let html = `<li class="list-group-item d-flex justify-content-between" disabled="">
+                                                <span class="text-primary"><strong>Submitted File/s</strong></span>
+                                                <span class="text-primary"><strong>Date Submitted</strong></span>
+                                            </li>`
+
+                let header = `<h5 class="text-dark">Faculty: ${responseData[0].faculty.last_name}, ${responseData[0].faculty.first_name}</h5>`
+
+                // IF FACULTY DOES NOT HAVE ANY SUBMITTED REQUIREMENTS YET
+                if(responseData[0].meeting_submitted.length == 0){
+                    html += `&nbsp;<div class="text-center">Empty Submission
+                        </div>`
+                }
+
+                // PASSING SUBMITTED REQUIREMENTS DATA INTO HTML VAR TO PASS IT TO DOM
+                $.each(responseData[0].meeting_submitted, function(i){
+                    let file_id = responseData[0].meeting_submitted[i].id
+                    let proof_of_attendance_file_directory = APP_URL + "/" + responseData[0].meeting_submitted[i].proof_of_attendance_file_directory
+                    let file_name = responseData[0].meeting_submitted[i].file_name
+                    let date_submitted = responseData[0].meeting_submitted[i].date_submitted
+
+                    html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                <button class="btn btn-info" onclick="window.open('${proof_of_attendance_file_directory}')" target="_blank">${file_name}</button>
+                                
+                                <span class="badge badge-light">${moment(date_submitted).format('lll')}</span>
+                                </li>`
+                })
+
+                // PASSING VAR DATA TO DOM
+                $('#fileModalHeader').html(header)
+                $('#fileModalBody').html(html)
+                $('#fileViewerModal').modal('show')
+            },
+        });
+    });
 
 // ------------------------------------------------------------------------------------------------- //
 
@@ -285,13 +333,6 @@
 
             $('#editRequiredFacultyModal').modal('show');
         })
-
-        $(document).on("click", ".btnViewDetails", function(){
-            Swal.fire({
-                icon: 'warning',
-                text: 'This feature is still under development'
-            })
-        });
 
         $('#updateRequiredFacultyForm').on('submit', function(e){
             e.preventDefault()

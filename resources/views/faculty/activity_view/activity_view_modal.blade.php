@@ -111,13 +111,13 @@
                                 <div class="hero-inner">
                                     <div class="d-flex justify-content-center">
                                         <div class="col-12">
-                                            <form class="dropzone"
+                                            <form class="dropzone proof_upload"
                                                     id="proof_upload">
                                             </form>
                                         </div>
                                     </div>
                                     <div id="btnUpload" class="d-flex justify-content-center">
-                                        <button type="button" class="btn btn-success">Process Upload</button>
+                                        <button type="button" class="btn btn-success btnUpload">Process Upload</button>
                                     </div>
                                 </div>
                             </div>
@@ -127,13 +127,13 @@
                 <fieldset id="tab021">
                     <div class="bg-light">
                         <h5 class="text-center mb-4 mt-0 pt-4">Upload Link</h5>
-                        <form>
+                        <form id="link_form" data-parsley-validate>
                             <div class="form-group pb-2 px-3">
-                                <input type="text" placeholder="Link" class="form-control">
+                                <input type="text" id= "proof_link" placeholder="Link" class="form-control" required>
                             </div>
                             
                             <div class="form-group pb-5 row justify-content-center">
-                                <button type="button" id="createBtn" class="btn btn-primary px-3">Submit</button>
+                                <button type="button" id="proof_link_submit" class="btn btn-primary px-3">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -142,6 +142,27 @@
             <div class="modal-footer d-flex flex-column justify-content-center border-0">
                 <!-- <p class="text-muted">Can't find what you're looking for?</p>
                 <button type="button" class="btn btn-primary">Contact Support Team</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="viewSubmittedFiles" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Uploaded Files</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="dropzone proof_upload" style="border: 2px dashed #a6c4ff"
+                id="fileupload">
+                </form>
+                <div id="btnUpload" class="d-flex justify-content-center">
+                    <button type="button" class="btn btn-success btnUpload">Process Upload</button>
+                </div>
             </div>
         </div>
     </div>

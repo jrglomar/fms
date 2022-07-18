@@ -25,6 +25,7 @@ class MeetingAttendanceRequiredFacultyList extends Model
             "time_in",
             "time_out",
             "attendance_status",
+            "proof_of_attendance_file_link",
             "faculty_id",
             "meeting_id",
             "remarks"

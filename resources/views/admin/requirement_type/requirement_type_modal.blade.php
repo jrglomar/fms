@@ -74,7 +74,7 @@
                             <div class="form-group col-md-12">
                                 <label>Description</label>
                                 <input type="text" class="form-control" id="description_edit" name="description_edit"
-                                placeholder="Description" tabindex="1" required>
+                                placeholder="Description" tabindex="1">
                             </div>
                         </div>
                     </div>
