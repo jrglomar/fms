@@ -92,10 +92,9 @@
                     refresh();
                 },
                 error: function(error){
-                    console.log(error)
-                    swalAlert('warning', error.responseJSON.message)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -209,29 +208,40 @@
             var id = this.id;
             let form_url = BASE_API+id
 
-            $.ajax({
-                url: form_url,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
+            // DELETE CONFIRMATION SWAL
+            Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't able to remove this.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "red",
+                    confirmButtonText: "Yes, remove it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: BASE_API + 'destroy/' + id,
+                            method: "DELETE",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
 
-                success: function(data){
-                    $('#id_delete').val(data.id);
-                    $('#title_delete').html(data.title);
-                    $('#description_delete').html(data.description);
-
-                    $('#deactivateModal').modal('show');
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            // ajax closing tag
-            })
+                            success: function(data){
+                                notification('error', '{{ $page_title }}')
+                                refresh()
+                            },
+                            error: function(error){
+                                console.log(error)
+                                swalAlert('warning', error.responseJSON.message)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+            });
+            // END OF DELETE CONFIRMATION SWAL
         });
         // END OF DEACTIVATE FUNCTION
 
