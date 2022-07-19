@@ -9,19 +9,6 @@
   text-align: center;
 }
 
-/* body {
-    color: #000;
-    overflow-x: hidden;
-    height: 100%;
-    background-color: #D1C4E9;
-    background-repeat: no-repeat;
-} */
-
-/* .container {
-    margin: 200px auto;
-} */
-
-
 /* FOR UPLOADING MODAL - TABS */
 fieldset {
     display: none;

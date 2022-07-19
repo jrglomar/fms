@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="viewForm" class="needs-validation" novalidate="">
+                <form id="viewForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-6">
@@ -83,7 +83,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="updateForm" class="needs-validation" novalidate="" data-parsley-validate>
+                <form id="updateForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="form-group col-md-12" hidden>
                             <label class="required-input">ID</label>
@@ -182,7 +182,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="deactivateForm" class="needs-validation" novalidate="">
+                <form id="deactivateForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12" hidden>

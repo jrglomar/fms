@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="viewForm" class="needs-validation" novalidate="">
+                <form id="viewForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12" hidden>
@@ -58,7 +58,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="updateForm" class="needs-validation" novalidate="" data-parsley-validate>
+                <form id="updateForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12" hidden>
@@ -74,7 +74,7 @@
                             <div class="form-group col-md-12">
                                 <label>Description</label>
                                 <input type="text" class="form-control" id="description_edit" name="description_edit"
-                                placeholder="Description" tabindex="1" required>
+                                placeholder="Description" tabindex="1">
                             </div>
                         </div>
                     </div>

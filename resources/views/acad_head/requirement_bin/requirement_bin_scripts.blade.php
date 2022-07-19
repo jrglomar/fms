@@ -242,11 +242,11 @@
         });
         // END OF UPDATE FUNCTION
 
-        // DEACTIVATE FUNCTION
+        // DELETE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = BASE_API+id
-
+            let form_url = BASE_API + id
+            console.log(id)
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -257,15 +257,41 @@
                 },
 
                 success: function(data){
-                    $('#id_delete').val(data.id);
-                    $('#title_delete').html(data.title);
-                    $('#description_delete').html(data.description);
-                    $('#deadline_delete').html(data.deadline);
+                    console.log(data)
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't able to remove this.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes, remove it!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: BASE_API + 'destroy/' + data.id,
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
 
-                    $('#deactivateModal').modal('show');
+                                success: function(data){
+                                    notification('error', 'Requirement Bin')
+                                    refresh();
+                                },
+                                error: function(error){
+                                    console.log(error)
+                                    swalAlert('warning', error.responseJSON.message)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    });
                 },
                 error: function(error){
-                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -273,7 +299,7 @@
             // ajax closing tag
             })
         });
-        // END OF DEACTIVATE FUNCTION
+        // END DELETE FUNCTION
 
         // DEACTIVATE SUBMIT FUNCTION
         $('#deactivateForm').on('submit', function(e){

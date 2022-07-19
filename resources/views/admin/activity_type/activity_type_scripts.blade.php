@@ -27,14 +27,14 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View activity type</div></div>
+                                        <div>View</div></div>
                                         <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit activity type</div></div>
-                                            <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete activity type</div></div></div></div>`;
+                                        <div style="width: 2rem"><i class="fas fa-edit"></i></div>
+                                        <div>Edit</div></div>
+                                        <div class="dropdown-divider"</div></div>
+                                        <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
+                                        <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
+                                        <div style="color: red">Delete</div></div></div></div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -210,11 +210,11 @@
         });
         // END OF UPDATE FUNCTION
 
-        // DEACTIVATE FUNCTION
+        // DELETE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = BASE_API+id
-
+            let form_url = BASE_API + id
+            console.log(id)
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -225,23 +225,49 @@
                 },
 
                 success: function(data){
-                    $('#id_delete').val(data.id);
-                    $('#title_delete').html(data.title);
-                    $('#description_delete').html(data.description);
+                    console.log(data)
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't able to remove this.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes, remove it!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: BASE_API + 'destroy/' + data.id,
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
 
-                    $('#deactivateModal').modal('show');
+                                success: function(data){
+                                    notification('error', 'Activity Type')
+                                    refresh();
+                                },
+                                error: function(error){
+                                    console.log(error)
+                                    swalAlert('warning', error.responseJSON.message)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    });
                 },
                 error: function(error){
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
-
-                    swalAlert('warning', error.responseJSON.message)
                 }
             // ajax closing tag
             })
         });
-        // END OF DEACTIVATE FUNCTION
+        // END DELETE FUNCTION
 
         // DEACTIVATE SUBMIT FUNCTION
         $('#deactivateForm').on('submit', function(e){

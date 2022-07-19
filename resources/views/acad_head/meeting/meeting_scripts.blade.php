@@ -162,7 +162,7 @@
 
             console.log(meeting_type)
 
-                if(endTime < startTime)
+                if(endTime < startTime || endTime == startTime)
                 {
                     swalAlert('warning', "The meeting End Time is Less than to your Start Time. Please pick time properly")
                 }
@@ -224,7 +224,7 @@
                 success: function(data){
                     $('#id_edit').val(data.id);
                     $('#title_edit').val(data.title);
-                    $('#meeting_types_id_edit').val(data.meeting_types_id);
+                    $('#meeting_type_id_edit').val(data.meeting_types_id);
                     $('#agenda_edit').val(data.agenda);
                     $('#location_edit').val(data.location);
                     $('#description_edit').val(data.description);
@@ -255,7 +255,7 @@
                 
                 let data = {
                     "title": $('#title_edit').val(),
-                    "meeting_types_id": $('#meeting_types_id_edit').val(),
+                    "meeting_type_id": $('#meeting_type_id_edit').val(),
                     "description": $('#description_edit').val(),
                     "agenda": $('#agenda_edit').val(),
                     "location": $('#location_edit').val(),
@@ -278,7 +278,7 @@
                     },
 
                     success: function(data){
-                        notification("success", "Meeting");
+                        notification("info", "Meeting");
                         refresh()
                         $('#editModal').modal('hide');
                     },
@@ -299,11 +299,11 @@
         });
         // END OF UPDATE FUNCTION
 
-        // DEACTIVATE FUNCTION
+        // DELETE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = BASE_API+id
-
+            let form_url = BASE_API + id
+            console.log(id)
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -314,19 +314,39 @@
                 },
 
                 success: function(data){
-                    $('#id_delete').val(data.id);
-                    $('#title_delete').html(data.title);
-                    $('#meeting_type_delete').html(data.meeting_types_id);
-                    $('#agenda_delete').html(data.agenda);
-                    $('#location_delete').html(data.location);
-                    $('#description_delete').html(data.description);
-                    $('#date_delete').html(data.date);
-                    $('#start_time_delete').html(data.start_time);
-                    $('#end_time_delete').html(data.end_time);
-                    $('#is_required_delete').html(data.is_required);
-                    $('#status_delete').html(data.status);
+                    console.log(data)
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't able to remove this.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes, remove it!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: BASE_API + 'destroy/' + data.id,
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
 
-                    $('#deactivateModal').modal('show');
+                                success: function(data){
+                                    notification('error', 'Meeting')
+                                    refresh();
+                                },
+                                error: function(error){
+                                    console.log(error)
+                                    swalAlert('warning', error.responseJSON.message)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    });
                 },
                 error: function(error){
                     console.log(error)
@@ -336,7 +356,7 @@
             // ajax closing tag
             })
         });
-        // END OF DEACTIVATE FUNCTION
+        // END DELETE FUNCTION
 
         // DEACTIVATE SUBMIT FUNCTION
         $('#deactivateForm').on('submit', function(e){

@@ -14,17 +14,11 @@
     <h1>{{ $page_title }}</h1>
 @endsection
 
-    {{-- MODAL --}}
-    @include('faculty/meeting/meeting_modal')
-
     {{-- CONTENT --}}
     @section('content')
 
             {{-- DETAILS --}}
             @include('faculty/meeting/meeting_view_content')
-
-            {{-- FORM --}}
-            @include('faculty/meeting/meeting_form')
 
             {{-- DATATABLE --}}
             @include('faculty/meeting/meeting_datatable')

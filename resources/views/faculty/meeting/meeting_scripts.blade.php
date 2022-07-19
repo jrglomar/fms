@@ -57,7 +57,7 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" data-value="${row.f_id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View Meeting</div></div>`
+                                        <div>View</div></div>`
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';

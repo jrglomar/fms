@@ -83,7 +83,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="updateForm" class="needs-validation" novalidate="" data-parsley-validate>
+                <form id="updateForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="form-group col-md-12" hidden>
                             <label class="required-input">ID</label>
@@ -156,7 +156,7 @@
                                 <label class="required-input">Memorandum</label>
                                 <input hidden type="text" id="memorandum_path">
                                 <input type="file" accept=".jpg, .png, .jpeg, .pdf" class="form-control" id="memorandum_file_directory_edit" name="memorandum_file_directory_edit"
-                                tabindex="1" required>
+                                tabindex="1">
                             </div>
                         </div>
                     </div>
