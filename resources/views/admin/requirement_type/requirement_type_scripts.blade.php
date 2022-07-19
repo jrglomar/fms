@@ -29,12 +29,21 @@
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
                                         <div>View</div></div>
                                         <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
+<<<<<<< HEAD
                                         <div style="width: 2rem"><i class="fas fa-edit"></i></div>
                                         <div>Edit</div></div>
                                         <div class="dropdown-divider"</div></div>
                                         <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
                                         <div style="color: red">Delete</div></div></div></div>`;
+=======
+                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
+                                            <div>Edit</div></div>
+                                            <div class="dropdown-divider"</div></div>
+                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
+                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
+                                            <div style="color: red">Delete</div></div></div></div>`;
+>>>>>>> 9e02594ae73d945839bcd4023ed934194448802c
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -213,6 +222,7 @@
         // DELETE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
+<<<<<<< HEAD
             let form_url = BASE_API + id
             console.log(id)
             $.ajax({
@@ -266,41 +276,45 @@
                 }
             // ajax closing tag
             })
+=======
+            let form_url = BASE_API+id
+
+            Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't able to remove this.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "red",
+                    confirmButtonText: "Yes, remove it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: BASE_API + 'destroy/' + id,
+                            method: "DELETE",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+
+                            success: function(data){
+                                notification('error', '{{ $page_title }}')
+                                refresh()
+                            },
+                            error: function(error){
+                                console.log(error)
+                                swalAlert('warning', error.responseJSON.message)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+            });
+            // END OF DELETE CONFIRMATION SWAL
+>>>>>>> 9e02594ae73d945839bcd4023ed934194448802c
         });
         // END DELETE FUNCTION
-
-        // DEACTIVATE SUBMIT FUNCTION
-        $('#deactivateForm').on('submit', function(e){
-            e.preventDefault()
-            var id = $('#id_delete').val();
-            var form_url = APP_URL+'/api/v1/requirement_type/destroy/'+id
-
-            $.ajax({
-                url: form_url,
-                method: "DELETE",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-
-                success: function(data){
-                    refresh()
-                    $('#deactivateModal').modal('hide');
-
-                    notification("info", "Deleted successfully")
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-
-                    swalAlert('warning', error.responseJSON.message)
-                }
-            // ajax closing tag
-            })
-        });
-        // END OF DEACTIVATE SUBMIT FUNCTION
 
         // ACTIVATE FUNCTION
         $(document).on("click", ".btnActivate", function(){
