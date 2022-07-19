@@ -92,20 +92,6 @@
                                 </ul>
                             </li>
 
-                        <li class="menu-header">Account Management</li>
-                        <li class="dropdown {{ Request::segment(2) == 'role' ||
-                                                Request::segment(2) == 'user_role'
-                                            ? 'active' : ''}}">
-                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                                    class="fas fa-book-reader"></i>
-                                <span>Account</span></a>
-                            <ul class="dropdown-menu">
-                                <li class="{{ Request::segment(2) == 'profile' ? 'active' : ''}}" >
-                                    <a class="nav-link" href="/faculty/profile/{{ Auth::user()->id }}">
-                                        <span>Profile</span></a></li>
-                            </ul>
-
-                        </li>
                     </ul>
 
 
