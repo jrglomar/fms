@@ -11,14 +11,20 @@
 @endsection
 
 @section('section_header')
-    <h1>{{ $page_title }}</h1>
+    <div class="col-12 d-flex justify-content-between">
+        <h1>{{ $page_title }}</h1>
+        <button id="btnTour" class="btn btn-primary btn-sm float-right">Start Page Tour</button>
+    </div>
+            
 @endsection
+
 
     {{-- MODAL --}}
     @include('acad_head/requirement_list_type/requirement_list_type_modal')
 
     {{-- CONTENT --}}
     @section('content')
+    
         <!-- <h2 class="section-title">Description</h2> -->
         <!-- <p class="section-lead" id="description_paragraph"></p> -->
 
@@ -43,4 +49,5 @@
 @section('script')
     @include('acad_head/requirement_list_type/requirement_list_type_scripts')
     @include('acad_head/requirement_list_type/required_faculty_list_scripts')
+    @include('acad_head/requirement_list_type/requirement_list_type_tour_scripts')
 @endsection

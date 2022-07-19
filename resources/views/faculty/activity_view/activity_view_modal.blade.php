@@ -93,6 +93,63 @@
     <div role="document" class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header row d-flex justify-content-between mx-1 mx-sm-3 mb-0 pb-0 border-0">
+                <div class="tabs-2 active" id="tab03">
+                    <h6 class="font-weight-bold">Upload File</h6>
+                </div>
+                <div class="tabs-2" id="tab04">
+                    <h6 class="text-muted">Upload Link</h6>
+                </div>
+            </div>
+            <div class="line"></div>
+            <div class="modal-body p-0">
+                <fieldset class="show" id="tab031">
+                    <div class="bg-light">
+                        <h5 class="text-center mb-4 mt-0 pt-4">Upload File</h5>
+                        <div class="col-12">
+                            <div class="hero text-white hero-bg-image hero-bg-parallax"
+                            style="background-image: url({{ URL::to('/images/designs/meeting_card_red.png') }})">
+                                <div class="hero-inner">
+                                    <div class="d-flex justify-content-center">
+                                        <div class="col-12">
+                                            <form class="dropzone proof_upload">
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div id="btnUpload" class="d-flex justify-content-center">
+                                        <button type="button" class="btn btn-success btnUpload">Process Upload</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset id="tab041">
+                    <div class="bg-light">
+                        <h5 class="text-center mb-4 mt-0 pt-4">Upload Link</h5>
+                        <form id="link_form" data-parsley-validate>
+                            <div class="form-group pb-2 px-3">
+                                <input type="text" id= "proof_link" placeholder="Link" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group pb-5 row justify-content-center">
+                                <button type="button" id="proof_link_submit" class="btn btn-primary px-3">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="modal-footer d-flex flex-column justify-content-center border-0">
+                <!-- <p class="text-muted">Can't find what you're looking for?</p>
+                <button type="button" class="btn btn-primary">Contact Support Team</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="viewSubmittedFiles" class="modal fade" tabindex="-1" role="dialog">
+    <div role="document" class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header row d-flex justify-content-between mx-1 mx-sm-3 mb-0 pb-0 border-0">
                 <div class="tabs active" id="tab01">
                     <h6 class="font-weight-bold">Upload File</h6>
                 </div>
@@ -111,13 +168,12 @@
                                 <div class="hero-inner">
                                     <div class="d-flex justify-content-center">
                                         <div class="col-12">
-                                            <form class="dropzone"
-                                                    id="proof_upload">
+                                            <form class="dropzone proof_upload">
                                             </form>
                                         </div>
                                     </div>
                                     <div id="btnUpload" class="d-flex justify-content-center">
-                                        <button type="button" class="btn btn-success">Process Upload</button>
+                                        <button type="button" class="btn btn-success btnUpload">Process Upload</button>
                                     </div>
                                 </div>
                             </div>
@@ -127,21 +183,29 @@
                 <fieldset id="tab021">
                     <div class="bg-light">
                         <h5 class="text-center mb-4 mt-0 pt-4">Upload Link</h5>
-                        <form>
+                        <form id="link_form" data-parsley-validate>
                             <div class="form-group pb-2 px-3">
-                                <input type="text" placeholder="Link" class="form-control">
+                                <input type="text" id= "proof_link_view" placeholder="Link" class="form-control" required>
                             </div>
                             
                             <div class="form-group pb-5 row justify-content-center">
-                                <button type="button" id="createBtn" class="btn btn-primary px-3">Submit</button>
+                                <button type="button" id="proof_link_edit" class="btn btn-primary px-3">Submit</button>
                             </div>
                         </form>
                     </div>
                 </fieldset>
             </div>
             <div class="modal-footer d-flex flex-column justify-content-center border-0">
-                <!-- <p class="text-muted">Can't find what you're looking for?</p>
-                <button type="button" class="btn btn-primary">Contact Support Team</button> -->
+                <form action="">
+                    <div class="row">
+                        <label>Status</label>
+                        <span class="form-control" id="proof_status"></span>
+                    </div>
+                    <div class="row">
+                            <label>Remarks</label>
+                            <span class="form-control" id="proof_remarks"></span>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

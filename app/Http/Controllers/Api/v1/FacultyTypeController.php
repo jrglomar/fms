@@ -48,8 +48,7 @@ class FacultyTypeController extends Controller
     {
         //
         $request->validate([
-            'title' => 'required',
-            'description',
+            'title' => 'required'
         ]);
 
         return FacultyType::create($request->all());

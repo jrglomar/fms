@@ -20,7 +20,8 @@ class ActivityAttendanceRequiredFacultyList extends Model
         "time_in",
         "time_out",
         "attendance_status",
-        "proof_of_attendance_file_directory",
+        "remarks",
+        "status",
         "proof_of_attendance_file_link",
         "activity_id",
         "faculty_id"

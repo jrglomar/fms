@@ -5,12 +5,12 @@
                 <div class="card-header">
                     <h4 class="text-dark">List of Users</h4>
                     <div class="card-header-action">
-                        <button id="uploadMultipleUser" class="btn btn-info" type="button" >Add Multiple User <i
+                        <button id="uploadMultipleUser" class="btn btn-info" type="button" >Add Multiple Users <i
                         class="fas fa-plus"></i></button>
                     </div>&nbsp;
                     <div class="card-header-action">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
-                        aria-expanded="false" aria-controls="create_card">New Users <i
+                        aria-expanded="false" aria-controls="create_card">New User <i
                         class="fas fa-plus"></i></button>
                     </div>
                 </div>

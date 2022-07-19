@@ -304,10 +304,9 @@
                                 }, 1500);
                             },
                             error: function(error){
-                                swalAlert('warning', error.responseJSON.message)
-                                console.log(error)
-                                console.log(`message: ${error.responseJSON.message}`)
-                                console.log(`status: ${error.status}`)
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
                             }
                         // ajax closing tag
                         })
@@ -335,10 +334,9 @@
                                 }, 1500);
                             },
                             error: function(error){
-                                swalAlert('warning', error.responseJSON.message)
-                                console.log(error)
-                                console.log(`message: ${error.responseJSON.message}`)
-                                console.log(`status: ${error.status}`)
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
                             }
                         // ajax closing tag
                         })

@@ -53,6 +53,36 @@
                 }
             });
         });
+
+        $(".tabs-2").click(function(){
+            
+            $(".tabs-2").removeClass("active");
+            $(".tabs-2 h6").removeClass("font-weight-bold");    
+            $(".tabs-2 h6").addClass("text-muted");    
+            $(this).children("h6").removeClass("text-muted");
+            $(this).children("h6").addClass("font-weight-bold");
+            $(this).addClass("active");
+
+            current_fs = $(".active");
+
+            next_fs = $(this).attr('id');
+            next_fs = "#" + next_fs + "1";
+
+            $("fieldset").removeClass("show");
+            $(next_fs).addClass("show");
+
+            current_fs.animate({}, {
+                step: function() {
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({
+                        'display': 'block'
+                    });
+                }
+            });
+        });
         // END UPLOAD FILES MODAL TABS
         
         function getActivity(){
@@ -129,7 +159,7 @@
 
                     
                 }
-            })
+            });
         }
 
         getActivity()
@@ -191,6 +221,14 @@
                                         'data-toggle="modal" data-target="#timeOutModal"><i class="fas fa-check"></i> Time out</button>';
                     $("#time_button").append(row_right_top);
                     }
+                    
+                    else if(data.attendance_status == "Attended"){
+                    $("#time_in_button").remove();
+                    $("#time_out_button").remove();
+                    var row_right_top = '<button id="time_out_button" type="button" class="btn time_out_btn btn-icon icon-left btn-primary btn-lg button-block float-right view-proof-btn"'+
+                                        'data-toggle="modal" data-target="#viewSubmittedFiles"><i class="fas fa-check"></i> Check uploaded files</button>';
+                    $("#time_button").append(row_right_top);
+                    }
 
                 },
                 error: function(error){
@@ -238,7 +276,8 @@
                     { data: "faculty_id", render: function(data, type, row){
                         if (data == USER_ROLE.faculty.id){
                             return `</div>
-                                    <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.id}">
+                                    <button type="button" class="btn btn-sm btn-success view-proof-btn" id="${row.id}"
+                                    data-toggle="modal" data-target="#viewSubmittedFiles">
                                     <div>Check Uploaded Files</div>
                                 </button>`
                         }
@@ -257,7 +296,7 @@
     
         $(document).on("click", ".time_in_btn", function(){
 
-            //activity_id = this.id
+            activity_id = this.id
             date = new Date()
 
             // console.log(ACTIVITY_ID)
@@ -280,9 +319,8 @@
                 },
 
                 success: function(data){
-                    refresh()
                     notification("info", "Activity Attended")
-                    
+                    location.reload()
                 },
                 error: function(error){
                     console.log(error)
@@ -296,33 +334,66 @@
 
         });
 
-        $("#proof_upload").dropzone({ 
+        $(".proof_upload").dropzone({ 
             url: ATTENDANCE_PROOF + 'file_uploads',
             acceptedFiles: '.xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf',
             method: "POST",
             addRemoveLinks: true,
             autoProcessQueue: false,
-            // renameFile: function (file) {
-            //     let file_name = file.name.substr(0, file.name.lastIndexOf('.')) || file.name;
-            //     file_name = file_name.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
 
-            //     ext = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
-
-            //     return file_name + '_' + FACULTY_LAST_NAME + '_' + new Date().getTime() + '.' + ext;
-            // },
             init: function () {
 
                 var myDropzone = this;
 
                 // Update selector to match your button
-                $("#btnUpload").click(function (e) {
+                $(".btnUpload").click(function (e) {
                     e.preventDefault();
                     myDropzone.processQueue();
+                });
+
+                $.ajax({
+                    url: APP_URL+'/api/v1/activity_submitted_proof/' + AA_FACULTY_ID ,
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (data) 
+                    {   
+                        $.each(data, function(i){
+                            let mockFile = { name: data[i].file_name,
+                                             id: data[i].id,
+                                             path: APP_URL + "/" + data[i].file_link_directory
+                                            };
+                            myDropzone.files.push(mockFile)
+                            myDropzone.emit("addedfile", mockFile);
+                            myDropzone.emit("complete", mockFile); 
+                        })
+                    },
+                    error: function ({ responseJSON }) {},
+                });
+                
+                myDropzone.on("complete", function(file) {
+                    
+                    file.previewElement.querySelector('.dz-size').innerHTML = '';
+                    file.previewElement.querySelector('.dz-image').innerHTML = `<img src="${APP_URL + '/images/designs/file_upload.png'}">`;
+
+                    file.previewElement.addEventListener("click", function() {
+                        // console.log(file)
+                        window.open(file.path);
+                    });
+                });
+
+                myDropzone.on("addedfile", function(file) {
+                    // file.previewElement.querySelector('.dz-size').innerHTML = '';
+                    // file.previewElement.querySelector('.dz-image').innerHTML = `<img src="${APP_URL + '/images/designs/file_upload.png'}">`;
+
+                    file.previewElement.addEventListener("click", function() {
+                        // console.log(file)
+                    });
                 });
                 
             },
 
             success: function(response, data){
+                var myDropzone = this;
 
                 let submission_data = [{
                     "aa_faculty_id": AA_FACULTY_ID,
@@ -330,100 +401,235 @@
                     "file_name": response.upload.filename
                 }]
                 // ajax opening tag
-                        $.ajax({
-                            url: ATTENDANCE_PROOF + 'multi_insert',
-                            method: "POST",
-                            data: JSON.stringify(submission_data),
-                            dataType: "JSON",
-                            headers: {
-                                "Accept": "application/json",
-                                "Authorization": API_TOKEN,
-                                "Content-Type": "application/json"
-                            },
-                            success: function(data){
-                                if(data.status == "success"){
-                                    date = new Date()
+                    $.ajax({
+                        url: ATTENDANCE_PROOF + 'multi_insert',
+                        method: "POST",
+                        data: JSON.stringify(submission_data),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+                        success: function(data){
+                            if(data.status == "success"){
+                                date = new Date()
 
-                                    let data_form = {
-                                        "time_out": moment(date).format('HH:mm:ss'),
-                                        "attendance_status": "Attended",
-                                    }
-
-                                    $.ajax({
-                                        url: ATTENDANCE_API + "time-in-out/" + ACTIVITY_ID + "/" +USER_ROLE.faculty.id,
-                                        method: "PUT",
-                                        data: fd,
-                                        dataType: "JSON",
-                                        headers: {
-                                            "Accept": "application/json",
-                                            "Authorization": API_TOKEN,
-                                            "Content-Type": "application/json"
-                                        },
-
-                                        success: function(data){
-                                            console.log(data)
-                                            // refresh()
-                                            // $('#timeOutModal').modal('hide');
-
-                                            // notification("info", "Time out")
-                                        },
-                                        error: function(error){
-                                            console.log(error)
-                                            console.log(`message: ${error.responseJSON.message}`)
-                                            console.log(`status: ${error.status}`)
-
-                                            swalAlert('warning', error.responseJSON.message)
-                                        }
-                                        // ajax closing tag
-                                    })
-                                    notification('success', response.upload.filename)
+                                let data_form = {
+                                    "time_out": moment(date).format('HH:mm:ss'),
+                                    "attendance_status": "Attended",
                                 }
-                            },
-                            error: function(error){
-                                console.log(error)
-                                swalAlert('warning', error.responseJSON.message)
-                                console.log(`message: ${error.responseJSON.message}`)
-                                console.log(`status: ${error.status}`)
+                                console.log(data_form)
+
+                                $.ajax({
+                                    url: ATTENDANCE_API + "time-in-out/" + ACTIVITY_ID + "/" +USER_ROLE.faculty.id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data_form),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+
+                                    success: function(data){
+                                        console.log(data)
+                                        // refresh()
+                                        $('#timeOutModal').modal('hide');
+                                        notification("info", "Time out")
+
+                                        location.reload()
+                                    },
+                                    error: function(error){
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+
+                                        swalAlert('warning', error.responseJSON.message)
+                                    }
+                                    // ajax closing tag
+                                })
+                                notification('success', response.upload.filename)
                             }
+                        },
+                        error: function(error){
+                            console.log(error)
+                            swalAlert('warning', error.responseJSON.message)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        }
                     })
                     // ajax closing tag
 
+                
+
             },
+
+            removedfile: function(file) {
+                Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't able to undo this.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes, remove it!",
+                    }).then((result) => {
+                        if (file.id != null && result.isConfirmed) {
+                            $.ajax({
+                                url: APP_URL+'/api/v1/activity_submitted_proof/destroy/' + file.id,
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+
+                                success: function(data){
+                                    notification('error', 'Submitted Requirement')
+                                    file.previewElement.remove();
+                                },
+                                error: function(error){
+                                    console.log(error)
+                                    swalAlert('warning', error.responseJSON.message)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                        else if(result.isConfirmed){
+                            file.previewElement.remove();
+                        }
+                    });
+            }
         });
 
-        /// TIME OUT SUBMIT FUNCTION
-        $('#timeOutForm').on('submit', function(e){
-            e.preventDefault()
-            //var id = $('#id_delete').val();
-            //var form_url = APP_URL+'/api/v1/activity_type/destroy/'+id
+        $(document).on("click", "#proof_link_submit", function(){
 
+            //activity_id = this.id
             date = new Date()
 
-            url_link = $('#url_link').val()
-            proof = $('#file_proof')[0].files[0]
-            time_out = moment(date).format('HH:mm:ss')
+            // console.log(ACTIVITY_ID)
+            // console.log(USER_ROLE.faculty.id)
 
-            if(url_link == null){
-                url_link = ""
+            let data = {
+            "time_out": moment(date).format('HH:mm:ss'),
+            "attendance_status": "Attended",
+            "status": "For checking",
+            "proof_of_attendance_file_link": $('#proof_link').val(),
             }
 
-            if(proof == null){
-                proof = ""
-            }
+            console.log(data)
 
-            var fd = new FormData();
-            
-            fd.append('file', proof)
-            fd.append('time_out', time_out)
-            fd.append('proof_of_attendance_file_link', url_link)
-            fd.append('attendance_status', "Attended")
+                $.ajax({
+                    url: ATTENDANCE_API + "time-in-out/" + ACTIVITY_ID + "/" +USER_ROLE.faculty.id,
+                    method: "PUT",
+                    data: JSON.stringify(data),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
 
-            //console.log(JSON.stringify(fd))
-            
-            
-            
-        });
-        // END OF TIME OUT SUBMIT FUNCTION
+                    success: function(data){
+                        $('#timeOutModal').modal('hide');
+                        notification("info", "Time out")
+
+                        location.reload()
+                    },
+                    error: function(error){
+                        console.log(error)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+
+                        swalAlert('warning', error.responseJSON.message)
+                    }
+                // ajax closing tag
+                })
+
+            });
+
+            $(document).on("click", ".view-proof-btn", function(){
+
+                $.ajax({
+                    url: ATTENDANCE_API + AA_FACULTY_ID,
+                    method: "GET",
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+
+                    success: function(data){
+                        console.log(data)
+
+                        $("#proof_link_view").val(data.proof_of_attendance_file_link);
+                        $("#proof_status").html(data.status);
+
+                        if(data.remarks == null){
+                            $("#proof_remarks").html("No Remarks");
+                        }
+                        else{
+                            $("#proof_remarks").html(data.remarks);
+                        }
+                        
+                        // $('#timeOutModal').modal('hide');
+                        // notification("info", "Time out")
+
+                        // location.reload()
+                    },
+                    error: function(error){
+                        console.log(error)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+
+                        swalAlert('warning', error.responseJSON.message)
+                    }
+                // ajax closing tag
+                })
+
+            });
+
+            $(document).on("click", "#proof_link_edit", function(){
+
+                let data = {
+                "status": "For checking",
+                "proof_of_attendance_file_link": $('#proof_link_view').val(),
+                }
+
+                console.log(data)
+
+                    $.ajax({
+                        url: ATTENDANCE_API + "time-in-out/" + ACTIVITY_ID + "/" +USER_ROLE.faculty.id,
+                        method: "PUT",
+                        data: JSON.stringify(data),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+
+                        success: function(data){
+                            $('#timeOutModal').modal('hide');
+                            notification("info", "URL Edited")
+
+                            location.reload()
+                        },
+                        error: function(error){
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+
+                            swalAlert('warning', error.responseJSON.message)
+                        }
+                    // ajax closing tag
+                    })
+
+                });
+
 
     });
 </script>

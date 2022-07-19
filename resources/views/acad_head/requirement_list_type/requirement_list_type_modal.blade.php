@@ -147,7 +147,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Add Required Document</button>
+                    <button id="btnAddRequiredDocu" type="submit" class="btn btn-success">Add Required Document</button>
                 </div>
             </form>
         </div>

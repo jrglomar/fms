@@ -15,7 +15,7 @@
                 
                   </div>
 
-                <form id="updateUserForm" class="needs-validation" novalidate="">
+                <form id="updateUserForm" data-parsley-validate>
                     {{-- EMAIL --}}
                     <div class="form-row">
                         <div class="form-group col-md-6">
@@ -115,46 +115,46 @@
                             <input type="text" class="form-control" id="salutation" name="salutation">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="phone_number">Phone Number</label>
-                            <input type="tel" class="form-control" id="phone_number" name="phone_number">
+                            <label class="required-input" for="phone_number">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone_number" name="phone_number" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="hire_date">Hire Date</label>
-                            <input type="date" class="form-control" id="hire_date" name="hire_date">
+                            <label class="required-input" for="hire_date">Hire Date</label>
+                            <input type="date" class="form-control" id="hire_date" name="hire_date" required>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="birthdate">Birthdate</label>
-                            <input type="date" class="form-control" id="birthdate" name="birthdate">
+                            <label class="required-input" for="birthdate">Birthdate</label>
+                            <input type="date" class="form-control" id="birthdate" name="birthdate" required>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="birthplace">Birthplace</label>
-                            <input  type="text" class="form-control" id="birthplace" name="birthplace">
+                            <label class="required-input" for="birthplace">Birthplace</label>
+                            <input  type="text" class="form-control" id="birthplace" name="birthplace" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="province">Province</label>
-                            <input  type="text" class="form-control" id="province" name="province">
+                            <label class="required-input" for="province">Province</label>
+                            <input  type="text" class="form-control" id="province" name="province"required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="province">City</label>
-                            <input  type="text" class="form-control" id="city" name="city">
+                            <label class="required-input" for="province">City</label>
+                            <input  type="text" class="form-control" id="city" name="city" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="barangay">Barangay</label>
-                            <input  type="text" class="form-control" id="barangay" name="barangay">
+                            <label class="required-input" for="barangay">Barangay</label>
+                            <input  type="text" class="form-control" id="barangay" name="barangay" required>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="street">Street</label>
-                            <input  type="text" class="form-control" id="street" name="street">
+                            <label class="required-input" for="street">Street</label>
+                            <input  type="text" class="form-control" id="street" name="street" required>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="house_number">House Number</label>
-                            <input  type="text" class="form-control" id="house_number" name="house_number">
+                            <label class="required-input" for="house_number">House Number</label>
+                            <input  type="text" class="form-control" id="house_number" name="house_number" required>
                         </div>
                     </div>
 

@@ -175,12 +175,6 @@
         //     })
         // });
 
-        $(document).on("click", ".btnViewDetails", function(){
-            Swal.fire({
-                icon: 'warning',
-                text: 'This feature is still under development'
-            })
-        });
 
         $('#updateRequiredFacultyForm').on('submit', function(e){
             e.preventDefault()
@@ -227,6 +221,144 @@
             })
         })
         
+
+        $(document).on("click", ".btnViewDetails", function(){
+            var id = this.id
+            
+            $.ajax({
+                url: APP_URL+'/api/v1/activity_submitted_proof/' + id,
+                type: "GET",
+                dataType: "JSON",
+                success: function (data){   
+                    console.log(data)
+
+                    let html = `<li class="list-group-item d-flex justify-content-between" disabled="">
+                                                    <span class="text-primary"><strong>Submitted File/s</strong></span>
+                                                    <span class="text-primary"><strong>Date Submitted</strong></span>
+                                                </li>`
+
+                    // let header = `<h5 class="text-dark">Faculty: ${data.faculty.last_name}, ${data.faculty.first_name}</h5>`
+
+                    // IF FACULTY DOES NOT HAVE ANY SUBMITTED REQUIREMENTS YET
+                    if(data.length == 0){
+                        html += `&nbsp;<div class="text-center">Empty Submission
+                            </div>`
+                    }
+
+                    // PASSING SUBMITTED REQUIREMENTS DATA INTO HTML VAR TO PASS IT TO DOM
+                    $.each(data, function(i){
+                        let file_id = data[i].id
+                        let file_link_directory = APP_URL + "/" + data[i].file_link_directory
+                        let file_name = data[i].file_name
+                        let date_submitted = data[i].date_submitted
+
+                        html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-info" onclick="window.open('${file_link_directory}')" target="_blank">${file_name}</button>
+                                    
+                                    <span class="badge badge-light">${moment(date_submitted).format('lll')}</span>
+                                 </li>`
+                    })
+
+                    $.ajax({
+                        url: ATTENDANCE_API + id,
+                        method: "GET",
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+
+                        success: function(data){
+                            console.log(data)
+                            $("#attendance_id").val(data.id);
+
+
+                            if(data.proof_of_attendance_file_link == null){
+                                $("#proof_link_view").val("No URL");
+                            }
+                            else{
+                                $("#proof_link_view").val(data.proof_of_attendance_file_link);
+                            }
+
+                            if(data.remarks == null){
+                                $("#proof_remarks").html("No Remarks");
+                            }
+                            else{
+                                $("#proof_remarks").val(data.remarks);
+                            }
+
+                            $("#proof_status").val(data.status);
+                            
+                        },
+                        error: function(error){
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+
+                            swalAlert('warning', error.responseJSON.message)
+                        }
+                    // ajax closing tag
+                    })
+                    
+                    //$('#fileModalHeader').html(header)
+                    $('#fileModalBody').html(html)
+                    $('#fileViewerModal').modal('show')
+                },
+            });
+        });
+
+        $('.btnSubmittedUpdate').on('click', function(e){
+            
+            let id = $('#attendance_id').val()
+            let status = $('#proof_status').val()
+            let remarks = $('#proof_remarks').val()
+
+            let form_url = ATTENDANCE_API + id
+            let form_data = {
+                "status": status,
+                "remarks": remarks
+            }
+
+            console.log(form_data)
+            $.ajax({
+                    url: form_url,
+                    method: "PUT",
+                    data: JSON.stringify(form_data),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        console.log(data)
+                        notification('info', 'Submitted Requirement/s')
+                        $('#fileViewerModal').modal('hide');
+                        refresh()
+                    },
+                    error: function(error){
+                        console.log(error)
+                        swalAlert('warning', error.responseJSON.message)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                // ajax closing tag
+            })
+        })
+
+        $(document).on("click", "#copyURL", function(){
+            /* Get the text field */
+            var copyText = document.getElementById("proof_link_view");
+
+            /* Select the text field */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+            /* Copy the text inside the text field */
+            navigator.clipboard.writeText(copyText.value);
+
+        });
 
     });
 </script>

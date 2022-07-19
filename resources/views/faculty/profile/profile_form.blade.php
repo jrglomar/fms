@@ -14,7 +14,7 @@
                     <input hidden type="file" id="uploadImage" name="uploadImage" accept="image/*" size="20" class="form-control-file">
                   </div><br><br>
 
-                <form id="updateUserForm" class="needs-validation" novalidate="">
+                <form id="updateUserForm" data-parsley-validate>
                     {{-- EMAIL --}}
                     <div class="form-row text-center">
                         <div class="col-md-12">
@@ -29,27 +29,10 @@
                             {{-- <label disabled type="email" class="form-control" id="email"> --}}
                         </div>
                         <div class="form-group col-md-2"></div>
-                        <div class="form-group  col-md-4" hidden>
-                            <label class="required-input" for="email">Status</label><br>
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="status">
-                                <label id="status_label" class="custom-control-label" for="status">Inactive</label>
-                            </div>
-                        </div>
                     </div>
 
-                    
-                    {{-- USER ROLE --}}
-                    <div class="form-row" hidden>
-                        <div class="form-group col-md-2">
-                            <label class="required-input">User Role</label>
-                        </div>
-                        <div class="form-group col-md-10" id="role_id">
-                            
-                        </div>
-                    </div>
 
-                    <button hidden type="submit" class="btn btn-success float-right" >Save Changes</button>
+                    <button type="submit" class="btn btn-success float-right" >Save Changes</button>
                 </form>
 
             </div>
@@ -68,19 +51,19 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label class="required-input" >Faculty Type</label>
-                            <select id="faculty_type_id" name="faculty_type_id" class="form-control">
+                            <select id="faculty_type_id" name="faculty_type_id" class="form-control"  disabled>
                                 <option disabled selected>List of user/s</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label class="required-input">Academic Rank</label>
-                            <select id="academic_rank_id" name="academic_rank_id" class="form-control">
+                            <select id="academic_rank_id" name="academic_rank_id" class="form-control"  disabled>
                                 <option disabled selected>List of role/s</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label class="required-input">Designation</label>
-                            <select id="designation_id" name="designation_id" class="form-control">
+                            <select id="designation_id" name="designation_id" class="form-control"  disabled>
                                 <option disabled selected>List of role/s</option>
                             </select>
                         </div>
@@ -107,11 +90,11 @@
                         <div class="form-group col-md-4">
                             <label class="required-input" for="gender">Gender</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="gender1" value="Female">
+                                <input disabled class="form-check-input" type="radio" name="gender" id="gender1" value="Female">
                                 <label class="form-check-label" for="gender1">Female</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="gender2" value="Male">
+                                <input disabled class="form-check-input" type="radio" name="gender" id="gender2" value="Male">
                                 <label class="form-check-label" for="gender2">Male</label>
                             </div>
                         </div>
@@ -120,46 +103,46 @@
                             <input type="text" class="form-control" id="salutation" name="salutation">
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="phone_number">Phone Number</label>
-                            <input type="tel" class="form-control" id="phone_number" name="phone_number">
+                            <label class="required-input" for="phone_number">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone_number" name="phone_number" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="hire_date">Hire Date</label>
-                            <input type="date" class="form-control" id="hire_date" name="hire_date">
+                            <label class="required-input" for="hire_date">Hire Date</label>
+                            <input type="date" class="form-control" id="hire_date" name="hire_date" disabled>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="birthdate">Birthdate</label>
-                            <input type="date" class="form-control" id="birthdate" name="birthdate">
+                            <label class="required-input" for="birthdate">Birthdate</label>
+                            <input type="date" class="form-control" id="birthdate" name="birthdate" disabled>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="birthplace">Birthplace</label>
-                            <input  type="text" class="form-control" id="birthplace" name="birthplace">
+                            <label class="required-input" for="birthplace">Birthplace</label>
+                            <input  type="text" class="form-control" id="birthplace" name="birthplace" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="province">Province</label>
-                            <input  type="text" class="form-control" id="province" name="province">
+                            <label class="required-input" for="province">Province</label>
+                            <input  type="text" class="form-control" id="province" name="province" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="province">City</label>
-                            <input  type="text" class="form-control" id="city" name="city">
+                            <label class="required-input" for="province">City</label>
+                            <input  type="text" class="form-control" id="city" name="city" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="barangay">Barangay</label>
-                            <input  type="text" class="form-control" id="barangay" name="barangay">
+                            <label class="required-input" for="barangay">Barangay</label>
+                            <input  type="text" class="form-control" id="barangay" name="barangay" required>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="street">Street</label>
-                            <input  type="text" class="form-control" id="street" name="street">
+                            <label class="required-input" for="street">Street</label>
+                            <input  type="text" class="form-control" id="street" name="street" required>
                         </div>
                         <div class="form-group col-md-4">
-                            <label for="house_number">House Number</label>
-                            <input  type="text" class="form-control" id="house_number" name="house_number">
+                            <label class="required-input" for="house_number">House Number</label>
+                            <input  type="text" class="form-control" id="house_number" name="house_number" required>
                         </div>
                     </div>
 
