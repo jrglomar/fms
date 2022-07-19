@@ -95,7 +95,9 @@
                     
                 },
                 error: function(error){
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -159,6 +161,9 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -201,7 +206,9 @@
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
 
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -250,7 +257,9 @@
                                 },
                                 error: function(error){
                                     console.log(error)
-                                    swalAlert('warning', error.responseJSON.message)
+                                    $.each(error.responseJSON.errors, function(key, value){
+                                            swalAlert('warning', value)
+                                    })
                                     console.log(`message: ${error.responseJSON.message}`)
                                     console.log(`status: ${error.status}`)
                                 }
@@ -263,6 +272,10 @@
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -295,7 +308,9 @@
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
 
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
