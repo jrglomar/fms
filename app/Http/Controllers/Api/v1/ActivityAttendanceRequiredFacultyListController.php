@@ -81,6 +81,15 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         return $request;
     }
 
+    public function update_status(Request $request, $id)
+    {
+        //
+        $ActivityAttendanceRequiredFacultyList = ActivityAttendanceRequiredFacultyList::find($id);
+        $ActivityAttendanceRequiredFacultyList->update($request->all());
+
+        return $ActivityAttendanceRequiredFacultyList;
+    }
+
 
     public function edit($id)
     {
