@@ -49,7 +49,6 @@ class DesignationController extends Controller
         //
         $request->validate([
             'title' => 'required',
-            'description' => 'required',
         ]);
 
         return Designation::create($request->all());

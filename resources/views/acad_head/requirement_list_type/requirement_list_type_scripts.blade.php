@@ -313,13 +313,6 @@
             var id = this.id;
             let form_url = BASE_API + id
 
-            // Swal.fire({
-            //     icon: 'warning',
-            //     text: 'This feature is still under development'
-            // })
-
-            console.log(id)
-
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -330,7 +323,6 @@
                 },
 
                 success: function(data){
-                    console.log(data)
                     Swal.fire({
                         title: "Are you sure?",
                         text: "You won't able to remove this.",
