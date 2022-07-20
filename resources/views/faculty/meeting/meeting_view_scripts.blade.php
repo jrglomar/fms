@@ -633,22 +633,14 @@
                                                                         moment("2022-06-27 "+responseData.end_time ).format('LT') +   
                                                                     '</div>' + 
                                                                 '</div>' +
-                                                            '</div> ' +
-                                                            '<div class="col-md-12">' +
-                                                                '<b>Required? </b>' +
-                                                            '</div>' +
-                                                            '<div class="col-md-12"> -- ' +
-                                                                isRequired +
-                                                            '</div>' +  
+                                                            '</div> ' + 
                                                         '</div>' + 
                                                     '</div>' + 
                                                 '</div>' ;
-                                            
                                 $("#row_left").html(row_left);
                                 $("#row_right").html(row_right_top);
                                 $("#row_right").append(row_right_bottom);
                             }
-
                         },
                         error: function ({ responseJSON }) {},
                     });

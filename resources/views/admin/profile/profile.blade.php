@@ -16,6 +16,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('admin/profile/profile_breadcrumbs')
 
             {{-- FORM --}}
             @include('admin/profile/profile_form')

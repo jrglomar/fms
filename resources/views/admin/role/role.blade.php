@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('admin/role/role_breadcrumbs')
 
             {{-- FORM --}}
             @include('admin/role/role_form')

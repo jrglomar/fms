@@ -1,6 +1,28 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+.breadcrumb-item+.breadcrumb-item::before {
+    content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxwYXRoIGQ9Ik0yLjUgMEwxIDEuNSAzLjUgNCAxIDYuNSAyLjUgOGw0LTQtNC00eiIgZmlsbD0iY3VycmVudENvbG9yIi8+PC9zdmc+);
+}
+</style>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            Dashboard
+        </li>
+        <li class="breadcrumb-item" id="acad_head_dashboard">
+        <a href="/acad_head/dashboard">Dashboard</a>
+            <script>
+                if(window.location.pathname == '/acad_head/dashboard')
+                {
+                    document.getElementById("acad_head_dashboard").classList.add('active');
+                    document.getElementById("acad_head_dashboard").setAttribute("aria-current", "page")
+                }
+            </script>
+        </li>
+    </ol>
+</nav>
 
       <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6 col-12">

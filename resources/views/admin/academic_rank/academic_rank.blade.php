@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('admin/academic_rank/academic_rank_breadcrumbs')
 
             {{-- FORM --}}
             @include('admin/academic_rank/academic_rank_form')

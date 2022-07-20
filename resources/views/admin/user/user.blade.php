@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('admin/user/user_breadcrumbs')
 
             {{-- FORM --}}
             @include('admin/user/user_form')

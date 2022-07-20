@@ -20,6 +20,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('faculty/meeting/meeting_view_breadcrumbs')
 
             {{-- DETAILS --}}
             @include('faculty/meeting/meeting_view_content')

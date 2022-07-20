@@ -16,6 +16,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+    @include('faculty/meeting/meeting_breadcrumbs')
 
             {{-- DETAILS --}}
             @include('faculty/meeting/meeting_view_content')

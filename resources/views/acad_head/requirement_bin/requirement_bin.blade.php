@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('acad_head/requirement_bin/requirement_bin_breadcrumbs')
 
             {{-- FORM --}}
             @include('acad_head/requirement_bin/requirement_bin_form')

@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('admin/meeting_type/meeting_type_breadcrumbs')
 
             {{-- FORM --}}
             @include('admin/meeting_type/meeting_type_form')

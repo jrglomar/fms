@@ -138,12 +138,6 @@
                                                                     '</div>' + 
                                                                 '</div>' +
                                                             '</div> ' +
-                                                            '<div class="col-md-12">' +
-                                                                '<b>Required? </b>' +
-                                                            '</div>' +
-                                                            '<div class="col-md-12"> -- ' +
-                                                                isRequired +
-                                                            '</div>' +  
                                                         '</div>' + 
                                                     '</div>' + 
                                                 '</div>' ;

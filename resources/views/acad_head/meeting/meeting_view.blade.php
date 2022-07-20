@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('acad_head/meeting/meeting_view_breadcrumbs')
 
             {{-- DETAILS --}}
             @include('acad_head/meeting/meeting_view_content')

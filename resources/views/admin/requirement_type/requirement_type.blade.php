@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('admin/requirement_type/requirement_type_breadcrumbs')
 
             {{-- FORM --}}
             @include('admin/requirement_type/requirement_type_form')

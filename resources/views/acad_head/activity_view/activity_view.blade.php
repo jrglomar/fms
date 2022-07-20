@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('acad_head/activity_view/activity_view_breadcrumbs')
 
             {{-- MAIN CONTENT --}}
             @include('acad_head/activity_view/activity_view_content')

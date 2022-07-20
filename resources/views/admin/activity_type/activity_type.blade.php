@@ -19,7 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
-
+        @include('admin/activity_type/activity_type_breadcrumbs')
             {{-- FORM --}}
             @include('admin/activity_type/activity_type_form')
 

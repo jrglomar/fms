@@ -16,6 +16,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('faculty/profile/profile_breadcrumbs')
 
             {{-- FORM --}}
             @include('faculty/profile/profile_form')

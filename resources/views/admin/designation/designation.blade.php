@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('admin/designation/designation_breadcrumbs')
 
             {{-- FORM --}}
             @include('admin/designation/designation_form')

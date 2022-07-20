@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('admin/faculty_type/faculty_type_breadcrumbs')
 
             {{-- FORM --}}
             @include('admin/faculty_type/faculty_type_form')

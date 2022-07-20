@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('faculty/activity/activity_breadcrumbs')
 
             {{-- FORM --}}
             @include('faculty/activity/activity_form')

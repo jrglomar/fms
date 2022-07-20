@@ -19,6 +19,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('acad_head/activity/activity_breadcrumbs')
 
             {{-- FORM --}}
             @include('acad_head/activity/activity_form')

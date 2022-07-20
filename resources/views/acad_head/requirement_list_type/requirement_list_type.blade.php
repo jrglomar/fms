@@ -24,6 +24,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        @include('acad_head/requirement_list_type/requirement_list_type_breadcrumbs')
     
         <!-- <h2 class="section-title">Description</h2> -->
         <!-- <p class="section-lead" id="description_paragraph"></p> -->
