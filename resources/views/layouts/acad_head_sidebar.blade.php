@@ -38,6 +38,11 @@
                         ><a class="nav-link" href="/acad_head/dashboard"><i class="fas fa-th-large"></i>
                                 <span>Dashboard</span></a></li>
 
+
+                        <li class="{{ Request::segment(2) == 'profile' ? 'active' : ''}}" >
+                            <a class="nav-link" href="/acad_head/profile/{{ Auth::user()->id }}">
+                        <i class="fas fa-user"></i><span>Profile</span></a></li>
+
                         {{-- SRD MANAGEMENT --}}
                         <li class="menu-header">SRD Management</li>
                         <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 

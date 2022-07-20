@@ -91,12 +91,12 @@
                 html = '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">Start time</label>' +
                             '<input type="datetime-local" class="form-control" id="start_datetime" name="start_datetime"' +
-                            'tabindex="1" value="{{ now() }}" min="{{ now() }}" required>' +
+                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:00:00"); }}" data-parsley-excluded="true">' +
                         '</div>' +
                         '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">End time</label>' +
                             '<input type="datetime-local" class="form-control" id="end_datetime" name="end_datetime"' +
-                            'tabindex="1" value="{{ now() }}" min="{{ now() }}" required>' +
+                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:01:00"); }}" data-parsley-excluded="true">' +
                         '</div>'
 
                 $('.additional-form').html(html);
@@ -111,12 +111,12 @@
                 html = '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">Start time</label>' +
                             '<input type="datetime-local" class="form-control" id="start_datetime_edit" name="start_datetime_edit"' +
-                            'tabindex="1" value="{{ now() }}" min="{{ now() }}" required>' +
+                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:01:00"); }}" required> data-parsley-excluded="true"' +
                         '</div>' +
                         '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">End time</label>' +
-                            '<input type="datetime-local" class="form-control" id="end_datetime_edit" name="end_datetime_edit"' +
-                            'tabindex="1" required>' +
+                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:01:00"); }}" data-parsley-excluded="true"' +
+                            'tabindex="1">' +
                         '</div>'
 
                 $('.additional-form-edit').html(html);
@@ -178,36 +178,40 @@
                     }
 
                     console.log(data_form)
+                        if($('#start_datetime').val() > "{{ date('Y-m-d 00:00:00'); }}" && $('#end_datetime').val() > "{{ date('Y-m-d 00:01:00'); }}" ){
+                            //ajax opening tag
+                            $.ajax({
+                                url: form_url_no_memo,
+                                method: "POST",
+                                data: JSON.stringify(data_form),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data){
+                                    console.log(data)
+                                    $("#createForm").trigger("reset")
+                                    $("#create_card").collapse("hide")
+                                    refresh();
 
-                        //ajax opening tag
-                        $.ajax({
-                            url: form_url_no_memo,
-                            method: "POST",
-                            data: JSON.stringify(data_form),
-                            dataType: "JSON",
-                            headers: {
-                                "Accept": "application/json",
-                                "Authorization": API_TOKEN,
-                                "Content-Type": "application/json"
-                            },
-                            success: function(data){
-                                console.log(data)
-                                $("#createForm").trigger("reset")
-                                $("#create_card").collapse("hide")
-                                refresh();
-
-                                notification("success", "Activity")
-                            },
-                            error: function(error){
-                                $.each(error.responseJSON.errors, function(key,value) {
-                                    swalAlert('warning', value)
-                                });
-                                console.log(error)
-                                console.log(`message: ${error.responseJSON.message}`)
-                                console.log(`status: ${error.status}`)
-                            }
-                        //ajax closing tag
-                        })
+                                    notification("success", "Activity")
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            //ajax closing tag
+                            })
+                        }
+                        else{
+                            swalAlert('warning', 'Invalid datetime')
+                        }
                     }
                     else{
                         //console.log(myDropzone)
@@ -353,33 +357,39 @@
 
                 console.log(data_form)
 
-                $.ajax({
-                    url: form_url,
-                    method: "PUT",
-                    data: JSON.stringify(data_form),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        "Content-Type": "application/json"
-                    },
+                if($('#start_datetime_edit').val() > "{{ date('Y-m-d 00:00:00'); }}" && $('#end_datetime_edit').val() > "{{ date('Y-m-d 00:00:01'); }}" ){
+                    $.ajax({
+                        url: form_url,
+                        method: "PUT",
+                        data: JSON.stringify(data_form),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
 
-                    success: function(data){
-                        refresh()
-                        $('#editModal').modal('hide');
+                        success: function(data){
+                            refresh()
+                            $('#editModal').modal('hide');
 
-                        notification("info", "Activity")
-                    },
-                    error: function(error){
-                        $.each(error.responseJSON.errors, function(key,value) {
-                            swalAlert('warning', value)
-                        });
-                        console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
+                            notification("info", "Activity")
+                        },
+                        error: function(error){
+                            $.each(error.responseJSON.errors, function(key,value) {
+                                swalAlert('warning', value)
+                            });
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        }
 
-                })
+                    })
+                }
+                else{
+                    swalAlert('warning', 'Invalid datetime')
+                }
+                
             }
             else{
 

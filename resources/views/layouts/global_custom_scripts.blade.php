@@ -64,8 +64,8 @@
         let user_role = ''
 
         $('#admin_profile_navbar').attr('href', APP_URL + "/admin/user/" + new_user_data.id)
-        $('#faculty_profile_navbar').attr('href', APP_URL + "/faculty/user/" + new_user_data.id)
-        $('#acadhead_profile_navbar').attr('href', APP_URL + "/acadhead/user/" + new_user_data.id)
+        $('#faculty_profile_navbar').attr('href', APP_URL + "/faculty/profile/" + new_user_data.id)
+        $('#acad_head_profile_navbar').attr('href', APP_URL + "/acadhead/profile/" + new_user_data.id)
 
         if(new_user_data.faculty == null){
             $('#userNameSidebar').html('Not set')

@@ -106,33 +106,40 @@
             })
 
 
-            // ajax opening tag
-            $.ajax({
-                url: form_url,
-                method: "POST",
-                data: JSON.stringify(data),
-                dataType: "JSON",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-                success: function(data){
-                    notification('success', 'Requirement Bin')
-                    $("#createForm").trigger("reset")
-                    $("#create_card").collapse("hide")
-                    refresh();
-                },
-                error: function(error){
-                    $.each(error.responseJSON.errors, function(key,value) {
-                        swalAlert('warning', value)
-                    });
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            // ajax closing tag
-            })
+            console.log($('#deadline').val())
+            if($('#deadline').val() > "{{ date('Y-m-d 00:00:00'); }}" ){
+                // ajax opening tag
+                $.ajax({
+                    url: form_url,
+                    method: "POST",
+                    data: JSON.stringify(data),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        notification('success', 'Requirement Bin')
+                        $("#createForm").trigger("reset")
+                        $("#create_card").collapse("hide")
+                        refresh();
+                    },
+                    error: function(error){
+                        $.each(error.responseJSON.errors, function(key,value) {
+                            swalAlert('warning', value)
+                        });
+                        console.log(error)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                // ajax closing tag
+                })
+            }
+            else{
+                swalAlert('warning', 'Invalid deadline')
+            }
+            
         });
         // END OF SUBMIT FUNCTION
 
