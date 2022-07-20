@@ -91,12 +91,12 @@
                 html = '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">Start time</label>' +
                             '<input type="datetime-local" class="form-control" id="start_datetime" name="start_datetime"' +
-                            'tabindex="1" required>' +
+                            'tabindex="1" value="{{ now() }}" min="{{ now() }}" required>' +
                         '</div>' +
                         '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">End time</label>' +
                             '<input type="datetime-local" class="form-control" id="end_datetime" name="end_datetime"' +
-                            'tabindex="1" required>' +
+                            'tabindex="1" value="{{ now() }}" min="{{ now() }}" required>' +
                         '</div>'
 
                 $('.additional-form').html(html);
@@ -111,7 +111,7 @@
                 html = '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">Start time</label>' +
                             '<input type="datetime-local" class="form-control" id="start_datetime_edit" name="start_datetime_edit"' +
-                            'tabindex="1" required>' +
+                            'tabindex="1" value="{{ now() }}" min="{{ now() }}" required>' +
                         '</div>' +
                         '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">End time</label>' +
