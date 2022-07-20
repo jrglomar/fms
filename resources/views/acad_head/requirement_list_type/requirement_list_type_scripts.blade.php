@@ -47,7 +47,14 @@
                     // $("#deadline").html("Deadline: " + deadline);
                     $("#description").html(description);
                 },
-                error: function ({ responseJSON }) {},
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
             });
         };
 
@@ -131,7 +138,14 @@
                     $("#requirement_type_id_edit2").html(html);
                     
                 },
-                error: function ({ responseJSON }) {},
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
             });
         };
 
@@ -189,8 +203,10 @@
                                 }, 1000);
                             },
                             error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
                                 console.log(error)
-                                swalAlert('warning', error.responseJSON.message)
                                 console.log(`message: ${error.responseJSON.message}`)
                                 console.log(`status: ${error.status}`)
                             }
@@ -202,7 +218,14 @@
                         swalAlert('custom', 'The required document is already added.')
                     }        
                 },
-                error: function ({ responseJSON }) {},
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
             });
         });
         // END OF SUBMIT FUNCTION
@@ -260,6 +283,9 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -297,6 +323,9 @@
                     $('#editModal').modal('hide');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -348,8 +377,10 @@
                                     }, 1000);
                                 },
                                 error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
                                     console.log(error)
-                                    swalAlert('warning', error.responseJSON.message)
                                     console.log(`message: ${error.responseJSON.message}`)
                                     console.log(`status: ${error.status}`)
                                 }
@@ -359,6 +390,9 @@
                     });
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -390,8 +424,10 @@
                     $('#deactivateModal').modal('hide');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
-                    swalAlert('warning', error.responseJSON.message)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
                 }
