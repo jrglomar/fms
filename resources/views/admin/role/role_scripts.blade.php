@@ -92,10 +92,9 @@
                     refresh();
                 },
                 error: function(error){
-                    console.log(error)
-                    swalAlert('warning', error.responseJSON.message)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -153,9 +152,9 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -191,10 +190,9 @@
                     $('#editModal').modal('hide');
                 },
                 error: function(error){
-                    console.log(error)
-                    swalAlert('warning', error.responseJSON.message)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -232,10 +230,9 @@
                                 refresh()
                             },
                             error: function(error){
-                                console.log(error)
-                                swalAlert('warning', error.responseJSON.message)
-                                console.log(`message: ${error.responseJSON.message}`)
-                                console.log(`status: ${error.status}`)
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
                             }
                         // ajax closing tag
                         })
@@ -266,9 +263,9 @@
                     $('#deactivateModal').modal('hide');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })

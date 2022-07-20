@@ -2,10 +2,10 @@
         <div class="main-sidebar sidebar-style-2">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="index.html">PUPQCFMS</a>
+                        <a href="/acad_head/dashboard">PUPQCFMS</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">FMS</a>
+                        <a href="/acad_head/dashboard">FMS</a>
                     </div>
                     <div class="p-3 hide-sidebar-mini">
                         <div class="media">
@@ -22,7 +22,9 @@
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
                         <figure class="avatar avatar">
-                            <!-- <img class=" rounded-circle" src="../../public/img/avatar/avatar-1.png" alt="Avatar image"> -->
+                            <img id="sidebar_icon2" class="mr-3 rounded-circle" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png"
+                                    alt="Avatar image">
+                            <i class="avatar-presence online"></i>
                             <i class="avatar-presence online"></i>
                         </figure>
                     </div>

@@ -124,8 +124,10 @@
                     refresh();
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
-                    swalAlert('warning', error.responseJSON.message)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
                 }
@@ -191,7 +193,9 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -230,7 +234,9 @@
                     $('#editModal').modal('hide');
                 },
                 error: function(error){
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -281,8 +287,10 @@
                                     refresh();
                                 },
                                 error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
                                     console.log(error)
-                                    swalAlert('warning', error.responseJSON.message)
                                     console.log(`message: ${error.responseJSON.message}`)
                                     console.log(`status: ${error.status}`)
                                 }
@@ -292,6 +300,9 @@
                     });
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -322,8 +333,10 @@
                     $('#deactivateModal').modal('hide');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
-                    swalAlert('warning', error.responseJSON.message)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
                 }

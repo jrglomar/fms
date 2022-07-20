@@ -48,7 +48,7 @@ class AcademicRankController extends Controller
     {
         //
         $request->validate([
-            'title' => 'required'
+            'title' => 'required|unique:academic_ranks'
         ]);
 
         return AcademicRank::create($request->all());

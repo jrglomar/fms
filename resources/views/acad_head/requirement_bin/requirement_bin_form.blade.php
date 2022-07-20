@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label class="required-input">Deadline</label>
-                            <input type="datetime-local" class="form-control" id="deadline" name="deadline"
+                            <input type="datetime-local" class="form-control" id="deadline" name="deadline" value="{{ now() }}" min="{{ now() }}"
                             placeholder="Deadline" tabindex="1" required>
                         </div>
                     </div>
