@@ -185,7 +185,7 @@
                 },
 
                 success: function(data){
-                    notification("success", "Role");
+                    notification("info", "Role");
                     refresh()
                     $('#editModal').modal('hide');
                 },

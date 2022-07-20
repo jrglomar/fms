@@ -185,7 +185,7 @@
                 },
 
                 success: function(data){
-                    notification("success", "Designation");
+                    notification("info", "Designation");
                     refresh()
                     $('#editModal').modal('hide');
                 },
