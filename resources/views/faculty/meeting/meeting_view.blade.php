@@ -15,7 +15,6 @@
 @endsection
 
     {{-- MODAL --}}
-    @include('faculty/meeting/meeting_modal')
     @include('faculty/meeting/meeting_view_modal')
 
     {{-- CONTENT --}}
