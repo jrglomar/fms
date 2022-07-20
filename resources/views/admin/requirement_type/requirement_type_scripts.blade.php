@@ -98,7 +98,9 @@
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
 
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             //ajax closing tag
             })
@@ -162,6 +164,10 @@
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -194,14 +200,16 @@
                     refresh()
                     $('#editModal').modal('hide');
 
-                    notification("info", "Requirement Type")
+                    notification("success", "Edited successfully")
                 },
                 error: function(error){
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
 
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -210,7 +218,7 @@
         });
         // END OF UPDATE FUNCTION
 
-        // DELETE FUNCTION
+        // DEACTIVATE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
             let form_url = BASE_API+id
@@ -249,7 +257,7 @@
             });
             // END OF DELETE CONFIRMATION SWAL
         });
-        // END DELETE FUNCTION
+        // END OF DEACTIVATE SUBMIT FUNCTION
 
         // ACTIVATE FUNCTION
         $(document).on("click", ".btnActivate", function(){

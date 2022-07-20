@@ -48,7 +48,7 @@ class RequirementTypeController extends Controller
     {
          //
          $request->validate([
-            'title' => 'required',
+            'title' => 'required|unique:requirement_types',
         ]);
 
         return RequirementType::create($request->all());

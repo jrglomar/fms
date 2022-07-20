@@ -103,6 +103,8 @@
                     let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
                     let is_required_view = ""
 
+                    currentDate = moment(new Date()).format('LLL');
+
                     $('#id_view').html(data.id);
                     $('#title').html(data.title);
                     $('#description').html(data.description);
@@ -116,6 +118,12 @@
                         is_required_view = "Not required to attend"
                     } else{
                         is_required_view = "Required to attend"
+                    }
+
+                    if(moment(data.start_datetime).format('LLL') >= currentDate &&
+                        moment(data.end_datetime).format('LLL') < currentDate){
+    
+                        document.getElementById("time_button").id = "newid";
                     }
 
                     if(data.status == "Pending"){
@@ -164,18 +172,17 @@
 
         getActivity()
 
-        //console.log(USER_ROLE)
-        let arrayOfUserRole = []
-        $.each(USER_ROLE.user_role, function(i){
-            arrayOfUserRole.push(USER_ROLE.user_role[i].role.title)
-        })
-        // CHECK THE USER ROLE
-        if(jQuery.inArray("Faculty", arrayOfUserRole) !== -1)
-        {
-            var row_right_top = '<button id="time_in_button" type="button" class="btn time_in_btn btn-icon icon-left btn-primary btn-lg button-block float-right" id="{{$activity_id}}"><i class="fas fa-check"></i> Time in</button>';
-            $("#time_button").append(row_right_top);
-        }
-
+        // //console.log(USER_ROLE)
+        // let arrayOfUserRole = []
+        // $.each(USER_ROLE.user_role, function(i){
+        //     arrayOfUserRole.push(USER_ROLE.user_role[i].role.title)
+        // })
+        // // CHECK THE USER ROLE
+        // if(jQuery.inArray("Faculty", arrayOfUserRole) !== -1)
+        // {
+        //     var row_right_top = '<button id="time_in_button" type="button" class="btn time_in_btn btn-icon icon-left btn-primary btn-lg button-block float-right" id="{{$activity_id}}"><i class="fas fa-check"></i> Time in</button>';
+        //     $("#time_button").append(row_right_top);
+        // }
 
         // CHECK STATUS OF ATTENDANCE AND OR IF INCLUDED
         $.ajax({
@@ -215,7 +222,13 @@
 
                 success: function(data){
 
+                    if(data.attendance_status == null){
+                    var row_right_top = '<button id="time_in_button" type="button" class="btn time_in_btn btn-icon icon-left btn-primary btn-lg button-block float-right" id="{{$activity_id}}"><i class="fas fa-check"></i> Time in</button>';
+                    $("#time_button").append(row_right_top);
+                    }
+
                     if(data.attendance_status == "Attending"){
+                    document.getElementById("newid").id = "time_button";
                     $("#time_in_button").remove();
                     var row_right_top = '<button id="time_out_button" type="button" class="btn time_out_btn btn-icon icon-left btn-primary btn-lg button-block float-right" id="{{$activity_id}}"'+
                                         'data-toggle="modal" data-target="#timeOutModal"><i class="fas fa-check"></i> Time out</button>';
@@ -223,6 +236,7 @@
                     }
                     
                     else if(data.attendance_status == "Attended"){
+                    document.getElementById("newid").id = "time_button";
                     $("#time_in_button").remove();
                     $("#time_out_button").remove();
                     var row_right_top = '<button id="time_out_button" type="button" class="btn time_out_btn btn-icon icon-left btn-primary btn-lg button-block float-right view-proof-btn"'+
@@ -236,7 +250,9 @@
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
 
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
                 })
                 // ajax closing tag
@@ -249,7 +265,9 @@
                 console.log(`message: ${error.responseJSON.message}`)
                 console.log(`status: ${error.status}`)
 
-                swalAlert('warning', error.responseJSON.message)
+                $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
             }
             })
             // ajax closing tag
@@ -327,7 +345,9 @@
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
 
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -445,7 +465,9 @@
                                         console.log(`message: ${error.responseJSON.message}`)
                                         console.log(`status: ${error.status}`)
 
-                                        swalAlert('warning', error.responseJSON.message)
+                                        $.each(error.responseJSON.errors, function(key, value){
+                                                swalAlert('warning', value)
+                                        })
                                     }
                                     // ajax closing tag
                                 })
@@ -454,9 +476,12 @@
                         },
                         error: function(error){
                             console.log(error)
-                            swalAlert('warning', error.responseJSON.message)
                             console.log(`message: ${error.responseJSON.message}`)
                             console.log(`status: ${error.status}`)
+
+                            $.each(error.responseJSON.errors, function(key, value){
+                                    swalAlert('warning', value)
+                            })
                         }
                     })
                     // ajax closing tag
@@ -490,7 +515,9 @@
                                 },
                                 error: function(error){
                                     console.log(error)
-                                    swalAlert('warning', error.responseJSON.message)
+                                    $.each(error.responseJSON.errors, function(key, value){
+                                            swalAlert('warning', value)
+                                    })
                                     console.log(`message: ${error.responseJSON.message}`)
                                     console.log(`status: ${error.status}`)
                                 }
@@ -543,7 +570,9 @@
                         console.log(`message: ${error.responseJSON.message}`)
                         console.log(`status: ${error.status}`)
 
-                        swalAlert('warning', error.responseJSON.message)
+                        $.each(error.responseJSON.errors, function(key, value){
+                                swalAlert('warning', value)
+                        })
                     }
                 // ajax closing tag
                 })
@@ -585,7 +614,9 @@
                         console.log(`message: ${error.responseJSON.message}`)
                         console.log(`status: ${error.status}`)
 
-                        swalAlert('warning', error.responseJSON.message)
+                        $.each(error.responseJSON.errors, function(key, value){
+                                swalAlert('warning', value)
+                        })
                     }
                 // ajax closing tag
                 })
@@ -623,7 +654,9 @@
                             console.log(`message: ${error.responseJSON.message}`)
                             console.log(`status: ${error.status}`)
 
-                            swalAlert('warning', error.responseJSON.message)
+                            $.each(error.responseJSON.errors, function(key, value){
+                                    swalAlert('warning', value)
+                            })
                         }
                     // ajax closing tag
                     })

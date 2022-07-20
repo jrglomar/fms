@@ -146,7 +146,9 @@
                                     }
                                 },
                                 error: function(error){
-                                    swalAlert('warning', error.responseJSON.message)
+                                    $.each(error.responseJSON.errors, function(key, value){
+                                            swalAlert('warning', value)
+                                    })
                                 }
                         })
                         // ajax closing tag
@@ -176,7 +178,9 @@
                                     },
                                     error: function(error){
                                         console.log(error)
-                                        swalAlert('warning', error.responseJSON.message)
+                                        $.each(error.responseJSON.errors, function(key, value){
+                                                swalAlert('warning', value)
+                                        })
                                         console.log(`message: ${error.responseJSON.message}`)
                                         console.log(`status: ${error.status}`)
                                     }
@@ -937,6 +941,9 @@
                 },
                 error: function(error){
                     console.log(`message: ${error.responseJSON.message}`)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -979,6 +986,9 @@
                 },
                 error: function(error){
                     console.log(`message: ${error.responseJSON.message}`)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -1018,6 +1028,9 @@
                 },
                 error: function(error){
                     console.log(`message: ${error.responseJSON.message}`)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -1045,6 +1058,9 @@
                 },
                 error: function(error){
                     console.log(`message: ${error.responseJSON.message}`)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })

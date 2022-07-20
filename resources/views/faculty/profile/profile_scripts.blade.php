@@ -39,6 +39,9 @@
                     console.log(error)
                     // console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -75,6 +78,9 @@
                     console.log(error)
                     // console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -107,6 +113,9 @@
                     console.log(error)
                     // console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -140,6 +149,9 @@
                     console.log(error)
                     // console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -227,6 +239,9 @@
                     console.log(error)
                     // console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -262,6 +277,9 @@
                     alert(error.status)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -321,7 +339,9 @@
                                 }, 1500);
                             },
                             error: function(error){
-                                swalAlert('warning', error.responseJSON.message)
+                                $.each(error.responseJSON.errors, function(key, value){
+                                        swalAlert('warning', value)
+                                })
                                 console.log(error)
                                 console.log(`message: ${error.responseJSON.message}`)
                                 console.log(`status: ${error.status}`)
@@ -352,7 +372,9 @@
                                 }, 1500);
                             },
                             error: function(error){
-                                swalAlert('warning', error.responseJSON.message)
+                                $.each(error.responseJSON.errors, function(key, value){
+                                        swalAlert('warning', value)
+                                })
                                 console.log(error)
                                 console.log(`message: ${error.responseJSON.message}`)
                                 console.log(`status: ${error.status}`)
@@ -362,7 +384,9 @@
                     }
                 },
                 error: function(error){
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -443,7 +467,9 @@
                                             }, 1500);
                                         },
                                         error: function(error){
-                                            swalAlert('warning', error.responseJSON.message)
+                                            $.each(error.responseJSON.errors, function(key, value){
+                                                    swalAlert('warning', value)
+                                            })
                                             console.log(error)
                                             console.log(`message: ${error.responseJSON.message}`)
                                             console.log(`status: ${error.status}`)
@@ -452,7 +478,9 @@
                                     })
                                 },
                                 error: function(error){
-                                    swalAlert('warning', error.responseJSON.message)
+                                    $.each(error.responseJSON.errors, function(key, value){
+                                            swalAlert('warning', value)
+                                    })
                                     console.log(error)
                                     console.log(`message: ${error.responseJSON.message}`)
                                     console.log(`status: ${error.status}`)

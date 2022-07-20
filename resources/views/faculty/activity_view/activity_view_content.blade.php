@@ -94,7 +94,7 @@
             <div class="card-body">
                 <span class="" style="white-space: pre-line" id="description"></h3>
             </div>
-            <div id="time_button">
+            <div class="check_time" id="time_button">
                 <button type="button" class="btn btn-primary"
                 data-toggle="modal" data-target="#memo_card" role="button" aria-expanded="false" aria-controls="memo_card"
                 >View Memo</button>

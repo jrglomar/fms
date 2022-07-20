@@ -2,10 +2,10 @@
         <div class="main-sidebar sidebar-style-2">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="index.html">PUPQCFMS</a>
+                        <a href="/admin/dashboard">PUPQCFMS</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">FMS</a>
+                        <a href="/admin/dashboard">FMS</a>
                     </div>
                     <div class="p-3 hide-sidebar-mini">
                         <div class="media">
