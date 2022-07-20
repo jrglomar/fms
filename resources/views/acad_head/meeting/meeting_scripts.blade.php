@@ -167,8 +167,6 @@
             console.log(endTime);   
             var meeting_type = $("#meeting_types_id").val()
 
-            console.log(meeting_type)
-
                 if(endTime < startTime || endTime == startTime)
                 {
                     swalAlert('warning', "The meeting End Time is Less than to your Start Time. Please pick time properly")

@@ -200,7 +200,7 @@
                     refresh()
                     $('#editModal').modal('hide');
 
-                    notification("success", "Edited successfully")
+                    notification("info", "Requirement Type")
                 },
                 error: function(error){
                     console.log(error)

@@ -63,9 +63,9 @@
         let middle_name = ''
         let user_role = ''
 
-        $('#admin_profile_navbar').attr('href', APP_URL + "admin/user/" + new_user_data.id)
-        $('#faculty_profile_navbar').attr('href', APP_URL + "faculty/user/" + new_user_data.id)
-        $('#acadhead_profile_navbar').attr('href', APP_URL + "acadhead/user/" + new_user_data.id)
+        $('#admin_profile_navbar').attr('href', APP_URL + "/admin/user/" + new_user_data.id)
+        $('#faculty_profile_navbar').attr('href', APP_URL + "/faculty/profile/" + new_user_data.id)
+        $('#acad_head_profile_navbar').attr('href', APP_URL + "/acadhead/profile/" + new_user_data.id)
 
         if(new_user_data.faculty == null){
             $('#userNameSidebar').html('Not set')
@@ -75,6 +75,7 @@
         else{
             if(new_user_data.faculty.image != null){
                 $('#sidebar_icon').attr("src", APP_URL + "/" + new_user_data.faculty.image)
+                $('#sidebar_icon2').attr("src", APP_URL + "/" + new_user_data.faculty.image)
             }
             if(new_user_data.faculty.middle_name == null){
                 middle_name = ''

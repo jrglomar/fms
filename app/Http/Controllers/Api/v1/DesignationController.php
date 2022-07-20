@@ -48,7 +48,7 @@ class DesignationController extends Controller
     {
         //
         $request->validate([
-            'title' => 'required|unique:designations',
+            'title' => 'required|unique:designations,deleted_at',
         ]);
 
         return Designation::create($request->all());

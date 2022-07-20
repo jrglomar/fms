@@ -22,7 +22,9 @@
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
                         <figure class="avatar avatar">
-                            <!-- <img class=" rounded-circle" src="../../public/img/avatar/avatar-1.png" alt="Avatar image"> -->
+                            <img id="sidebar_icon2" class="mr-3 rounded-circle" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png"
+                                    alt="Avatar image">
+                            <i class="avatar-presence online"></i>
                             <i class="avatar-presence online"></i>
                         </figure>
                     </div>
@@ -35,6 +37,11 @@
                         
                         ><a class="nav-link" href="/acad_head/dashboard"><i class="fas fa-th-large"></i>
                                 <span>Dashboard</span></a></li>
+
+
+                        <li class="{{ Request::segment(2) == 'profile' ? 'active' : ''}}" >
+                            <a class="nav-link" href="/acad_head/profile/{{ Auth::user()->id }}">
+                        <i class="fas fa-user"></i><span>Profile</span></a></li>
 
                         {{-- SRD MANAGEMENT --}}
                         <li class="menu-header">SRD Management</li>

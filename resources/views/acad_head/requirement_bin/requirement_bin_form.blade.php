@@ -25,8 +25,10 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label class="required-input">Deadline</label>
-                            <input type="datetime-local" class="form-control" id="deadline" name="deadline"
-                            placeholder="Deadline" tabindex="1" required>
+                            <input type="datetime-local" class="form-control" id="deadline" name="deadline" 
+                            value="{{ date('Y-m-d 00:00:00'); }}" min="{{ date('Y-m-d 00:00:00'); }}" 
+                            data-parsley-excluded="true"
+                            placeholder="Deadline" tabindex="1">
                         </div>
                     </div>
                 </div>

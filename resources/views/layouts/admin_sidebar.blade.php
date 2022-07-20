@@ -22,7 +22,8 @@
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
                         <figure class="avatar avatar">
-                            <!-- <img class=" rounded-circle" src="../../public/img/avatar/avatar-1.png" alt="Avatar image"> -->
+                            <img id="sidebar_icon2" class="mr-3 rounded-circle" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png"
+                                    alt="Avatar image">
                             <i class="avatar-presence online"></i>
                         </figure>
                     </div>

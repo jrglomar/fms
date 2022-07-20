@@ -177,6 +177,10 @@ Route::group(['middleware' => ['role.acadhead'],
         return view('acad_head/dashboard/dashboard', ['page_title' => 'Dashboard']);
     })->name('acad_head_dashboard');
 
+    Route::get('/profile/{id}', function ($id) {
+        return view('acad_head/profile/profile', ['page_title' => 'Profile', 'user_id' => $id]);
+    })->name('acad_head_profile');
+
     // ------------MEETING--------------- //
     Route::get('/meeting', function () {
         return view('acad_head/meeting/meeting', ['page_title' => 'Meeting']);

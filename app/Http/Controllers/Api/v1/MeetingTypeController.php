@@ -56,7 +56,7 @@ class MeetingTypeController extends Controller
         //
 
         $request->validate([
-            'title' => 'required|unique:meeting_types',
+            'title' => 'required|unique:meeting_types,deleted_at',
         ]);
 
         return MeetingType::create($request->all());
