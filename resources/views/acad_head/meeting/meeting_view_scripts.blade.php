@@ -152,7 +152,14 @@
                         $("#row_right").html(row_right_bottom);
                     }
                 },
-                error: function ({ responseJSON }) {},
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                },
             });
         };
 
@@ -370,8 +377,10 @@
                     refresh();
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
-                    swalAlert('warning', error.responseJSON.message)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
                 }
