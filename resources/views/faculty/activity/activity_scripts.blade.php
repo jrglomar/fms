@@ -32,7 +32,7 @@
                                 if (data == null){
                                     return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                    <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
+                                    <div class="dropdown-item d-flex btnView" id="${row.activity_id}" role="button">
                                     <div style="width: 2rem"><i class="fas fa-eye"></i></div>
                                     <div>View</div></div>`;
                                 }

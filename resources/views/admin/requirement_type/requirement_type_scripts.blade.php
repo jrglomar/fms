@@ -29,21 +29,12 @@
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
                                         <div>View</div></div>
                                         <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-<<<<<<< HEAD
                                         <div style="width: 2rem"><i class="fas fa-edit"></i></div>
                                         <div>Edit</div></div>
                                         <div class="dropdown-divider"</div></div>
                                         <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
                                         <div style="color: red">Delete</div></div></div></div>`;
-=======
-                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit</div></div>
-                                            <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete</div></div></div></div>`;
->>>>>>> 9e02594ae73d945839bcd4023ed934194448802c
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -107,7 +98,9 @@
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
 
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             //ajax closing tag
             })
@@ -171,6 +164,10 @@
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
+
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -203,14 +200,16 @@
                     refresh()
                     $('#editModal').modal('hide');
 
-                    notification("info", "Requirement Type")
+                    notification("success", "Edited successfully")
                 },
                 error: function(error){
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
 
-                    swalAlert('warning', error.responseJSON.message)
+                    $.each(error.responseJSON.errors, function(key, value){
+                            swalAlert('warning', value)
+                    })
                 }
             // ajax closing tag
             })
@@ -219,64 +218,9 @@
         });
         // END OF UPDATE FUNCTION
 
-        // DELETE FUNCTION
+        // DEACTIVATE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-<<<<<<< HEAD
-            let form_url = BASE_API + id
-            console.log(id)
-            $.ajax({
-                url: form_url,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-
-                success: function(data){
-                    console.log(data)
-                    Swal.fire({
-                        title: "Are you sure?",
-                        text: "You won't able to remove this.",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "red",
-                        confirmButtonText: "Yes, remove it!",
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                url: BASE_API + 'destroy/' + data.id,
-                                method: "DELETE",
-                                headers: {
-                                    "Accept": "application/json",
-                                    "Authorization": API_TOKEN,
-                                    "Content-Type": "application/json"
-                                },
-
-                                success: function(data){
-                                    notification('error', 'Requirement Type')
-                                    refresh();
-                                },
-                                error: function(error){
-                                    console.log(error)
-                                    swalAlert('warning', error.responseJSON.message)
-                                    console.log(`message: ${error.responseJSON.message}`)
-                                    console.log(`status: ${error.status}`)
-                                }
-                            // ajax closing tag
-                            })
-                        }
-                    });
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            // ajax closing tag
-            })
-=======
             let form_url = BASE_API+id
 
             Swal.fire({
@@ -312,9 +256,8 @@
                     }
             });
             // END OF DELETE CONFIRMATION SWAL
->>>>>>> 9e02594ae73d945839bcd4023ed934194448802c
         });
-        // END DELETE FUNCTION
+        // END OF DEACTIVATE SUBMIT FUNCTION
 
         // ACTIVATE FUNCTION
         $(document).on("click", ".btnActivate", function(){

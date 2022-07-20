@@ -36,9 +36,9 @@
                     // $('#faculty_type_id_edit').html(id_select)
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -72,9 +72,9 @@
                     // $('#role_id_edit').html(id_selet)
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -104,9 +104,9 @@
                     // $('#faculty_type_id_edit').html(id_select)
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -137,9 +137,9 @@
                     // $('#faculty_type_id_edit').html(id_select)
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -212,9 +212,9 @@
                     removeLoader()
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -246,10 +246,9 @@
                     console.log('Update Success')
                 },
                 error: function(error){
-                    console.log(error)
-                    alert(error.status)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -343,10 +342,9 @@
                     }
                 },
                 error: function(error){
-                    swalAlert('warning', error.responseJSON.message)
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -400,10 +398,9 @@
                         notification('info', 'User Role')
                     },
                     error: function(error){
-                        console.log(error)
-                        swalAlert('warning', error.responseJSON.message)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
+                        $.each(error.responseJSON.errors, function(key,value) {
+                            swalAlert('warning', value)
+                        });
                     }
                 // ajax closing tag
             })
@@ -461,19 +458,17 @@
                                             }, 1500);
                                         },
                                         error: function(error){
-                                            swalAlert('warning', error.responseJSON.message)
-                                            console.log(error)
-                                            console.log(`message: ${error.responseJSON.message}`)
-                                            console.log(`status: ${error.status}`)
+                                            $.each(error.responseJSON.errors, function(key,value) {
+                                                swalAlert('warning', value)
+                                            });
                                         }
                                     // ajax closing tag
                                     })
                                 },
                                 error: function(error){
-                                    swalAlert('warning', error.responseJSON.message)
-                                    console.log(error)
-                                    console.log(`message: ${error.responseJSON.message}`)
-                                    console.log(`status: ${error.status}`)
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
                                 }
                             // ajax closing tag
                             })
