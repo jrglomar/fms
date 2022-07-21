@@ -13,12 +13,13 @@
                         <div id="dt_btn_div">
                         </div>
                     </div>
-
+                    <input id="pdf_filename" value="download" hidden>
+                    <input id="pdf_title" value="dynamic title" hidden>
                     <table class="table table-sm" id="requiredFacultyDatatable" style="width:100%">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Created at</th>
+                                <th class="hidden">ID</th>
+                                <th>Date Created</th>
                                 <th>Faculty Name</th>
                                 <th>Time In</th>
                                 <th>Time Out</th>

@@ -46,6 +46,13 @@
                 $("#create_btn").prop('disabled', false);
             });
 
+            // FOR DISABLING ADD REQUIRED DOCUMENT BUTTON ON BIN DETAILS
+            $(document).ajaxStart(function() {
+                $("#btnAddRequiredDocu").prop('disabled', true);
+            }).ajaxStop(function() {
+                $("#btnAddRequiredDocu").prop('disabled', false);
+            });
+
             // FOR DISABLING UPDATE CHANGES BUTTON ON UPDATE FORM
             $(document).ajaxStart(function() {
                 $(".btnUpdate").prop('disabled', true);

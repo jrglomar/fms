@@ -237,36 +237,40 @@
 
                 console.log(formdata)
 
-                //ajax opening tag
-                $.ajax({
-                    url: form_url,
-                    method: "POST",
-                    data: JSON.stringify(formdata),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        "Content-Type": "application/json"
-                    },
-                    success: function(data){
-                        console.log(data)
-                        $("#createForm").trigger("reset")
-                        $("#create_card").collapse("hide")
-                        refresh();
+                if($('#start_datetime').val() > "{{ date('Y-m-d 00:00:00'); }}" && $('#end_datetime').val() > "{{ date('Y-m-d 00:01:00'); }}" ){
+                    //ajax opening tag
+                    $.ajax({
+                        url: form_url,
+                        method: "POST",
+                        data: JSON.stringify(formdata),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+                        success: function(data){
+                            console.log(data)
+                            $("#createForm").trigger("reset")
+                            $("#create_card").collapse("hide")
+                            refresh();
 
-                        notification("success", "Activity")
-                    },
-                    error: function(error){
-                        $.each(error.responseJSON.errors, function(key,value) {
-                            swalAlert('warning', value)
-                        });
-                        console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
-                //ajax closing tag
-
-                })
+                            notification("success", "Activity")
+                        },
+                        error: function(error){
+                            $.each(error.responseJSON.errors, function(key,value) {
+                                swalAlert('warning', value)
+                            });
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        }
+                    //ajax closing tag
+                    })
+                }
+                else{
+                    swalAlert('warning', 'Invalid datetime')
+                }
 
             },
         });

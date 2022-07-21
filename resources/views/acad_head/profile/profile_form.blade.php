@@ -73,7 +73,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label class="required-input" for="first_name">First Name</label>
-                            <input  type="text" class="form-control" id="first_name" name="first_name">
+                            <input  type="text" class="form-control" id="first_name" name="first_name" required>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="middle_name">Middle Name</label>
@@ -81,7 +81,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label class="required-input" for="last_name">Last Name</label>
-                            <input  type="text" class="form-control" id="last_name" name="last_name">
+                            <input  type="text" class="form-control" id="last_name" name="last_name" required>
                         </div>
                     </div>
 

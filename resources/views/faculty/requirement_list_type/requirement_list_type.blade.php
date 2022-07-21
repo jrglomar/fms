@@ -11,7 +11,10 @@
 @endsection
 
 @section('section_header')
+<div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
+    @include('faculty/requirement_list_type/requirement_list_type_breadcrumbs')
+</div>
 @endsection
 
     {{-- MODAL --}}
@@ -19,6 +22,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        
         <!-- <h2 class="section-title">Description</h2> -->
         <!-- <p class="section-lead" id="description_paragraph"></p> -->
 

@@ -15,11 +15,11 @@
 @endsection
 
     {{-- MODAL --}}
-    @include('faculty/meeting/meeting_modal')
     @include('faculty/meeting/meeting_view_modal')
 
     {{-- CONTENT --}}
     @section('content')
+        @include('faculty/meeting/meeting_view_breadcrumbs')
 
             {{-- DETAILS --}}
             @include('faculty/meeting/meeting_view_content')

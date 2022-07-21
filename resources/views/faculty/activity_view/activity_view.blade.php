@@ -11,7 +11,10 @@
 @endsection
 
 @section('section_header')
+<div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
+    @include('faculty/activity_view/activity_view_breadcrumbs')
+</div>
 @endsection
 
 {{-- MODAL --}}
@@ -19,7 +22,6 @@
 
     {{-- CONTENT --}}
     @section('content')
-
             {{-- MAIN CONTENT --}}
             @include('faculty/activity_view/activity_view_content')
             &nbsp;
