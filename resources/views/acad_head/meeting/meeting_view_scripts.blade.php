@@ -18,6 +18,91 @@
 
 // ------------------------------------------------------------------------------------------------- //
 
+    // FUNCTION TO CHANGE CONTENT
+    function updateMeetingStatus(){
+        $.ajax({
+            url: BASE_API + MEETING_ID,
+            type: "GET",
+            dataType: "JSON",
+            success: function (responseData) 
+            {  
+                var meeting_status = responseData.status
+                var current_time = new Date(); // current time
+                var hours = current_time.getHours();
+                var mins = current_time.getMinutes();
+                if(mins < 10)
+                {
+                    mins = "0"+mins
+                }
+                else
+                {
+                    mins = mins;
+                }
+                
+                var moment_current_date = moment(current_time).format('L')
+                var moment_meeting_date = moment(responseData.date).format('L');
+
+                var now = hours+":"+mins+":00";
+                // console.log("the end time is: " + responseData.end_time + ",and the current time is: " + now)
+
+                if(meeting_status == "Pending")
+                {
+                    if(moment_current_date > moment_meeting_date || now > responseData.end_time)
+                    {
+                        let data = {
+                            "title": responseData.title,
+                            "meeting_type_id": responseData.meeting_type_id,
+                            "description": responseData.description,
+                            "agenda": responseData.agenda,
+                            "location": responseData.location,
+                            "date": responseData.date,
+                            "start_time": responseData.start_time,
+                            "end_time": responseData.end_time,
+                            "is_required": responseData.is_required,
+                            "status": "Done",
+                        }
+
+                        $.ajax({
+                            url: BASE_API + MEETING_ID,
+                            method: "PUT",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data){console.log(data)},
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                }
+                console.log(meeting_status) 
+            },
+            error: function(error)
+            {
+                $.each(error.responseJSON.errors, function(key,value) {
+                    swalAlert('warning', value)
+                });
+                console.log(error)
+                console.log(`message: ${error.responseJSON.message}`)
+                console.log(`status: ${error.status}`)
+            },
+        });
+    };
+    updateMeetingStatus();
+
+
+// ------------------------------------------------------------------------------------------------- //
+
         // FUNCTION TO CHANGE CONTENT
         function getMeetingDetails(){
             $.ajax({

@@ -167,11 +167,14 @@
             console.log(endTime);   
             var meeting_type = $("#meeting_types_id").val()
 
-                if(endTime < startTime || endTime == startTime)
+                if(endTime < startTime)
                 {
                     swalAlert('warning', "The meeting End Time is Less than to your Start Time. Please pick time properly")
                 }
-
+                else if (endTime == startTime)
+                {
+                    swalAlert('warning', "The meeting End Time is equal to your Start Time. Please pick time properly")
+                }
                 else if(endTime > startTime)
                 {
                     // ajax opening tag
