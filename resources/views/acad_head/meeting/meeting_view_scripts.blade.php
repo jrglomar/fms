@@ -47,11 +47,11 @@
 
                 if(meeting_status == "Pending")
                 {
-                    var add_required_faculty_button = "";
+                    // var add_required_faculty_button = "";
 
-                    add_required_faculty_button = '<button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>';
+                    // add_required_faculty_button = '<button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>';
                     
-                    $("#add_required_faculty").html(add_required_faculty_button);
+                    // $("#add_required_faculty").html(add_required_faculty_button);
 
                     if(moment_meeting_date == moment_current_date && now >= responseData.start_time &&  now <= responseData.end_time) 
                     {
@@ -179,11 +179,11 @@
                 }
                 else if(meeting_status == "On Going")
                 {
-                    var add_required_faculty_button = "";
+                    // var add_required_faculty_button = "";
 
-                    add_required_faculty_button = '<button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>';
+                    // add_required_faculty_button = '<button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>';
 
-                    $("#add_required_faculty").html(add_required_faculty_button);
+                    // $("#add_required_faculty").html(add_required_faculty_button);
                     
                     if(moment_current_date > moment_meeting_date)
                     {

@@ -31,6 +31,7 @@
                     
                 today = yyyy + '-' + mm + '-' + dd;
                 document.getElementById("date").setAttribute("min", today); // "min" or "max"
+                document.getElementById("date_edit").setAttribute("min", today); // "min" or "max"
                 // document.getElementById("date").setAttribute("max", today); // "min" or "max"
             }
             FilterPastDate()
