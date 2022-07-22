@@ -228,7 +228,6 @@
                     }
 
                     if(data.attendance_status == "Attending"){
-                    document.getElementById("newid").id = "time_button";
                     $("#time_in_button").remove();
                     var row_right_top = '<button id="time_out_button" type="button" class="btn time_out_btn btn-icon icon-left btn-primary btn-lg button-block float-right" id="{{$activity_id}}"'+
                                         'data-toggle="modal" data-target="#timeOutModal"><i class="fas fa-check"></i> Time out</button>';
@@ -236,7 +235,6 @@
                     }
                     
                     else if(data.attendance_status == "Attended"){
-                    document.getElementById("newid").id = "time_button";
                     $("#time_in_button").remove();
                     $("#time_out_button").remove();
                     var row_right_top = '<button id="time_out_button" type="button" class="btn time_out_btn btn-icon icon-left btn-primary btn-lg button-block float-right view-proof-btn"'+
@@ -321,7 +319,7 @@
             // console.log(USER_ROLE.faculty.id)
 
             let data = {
-            "time_in": moment(date).format('HH:mm:ss'),
+            "time_in": moment(date).format('YYYY[-]MM[-]DD HH:mm:ss'),
             "attendance_status": "Attending"
             }
 
@@ -436,7 +434,7 @@
                                 date = new Date()
 
                                 let data_form = {
-                                    "time_out": moment(date).format('HH:mm:ss'),
+                                    "time_out": moment(date).format('YYYY[-]MM[-]DD HH:mm:ss'),
                                     "attendance_status": "Attended",
                                 }
                                 console.log(data_form)
@@ -540,7 +538,7 @@
             // console.log(USER_ROLE.faculty.id)
 
             let data = {
-            "time_out": moment(date).format('HH:mm:ss'),
+            "time_out": moment(date).format('YYYY[-]MM[-]DD HH:mm:ss'),
             "attendance_status": "Attended",
             "status": "For checking",
             "proof_of_attendance_file_link": $('#proof_link').val(),

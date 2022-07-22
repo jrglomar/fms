@@ -20,8 +20,8 @@ class CreateActivityAttendanceRequiredFacultyListsTable extends Migration
             $table->foreignUuid('created_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');   
             $table->foreignUuid('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
 
-            $table->time('time_in')->nullable();
-            $table->time('time_out')->nullable();
+            $table->dateTime('time_in')->nullable();
+            $table->dateTime('time_out')->nullable();
 
             $table->string('attendance_status')->nullable();
             $table->longText('remarks')->nullable();

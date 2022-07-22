@@ -5,7 +5,7 @@
 </style>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item">
+        <li class="breadcrumb-item" style="background-color: #FFFFFF; padding-left: 0px; margin-bottom: 0px">
             SRD Management
         </li>
         <li class="breadcrumb-item">
