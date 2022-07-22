@@ -185,11 +185,11 @@
 
                 if(endTime < startTime)
                 {
-                    swalAlert('warning', "The meeting End Time is Less than to your Start Time. Please pick time properly")
+                    swalAlert('warning', "The meeting End Time is less than Start Time. Please pick time properly")
                 }
                 else if (endTime == startTime)
                 {
-                    swalAlert('warning', "The meeting End Time is equal to your Start Time. Please pick time properly")
+                    swalAlert('warning', "The meeting End Time and Start Time appears to be the same. Please pick time properly")
                 }
                 else if(endTime > startTime)
                 {
