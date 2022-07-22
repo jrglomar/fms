@@ -31,6 +31,7 @@
                     
                 today = yyyy + '-' + mm + '-' + dd;
                 document.getElementById("date").setAttribute("min", today); // "min" or "max"
+                document.getElementById("date_edit").setAttribute("min", today); // "min" or "max"
                 // document.getElementById("date").setAttribute("max", today); // "min" or "max"
             }
             FilterPastDate()
@@ -72,19 +73,35 @@
                     },
                     { data: "status"},
                     { data: "deleted_at", render: function(data, type, row){    
-                                if (data == null){
-                                    return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
-                                        <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View</div></div>
-                                        <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit</div></div>
-                                            <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete</div></div></div></div>`;
+                                if (data == null)
+                                {
+                                    if(row.status == "Done" || row.status == "done" || row.status == "On Going")
+                                    {
+                                        return `<div class="text-center dropdown">
+                                                    <div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
+                                                            <div style="width: 2rem"><i class="fas fa-eye"></i></div>
+                                                            <div>View</div>
+                                                        </div>
+                                                    </div>
+                                                </div>`;
+                                    }
+                                    else
+                                    {
+                                        return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
+                                                <div style="width: 2rem"><i class="fas fa-eye"></i></div>
+                                                <div>View</div></div>
+                                                <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
+                                                <div style="width: 2rem"><i class="fas fa-edit"></i></div>
+                                                <div>Edit</div></div>
+                                                <div class="dropdown-divider"</div></div>
+                                                <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
+                                                <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
+                                                <div style="color: red">Delete</div>`;
+                                    }
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -169,11 +186,11 @@
 
                 if(endTime < startTime)
                 {
-                    swalAlert('warning', "The meeting End Time is Less than to your Start Time. Please pick time properly")
+                    swalAlert('warning', "The meeting End Time is less than Start Time. Please pick time properly")
                 }
                 else if (endTime == startTime)
                 {
-                    swalAlert('warning', "The meeting End Time is equal to your Start Time. Please pick time properly")
+                    swalAlert('warning', "The meeting End Time and Start Time appears to be the same. Please pick time properly")
                 }
                 else if(endTime > startTime)
                 {

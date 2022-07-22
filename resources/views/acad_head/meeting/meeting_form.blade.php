@@ -65,12 +65,12 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <select class="form-control js-example-basic-single" id="is_required" name="is_required" value="Yes"
+                            <select class="form-control js-example-basic-single" id="is_required" name="is_required" value="1"
                                 hidden
                                 data-parsley-errors-container="#is-required-errors">
-                                    <option disabled selected>Choose between Yes or No</option>>
+                                    <option disabled>Choose between Yes or No</option>>
                                     <option value="0">No</option>
-                                    <option value="1">Yes</option>
+                                    <option value="1" selected>Yes</option>
                             </select>
                             <ul class="parsley-err-msg">
                                 <li id="is-required-errors"></li>
