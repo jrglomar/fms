@@ -11,12 +11,15 @@
 @endsection
 
 @section('section_header')
+<div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
+    @include('faculty/meeting/meeting_breadcrumbs')
+</div>
 @endsection
 
     {{-- CONTENT --}}
     @section('content')
-    @include('faculty/meeting/meeting_breadcrumbs')
+    
 
             {{-- DETAILS --}}
             @include('faculty/meeting/meeting_view_content')

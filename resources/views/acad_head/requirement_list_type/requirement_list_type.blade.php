@@ -11,10 +11,13 @@
 @endsection
 
 @section('section_header')
+<div class='container-fluid'>
     <div class="col-12 d-flex justify-content-between">
         <h1>{{ $page_title }}</h1>
         <button id="btnTour" class="btn btn-primary btn-sm float-right">Start Page Tour</button>
     </div>
+    @include('acad_head/requirement_list_type/requirement_list_type_breadcrumbs')
+</div>
             
 @endsection
 
@@ -24,7 +27,6 @@
 
     {{-- CONTENT --}}
     @section('content')
-        @include('acad_head/requirement_list_type/requirement_list_type_breadcrumbs')
     
         <!-- <h2 class="section-title">Description</h2> -->
         <!-- <p class="section-lead" id="description_paragraph"></p> -->

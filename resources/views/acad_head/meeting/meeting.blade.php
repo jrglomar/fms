@@ -11,7 +11,10 @@
 @endsection
 
 @section('section_header')
+<div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
+    @include('acad_head/meeting/meeting_breadcrumbs')
+</div>
 @endsection
 
     {{-- MODAL --}}
@@ -19,7 +22,7 @@
 
     {{-- CONTENT --}}
     @section('content')
-        @include('acad_head/meeting/meeting_breadcrumbs')
+        
 
             {{-- DETAILS --}}
             @include('acad_head/meeting/meeting_view_content')

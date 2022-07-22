@@ -11,7 +11,10 @@
 @endsection
 
 @section('section_header')
+<div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
+    @include('admin/user/user_breadcrumbs')
+</div>
 @endsection
 
     {{-- MODAL --}}
@@ -19,7 +22,6 @@
 
     {{-- CONTENT --}}
     @section('content')
-        @include('admin/user/user_breadcrumbs')
 
             {{-- FORM --}}
             @include('admin/user/user_form')
