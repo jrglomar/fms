@@ -31,7 +31,7 @@
 
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
-                        <li class=""><a class="nav-link" href="/faculty/dashboard"><i class="fas fa-th-large"></i>
+                        <li class="{{ Request::segment(2) == 'dashboard' ? 'active' : ''}}"><a class="nav-link" href="/faculty/dashboard"><i class="fas fa-th-large"></i>
                                 <span>Dashboard</span></a></li>
 
                         <li class="{{ Request::segment(2) == 'profile' ? 'active' : ''}}" >
