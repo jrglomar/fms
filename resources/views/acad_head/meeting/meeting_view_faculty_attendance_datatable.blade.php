@@ -4,8 +4,8 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <h4 class="text-dark">Attendance / Required Faculty List</h4>
-                    <div class="card-header-action">
-                        <button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>
+                    <div class="card-header-action" id="add_required_faculty">
+                        
                     </div>
                 </div>
                 <div class="card-body">
@@ -13,12 +13,13 @@
                         <div id="dt_btn_div">
                         </div>
                     </div>
-
+                    <input id="pdf_filename" value="download" hidden>
+                    <input id="pdf_title" value="dynamic title" hidden>
                     <table class="table table-sm" id="requiredFacultyDatatable" style="width:100%">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Created at</th>
+                                <th class="hidden">ID</th>
+                                <th>Date Created</th>
                                 <th>Faculty Name</th>
                                 <th>Time In</th>
                                 <th>Time Out</th>

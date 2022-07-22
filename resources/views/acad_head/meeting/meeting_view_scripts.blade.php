@@ -47,7 +47,13 @@
 
                 if(meeting_status == "Pending")
                 {
-                    if(moment_current_date > moment_meeting_date || now > responseData.end_time)
+                    var add_required_faculty_button = "";
+
+                    add_required_faculty_button = '<button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>';
+                    
+                    $("#add_required_faculty").html(add_required_faculty_button);
+
+                    if(moment_current_date > moment_meeting_date)
                     {
                         let data = {
                             "title": responseData.title,
@@ -72,7 +78,44 @@
                                 "Authorization": API_TOKEN,
                                 "Content-Type": "application/json"
                             },
-                            success: function(data){console.log(data)},
+                            success: function(data){},
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                    else if(moment_current_date == moment_meeting_date && now > responseData.end_time)
+                    {
+                        let data = {
+                            "title": responseData.title,
+                            "meeting_type_id": responseData.meeting_type_id,
+                            "description": responseData.description,
+                            "agenda": responseData.agenda,
+                            "location": responseData.location,
+                            "date": responseData.date,
+                            "start_time": responseData.start_time,
+                            "end_time": responseData.end_time,
+                            "is_required": responseData.is_required,
+                            "status": "Done",
+                        }
+
+                        $.ajax({
+                            url: BASE_API + MEETING_ID,
+                            method: "PUT",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data){},
                             error: function(error){
                                 $.each(error.responseJSON.errors, function(key,value) {
                                     swalAlert('warning', value)
@@ -85,7 +128,63 @@
                         })
                     }
                 }
-                console.log(meeting_status) 
+                else if(meeting_status == "Done" || meeting_status == "done")
+                {
+                    $.ajax({
+                        url: APP_URL + "/api/v1/meeting_attendance_required_faculty_list/faculty_list_time_out_null/" + MEETING_ID,
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function (responseData) 
+                        {  
+                            console.log(responseData)
+                            if (responseData.length != 0)
+                            {
+                                $.each(responseData, function (i, dataOptions) 
+                                {
+                                    var time_in = responseData[i].time_in
+                                    var time_out = responseData[i].time_out
+                                    var attendance_status = responseData[i].attendance_status
+                                    var remarks = responseData[i].remarks
+                                    var proof_of_attendance_file_link = responseData[i].proof_of_attendance_file_link
+                                    var faculty_id = responseData[i].faculty_id
+                                    var meeting_id = responseData[i].meeting_id
+                                    var id = responseData[i].id
+
+                                    $.ajax(
+                                    {
+                                        url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/' + id,
+                                        type: "PUT",
+                                        data: JSON.stringify(
+                                        {		
+                                            "time_in": time_in,
+                                            "time_out": time_out,
+                                            "attendance_status": "Absent",
+                                            "remarks": remarks,
+                                            "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                                            "faculty_id": faculty_id,
+                                            "meeting_id": meeting_id,
+                                        }),
+                                        dataType: "JSON",
+                                        contentType: 'application/json',
+                                        processData: false,
+                                        cache: false,
+                                        success: function (responseJSON) 
+                                        {                          
+                                        },
+                                        error: function(error){
+                                            $.each(error.responseJSON.errors, function(key,value) {
+                                                swalAlert('warning', value)
+                                            });
+                                            console.log(error)
+                                            console.log(`message: ${error.responseJSON.message}`)
+                                            console.log(`status: ${error.status}`)
+                                        },
+                                    });
+                                });
+                            }
+                        }
+                    });
+                }
             },
             error: function(error)
             {
@@ -111,11 +210,17 @@
                 dataType: "JSON",
                 success: function (responseData) 
                 {   
-                    console.log(responseData)
+                    
 
                     var isRequired = responseData.is_required
                     var status = responseData.status
+
                     
+                    $("#pdf_title").val("Meeting_"+moment(responseData.created_at).format('YYYY_MMMM_DD'))
+                    $("#pdf_filename").val("Meeting_"+moment(responseData.created_at).format('YYYY_MMMM_DD'))
+
+                    var pdf_title = $("#pdf_title").val()
+                    var pdf_filename = $("#pdf_filename").val()
 
                     // Changing Boolean value of is_required to text
                     if(isRequired == true)
@@ -132,9 +237,9 @@
                     {
                         status = '<span class="badge badge-warning">' + responseData.status + '</span>'
                     }
-                    else if(status == "Done")
+                    else if(status == "Done" || status == "done")
                     {
-                        status = '<span class="badge badge-success">' + responseData.status + '</span>'
+                        status = '<span class="badge badge-success">Meeting Status: ' + responseData.status + '</span>'
                     } 
 
 
@@ -179,7 +284,7 @@
                     let arrayOfUserRole = []
                     $.each(USER_ROLE.user_role, function(i){
                         arrayOfUserRole.push(USER_ROLE.user_role[i].role.title)
-                        console.log('test')
+                        
                     })
                     // if(USER_ROLE.user_role[0].role.title == "Academic Head")
                     if(jQuery.inArray("Academic Head", arrayOfUserRole) !== -1)
@@ -248,15 +353,41 @@
 // ------------------------------------------------------------------------------------------------- //
 
         // FUNCTION FOR REQUIRED FACULTY DATATABLE
-        function requiredFacultyDatatable(){
+        function requiredFacultyDatatable()
+        {
             dataTable = $('#requiredFacultyDatatable').DataTable({
                 "ajax": {
                     url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search/' + MEETING_ID, 
                     dataSrc: ''
                 },
+                "dom": 'Bfrtip',
+                "buttons":[
+                    {
+                        extend: 'pdfHtml5', 
+                        text: 'Save to PDF File',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: [ 1, 2, 3, 4, 5, 6, 7 ],
+                            modifier: { order: 'index' }
+                        },
+                        title: function() {
+                            return $('#pdf_title').val()
+                        },
+                        titleAttr : 'PDF',
+                        filename: function() {
+                            return $('#pdf_filename').val()
+                        },
+                        // customize: function (doc) {
+                        //    console.log(doc)
+                        // }
+                    }
+                ],
                 "columns": [
                     { data: "id"},
-                    { data: "created_at"},
+                    { data: "created_at", render: function(data, type, row){
+                        return moment(row.created_at).format('LL')
+                    }},
                     { data: "faculty.first_name", render: function(data, type, row){
                         let html = ''
                         html += row.faculty.first_name + ' ' + row.faculty.last_name
@@ -265,7 +396,7 @@
                     { data: "time_in", render: function(data, type, row){
                         if(data == null)
                         {
-                            return "<p>No Time In Yet</p>"
+                            return "<p>-----</p>"
                         }
                         else
                         {
@@ -275,7 +406,7 @@
                     { data: "time_out", render: function(data, type, row){
                         if(data == null)
                         {
-                            return "<p>No Time Out Yet</p>"
+                            return "<p>-----</p>"
                         }
                         else
                         {
@@ -285,7 +416,7 @@
                     { data: "attendance_status", render: function(data, type, row){
                         if(data == null)
                         {
-                            return "<p>No Attendance Status Yet</p>"
+                            return "<p>-----</p>"
                         }
                         else
                         {
@@ -293,16 +424,23 @@
                         }
                     }},
                     { data: "id", render: function(data, type, row){
-                        console.log(row)
-                        return `</div>
-                                <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.faculty_id}">
-                                    <div>Check Proof of Attendance</div>
-                                </button>`
+                        if(row.meeting_submitted.length != 0)
+                        {
+                            return `</div>
+                                    <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.faculty_id}">
+                                        <div>Check Proof of Attendance</div>
+                                    </button>`
+                        }
+                        else
+                        {
+                            return `</div>
+                                        <div>-----</div>`                         
+                        }
                     }},
                     { data: "proof_of_attendance_file_link", render: function(data, type, row){
                         if(data == null)
                         {
-                            return "<p>No Proof Yet</p>"
+                            return "<p>-----</p>"
                         }
                         else
                         {
@@ -334,8 +472,6 @@
             dataType: "JSON",
             success: function (responseData)
             {   
-                console.log(responseData)
-
                 let html = `<li class="list-group-item d-flex justify-content-between" disabled="">
                                                 <span class="text-primary"><strong>Submitted File/s</strong></span>
                                                 <span class="text-primary"><strong>Date Submitted</strong></span>

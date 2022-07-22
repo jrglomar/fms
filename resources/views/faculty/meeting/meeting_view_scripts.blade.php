@@ -345,6 +345,8 @@
                             var time_in = data[0].time_in
                             var time_out = data[0].time_out
                             var attendance_status = data[0].attendance_status
+                            var remarks = responseData[0].remarks
+                            var proof_of_attendance_file_link = responseData[0].proof_of_attendance_file_link
                             var faculty_id = FACULTY_ID
                             var meeting_id = MEETING_ID
                             var id = data[0].id
@@ -358,6 +360,8 @@
                                     "time_in": now,
                                     "time_out": time_out,
                                     "attendance_status": "Present",
+                                    "remarks": remarks,
+                                    "proof_of_attendance_file_link": proof_of_attendance_file_link,
                                     "faculty_id": faculty_id,
                                     "meeting_id": meeting_id,
                                 }),
@@ -439,6 +443,8 @@
                             var time_in = data[0].time_in
                             var time_out = data[0].time_out
                             var attendance_status = data[0].attendance_status
+                            var remarks = responseData[0].remarks
+                            var proof_of_attendance_file_link = responseData[0].proof_of_attendance_file_link
                             var faculty_id = FACULTY_ID
                             var meeting_id = MEETING_ID
                             var id = data[0].id
@@ -452,6 +458,8 @@
                                     "time_in": time_in,
                                     "time_out": now,
                                     "attendance_status": attendance_status,
+                                    "remarks": remarks,
+                                    "proof_of_attendance_file_link": proof_of_attendance_file_link,
                                     "faculty_id": faculty_id,
                                     "meeting_id": meeting_id,
                                 }),

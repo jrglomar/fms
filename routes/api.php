@@ -115,6 +115,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/meeting_attendance_required_faculty_list/search/{name}', [MeetingAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/meeting_attendance_required_faculty_list/show_soft_deleted/{all}', [MeetingAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
         Route::get('/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/{meeting_id}/{faculty_id}', [MeetingAttendanceRequiredFacultyListController::class, 'search_specific_meeting_and_faculty']); //
+        Route::get('/meeting_attendance_required_faculty_list/faculty_list_time_out_null/{meeting_id}', [MeetingAttendanceRequiredFacultyListController::class, 'faculty_list_time_out_null']); //
 
         // Requirement Bin
         Route::get('/requirement_bin', [RequirementBinController::class, 'index']);
