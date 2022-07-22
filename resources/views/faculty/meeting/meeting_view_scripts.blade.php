@@ -535,6 +535,10 @@
                             {
                                 status = '<span class="badge badge-success">Meeting Status: ' + responseData.status + '</span>'
                             } 
+                            else if(status == "On Going")
+                            {
+                                status = '<span class="badge badge-info">Meeting Status: ' + responseData.status + '</span>'
+                            }
 
 
                             // For meeting_view_content> div#row_left

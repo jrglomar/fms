@@ -156,6 +156,7 @@
                                 <label class="required-input">Status</label>
                                 <select class="form-control js-example-basic-single" id="status_edit" name="status_edit">
                                     <option value="Pending">Pending</option>
+                                    <option value="On Going">On Going</option>
                                     <option value="Done">Done</option>
                                 </select>
                             </div>                                                                      

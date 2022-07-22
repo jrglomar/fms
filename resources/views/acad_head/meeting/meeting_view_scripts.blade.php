@@ -53,7 +53,48 @@
                     
                     $("#add_required_faculty").html(add_required_faculty_button);
 
-                    if(moment_current_date > moment_meeting_date)
+                    if(moment_meeting_date == moment_current_date && now >= responseData.start_time &&  now <= responseData.end_time) 
+                    {
+                        let data = {
+                            "title": responseData.title,
+                            "meeting_type_id": responseData.meeting_type_id,
+                            "description": responseData.description,
+                            "agenda": responseData.agenda,
+                            "location": responseData.location,
+                            "date": responseData.date,
+                            "start_time": responseData.start_time,
+                            "end_time": responseData.end_time,
+                            "is_required": responseData.is_required,
+                            "status": "On Going",
+                        }
+                        $.ajax({
+                            url: BASE_API + MEETING_ID,
+                            method: "PUT",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data)
+                            {
+                                setInterval(() => {
+                                        location.reload()
+                                    }, 500);
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                    else if(moment_current_date > moment_meeting_date)
                     {
                         let data = {
                             "title": responseData.title,
@@ -67,7 +108,6 @@
                             "is_required": responseData.is_required,
                             "status": "Done",
                         }
-
                         $.ajax({
                             url: BASE_API + MEETING_ID,
                             method: "PUT",
@@ -78,7 +118,12 @@
                                 "Authorization": API_TOKEN,
                                 "Content-Type": "application/json"
                             },
-                            success: function(data){},
+                            success: function(data)
+                            {
+                                setInterval(() => {
+                                        location.reload()
+                                    }, 500);
+                            },
                             error: function(error){
                                 $.each(error.responseJSON.errors, function(key,value) {
                                     swalAlert('warning', value)
@@ -104,7 +149,6 @@
                             "is_required": responseData.is_required,
                             "status": "Done",
                         }
-
                         $.ajax({
                             url: BASE_API + MEETING_ID,
                             method: "PUT",
@@ -115,7 +159,97 @@
                                 "Authorization": API_TOKEN,
                                 "Content-Type": "application/json"
                             },
-                            success: function(data){},
+                            success: function(data)
+                            {
+                                setInterval(() => {
+                                        location.reload()
+                                    }, 500);
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                }
+                else if(meeting_status == "On Going")
+                {
+                    if(moment_current_date > moment_meeting_date)
+                    {
+                        let data = {
+                            "title": responseData.title,
+                            "meeting_type_id": responseData.meeting_type_id,
+                            "description": responseData.description,
+                            "agenda": responseData.agenda,
+                            "location": responseData.location,
+                            "date": responseData.date,
+                            "start_time": responseData.start_time,
+                            "end_time": responseData.end_time,
+                            "is_required": responseData.is_required,
+                            "status": "Done",
+                        }
+                        $.ajax({
+                            url: BASE_API + MEETING_ID,
+                            method: "PUT",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data)
+                            {
+                                setInterval(() => {
+                                        location.reload()
+                                    }, 500);
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                    else if(moment_current_date == moment_meeting_date && now > responseData.end_time)
+                    {
+                        let data = {
+                            "title": responseData.title,
+                            "meeting_type_id": responseData.meeting_type_id,
+                            "description": responseData.description,
+                            "agenda": responseData.agenda,
+                            "location": responseData.location,
+                            "date": responseData.date,
+                            "start_time": responseData.start_time,
+                            "end_time": responseData.end_time,
+                            "is_required": responseData.is_required,
+                            "status": "Done",
+                        }
+                        $.ajax({
+                            url: BASE_API + MEETING_ID,
+                            method: "PUT",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data)
+                            {
+                                setInterval(() => {
+                                        location.reload()
+                                    }, 500);
+                            },
                             error: function(error){
                                 $.each(error.responseJSON.errors, function(key,value) {
                                     swalAlert('warning', value)
@@ -235,11 +369,15 @@
                     // IF Else Condition to specify if the Status is Done or Pending
                     if(status == "Pending")
                     {
-                        status = '<span class="badge badge-warning">' + responseData.status + '</span>'
+                        status = '<span class="badge badge-warning">Meeting Status: ' + responseData.status + '</span>'
                     }
                     else if(status == "Done" || status == "done")
                     {
                         status = '<span class="badge badge-success">Meeting Status: ' + responseData.status + '</span>'
+                    } 
+                    else if(status == "On Going")
+                    {
+                        status = '<span class="badge badge-info">Meeting Status: ' + responseData.status + '</span>'
                     } 
 
 
