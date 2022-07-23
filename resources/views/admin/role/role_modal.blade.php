@@ -26,7 +26,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <label>Descrition</label>
+                                <label>Description</label>
                                 <p id="description_view" class="card-text"></p>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="updateForm" class="needs-validation" novalidate="">
+                <form id="updateForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12" hidden>
@@ -70,6 +70,11 @@
                                 <label class="required-input">Title</label>
                                 <input type="text" class="form-control" id="title_edit" name="title_edit"
                                 placeholder="Title" tabindex="1" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Description</label>
+                                <input type="text" class="form-control" id="description_edit" name="description_edit"
+                                placeholder="Description" tabindex="1">
                             </div>
                         </div>
                     </div>

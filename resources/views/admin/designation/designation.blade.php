@@ -11,7 +11,10 @@
 @endsection
 
 @section('section_header')
+<div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
+    @include('admin/designation/designation_breadcrumbs')
+</div>
 @endsection
 
     {{-- MODAL --}}
@@ -19,6 +22,7 @@
 
     {{-- CONTENT --}}
     @section('content')
+        
 
             {{-- FORM --}}
             @include('admin/designation/designation_form')
@@ -36,5 +40,6 @@
 
 
 @section('script')
+    @include('layouts/global_custom_scripts')
     @include('admin/designation/designation_scripts')
 @endsection

@@ -7,6 +7,7 @@
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/designation/'
+        var PAGE_TITLE = '{{ $page_title }}'
         // END OF GLOBAL VARIABLE
 
         // DATA TABLES FUNCTION
@@ -27,14 +28,14 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View Designation</div></div>
+                                        <div>View</div></div>
                                         <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit Designation</div></div>
+                                            <div>Edit</div></div>
                                             <div class="dropdown-divider"</div></div>
                                             <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete Designation</div></div></div></div>`;
+                                            <div style="color: red">Delete</div></div></div></div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -86,14 +87,15 @@
                 },
                 success: function(data){
                     console.log(data)
+                    notification("success", "Designation");
                     $("#createForm").trigger("reset")
                     $("#create_card").collapse("hide")
                     refresh();
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -143,8 +145,6 @@
                     "Authorization": API_TOKEN,
                     "Content-Type": "application/json"
                 },
-
-
                 success: function(data){
                     $('#id_edit').val(data.id);
                     $('#title_edit').val(data.title);
@@ -153,9 +153,9 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -185,13 +185,14 @@
                 },
 
                 success: function(data){
+                    notification("info", "Designation");
                     refresh()
                     $('#editModal').modal('hide');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -205,29 +206,40 @@
             var id = this.id;
             let form_url = BASE_API+id
 
-            $.ajax({
-                url: form_url,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
+            // DELETE CONFIRMATION SWAL
+            Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't able to remove this.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "red",
+                    confirmButtonText: "Yes, remove it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: BASE_API + 'destroy/' + id,
+                            method: "DELETE",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
 
-                success: function(data){
-                    $('#id_delete').val(data.id);
-                    $('#title_delete').html(data.title);
-                    $('#description_delete').html(data.description);
+                            success: function(data){
+                                notification('error', '{{ $page_title }}')
+                                refresh()
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                            }
+                        // ajax closing tag
+                        })
+                    }
+            });
+            // END OF DELETE CONFIRMATION SWAL
 
-                    $('#deactivateModal').modal('show');
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            // ajax closing tag
-            })
         });
         // END OF DEACTIVATE FUNCTION
 
@@ -247,13 +259,14 @@
                 },
 
                 success: function(data){
+                    notification("error", "Designation")
                     refresh()
                     $('#deactivateModal').modal('hide');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })

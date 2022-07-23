@@ -22,15 +22,15 @@ class CreateActivitiesTable extends Migration
             $table->foreignUuid('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->string('title');
-            $table->string('memorandum_file_directory');
+            $table->string('memorandum_file_directory')->nullable();
             $table->string('location');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->string('status');
             $table->dateTime('start_datetime');
             $table->dateTime('end_datetime');
 
             //Addditional column
-            $table->boolean('is_required');
+            $table->boolean('is_required')->nullable();
 
             $table->foreignUuid('activity_type_id')->nullable();
             $table->foreign('activity_type_id')->references('id')->on('activity_types');

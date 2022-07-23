@@ -11,14 +11,22 @@
 @endsection
 
 @section('section_header')
+<div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
+    @include('acad_head/activity_view/activity_view_breadcrumbs')
+</div>
 @endsection
+
+{{-- MODAL --}}
+@include('acad_head/activity_view/activity_view_modal')
 
     {{-- CONTENT --}}
     @section('content')
-
-            {{-- FORM --}}
+        
+            {{-- MAIN CONTENT --}}
             @include('acad_head/activity_view/activity_view_content')
+            &nbsp;
+            @include('acad_head/activity_view/required_faculty_list_view_datatable')
 
     @endsection
 

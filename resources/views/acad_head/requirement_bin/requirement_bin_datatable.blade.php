@@ -16,15 +16,15 @@
                         </div>
                     </div>
 
-                    <table class="table table-sm" id="dataTable" style="width:100%">
+                    <table class="table table-hover table-sm" id="dataTable" style="width:100%">
                         <thead>
-                            <tr>
+                            <tr class="bg-primary text-light">
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Title</th>
-                                <th>Requirements</th>
-                                <th>Deadline</th>
-                                <th>Action</th>
+                                <th width="25%">Title</th>
+                                <th width="35%">Requirements</th>
+                                <th width="20%">Deadline</th>
+                                <th width="10%" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>

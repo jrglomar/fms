@@ -33,6 +33,10 @@ class RequirementBin extends Model
             {
                 return $this->hasMany(RequirementListType::class)->without('requirement_bin');;
             }
+
+            public function requirement_bin_required_faculty_lists(){
+                return $this->hasMany(RequirementRequiredFacultyList::class)->without('requirement_bin');;
+            }
         // End of [Declare relationships here]
 
         // [Default relationship]       - Default

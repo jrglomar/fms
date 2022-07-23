@@ -22,9 +22,10 @@ class SubmittedRequirement extends Model
                 "date_submitted",
                 "remarks",
                 "status",
+                "file_name",
                 "file_link",
                 "file_link_directory",
-                "submitted_requirement_folder_id"
+                "rr_faculty_list_id"
             ];
 
         protected $dates = ['deleted_at'];
@@ -32,8 +33,8 @@ class SubmittedRequirement extends Model
         // protected $with = ['users','created_by_user','updated_by_user'];
 
         // [Declare relationships here]
-            public function submitted_requirement_folder(){
-                return $this->belongsTo(SubmittedRequirementFolder::class)->withDefault();
+            public function rr_faculty_lists(){
+                return $this->belongsTo(RequirementRequiredFacultyList::class)->withDefault();
             }
         // End of [Declare relationships here]
 
@@ -48,7 +49,7 @@ class SubmittedRequirement extends Model
             return $this->belongsTo(User::class,'updated_by');
         }
 
-        protected $with = ['submitted_requirement_folder','created_by_user','updated_by_user'];
+        protected $with = ['rr_faculty_lists','created_by_user','updated_by_user'];
 
         // [Added for UUID Incrementation]      - Default
         public $incrementing = false;

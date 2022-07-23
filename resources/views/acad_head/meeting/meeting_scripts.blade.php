@@ -1,7 +1,6 @@
 
 <script>
     $(document).ready(function(){
-
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
@@ -12,6 +11,31 @@
 
         var USER_ROLE = JSON.parse(USER_DATA)
         // END OF GLOBAL VARIABLE
+
+        // PAST DATE RESTRICTION ON INPUT="DATE"
+            // To set the minimum of date picker.....
+            FilterPastDate = () =>
+            {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+                
+                if (dd < 10) {
+                dd = '0' + dd;
+                }
+                
+                if (mm < 10) {
+                mm = '0' + mm;
+                } 
+                    
+                today = yyyy + '-' + mm + '-' + dd;
+                document.getElementById("date").setAttribute("min", today); // "min" or "max"
+                document.getElementById("date_edit").setAttribute("min", today); // "min" or "max"
+                // document.getElementById("date").setAttribute("max", today); // "min" or "max"
+            }
+            FilterPastDate()
+        // END PAST DATE RESTRICTION ON INPUT="DATE"
 
         // DATA TABLES FUNCTION
         function dataTable(){
@@ -30,7 +54,10 @@
                     { data: "start_time", render: function(data, type, row){
                         console.log("0000-00-00 "+data)
                         console.log(row.date)
-                        return `${moment(row.date).format('LL')} <br> ${moment("2022-06-27 "+data).format('LT')} - ${moment("2022-06-27 "+row.end_time).format('LT')}`
+                        
+                        return `<span class="badge badge-info">${moment(row.date).format('LL')}, 
+                            ${moment("2022-06-27 "+data).format('LT')} - ${moment("2022-06-27 "+row.end_time).format('LT')
+                            }</span>`
                     }}, // merge date (to be add), start_time, end_time
                     { data: "is_required", render: function (data, type, row) { // required
                           console.log(data)
@@ -46,19 +73,35 @@
                     },
                     { data: "status"},
                     { data: "deleted_at", render: function(data, type, row){    
-                                if (data == null){
-                                    return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
-                                        <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View Meeting</div></div>
-                                        <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit Meeting</div></div>
-                                            <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete Meeting</div></div></div></div>`;
+                                if (data == null)
+                                {
+                                    if(row.status == "Done" || row.status == "done" || row.status == "On Going")
+                                    {
+                                        return `<div class="text-center dropdown">
+                                                    <div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
+                                                            <div style="width: 2rem"><i class="fas fa-eye"></i></div>
+                                                            <div>View</div>
+                                                        </div>
+                                                    </div>
+                                                </div>`;
+                                    }
+                                    else
+                                    {
+                                        return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
+                                                <div style="width: 2rem"><i class="fas fa-eye"></i></div>
+                                                <div>View</div></div>
+                                                <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
+                                                <div style="width: 2rem"><i class="fas fa-edit"></i></div>
+                                                <div>Edit</div></div>
+                                                <div class="dropdown-divider"</div></div>
+                                                <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
+                                                <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
+                                                <div style="color: red">Delete</div>`;
+                                    }
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -66,7 +109,7 @@
                             }
                         }
                     ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 3, 4, 5, 7, 8] }],
                 "order": [[1, "desc"]]
                 })
         }
@@ -107,7 +150,14 @@
                     });
                     
                 },
-                error: function ({ responseJSON }) {},
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                },
             });
         };
 
@@ -131,83 +181,57 @@
             var endTime = $('#end_time').val();
 
             console.log(startTime);
-            console.log(endTime);
+            console.log(endTime);   
+            var meeting_type = $("#meeting_types_id").val()
 
-            if(endTime < startTime)
-            {
-                alert("The meeting End Time is Less than to your Start Time. Please pick time properly")
-            }
-            else
-            {
-                // ajax opening tag
-                $.ajax({
-                    url: form_url,
-                    method: "POST",
-                    data: JSON.stringify(data),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        "Content-Type": "application/json"
-                    },
-                    success: function(data){
-                        console.log(data)
-                        $("#createForm").trigger("reset")
-                        $("#create_card").collapse("hide")
-                        refresh();
-                    },
-                    error: function(error){
-                        console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
-                // ajax closing tag
-                })
-            }
+                if(endTime < startTime)
+                {
+                    swalAlert('warning', "The meeting End Time is less than Start Time. Please pick time properly")
+                }
+                else if (endTime == startTime)
+                {
+                    swalAlert('warning', "The meeting End Time and Start Time appears to be the same. Please pick time properly")
+                }
+                else if(endTime > startTime)
+                {
+                    // ajax opening tag
+                    $.ajax({
+                        url: form_url,
+                        method: "POST",
+                        data: JSON.stringify(data),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+                        success: function(data){
+                            console.log(data);
+                            notification("success", "Meeting");
+                            $("#createForm").trigger("reset");
+                            $("#create_card").collapse("hide");
+                            $('.select2').val('').trigger("change");
+                            refresh();
+                        },
+                        error: function(error){
+                            $.each(error.responseJSON.errors, function(key,value) {
+                                swalAlert('warning', value)
+                            });
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        }
+                    // ajax closing tag
+                    })
+                }
+            // }
         });
         // END OF SUBMIT FUNCTION
 
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var meeting_id = this.id;
-            window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id);
-
-            // $.ajax({
-            //     url: form_url,
-            //     method: "GET",
-            //     headers: {
-            //         "Accept": "application/json",
-            //         "Authorization": API_TOKEN,
-            //         "Content-Type": "application/json"
-            //     },
-
-            //     success: function(data){
-            //         let created_at = moment(data.created_at).format('LLL');
-            //         let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
-
-            //         $('#id_view').html(data.id);
-            //         $('#title_view').html(data.title);
-            //         $('#meeting_types_id_view').html(data.meeting_type.title);
-            //         $('#agenda_view').html(data.agenda);
-            //         $('#description_view').html(data.description);
-            //         $('#start_time_view').html(data.start_time);
-            //         $('#end_time_view').html(data.end_time);
-            //         if(data.is_required == 0) // true
-            //         {
-            //             data.is_required = "No"
-            //         }
-            //         else
-            //         {
-            //             data.is_required = "Yes"
-            //         }
-            //         $('#is_required_view').html(data.is_required);
-            //         $('#status_view').html(data.status);
-            //         $('#created_at_view').html(created_at);
-
-            //         $('#viewModal').modal('show');
-            //     }
-            // // ajax closing tag
-            // })
+            setInterval(window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id), 1500);
         });
         // END OF VIEW FUNCTION
 
@@ -215,7 +239,7 @@
         $(document).on("click", ".btnEdit", function(){
             var id = this.id;
             let form_url = BASE_API+id
-
+            
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -227,7 +251,7 @@
                 success: function(data){
                     $('#id_edit').val(data.id);
                     $('#title_edit').val(data.title);
-                    $('#meeting_types_id_edit').val(data.meeting_types_id);
+                    $('#meeting_type_id_edit').val(data.meeting_types_id);
                     $('#agenda_edit').val(data.agenda);
                     $('#location_edit').val(data.location);
                     $('#description_edit').val(data.description);
@@ -239,6 +263,9 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -251,54 +278,64 @@
         // UPDATE FUNCTION
         $('#updateForm').on('submit', function(e){
             e.preventDefault()
-            var id = $('#id_edit').val();
-            var form_url = BASE_API+id
-
-            let data = {
-                "title": $('#title_edit').val(),
-                "meeting_types_id": $('#meeting_types_id_edit').val(),
-                "description": $('#description_edit').val(),
-                "agenda": $('#agenda_edit').val(),
-                "location": $('#location_edit').val(),
-                "date": $('#date_edit').val(),
-                "start_time": $('#start_time_edit').val(),
-                "end_time": $('#end_time_edit').val(),
-                "is_required": $('#is_required_edit').val(),
-                "status": $('#status_edit').val(),
-            }
-
-            $.ajax({
-                url: form_url,
-                method: "PUT",
-                data: JSON.stringify(data),
-                dataType: "JSON",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-
-                success: function(data){
-                    refresh()
-                    $('#editModal').modal('hide');
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+            if ($(this).parsley().isValid()) 
+            {
+                var id = $('#id_edit').val();
+                var form_url = BASE_API+id
+                
+                let data = {
+                    "title": $('#title_edit').val(),
+                    "meeting_type_id": $('#meeting_type_id_edit').val(),
+                    "description": $('#description_edit').val(),
+                    "agenda": $('#agenda_edit').val(),
+                    "location": $('#location_edit').val(),
+                    "date": $('#date_edit').val(),
+                    "start_time": $('#start_time_edit').val(),
+                    "end_time": $('#end_time_edit').val(),
+                    "is_required": $('#is_required_edit').val(),
+                    "status": $('#status_edit').val(),
                 }
-            // ajax closing tag
-            })
 
+                $.ajax({
+                    url: form_url,
+                    method: "PUT",
+                    data: JSON.stringify(data),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
 
+                    success: function(data){
+                        notification("info", "Meeting");
+                        refresh()
+                        $('#editModal').modal('hide');
+                    },
+                    error: function(error){
+                        $.each(error.responseJSON.errors, function(key,value) {
+                            swalAlert('warning', value)
+                        });
+                        console.log(error)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                // ajax closing tag
+                })
+            }
+            else
+            {
+                $('#updateForm').parsley().reset();
+                swalAlert('warning', "Please put a valid input!");
+            }
         });
         // END OF UPDATE FUNCTION
 
-        // DEACTIVATE FUNCTION
+        // DELETE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = BASE_API+id
-
+            let form_url = BASE_API + id
+            console.log(id)
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -309,21 +346,46 @@
                 },
 
                 success: function(data){
-                    $('#id_delete').val(data.id);
-                    $('#title_delete').html(data.title);
-                    $('#meeting_type_delete').html(data.meeting_types_id);
-                    $('#agenda_delete').html(data.agenda);
-                    $('#location_delete').html(data.location);
-                    $('#description_delete').html(data.description);
-                    $('#date_delete').html(data.date);
-                    $('#start_time_delete').html(data.start_time);
-                    $('#end_time_delete').html(data.end_time);
-                    $('#is_required_delete').html(data.is_required);
-                    $('#status_delete').html(data.status);
+                    console.log(data)
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't able to remove this.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes, remove it!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: BASE_API + 'destroy/' + data.id,
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
 
-                    $('#deactivateModal').modal('show');
+                                success: function(data){
+                                    notification('error', 'Meeting')
+                                    refresh();
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    });
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -331,7 +393,7 @@
             // ajax closing tag
             })
         });
-        // END OF DEACTIVATE FUNCTION
+        // END DELETE FUNCTION
 
         // DEACTIVATE SUBMIT FUNCTION
         $('#deactivateForm').on('submit', function(e){
@@ -349,10 +411,14 @@
                 },
 
                 success: function(data){
+                    notification("error", "Meeting")
                     refresh()
                     $('#deactivateModal').modal('hide');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)

@@ -1,5 +1,6 @@
     <div class="container">
-        <div class="navbar-bg"></div>
+        <div class="navbar-bg" 
+        style="background-image: url({{ URL::to('/images/designs/navbar_red.png') }});"></div>
 
             <nav class="navbar navbar-expand-lg main-navbar">
                 <form class="form-inline mr-auto">
@@ -150,13 +151,13 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="dropdown-title">Logged in 5 min ago</div>
-                            <a href="features-profile.html" class="dropdown-item has-icon">
+                            <a id="acadhead_profile_navbar" href="/acad_head/profile/{{ Auth::user()->id }}" class="dropdown-item has-icon">
                                 <i class="far fa-user"></i> Profile
                             </a>
-                            <a href="features-activities.html" class="dropdown-item has-icon">
+                            <a href="features-activities.html" class="dropdown-item has-icon" hidden>
                                 <i class="fas fa-bolt"></i> Activities
                             </a>
-                            <a href="features-settings.html" class="dropdown-item has-icon">
+                            <a href="features-settings.html" class="dropdown-item has-icon" hidden>
                                 <i class="fas fa-cog"></i> Settings
                             </a>
                             <div class="dropdown-divider"></div>

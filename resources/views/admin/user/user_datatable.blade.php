@@ -4,9 +4,13 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <h4 class="text-dark">List of Users</h4>
+                    {{-- <div class="card-header-action">
+                        <button id="uploadMultipleUser" class="btn btn-info" type="button" >Add Multiple Users <i
+                        class="fas fa-plus"></i></button>
+                    </div>&nbsp; --}}
                     <div class="card-header-action">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
-                        aria-expanded="false" aria-controls="create_card">New Users <i
+                        aria-expanded="false" aria-controls="create_card">New User <i
                         class="fas fa-plus"></i></button>
                     </div>
                 </div>
@@ -16,15 +20,15 @@
                         </div>
                     </div>
 
-                    <table class="table table-sm" id="dataTable" style="width:100%">
+                    <table class="table table-hover table-sm" id="dataTable" style="width:100%">
                         <thead>
-                            <tr>
+                            <tr class="bg-primary text-light">
                                 <th>ID</th>
                                 <th>Created at</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>

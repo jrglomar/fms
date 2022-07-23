@@ -11,11 +11,15 @@
 @endsection
 
 @section('section_header')
+<div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
+    @include('admin/profile/profile_breadcrumbs')
+</div>
 @endsection
 
     {{-- CONTENT --}}
     @section('content')
+        
 
             {{-- FORM --}}
             @include('admin/profile/profile_form')

@@ -20,20 +20,21 @@
                     { data: "id"},
                     { data: "created_at"},
                     { data: "title"},
+                    { data: "description"},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
                                     return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View Role Type</div></div>
+                                        <div>View</div></div>
                                         <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit Role Type</div></div>
+                                            <div>Edit</div></div>
                                             <div class="dropdown-divider"</div></div>
                                             <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete Role Type</div></div></div></div>`;
+                                            <div style="color: red">Delete</div></div></div></div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -85,14 +86,15 @@
                 },
                 success: function(data){
                     console.log(data)
+                    notification("success", "Role");
                     $("#createForm").trigger("reset")
                     $("#create_card").collapse("hide")
                     refresh();
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -150,9 +152,9 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -169,6 +171,7 @@
                 "title": $('#title_edit').val(),
                 "description": $('#description_edit').val()
             }
+            console.log(data)
 
             $.ajax({
                 url: form_url,
@@ -182,13 +185,14 @@
                 },
 
                 success: function(data){
+                    notification("info", "Role");
                     refresh()
                     $('#editModal').modal('hide');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -202,28 +206,39 @@
             var id = this.id;
             let form_url = BASE_API+id
 
-            $.ajax({
-                url: form_url,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
+            // DELETE CONFIRMATION SWAL
+            Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't able to remove this.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "red",
+                    confirmButtonText: "Yes, remove it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: BASE_API + 'destroy/' + id,
+                            method: "DELETE",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
 
-                success: function(data){
-                    $('#id_delete').val(data.id);
-                    $('#title_delete').html(data.title);
-
-                    $('#deactivateModal').modal('show');
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            // ajax closing tag
-            })
+                            success: function(data){
+                                notification('error', '{{ $page_title }}')
+                                refresh()
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                            }
+                        // ajax closing tag
+                        })
+                    }
+            });
+            // END OF DELETE CONFIRMATION SWAL
         });
         // END OF DEACTIVATE FUNCTION
 
@@ -243,13 +258,14 @@
                 },
 
                 success: function(data){
+                    notification("error", "Role")
                     refresh()
                     $('#deactivateModal').modal('hide');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })

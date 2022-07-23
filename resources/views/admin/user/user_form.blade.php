@@ -3,10 +3,10 @@
     <div class="col-md-12 collapse" id="create_card">
         <div class="card card-primary">
             <div class="card-header">
-                <h4 class="text-dark"> <span id="create_card_title">Create</span>{{ $page_title }}</h4>
+                <h4 class="text-dark"> <span id="create_card_title">Add</span> {{ $page_title }}</h4>
             </div>
 
-            <form id="createForm" class="needs-validation" novalidate="">
+            <form id="createForm" data-parsley-validate>
                 <div class="card-body">
                     <div class="row">
                         <div class="form-group col-md-12">

@@ -47,7 +47,7 @@ class User extends Authenticatable
 
         public function faculty()
         {
-            return $this->hasOne(Faculty::class)->without('user', 'created_by_user', 'updated_by_user', 'academic_rank', 'designation', 'faculty_type');;
+            return $this->hasOne(Faculty::class)->without('user', 'created_by_user', 'updated_by_user', 'academic_rank', 'designation', 'faculty_type');
         }
 
     /**

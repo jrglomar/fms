@@ -67,7 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => env('APP_TIMEZONE', 'Asia/Singapore'),
 
     /*
     |--------------------------------------------------------------------------
@@ -161,6 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        // ADDED LARAVEL PACKAGE -- https://github.com/yajra/laravel-datatables
         Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
@@ -230,6 +231,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        // ADDED LARAVEL PACKAGE -- https://github.com/yajra/laravel-datatables
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],

@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="viewForm" class="needs-validation" novalidate="">
+                <form id="viewForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12" hidden>
@@ -98,7 +98,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="updateForm" class="needs-validation" novalidate="">
+                <form id="updateForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12" hidden>
@@ -118,7 +118,7 @@
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="required-input">Meeting Type</label>
-                                <select class="form-control js-example-basic-single" id="meeting_types_id_edit" name="meeting_types_id_edit">
+                                <select class="form-control js-example-basic-single select2" id="meeting_types_id_edit" name="meeting_types_id_edit">
                                 </select>
                             </div>   
                             <div class="form-group col-md-12">
@@ -156,6 +156,7 @@
                                 <label class="required-input">Status</label>
                                 <select class="form-control js-example-basic-single" id="status_edit" name="status_edit">
                                     <option value="Pending">Pending</option>
+                                    <option value="On Going">On Going</option>
                                     <option value="Done">Done</option>
                                 </select>
                             </div>                                                                      
@@ -164,7 +165,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-success btnUpdate">Update changes</button>
+                <button type="submit" class="btn btn-success btnUpdate" id="update_btn">Update changes</button>
             </div>
                 </form>
         </div>
@@ -183,7 +184,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="deactivateForm" class="needs-validation" novalidate="">
+                <form id="deactivateForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
                             <div class="form-group col-md-12" hidden>

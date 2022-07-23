@@ -58,9 +58,24 @@ Start the local development server
         </thead>
         <tbody>
             <tr>
-                <td>admin@gmail.com</td>
+                <td>admin@pupqc.com</td>
                 <td>User01</td>
                 <td>Admin</td>
+            </tr>
+            <tr>
+                <td>acadhead@pupqc.com</td>
+                <td>User01</td>
+                <td>Academic Head</td>
+            </tr>
+            <tr>
+                <td>faculty@pupqc.com</td>
+                <td>User01</td>
+                <td>Faculty</td>
+            </tr>
+            <tr>
+                <td>faculty2@pupqc.com</td>
+                <td>User01</td>
+                <td>Faculty</td>
             </tr>
         </tbody>
     </table>

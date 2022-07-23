@@ -2,15 +2,15 @@
         <div class="main-sidebar sidebar-style-2">
                 <aside id="sidebar-wrapper">
                     <div class="sidebar-brand">
-                        <a href="index.html">PUPQCFMS</a>
+                        <a href="/faculty/dashboard">PUPQCFMS</a>
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
-                        <a href="index.html">FMS</a>
+                        <a href="/faculty/dashboard">FMS</a>
                     </div>
                     <div class="p-3 hide-sidebar-mini">
                         <div class="media">
                             <figure class="avatar mr-2 avatar">
-                                <!-- <img class="mr-3 rounded-circle" src="../../public/img/avatar/avatar-1.png" -->
+                                <img id="sidebar_icon" class="mr-3 rounded-circle" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png" alt="Avatar image"> 
                                     <!-- alt="Avatar image"> -->
                                 <i class="avatar-presence online"></i>
                             </figure>
@@ -22,22 +22,48 @@
                     </div>
                     <div class="sidebar-brand sidebar-brand-sm">
                         <figure class="avatar avatar">
-                            <!-- <img class=" rounded-circle" src="../../public/img/avatar/avatar-1.png" alt="Avatar image"> -->
+                            <img id="sidebar_icon2" class="mr-3 rounded-circle" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png"
+                                    alt="Avatar image">
+                            <i class="avatar-presence online"></i>
                             <i class="avatar-presence online"></i>
                         </figure>
                     </div>
 
                     <ul class="sidebar-menu">
                         <li class="menu-header">Dashboard</li>
-                        <li class=""><a class="nav-link" href="/faculty/dashboard"><i class="fas fa-th-large"></i>
+                        <li class="{{ Request::segment(2) == 'dashboard' ? 'active' : ''}}"><a class="nav-link" href="/faculty/dashboard"><i class="fas fa-th-large"></i>
                                 <span>Dashboard</span></a></li>
+
+                        <li class="{{ Request::segment(2) == 'profile' ? 'active' : ''}}" >
+                            <a class="nav-link" href="/faculty/profile/{{ Auth::user()->id }}">
+                        <i class="fas fa-user"></i><span>Profile</span></a></li>
+
+                            {{-- SRD MANAGEMENT --}}
+                            <li class="menu-header">SRD Management</li>
+                            <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 
+                                                    Request::segment(2) == 'requirement_bin' ||
+                                                    Request::segment(2) == 'requirement_list_type' 
+                                                    ? 'active' : ''}}">
+                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                    class="fas fa-book-reader"></i>
+                            <span>SRD</span></a>
+                            <ul class="dropdown-menu">
+                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                <li class="{{ Request::segment(2) == 'requirement_bin' || 
+                                                Request::segment(2) == 'requirement_list_type' 
+                                                
+                                                ? 'active' : ''}}">
+                                    <a class="nav-link" href="/faculty/requirement_bin">
+                                        <span>Requirement Bins</span></a>
+                                </li>
+                            </ul>
 
                             {{-- MEETING MANAGEMENT --}}
                             <li class="menu-header">Meeting Management</li>
                             <li class="dropdown {{ Request::segment(2) == 'meeting'
                                                 ? 'active' : ''}}">
                                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                                        class="fas fa-book-reader"></i>
+                                        class="fas fa-calendar"></i>
                                 <span>Meeting</span></a>
                                 <ul class="dropdown-menu">
                                     <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
@@ -46,22 +72,28 @@
                                             <span>Meetings</span></a>
                                     </li>
                                 </ul>
-                            </li>        
+                            </li>       
+                            
+                             {{-- ACTIVITY MANAGEMENT --}}
+                            <li class="menu-header">Activity Management</li>
+                            <li class="dropdown {{ Request::segment(2) == 'activity_type' || 
+                                                    Request::segment(2) == 'activity' ||
+                                                    Request::segment(2) == 'activity_view'
+                                                ? 'active' : ''}}">
+                                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                        class="fas fa-clipboard"></i>
+                                <span>Activity</span></a>
+                                <ul class="dropdown-menu">
+                                    <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                    <li class="{{ Request::segment(2) == 'activity' ||
+                                                Request::segment(2) == 'activity_view'
+                                    ? 'active' : ''}}">
+                                        <a class="nav-link" href="/faculty/activity">
+                                            <span>Activities</span></a>
+                                    </li>
+                                </ul>
+                            </li>
 
-                        <li class="menu-header">Account Management</li>
-                        <li class="dropdown {{ Request::segment(2) == 'role' ||
-                                                Request::segment(2) == 'user_role'
-                                            ? 'active' : ''}}">
-                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                                    class="fas fa-book-reader"></i>
-                                <span>Account</span></a>
-                            <ul class="dropdown-menu">
-                                <li class="{{ Request::segment(2) == 'profile' ? 'active' : ''}}" >
-                                    <a class="nav-link" href="/faculty/profile">
-                                        <span>Profile</span></a></li>
-                            </ul>
-
-                        </li>
                     </ul>
 
 

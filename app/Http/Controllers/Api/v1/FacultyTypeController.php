@@ -48,8 +48,7 @@ class FacultyTypeController extends Controller
     {
         //
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
+            'title' => 'required|unique:faculty_types,deleted_at'
         ]);
 
         return FacultyType::create($request->all());

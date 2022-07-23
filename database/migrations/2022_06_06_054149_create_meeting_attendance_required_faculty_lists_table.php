@@ -22,10 +22,10 @@ class CreateMeetingAttendanceRequiredFacultyListsTable extends Migration
             $table->foreignUuid('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade'); 
 
             // Fillables
-            $table->time('time_in');
-            $table->time('time_out');
+            $table->time('time_in')->nullable();;
+            $table->time('time_out')->nullable();;
             $table->string('attendance_status')->nullable();
-            $table->string('proof_of_attendance_file_directory')->nullable();
+            $table->longText('remarks')->nullable();
             $table->string('proof_of_attendance_file_link')->nullable();
 
             // Relationship sample

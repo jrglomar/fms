@@ -5,8 +5,45 @@
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
+        var IS_LOGGED_IN = "{{ Auth::check() }}"
         // END OF GLOBAL VARIABLE
 
+        console.log("{{ Auth::check() }}")
+
+        function checkLoggedIn(){
+            if(IS_LOGGED_IN == true){
+                let USER_DATA = localStorage.getItem("USER_DATA")
+                let new_user_data = (JSON.parse(USER_DATA))
+                console.log(new_user_data)
+
+                let role = []
+
+                $.each(new_user_data.user_role, function(i){
+                    role.push(new_user_data.user_role[i].role.title)
+                })
+            
+                if(role.includes('Admin')){
+                window.location.href = "/admin/dashboard"
+                }
+                else if(role.includes('Academic Head')){
+                    window.location.href = "/acad_head/dashboard"
+                }
+                else if(role.includes('Faculty')){
+                    window.location.href = "/faculty/dashboard"
+                }
+                else if(role.includes('Checker')){
+                    window.location.href = "/checker/dashboard"
+                }
+                else{
+                    window.location.href = "/"
+                }
+            }
+            else{
+                removeLoader()
+            }
+        }
+        // removeLoader()
+        checkLoggedIn()
 
         $('#loginForm').on('submit', function(e){
             e.preventDefault()
@@ -19,7 +56,6 @@
                 data[[this.name]] = this.value;
             })
 
-            console.log(JSON.stringify(data))
             // ajax opening tag
             $.ajax({
                 url: form_url,
@@ -40,25 +76,30 @@
                     $.each(data.user.user_role, function(i){
                         role.push(data.user.user_role[i].role.title)
                     })
-                    
-                    if(role.includes('Admin')){
-                        window.location.href = "/admin/dashboard"
-                    }
-                    else if(role.includes('Academic Head')){
-                        window.location.href = "/acad_head/dashboard"
-                    }
-                    else if(role.includes('Faculty')){
-                        window.location.href = "/faculty/dashboard"
-                    }
-                    else if(role.includes('Checker')){
-                        window.location.href = "/checker/dashboard"
-                    }
-                    else{
-                        window.location.href = "/"
-                    }
 
+                    notification('custom', 'Login Success')
+                    
+                    // toastr.success('Login Success')
+                    setInterval(function(){
+                        if(role.includes('Admin')){
+                        window.location.href = "/admin/dashboard"
+                        }
+                        else if(role.includes('Academic Head')){
+                            window.location.href = "/acad_head/dashboard"
+                        }
+                        else if(role.includes('Faculty')){
+                            window.location.href = "/faculty/dashboard"
+                        }
+                        else if(role.includes('Checker')){
+                            window.location.href = "/checker/dashboard"
+                        }
+                        else{
+                            window.location.href = "/"
+                        }
+                    }, 2000)
                 },
                 error: function(error){
+                    swalAlert('warning', error.responseJSON.message)
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -68,6 +109,7 @@
         })
 
     // END OF JQUERY FUNCTIONS
+    removeLoader()
     });
 </script>
 

@@ -11,7 +11,10 @@
 @endsection
 
 @section('section_header')
+<div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
+    @include('admin/activity_type/activity_type_breadcrumbs')
+</div>
 @endsection
 
     {{-- MODAL --}}
@@ -19,7 +22,7 @@
 
     {{-- CONTENT --}}
     @section('content')
-
+        
             {{-- FORM --}}
             @include('admin/activity_type/activity_type_form')
 

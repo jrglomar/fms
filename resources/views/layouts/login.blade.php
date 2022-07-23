@@ -31,10 +31,20 @@
     <link rel="stylesheet" href="{{ asset('stisla/css/components.css') }}">
     <link rel="stylesheet" href="{{ asset('stisla/css/custom.css') }}">
 
+    <style>
+        #loading_cover {position: fixed; height: 100%; width: 100%; top:0; left: 0; background: rgb(255, 255, 255); z-index:9999;}
+    </style>
 
     <!-- Styles -->
 </head>
     <body>
+        <div id="loading_cover">
+            <div style="position: fixed; height:100%; width:100%; top:50%; left:50%">
+                <div class="spinner-border" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </div>
         <div>
 
                     <section class="section">
@@ -56,6 +66,7 @@
             crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <!-- Libraries -->
         <script src="{{ asset('vendors/parsley/js/parsley.min.js') }}"></script>
@@ -70,6 +81,8 @@
         <script src="{{ asset('stisla/js/custom.js') }}"></script>
 
         <script src="{{ mix('js/app.js') }}"></script>
+
+        @include('layouts/global_custom_scripts')
 
         <!-- Scripts -->
         @yield('script')

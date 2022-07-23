@@ -37,8 +37,7 @@
                         return requirement_list_type;
                     }},
                     { data: "deadline", render: function(data, type, row){
-                        console.log(data)
-                        return `${moment(data).format('LLL')}`
+                        return `<span class="badge badge-info">${moment(data).format('LLL')}</span>`
                     }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
@@ -107,30 +106,40 @@
             })
 
 
-            // ajax opening tag
-            $.ajax({
-                url: form_url,
-                method: "POST",
-                data: JSON.stringify(data),
-                dataType: "JSON",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-                success: function(data){
-                    console.log(data)
-                    $("#createForm").trigger("reset")
-                    $("#create_card").collapse("hide")
-                    refresh();
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            // ajax closing tag
-            })
+            console.log($('#deadline').val())
+            if($('#deadline').val() > "{{ date('Y-m-d 00:00:00'); }}" ){
+                // ajax opening tag
+                $.ajax({
+                    url: form_url,
+                    method: "POST",
+                    data: JSON.stringify(data),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        notification('success', 'Requirement Bin')
+                        $("#createForm").trigger("reset")
+                        $("#create_card").collapse("hide")
+                        refresh();
+                    },
+                    error: function(error){
+                        $.each(error.responseJSON.errors, function(key,value) {
+                            swalAlert('warning', value)
+                        });
+                        console.log(error)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                // ajax closing tag
+                })
+            }
+            else{
+                swalAlert('warning', 'Invalid deadline')
+            }
+            
         });
         // END OF SUBMIT FUNCTION
 
@@ -191,6 +200,9 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -224,10 +236,14 @@
                 },
 
                 success: function(data){
+                    notification('info', 'Requirement Bin')
                     refresh()
                     $('#editModal').modal('hide');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -239,11 +255,11 @@
         });
         // END OF UPDATE FUNCTION
 
-        // DEACTIVATE FUNCTION
+        // DELETE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = BASE_API+id
-
+            let form_url = BASE_API + id
+            console.log(id)
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -254,14 +270,46 @@
                 },
 
                 success: function(data){
-                    $('#id_delete').val(data.id);
-                    $('#title_delete').html(data.title);
-                    $('#description_delete').html(data.description);
-                    $('#deadline_delete').html(data.deadline);
+                    console.log(data)
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't able to remove this.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes, remove it!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: BASE_API + 'destroy/' + data.id,
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
 
-                    $('#deactivateModal').modal('show');
+                                success: function(data){
+                                    notification('error', 'Requirement Bin')
+                                    refresh();
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    });
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -269,7 +317,7 @@
             // ajax closing tag
             })
         });
-        // END OF DEACTIVATE FUNCTION
+        // END DELETE FUNCTION
 
         // DEACTIVATE SUBMIT FUNCTION
         $('#deactivateForm').on('submit', function(e){
@@ -287,10 +335,14 @@
                 },
 
                 success: function(data){
+                    notification('error', 'Requirement Bin')
                     refresh()
                     $('#deactivateModal').modal('hide');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)

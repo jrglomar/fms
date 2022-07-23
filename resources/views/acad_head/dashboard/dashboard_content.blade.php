@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+.breadcrumb-item+.breadcrumb-item::before {
+    content: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjgiPjxwYXRoIGQ9Ik0yLjUgMEwxIDEuNSAzLjUgNCAxIDYuNSAyLjUgOGw0LTQtNC00eiIgZmlsbD0iY3VycmVudENvbG9yIi8+PC9zdmc+);
+}
+</style>
 
       <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6 col-12">

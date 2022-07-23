@@ -58,7 +58,7 @@ class ActivityController extends Controller
         $data = array();
 
         $validator = $request->validate([
-            'file' => 'required|mimes:pdf'
+            'file' => 'required|mimes:pdf,jpg,jpeg,png'
         ]);
 
             $data['success'] = 1;
@@ -80,7 +80,7 @@ class ActivityController extends Controller
         $data = array();
 
         $validator = $request->validate([
-            'file' => 'required|mimes:pdf'
+            'file' => 'required|mimes:pdf,jpg,jpeg,png'
         ]);
 
             $data['success'] = 1;
@@ -98,6 +98,8 @@ class ActivityController extends Controller
                 $data['message'] = "old memo deleted";
             }else{
                 $data['message'] = "old memo doesnt exist";
+                $data['path'] = 'uploads/memorandum/'.$unique_name.'.'.$extension;
+                $file->move('uploads/memorandum/', $unique_name.'.'.$extension);
             }
 
         return $data;
@@ -112,7 +114,7 @@ class ActivityController extends Controller
     public function show($id)
     {
         //
-         return Activity::with('activity_type')->find($id);
+         return Activity::with('activity_type', 'created_by_user')->find($id);
 
         //return Activity::with('user', 'created_by_user')->find($id);
     }
@@ -168,5 +170,16 @@ class ActivityController extends Controller
     {
 
         return Activity::where('email', 'like', '%'.$title.'%')->get();
+    }
+
+    public function get_required_activity($faculty_id)
+    {
+        $activity = Activity::select("*")
+        ->join("activity_attendance_required_faculty_lists", "activity_attendance_required_faculty_lists.activity_id", "=", "activities.id")
+        ->where('faculty_id', $faculty_id)
+        ->get();
+
+        return $activity;
+
     }
 }

@@ -24,6 +24,11 @@
     <link rel="stylesheet" href="{{ asset('vendors/select2/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/datatable/css/datatables.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendors/parsley/css/custom-parsley.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/xbs-enjoyhint/enjoyhint.css') }}">
+    {{-- <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/dropzonejs/dropzone.css"> --}}
+    <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+
+    
 
     <!-- Template CSS -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700,800" rel="stylesheet">
@@ -73,10 +78,10 @@
                 @yield('footer')
         </div>
 
+
         <!-- General JS Scripts -->
-        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
@@ -93,62 +98,31 @@
         <script src="{{ asset('vendors/jquery-cookie/jquery-cookie.js') }}"></script>
         <script src="{{ asset('vendors/select2/js/select2.min.js') }}"></script>
         <script src="{{ asset('vendors/datatable/js/datatables.min.js') }}"></script>
+        {{-- <script src="https://demo.getstisla.com/assets/modules/dropzonejs/min/dropzone.min.js"></script> --}}
+        <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+        {{-- <script src="https://demo.getstisla.com/assets/js/page/components-multiple-upload.js"></script> --}}
+        <!-- get jQuery from somewhere; personally, I like the Google CDN: -->
+
+            
+        <!-- From external libraries -->
+        {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/kineticjs/5.2.0/kinetic.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+        
+        <script src="{{ asset('vendors/xbs-enjoyhint/enjoyhint.js') }}"></script>
+        <script src="{{ asset('vendors/xbs-enjoyhint/enjoyhint.min.js') }}"></script>
+        
 
         <!-- Template JS File -->
         <script src="{{ asset('stisla/js/stisla.js') }}"></script>
         <script src="{{ asset('stisla/js/scripts.js') }}"></script>
         <script src="{{ asset('stisla/js/custom.js') }}"></script>
 
+        
         <script src="{{ mix('js/app.js') }}"></script>
 
-        <script>
-            function removeLoader(){
-                    $("#loading_cover").fadeOut();
-            };
-
-            function swalAlert(icon, text){
-                Swal.fire({
-                    icon: icon,
-                    text: text
-                })
-            }
-
-            $(document).ready(function(){
-                // GLOBAL VARIABLE
-                var APP_URL = {!! json_encode(url('/')) !!}
-                var API_TOKEN = localStorage.getItem("API_TOKEN")
-                var USER_DATA = localStorage.getItem("USER_DATA")
-                let new_user_data = (JSON.parse(USER_DATA))
-                let middle_name = ''
-                let user_role = ''
-
-                if(new_user_data.faculty == null){
-                    $('#userNameSidebar').html('Not set')
-                    $('#userRoleSidebar').html('Not set')
-                    $('#userNameNavbar').html('Not set')
-                }
-                else{
-      
-                    if(new_user_data.faculty.middle_name == null){
-                        middle_name = ''
-                    }
-
-                    $('#userNameSidebar').html(new_user_data.faculty.first_name + ' ' + middle_name + ' ' + new_user_data.faculty.last_name)
-                    $.each(new_user_data.user_role, function(i){
-                        if(i < (new_user_data.user_role.length) - 1){
-                            user_role += new_user_data.user_role[i].role.title + ', '
-                        }
-                        else{
-                            user_role += new_user_data.user_role[i].role.title
-                        }
-                    })
-                    $('#userRoleSidebar').html(user_role)
-                    $('#userNameNavbar').html(new_user_data.faculty.first_name)
-                }
-            })
-        </script>
+        @include('layouts/global_custom_scripts')
         
-
         <!-- Scripts -->
         @yield('script')
     </body>

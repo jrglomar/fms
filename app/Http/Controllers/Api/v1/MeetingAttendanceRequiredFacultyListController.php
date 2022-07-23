@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 
 use App\Models\MeetingAttendanceRequiredFacultyList;
+use App\Models\Faculty;
 use Illuminate\Http\Request;
 
 class MeetingAttendanceRequiredFacultyListController extends Controller
@@ -36,10 +37,9 @@ class MeetingAttendanceRequiredFacultyListController extends Controller
     public function create()
     {
         $request->validate([
-            'title' => 'required',
             'time_in' => 'required',
             'time_out' => 'required',
-            'proof_of_attendance_file_directory' => 'required',
+            'attendance_status' => 'required',
             'proof_of_attendance_file_link' => 'required',
             'faculty_id' => 'required',
             "meeting_id" => 'required'
@@ -57,13 +57,12 @@ class MeetingAttendanceRequiredFacultyListController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'time_in' => 'required',
-            'time_out' => 'required',
-            'proof_of_attendance_file_directory' => 'required',
-            'proof_of_attendance_file_link' => 'required',
+            'time_in',
+            'time_out',
+            'attendance_status',
+            'proof_of_attendance_file_link',
             'faculty_id' => 'required',
-            "meeting_id" => 'required'
+            'meeting_id' => 'required'
         ]);
 
         return MeetingAttendanceRequiredFacultyList::create($request->all());
@@ -137,10 +136,39 @@ class MeetingAttendanceRequiredFacultyListController extends Controller
         return $meeting_attendance_required_faculty_lists;
     }
 
-    public function search($title)
+    public function search($meeting_id)
     {
 
-        return MeetingAttendanceRequiredFacultyList::where('title', 'like', '%'.$title.'%')->get();
+        return MeetingAttendanceRequiredFacultyList::where('meeting_id', 'like', '%'.$meeting_id.'%')->get();
+    }
+
+    public function multi_insert(Request $request)
+    {
+
+        $data = $request->all();
+
+        for($i=0; $i < count($data); $i++) {
+            MeetingAttendanceRequiredFacultyList::create($data[$i]);
+        }
+
+        return [
+            'message' => 'Multiple Insert Success.'
+        ];
+        
+    }
+
+    public function search_specific_meeting_and_faculty($meeting_id, $faculty_id)
+    {
+        return MeetingAttendanceRequiredFacultyList::where('meeting_id', 'like', '%'.$meeting_id.'%')
+        ->where('faculty_id', 'like', '%'.$faculty_id.'%')
+        ->get();
+    }
+    public function faculty_list_time_out_null($meeting_id)
+    {
+        return MeetingAttendanceRequiredFacultyList::where('meeting_id', 'like', '%'.$meeting_id.'%')
+        ->whereNull('time_out')
+        ->whereNull('attendance_status')
+        ->get();
     }
 
 }

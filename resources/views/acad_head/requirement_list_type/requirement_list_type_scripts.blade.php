@@ -14,6 +14,7 @@
         let R_BIN_ID = "{{ $requirement_bin_id }}"
         // END OF GLOBAL VARIABLE
 
+
         // FUNCTION TO CHANGE PAGE HEADER/TITLE
         function getRequirementBinDetails(){
             $.ajax({
@@ -34,7 +35,7 @@
                         let requiredDocumentTitle = responseData.requirement_list_type[i].requirement_type.title 
                         requiredDocumentList += `<li class="list-group-item d-flex justify-content-between align-items-center">
                                                     <span class="text-primary">${requiredDocumentTitle}</span>
-                                                    <button type="button" class="btn btn-danger btnDeactivate" id="${responseData.requirement_list_type[i].requirement_type.id}"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                                    <button type="button" class="btn btn-danger btnDeactivateRequiredDocument" id="${responseData.requirement_list_type[i].id}"><i class="fa fa-minus" aria-hidden="true"></i></button>
                                                 </li>`
                     })
 
@@ -46,7 +47,14 @@
                     // $("#deadline").html("Deadline: " + deadline);
                     $("#description").html(description);
                 },
-                error: function ({ responseJSON }) {},
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
             });
         };
 
@@ -112,11 +120,9 @@
                 success: function (responseData) 
                 {   
 
-                    console.log(responseData)
                     let html = ""
                     $.each(responseData, function (i, dataOptions) 
                     {
-                        console.log(responseData)
                         html +=
                             "<option value='" +
                             dataOptions.id +
@@ -124,7 +130,6 @@
                             dataOptions.title +
                             "</option>";
 
-                        
                     });
 
                     $("#requirement_type_id").html(html);
@@ -133,7 +138,14 @@
                     $("#requirement_type_id_edit2").html(html);
                     
                 },
-                error: function ({ responseJSON }) {},
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
             });
         };
 
@@ -183,11 +195,17 @@
                                 "Content-Type": "application/json"
                             },
                             success: function(data){
+                                notification('success', 'Required Document')
                                 $("#createForm").trigger("reset")
                                 $('#createRequiredDocumentModal').modal('hide')
-                                location.reload()
+                                setInterval(() => {
+                                    location.reload()
+                                }, 1000);
                             },
                             error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
                                 console.log(error)
                                 console.log(`message: ${error.responseJSON.message}`)
                                 console.log(`status: ${error.status}`)
@@ -197,10 +215,17 @@
                     }
                     else if (responseData.length > 0)
                     {
-                        alert('The Requirement List Type is already Exist!')
+                        swalAlert('custom', 'The required document is already added.')
                     }        
                 },
-                error: function ({ responseJSON }) {},
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
             });
         });
         // END OF SUBMIT FUNCTION
@@ -258,6 +283,9 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -290,10 +318,14 @@
                 },
 
                 success: function(data){
+                    notification('info', 'Required Document')
                     refresh()
                     $('#editModal').modal('hide');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -306,38 +338,67 @@
         // END OF UPDATE FUNCTION
 
         // DEACTIVATE FUNCTION
-        $(document).on("click", ".btnDeactivate", function(){
+        $(document).on("click", ".btnDeactivateRequiredDocument", function(){
             var id = this.id;
             let form_url = BASE_API + id
 
-            Swal.fire({
-                icon: 'warning',
-                text: 'This feature is still under development'
+            $.ajax({
+                url: form_url,
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    "Content-Type": "application/json"
+                },
+
+                success: function(data){
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't able to remove this.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes, remove it!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: BASE_API + 'destroy/' + data.id,
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+
+                                success: function(data){
+                                    notification('error', 'Required Document')
+                                    setInterval(() => {
+                                        location.reload()
+                                    }, 1000);
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    });
+                },
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
+            // ajax closing tag
             })
-
-            // $.ajax({
-            //     url: form_url,
-            //     method: "GET",
-            //     headers: {
-            //         "Accept": "application/json",
-            //         "Authorization": API_TOKEN,
-            //         "Content-Type": "application/json"
-            //     },
-
-            //     success: function(data){
-            //         $('#id_delete').val(data.id);
-            //         $('#requirement_bin_id_delete').html(data.requirement_bin_id);
-            //         $('#requirement_type_id_delete').html(data.requirement_type_id);
-
-            //         $('#deactivateModal').modal('show');
-            //     },
-            //     error: function(error){
-            //         console.log(error)
-            //         console.log(`message: ${error.responseJSON.message}`)
-            //         console.log(`status: ${error.status}`)
-            //     }
-            // // ajax closing tag
-            // })
         });
         // END OF DEACTIVATE FUNCTION
 
@@ -358,10 +419,14 @@
                 },
 
                 success: function(data){
+                    notification('error', 'Required Document')
                     refresh()
                     $('#deactivateModal').modal('hide');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)

@@ -36,9 +36,9 @@
                     // $('#faculty_type_id_edit').html(id_select)
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -72,9 +72,9 @@
                     // $('#role_id_edit').html(id_selet)
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -104,9 +104,9 @@
                     // $('#faculty_type_id_edit').html(id_select)
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -137,9 +137,9 @@
                     // $('#faculty_type_id_edit').html(id_select)
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -161,6 +161,8 @@
                 },
 
                 success: function(data){
+                    console.log('specific')
+                    console.log(data)
                     $('#email').val(data.email);
 
                     $.each(data.user_role, function(i){
@@ -182,7 +184,12 @@
                     }
 
                     // $("input[name=gender]").val(data.faculty.gender);
-                    $("input[name=gender][value=" + data.faculty.gender + "]").attr('checked', 'checked');
+                    $("input[name=gender][value=" + data.faculty.gender + "]").attr('checked', 'checked')
+
+                    if(data.faculty.image != null){
+                        $('#faculty_image').attr("src", APP_URL + "/" + data.faculty.image)
+                        console.log(APP_URL + "/" + data.faculty.image)
+                    }
 
                     $('#faculty_type_id').val(data.faculty.faculty_type_id);
                     $('#academic_rank_id').val(data.faculty.academic_rank_id);
@@ -207,9 +214,9 @@
                     removeLoader()
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -241,10 +248,9 @@
                     console.log('Update Success')
                 },
                 error: function(error){
-                    console.log(error)
-                    alert(error.status)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -266,6 +272,7 @@
             $.each(form, function(){
                 form_data[[this.name]] = this.value;
             })
+
 
 
             $.ajax({
@@ -291,13 +298,16 @@
                                 "Content-Type": "application/json"
                             },
                             success: function(data){
+                                notification('info', 'Faculty Details')
                                 console.log('Update Success')
-                                location.reload();
+                                setInterval(() => {
+                                    location.reload();
+                                }, 1500);
                             },
                             error: function(error){
-                                console.log(error)
-                                console.log(`message: ${error.responseJSON.message}`)
-                                console.log(`status: ${error.status}`)
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
                             }
                         // ajax closing tag
                         })
@@ -318,125 +328,160 @@
                                 "Content-Type": "application/json"
                             },
                             success: function(data){
+                                notification('success', 'Faculty Details')
                                 console.log('Create Success')
-                                location.reload();
+                                setInterval(() => {
+                                    location.reload();
+                                }, 1500);
                             },
                             error: function(error){
-                                console.log(error)
-                                console.log(`message: ${error.responseJSON.message}`)
-                                console.log(`status: ${error.status}`)
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
                             }
                         // ajax closing tag
                         })
                     }
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
         });
 
-        $('#uploadImage').on('click', function(){
-            swalAlert('warning', 'This feature is still under development')
+        $('#btnUploadImage').on('click', function(){
+            // swalAlert('warning', 'This feature is still under development')
+            $("#uploadImage").click();
         })
+
+        $("#uploadImage").on('change', function(){
+            let uploadImage = $('#uploadImage')[0].files[0]
+            let imgUrl = URL.createObjectURL(uploadImage)
+            $('#faculty_image').attr("src", imgUrl)
+        });
+        
 
         // FORM SUBMIT
         $('#updateUserForm').on('submit', function(e){
             e.preventDefault()
 
-            swalAlert('warning', 'This feature is still under development')
+            var uploadImage = $('#uploadImage')[0].files[0]
+            var Extension;
+            // var files = $('#memorandum_file_directory')[0].files[0]
+            console.log(uploadImage)
+            
 
-            var check_form_url = APP_URL+'/api/v1/faculty/check_user_exist/'+USER_ID;
-            var create_form_url = BASE_API
-            var update_form_url = BASE_API+FACULTY_ID
-
-            var form = $("#updateUserForm").serializeArray();
-            let form_data = {}
-            let role_id_input = [];
-
-            $("input[name='role_id_input[]']").each(function() {
-                if(this.checked == true){
-                    role_id_input.push($(this).val())
+            let role_id_input = $("input[name='role_id_input[]']:checked")
+              .map(function(){
+                return {
+                "role_id": $(this).val(),
+                "user_id": USER_ID
                 }
-            });
+            }).get();
 
-            $.each(form, function(){
-                form_data[[this.name]] = this.value;
+
+            let role_form_url = APP_URL + '/api/v1/user_role/multi_insert' 
+            console.log(role_id_input)
+
+            $.ajax({
+                    url: role_form_url,
+                    method: "POST",
+                    data: JSON.stringify(role_id_input),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        notification('info', 'User Role')
+                    },
+                    error: function(error){
+                        $.each(error.responseJSON.errors, function(key,value) {
+                            swalAlert('warning', value)
+                        });
+                    }
+                // ajax closing tag
             })
 
-            console.log(form_data)
 
-            // $.ajax({
-            //     url: check_form_url,
-            //     method: "GET",
-            //     headers: {
-            //         "Accept": "application/json",
-            //         "Authorization": API_TOKEN,
-            //         "Content-Type": "application/json"
-            //     },
-            //     success: function(data){
-            //         if(data == true){
-            //             // UPDATE FORM
-            //             console.log('update')
-            //             $.ajax({
-            //                 url: update_form_url,
-            //                 method: "PUT",
-            //                 data: JSON.stringify(form_data),
-            //                 dataType: "JSON",
-            //                 headers: {
-            //                     "Accept": "application/json",
-            //                     "Authorization": API_TOKEN,
-            //                     "Content-Type": "application/json"
-            //                 },
-            //                 success: function(data){
-            //                     console.log('Update Success')
-            //                     location.reload();
-            //                 },
-            //                 error: function(error){
-            //                     console.log(error)
-            //                     console.log(`message: ${error.responseJSON.message}`)
-            //                     console.log(`status: ${error.status}`)
-            //                 }
-            //             // ajax closing tag
-            //             })
-            //         }
-            //         else{
-            //             // CREATE FOR
-            //             console.log('create')
-            //             // ajax opening tag
-            //             $.ajax({
-            //                 url: create_form_url,
-            //                 method: "POST",
-            //                 data: JSON.stringify(form_data),
-            //                 dataType: "JSON",
-            //                 headers: {
-            //                     "Accept": "application/json",
-            //                     "Authorization": API_TOKEN,
-            //                     "Content-Type": "application/json"
-            //                 },
-            //                 success: function(data){
-            //                     console.log('Create Success')
-            //                     location.reload();
-            //                 },
-            //                 error: function(error){
-            //                     console.log(error)
-            //                     console.log(`message: ${error.responseJSON.message}`)
-            //                     console.log(`status: ${error.status}`)
-            //                 }
-            //             // ajax closing tag
-            //             })
-            //         }
-            //     },
-            //     error: function(error){
-            //         console.log(error)
-            //         console.log(`message: ${error.responseJSON.message}`)
-            //         console.log(`status: ${error.status}`)
-            //     }
-            // // ajax closing tag
-            // })
+            if (uploadImage != null){
+                Extension = uploadImage.name.substring(
+                uploadImage.name.lastIndexOf('.') + 1).toLowerCase();
+
+                let form_data = new FormData();
+                form_data.append('file', uploadImage)
+                console.log(form_data)
+
+                if (Extension == "png" || Extension == "jpeg" || Extension == "jpg") {
+                    if($('#uploadImage').val() == ''){
+                            swalAlert('warning', 'Please select an image')
+                    }
+                    else{
+                        let upload_form_url = BASE_API + 'faculty_image_upload'
+                        $.ajax({
+                                url: upload_form_url,
+                                method: "POST",
+                                data: form_data,
+                                dataType: "JSON",
+                                processData: false,
+                                contentType: false,
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                },
+                                success: function(data){
+                                    notification('success', 'Image Update Successfully')
+                                    
+                                    let update_data = {}
+                                    update_data['image'] = data.path
+                                    var update_form_url = BASE_API+FACULTY_ID
+                                    console.log(JSON.stringify(update_data))
+                                    console.log(JSON.stringify(update_form_url))
+
+                                    // UPDATE IMAGE PATH IN DB
+                                    $.ajax({
+                                        url: update_form_url,
+                                        method: "PUT",
+                                        data: JSON.stringify(update_data),
+                                        dataType: "JSON",
+                                        headers: {
+                                            "Accept": "application/json",
+                                            "Authorization": API_TOKEN,
+                                            "Content-Type": "application/json"
+                                        },
+                                        success: function(data){
+                                            // notification('info', 'Faculty Details')
+                                            setInterval(() => {
+                                                location.reload();
+                                            }, 1500);
+                                        },
+                                        error: function(error){
+                                            $.each(error.responseJSON.errors, function(key,value) {
+                                                swalAlert('warning', value)
+                                            });
+                                        }
+                                    // ajax closing tag
+                                    })
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                }
+                            // ajax closing tag
+                            })
+                    }
+                }
+                else{
+                    swalAlert('warning', 'Invalid file extension. File must be png, jpeg, jpg');
+                }
+            }
+            // END OF UPLOAD IMAGE
+
         });
 
         // CALL FUNCTION

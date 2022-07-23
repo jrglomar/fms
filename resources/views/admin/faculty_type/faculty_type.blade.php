@@ -11,7 +11,10 @@
 @endsection
 
 @section('section_header')
+<div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
+    @include('admin/faculty_type/faculty_type_breadcrumbs')
+</div>
 @endsection
 
     {{-- MODAL --}}
@@ -36,5 +39,6 @@
 
 
 @section('script')
+    @include('layouts/global_custom_scripts')
     @include('admin/faculty_type/faculty_type_scripts')
 @endsection

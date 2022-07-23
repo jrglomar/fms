@@ -10,7 +10,9 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 
 use App\Models\RequirementRequiredFacultyList;
+use App\Models\Faculty;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RequirementRequiredFacultyListController extends Controller
 {
@@ -133,4 +135,42 @@ class RequirementRequiredFacultyListController extends Controller
         // return RequirementRequiredFacultyList::where('id', 'like', '%'.$id.'%')->get();
         return RequirementRequiredFacultyList::where('requirement_bin_id', 'like', '%'.$id.'%')->get();
     }
+
+    public function multi_insert(Request $request)
+    {
+
+        $data = $request->all();
+
+        for($i=0; $i < count($data); $i++) {
+            RequirementRequiredFacultyList::create($data[$i]);
+        }
+
+        return [
+            'message' => 'Multiple Insert Success.'
+        ];
+        
+    }
+
+    // Get Faculties does not on specific meeting.
+    // public function get_unrequired_faculty($requirement_bin_id)
+    // {
+    //     $faculties_per_meeting = RequirementRequiredFacultyList::select("*")
+    //     // ->join("requirement_bins", "requirement_bins.requirement_bin_id", "=", "requirement_bins.id")
+    //     ->where('requirement_bin_id', "=", $requirement_bin_id)
+    //     ->get();
+
+    //     return $faculties_per_meeting;
+    // }
+
+    public function get_unrequired_faculty($requirement_bin_id)
+    {
+        $faculties_per_meeting = Faculty::select("*")
+        ->whereNotIn('faculties.id', RequirementRequiredFacultyList::select("requirement_required_faculty_lists.faculty_id")
+        ->rightJoin('faculties', 'faculties.id', '=', 'requirement_required_faculty_lists.faculty_id')
+        ->where('requirement_required_faculty_lists.requirement_bin_id', $requirement_bin_id))
+        ->get();
+
+        return $faculties_per_meeting;
+    }
+
 }

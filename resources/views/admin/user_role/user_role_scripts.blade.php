@@ -24,14 +24,14 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View Category</div></div>
+                                        <div>View</div></div>
                                         <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit Category</div></div>
+                                            <div>Edit</div></div>
                                             <div class="dropdown-divider"</div></div>
                                             <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete Category</div></div></div></div>`;
+                                            <div style="color: red">Delete</div></div></div></div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -76,9 +76,9 @@
                     $('#user_id_edit').html(user_id_select)
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -109,9 +109,9 @@
                     $('#role_id_edit').html(role_id_select)
                 },
                 error: function(error){
-                    console.log(error)
-                    // console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -143,15 +143,15 @@
                     "Content-Type": "application/json"
                 },
                 success: function(data){
-                    console.log(data)
+                    notification('success', 'User Role')
                     $("#createForm").trigger("reset")
                     $("#create_card").collapse("hide")
                     refresh();
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -215,9 +215,9 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -247,13 +247,14 @@
                 },
 
                 success: function(data){
+                    notification('info', 'User Role')
                     refresh()
                     $('#editModal').modal('hide');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -282,9 +283,9 @@
                     $('#deactivateModal').modal('show');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })
@@ -307,13 +308,14 @@
                 },
 
                 success: function(data){
+                    notification('error', 'User Role')
                     refresh()
                     $('#deactivateModal').modal('hide');
                 },
                 error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                 }
             // ajax closing tag
             })

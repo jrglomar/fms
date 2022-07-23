@@ -11,6 +11,7 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 
 use App\Models\Faculty;
+use App\Models\MeetingAttendanceRequiredFacultyList;
 use Illuminate\Http\Request;
 
 class FacultyController extends Controller
@@ -56,20 +57,42 @@ class FacultyController extends Controller
             'last_name' => 'required',
             'gender' => 'required',
             'birthdate' => 'required',
-            'birthplace' => 'required',
+            // 'birthplace' => 'required',
             'hire_date' => 'required',
-            'phone_number' => 'required',
-            'province' => 'required',
-            'city' => 'required',
-            'barangay' => 'required',
-            'street' => 'required',
+            // 'phone_number' => 'required',
+            // 'province' => 'required',
+            // 'city' => 'required',
+            // 'barangay' => 'required',
+            // 'street' => 'required',
             'house_number' => 'required',
             'user_id' => 'required',
             'academic_rank_id' => 'required',
             'faculty_type_id' => 'required',
+            'designation_id' => 'required',
         ]);
 
         return Faculty::create($request->all());
+    }
+
+    public function faculty_image_upload(Request $request){
+        $data = array();
+
+        $validator = $request->validate([
+            'file' => 'required|mimes:gif,svg,jpg,jpeg,png|max:2048'
+        ]);
+
+            $data['success'] = 1;
+            $file = $request->file('file');
+            $filename = $file->getClientOriginalName();
+
+            $unique_name = md5($filename . microtime());
+            $extension = $request->file('file')->extension();
+
+            $file->move('images/faculty_images/', $unique_name.'.'.$extension);
+
+            $data['path'] = 'images/faculty_images/'.$unique_name.'.'.$extension;
+
+        return $data;
     }
 
     /**
@@ -162,5 +185,15 @@ class FacultyController extends Controller
         return Faculty::where('email', 'like', '%'.$title.'%')->get();
     }
 
+    public function get_all_faculties_that_does_not_on_meeting($meeting_id)
+    {
+        $faculties_per_meeting = Faculty::select("*")
+        ->whereNotIn('faculties.id', MeetingAttendanceRequiredFacultyList::select("meeting_attendance_required_faculty_lists.faculty_id")
+        ->rightJoin('faculties', 'faculties.id', '=', 'meeting_attendance_required_faculty_lists.faculty_id')
+        ->where('meeting_attendance_required_faculty_lists.meeting_id', $meeting_id))
+        ->get();
+
+        return $faculties_per_meeting;
+    }
     
 }

@@ -35,6 +35,7 @@ class Faculty extends Model
                 'house_number',
                 'created_by',
                 'updated_by',
+                'image',
                 // FK
                 'user_id',
                 'academic_rank_id',
@@ -67,6 +68,21 @@ class Faculty extends Model
             {
                 return $this->belongsTo(Designation::class);
             }
+            
+            public function requirement_required_faculty_list()
+            {
+                return $this->hasMany(RequirementRequiredFacultyList::class)->without('faculty', 'created_by_user', 'updated_by_user', 'requirement_bin');
+            }
+
+            public function activity_attendance_required_faculty_list()
+            {
+                return $this->hasMany(ActivityAttendanceRequiredFacultyList::class)->without('faculty', 'created_by_user', 'updated_by_user', 'activity');
+            }
+
+            public function meeting_attendance_required_faculty_list()
+            {
+                return $this->hasMany(MeetingAttendanceRequiredFacultyList::class)->without('faculty', 'created_by_user', 'updated_by_user', 'meeting');
+            }
 
         // End of [Declare relationships here]
 
@@ -81,7 +97,9 @@ class Faculty extends Model
             return $this->belongsTo(User::class,'updated_by');
         }
 
-        protected $with = ['academic_rank', 'designation', 'faculty_type', 'user','created_by_user','updated_by_user'];
+        protected $with = ['academic_rank', 'designation', 'faculty_type', 'user', 
+        'created_by_user','updated_by_user', 'requirement_required_faculty_list',
+        'activity_attendance_required_faculty_list', 'meeting_attendance_required_faculty_list'];
 
 
         // [Added for UUID Incrementation]      - Default

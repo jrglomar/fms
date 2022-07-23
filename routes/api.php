@@ -17,6 +17,7 @@ use App\Http\Controllers\Api\v1\UserRoleController;
 use App\Http\Controllers\Api\v1\MeetingTypeController;
 use App\Http\Controllers\Api\v1\MeetingController;
 use App\Http\Controllers\Api\v1\MeetingAttendanceRequiredFacultyListController;
+use App\Http\Controllers\Api\v1\MeetingSubmittedProofOfAttendanceController;
 use App\Http\Controllers\Api\v1\RequirementBinController;
 use App\Http\Controllers\Api\v1\RequirementTypeController;
 use App\Http\Controllers\Api\v1\RequirementListTypeController;
@@ -27,6 +28,7 @@ use App\Http\Controllers\Api\v1\ObservationController;
 use App\Http\Controllers\Api\v1\ActivityTypeController;
 use App\Http\Controllers\Api\v1\ActivityController;
 use App\Http\Controllers\Api\v1\ActivityAttendanceRequiredFacultyListController;
+use App\Http\Controllers\Api\v1\ActivityAttendanceSubmittedFileController;
 use App\Http\Controllers\Api\v1\RoomController;
 use App\Http\Controllers\Api\v1\ClassScheduleController;
 
@@ -54,6 +56,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/user/{id}', [UserController::class, 'show']);
         Route::get('/user/search/{name}', [UserController::class, 'search']);
         Route::get('/user/show_soft_deleted/{all}', [UserController::class, 'show_soft_deleted']);
+        Route::get('/user/get_faculty_for_required_list/{role_id}', [UserController::class, 'get_faculty_for_required_list']); // FOR USER CONTROLLER
 
         // Faculty Type
         Route::get('/faculty_type', [FacultyTypeController::class, 'index']);
@@ -79,6 +82,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/faculty/search/{name}', [FacultyController::class, 'search']);
         Route::get('/faculty/show_soft_deleted/{all}', [FacultyController::class, 'show_soft_deleted']);
         Route::get('/faculty/check_user_exist/{id}', [FacultyController::class, 'check_user_exist']);
+        Route::get('/faculty/get_all_faculties_that_does_not_on_meeting/{meeting_id}', [FacultyController::class, 'get_all_faculties_that_does_not_on_meeting']); // 
 
         // Role
         Route::get('/role', [RoleController::class, 'index']);
@@ -103,18 +107,22 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/meeting/{id}', [MeetingController::class, 'show']);
         Route::get('/meeting/search/{name}', [MeetingController::class, 'search']);
         Route::get('/meeting/show_soft_deleted/{all}', [MeetingController::class, 'show_soft_deleted']);
+        Route::get('/meeting/get_specific_meeting_of_faculty/{faculty_id}', [MeetingController::class, 'get_specific_meeting_of_faculty']); // FOR FACULTY CONTROLLER
 
         // Meeting Attendance Required Faculty List
         Route::get('/meeting_attendance_required_faculty_list', [MeetingAttendanceRequiredFacultyListController::class, 'index']);
         Route::get('/meeting_attendance_required_faculty_list/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'show']);
         Route::get('/meeting_attendance_required_faculty_list/search/{name}', [MeetingAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/meeting_attendance_required_faculty_list/show_soft_deleted/{all}', [MeetingAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
+        Route::get('/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/{meeting_id}/{faculty_id}', [MeetingAttendanceRequiredFacultyListController::class, 'search_specific_meeting_and_faculty']); //
+        Route::get('/meeting_attendance_required_faculty_list/faculty_list_time_out_null/{meeting_id}', [MeetingAttendanceRequiredFacultyListController::class, 'faculty_list_time_out_null']); //
 
         // Requirement Bin
         Route::get('/requirement_bin', [RequirementBinController::class, 'index']);
         Route::get('/requirement_bin/{id}', [RequirementBinController::class, 'show']);
         Route::get('/requirement_bin/search/{title}', [RequirementBinController::class, 'search']);
         Route::get('/requirement_bin/show_soft_deleted/{all}', [RequirementBinController::class, 'show_soft_deleted']);
+        Route::get('/requirement_bin/get_required_requirement_bin/{id}', [RequirementBinController::class, 'get_required_requirement_bin']); // FOR FACULTY CONTROLLER
 
         // Requirement Type
         Route::get('/requirement_type', [RequirementTypeController::class, 'index']);
@@ -134,6 +142,13 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/requirement_required_faculty_list/{id}', [RequirementRequiredFacultyListController::class, 'show']);
         Route::get('/requirement_required_faculty_list/search/{title}', [RequirementRequiredFacultyListController::class, 'search']);
         Route::get('/requirement_required_faculty_list/show_soft_deleted/{all}', [RequirementRequiredFacultyListController::class, 'show_soft_deleted']);
+        Route::get('/requirement_required_faculty_list/get_unrequired_faculty/{id}', [RequirementRequiredFacultyListController::class, 'get_unrequired_faculty']);
+
+         // Submitted Requirements
+         Route::get('/meeting_submitted_proof', [MeetingSubmittedProofOfAttendanceController::class, 'index']);
+         Route::get('/meeting_submitted_proof/{id}', [MeetingSubmittedProofOfAttendanceController::class, 'show']);
+         Route::get('/meeting_submitted_proof/search/{title}', [MeetingSubmittedProofOfAttendanceController::class, 'search']);
+         Route::get('/meeting_submitted_proof/show_soft_deleted/{all}', [MeetingSubmittedProofOfAttendanceController::class, 'show_soft_deleted']);
 
         // Submitted Requirements Folder
         Route::get('/submitted_requirement_folder', [SubmittedRequirementFolderController::class, 'index']);
@@ -146,6 +161,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/submitted_requirement/{id}', [SubmittedRequirementController::class, 'show']);
         Route::get('/submitted_requirement/search/{title}', [SubmittedRequirementController::class, 'search']);
         Route::get('/submitted_requirement/show_soft_deleted/{all}', [SubmittedRequirementController::class, 'show_soft_deleted']);
+
         // Observations
         Route::get('/observation', [ObservationController::class, 'index']);
         Route::get('/observation/{id}', [ObservationController::class, 'show']);
@@ -163,24 +179,23 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/activity/{id}', [ActivityController::class, 'show']);
         Route::get('/activity/search/{name}', [ActivityController::class, 'search']);
         Route::get('/activity/show_soft_deleted/{all}', [ActivityController::class, 'show_soft_deleted']);
+        Route::get('/activity/get_required_activity/{id}', [ActivityController::class, 'get_required_activity']); // FOR FACULTY CONTROLLER
 
         // Activity Attendance
         Route::get('/activity_attendance', [ActivityAttendanceRequiredFacultyListController::class, 'index']);
+        Route::put('/activity_attendance/time-in-out/{id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'update']);
+        Route::put('/activity_attendance/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'update_status']);
         Route::get('/activity_attendance/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'show']);
-        Route::get('/activity_attendance/search/{name}', [ActivityAttendanceRequiredFacultyListController::class, 'search']);
+        Route::get('/activity_attendance/search/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/activity_attendance/show_soft_deleted/{all}', [ActivityAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
+        Route::get('/activity_attendance/unrequired_faculty/{activity_id}', [ActivityAttendanceRequiredFacultyListController::class, 'get_unrequired_faculty']);
 
-        // Room
-        Route::get('/room', [RoomController::class, 'index']);
-        Route::get('/room/{id}', [RoomController::class, 'show']);
-        Route::get('/room/search/{name}', [RoomController::class, 'search']);
-        Route::get('/room/show_soft_deleted/{all}', [RoomController::class, 'show_soft_deleted']);
+        // Activity Submitted Proof
+        Route::get('/activity_submitted_proof', [ActivityAttendanceSubmittedFileController::class, 'index']);
+         Route::get('/activity_submitted_proof/{id}', [ActivityAttendanceSubmittedFileController::class, 'show']);
+         Route::get('/activity_submitted_proof/search/{title}', [ActivityAttendanceSubmittedFileController::class, 'search']);
+         Route::get('/activity_submitted_proof/show_soft_deleted/{all}', [ActivityAttendanceSubmittedFileController::class, 'show_soft_deleted']);
 
-        // Class Schedule
-        Route::get('/class_schedule', [ClassScheduleController::class, 'index']);
-        Route::get('/class_schedule/{id}', [ClassScheduleController::class, 'show']);
-        Route::get('/class_schedule/search/{name}', [ClassScheduleController::class, 'search']);
-        Route::get('/class_schedule/show_soft_deleted/{all}', [ClassScheduleController::class, 'show_soft_deleted']);
     });
 
 
@@ -220,6 +235,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/faculty/{id}', [FacultyController::class, 'update']);
         Route::delete('/faculty/destroy/{id}', [FacultyController::class, 'destroy']);
         Route::put('/faculty/restore/{id}', [FacultyController::class, 'restore']);
+        Route::post('/faculty/faculty_image_upload', [FacultyController::class, 'faculty_image_upload']);
 
         // Role
         Route::post('/role', [RoleController::class, 'store']);
@@ -232,6 +248,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/user_role/{id}', [UserRoleController::class, 'update']);
         Route::delete('/user_role/destroy/{id}', [UserRoleController::class, 'destroy']);
         Route::put('/user_role/restore/{id}', [UserRoleController::class, 'restore']);
+        Route::post('/user_role/multi_insert', [UserRoleController::class, 'multi_insert']);
 
         // Meeting Type
         Route::post('/meeting_type', [MeetingTypeController::class, 'store']);
@@ -251,6 +268,23 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/meeting_attendance_required_faculty_list/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'update']);
         Route::delete('/meeting_attendance_required_faculty_list/destroy/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'destroy']);
         Route::put('/meeting_attendance_required_faculty_list/restore/{id}', [MeetingAttendanceRequiredFacultyListController::class, 'restore']);
+        Route::post('/meeting_attendance_required_faculty_list/multi_insert', [MeetingAttendanceRequiredFacultyListController::class, 'multi_insert']);
+
+        // Meeting Submitted Proof
+        Route::post('/meeting_submitted_proof', [MeetingSubmittedProofOfAttendanceController::class, 'store']);
+        Route::put('/meeting_submitted_proof/{id}', [MeetingSubmittedProofOfAttendanceController::class, 'update']);
+        Route::delete('/meeting_submitted_proof/destroy/{id}', [MeetingSubmittedProofOfAttendanceController::class, 'destroy']);
+        Route::put('/meeting_submitted_proof/restore/{id}', [MeetingSubmittedProofOfAttendanceController::class, 'restore']);
+        Route::post('/meeting_submitted_proof/file_uploads', [MeetingSubmittedProofOfAttendanceController::class, 'file_uploads']);
+        Route::post('/meeting_submitted_proof/multi_insert', [MeetingSubmittedProofOfAttendanceController::class, 'multi_insert']);
+
+        // Activity Submitted Proof
+        Route::post('/activity_submitted_proof', [ActivityAttendanceSubmittedFileController::class, 'store']);
+        Route::put('/activity_submitted_proof/{id}', [ActivityAttendanceSubmittedFileController::class, 'update']);
+        Route::delete('/activity_submitted_proof/destroy/{id}', [ActivityAttendanceSubmittedFileController::class, 'destroy']);
+        Route::put('/activity_submitted_proof/restore/{id}', [ActivityAttendanceSubmittedFileController::class, 'restore']);
+        Route::post('/activity_submitted_proof/file_uploads', [ActivityAttendanceSubmittedFileController::class, 'file_uploads']);
+        Route::post('/activity_submitted_proof/multi_insert', [ActivityAttendanceSubmittedFileController::class, 'multi_insert']);
         
         // Observation
         Route::post('/observation', [ObservationController::class, 'store']);
@@ -274,9 +308,10 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
         // Activity Attendance
         Route::post('/activity_attendance', [ActivityAttendanceRequiredFacultyListController::class, 'store']);
-        Route::put('/activity_attendance/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'update']);
         Route::delete('/activity_attendance/destroy/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'destroy']);
         Route::put('/activity_attendance/restore/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'restore']);
+        Route::post('/activity_attendance/multi_insert', [ActivityAttendanceRequiredFacultyListController::class, 'multi_insert']);
+
 
         // Room
         Route::post('/room', [RoomController::class, 'store']);
@@ -313,6 +348,7 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/requirement_required_faculty_list/{id}', [RequirementRequiredFacultyListController::class, 'update']);
         Route::delete('/requirement_required_faculty_list/destroy/{id}', [RequirementRequiredFacultyListController::class, 'destroy']);
         Route::put('/requirement_required_faculty_list/restore/{id}', [RequirementRequiredFacultyListController::class, 'restore']);
+        Route::post('/requirement_required_faculty_list/multi_insert', [RequirementRequiredFacultyListController::class, 'multi_insert']);
 
         // Submitted Requirements Folder
         Route::post('/submitted_requirement_folder', [SubmittedRequirementFolderController::class, 'store']);
@@ -324,6 +360,8 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::post('/submitted_requirement', [SubmittedRequirementController::class, 'store']);
         Route::put('/submitted_requirement/{id}', [SubmittedRequirementController::class, 'update']);
         Route::delete('/submitted_requirement/destroy/{id}', [SubmittedRequirementController::class, 'destroy']);
-        Route::put('/submitted_requirement/restore/{id}', [SubmittedRequirementController::class, 'restore']);;
-        });
+        Route::put('/submitted_requirement/restore/{id}', [SubmittedRequirementController::class, 'restore']);
+        Route::post('/submitted_requirement/file_uploads', [SubmittedRequirementController::class, 'file_uploads']);
+        Route::post('/submitted_requirement/multi_insert', [SubmittedRequirementController::class, 'multi_insert']);
+    });
 });

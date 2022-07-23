@@ -24,7 +24,7 @@
                     { data: "description"},
                     { data: "status"},
                     { data: "start_datetime", render: function(data, row){
-                        return `${moment(data).format('LLL')} - ${moment(row.end_datetime).format('LLL')}` 
+                        return `<span class="badge badge-info">${moment(data).format('LLL')} - ${moment(row.end_datetime).format('LLL')}</span>` 
                     }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
@@ -32,14 +32,14 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View activity type</div></div>
+                                        <div>View</div></div>
                                         <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit activity type</div></div>
+                                            <div>Edit</div></div>
                                             <div class="dropdown-divider"</div></div>
                                             <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
                                             <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete activity type</div></div></div></div>`;
+                                            <div style="color: red">Delete</div></div></div></div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -91,12 +91,12 @@
                 html = '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">Start time</label>' +
                             '<input type="datetime-local" class="form-control" id="start_datetime" name="start_datetime"' +
-                            'tabindex="1" required>' +
+                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:00:00"); }}" data-parsley-excluded="true">' +
                         '</div>' +
                         '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">End time</label>' +
                             '<input type="datetime-local" class="form-control" id="end_datetime" name="end_datetime"' +
-                            'tabindex="1" required>' +
+                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:01:00"); }}" data-parsley-excluded="true">' +
                         '</div>'
 
                 $('.additional-form').html(html);
@@ -111,12 +111,12 @@
                 html = '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">Start time</label>' +
                             '<input type="datetime-local" class="form-control" id="start_datetime_edit" name="start_datetime_edit"' +
-                            'tabindex="1" required>' +
+                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:01:00"); }}" required> data-parsley-excluded="true"' +
                         '</div>' +
                         '<div class="form-group col-md-6 additional-input">' +
                             '<label class="required-input">End time</label>' +
-                            '<input type="datetime-local" class="form-control" id="end_datetime_edit" name="end_datetime_edit"' +
-                            'tabindex="1" required>' +
+                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:01:00"); }}" data-parsley-excluded="true"' +
+                            'tabindex="1">' +
                         '</div>'
 
                 $('.additional-form-edit').html(html);
@@ -135,33 +135,109 @@
         // REFRESH DATATABLE FUNCTION
 
 
-        // SUBMIT FUNCTION
-        $('#createForm').on('submit', function(e){
-            e.preventDefault();
+        $("#memo_upload").dropzone({ 
+            url: BASE_API +'upload',
+            acceptedFiles: 'image/*, .pdf',
+            maxFiles: 1,
+            addRemoveLinks: true,
+            autoProcessQueue: false,
+            // renameFile: function (file) {
+            //     let file_name = file.name.substr(0, file.name.lastIndexOf('.')) || file.name;
+            //     file_name = file_name.replace(/[^a-z0-9\s]/gi, '').replace(/[_\s]/g, '-');
 
-            var fd = new FormData();
-            var files = $('#memorandum_file_directory')[0].files[0]
-            var form = $("#createForm").serializeArray();
-            let data = {}
+            //     ext = file.name.substring(file.name.lastIndexOf('.') + 1).toLowerCase();
 
-            fd.append('file', files)
+            //     return file_name + '_' + FACULTY_LAST_NAME + '_' + new Date().getTime() + '.' + ext;
+            // },
+            init: function () {
 
-            var form_url = BASE_API +'upload'
+                var myDropzone = this;
 
-            console.log(fd)
+                // Update selector to match your button
 
-            if (files == null){
+                $('#createForm').on('submit', function(e){
+
+                    e.preventDefault()
+
+                   // myDropzone.processQueue();
+
+                    if (myDropzone.getQueuedFiles().length === 0){
+
+                    form_url_no_memo = BASE_API
+
+                    let data_form = {
+                        "title": $('#title').val(),
+                        "description": $('#description').val(),
+                        "location": $('#location').val(),
+                        "start_datetime": $('#start_datetime').val(),
+                        "end_datetime": $('#end_datetime').val(),
+                        "activity_type_id": $('#activity_type_id').val(),
+                        "status": $('#status').val(),
+                        "is_required": $('#is_required').val(),
+                        "memorandum_file_directory": "NA"
+                    }
+
+                    console.log(data_form)
+                        if($('#start_datetime').val() > "{{ date('Y-m-d 00:00:00'); }}" && $('#end_datetime').val() > "{{ date('Y-m-d 00:01:00'); }}" ){
+                            //ajax opening tag
+                            $.ajax({
+                                url: form_url_no_memo,
+                                method: "POST",
+                                data: JSON.stringify(data_form),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data){
+                                    console.log(data)
+                                    $("#createForm").trigger("reset")
+                                    $("#create_card").collapse("hide")
+                                    refresh();
+
+                                    notification("success", "Activity")
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            //ajax closing tag
+                            })
+                        }
+                        else{
+                            swalAlert('warning', 'Invalid datetime')
+                        }
+                    }
+                    else{
+                        //console.log(myDropzone)
+                        myDropzone.processQueue();
+                    }
+                })
+                
+            },
+
+            success: function(response, data){
+            
+                //console.log(data)
                 form_url = BASE_API
 
-                    var form = $("#createForm").serializeArray();
-                    let formdata = {}
+                var form = $("#createForm").serializeArray();
+                let formdata = {}
 
-                    $.each(form, function(){
-                        formdata[[this.name]] = this.value;
-                    })
+                formdata['memorandum_file_directory'] = data.path
 
-                    console.log(formdata)
+                $.each(form, function(){
+                    formdata[[this.name]] = this.value;
+                })
 
+                console.log(formdata)
+
+                if($('#start_datetime').val() > "{{ date('Y-m-d 00:00:00'); }}" && $('#end_datetime').val() > "{{ date('Y-m-d 00:01:00'); }}" ){
                     //ajax opening tag
                     $.ajax({
                         url: form_url,
@@ -178,128 +254,34 @@
                             $("#createForm").trigger("reset")
                             $("#create_card").collapse("hide")
                             refresh();
+
+                            notification("success", "Activity")
                         },
                         error: function(error){
+                            $.each(error.responseJSON.errors, function(key,value) {
+                                swalAlert('warning', value)
+                            });
                             console.log(error)
                             console.log(`message: ${error.responseJSON.message}`)
                             console.log(`status: ${error.status}`)
                         }
                     //ajax closing tag
                     })
-            }
+                }
+                else{
+                    swalAlert('warning', 'Invalid datetime')
+                }
 
-            else{
-                $.ajax({
-                    url: form_url,
-                    method: "POST",
-                    data: fd,
-                    dataType: "JSON",
-                    processData: false,
-                    contentType: false,
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        
-                    },
-                    success: function(data){
-                        //console.log(data)
-                        form_url = BASE_API
-
-                        var form = $("#createForm").serializeArray();
-                        let formdata = {}
-
-                        formdata['memorandum_file_directory'] = data.path
-
-                        $.each(form, function(){
-                            formdata[[this.name]] = this.value;
-                        })
-
-                        console.log(formdata)
-
-                        //ajax opening tag
-                        $.ajax({
-                            url: form_url,
-                            method: "POST",
-                            data: JSON.stringify(formdata),
-                            dataType: "JSON",
-                            headers: {
-                                "Accept": "application/json",
-                                "Authorization": API_TOKEN,
-                                "Content-Type": "application/json"
-                            },
-                            success: function(data){
-                                console.log(data)
-                                $("#createForm").trigger("reset")
-                                $("#create_card").collapse("hide")
-                                refresh();
-                            },
-                            error: function(error){
-                                console.log(error)
-                                console.log(`message: ${error.responseJSON.message}`)
-                                console.log(`status: ${error.status}`)
-                            }
-                        //ajax closing tag
-                        })
-                    },
-                    error: function(error){
-                        console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
-                })
-            }
-            
+            },
         });
-        // END OF SUBMIT FUNCTION
+
 
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var id = this.id;
 
-            window.location.replace(APP_URL+"/acad_head/activity_view/"+id);
+            window.location.replace(APP_URL+"/acad_head/activity/"+id);
 
-            //let form_url =BASE_API+id
-
-            // $.ajax({
-            //     url: form_url,
-            //     method: "GET",
-            //     headers: {
-            //         "Accept": "application/json",
-            //         "Authorization": API_TOKEN,
-            //         "Content-Type": "application/json"
-            //     },
-
-            //     success: function(data){
-            //         let created_at = moment(data.created_at).format('LLL');
-            //         let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
-            //         let is_required_view = ""
-
-            //         $('#id_view').html(data.id);
-            //         $('#title_view').html(data.title);
-            //         $('#description_view').html(data.description);
-            //         $('#start_time_view').html(data.start_datetime);
-            //         $('#end_time_view').html(data.end_datetime);
-            //         $('#activity_type_view').html(data.activity_type.title); 
-            //         console.log(data.activity_type)  
-
-            //         if(data.is_required == 0){
-            //             is_required_view = "No"
-            //         } else{
-            //             is_required_view = "Yes"
-            //         }
-
-            //         $('#status_view').html(data.status);
-            //         $('#is_required_view').html(is_required_view);
-            //         //$('#created_at_view').html(created_at);
-
-            //         //console.log(data.memorandum_file_directory)
-            //         document.getElementById("memorandum_view").src="http://127.0.0.1:8000/" + data.memorandum_file_directory;
-            //         //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
-
-            //         $('#viewModal').modal('show');
-            //     }
-            // // ajax closing tag
-            // })
         });
         // END OF VIEW FUNCTION
 
@@ -338,6 +320,9 @@
                     $('#editModal').modal('show');
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -376,28 +361,39 @@
 
                 console.log(data_form)
 
-                $.ajax({
-                    url: form_url,
-                    method: "PUT",
-                    data: JSON.stringify(data_form),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        "Content-Type": "application/json"
-                    },
+                if($('#start_datetime_edit').val() > "{{ date('Y-m-d 00:00:00'); }}" && $('#end_datetime_edit').val() > "{{ date('Y-m-d 00:00:01'); }}" ){
+                    $.ajax({
+                        url: form_url,
+                        method: "PUT",
+                        data: JSON.stringify(data_form),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
 
-                    success: function(data){
-                        refresh()
-                        $('#editModal').modal('hide');
-                    },
-                    error: function(error){
-                        console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
+                        success: function(data){
+                            refresh()
+                            $('#editModal').modal('hide');
 
-                })
+                            notification("info", "Activity")
+                        },
+                        error: function(error){
+                            $.each(error.responseJSON.errors, function(key,value) {
+                                swalAlert('warning', value)
+                            });
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        }
+
+                    })
+                }
+                else{
+                    swalAlert('warning', 'Invalid datetime')
+                }
+                
             }
             else{
 
@@ -456,8 +452,13 @@
                             success: function(data){
                                 refresh()
                                 $('#editModal').modal('hide');
+
+                                notification("info", "Activity")
                             },
                             error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
                                 console.log(error)
                                 console.log(`message: ${error.responseJSON.message}`)
                                 console.log(`status: ${error.status}`)
@@ -472,11 +473,11 @@
         });
         // END OF UPDATE FUNCTION
 
-        // DEACTIVATE FUNCTION
+        // DELETE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = BASE_API+id
-
+            let form_url = BASE_API + id
+            console.log(id)
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -487,13 +488,46 @@
                 },
 
                 success: function(data){
-                    $('#id_delete').val(data.id);
-                    $('#title_delete').html(data.title);
-                    $('#description_delete').html(data.description);
+                    console.log(data)
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't able to remove this.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes, remove it!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: BASE_API + 'destroy/' + data.id,
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
 
-                    $('#deactivateModal').modal('show');
+                                success: function(data){
+                                    notification('error', 'Activity')
+                                    refresh();
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    });
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
@@ -501,7 +535,7 @@
             // ajax closing tag
             })
         });
-        // END OF DEACTIVATE FUNCTION
+        // END DELETE FUNCTION
 
         // DEACTIVATE SUBMIT FUNCTION
         $('#deactivateForm').on('submit', function(e){
@@ -521,8 +555,13 @@
                 success: function(data){
                     refresh()
                     $('#deactivateModal').modal('hide');
+
+                    notification("error", "Activity")
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)

@@ -25,10 +25,10 @@ class MeetingAttendanceRequiredFacultyList extends Model
             "time_in",
             "time_out",
             "attendance_status",
-            "proof_of_attendance_file_directory",
             "proof_of_attendance_file_link",
             "faculty_id",
-            "meeting_id"
+            "meeting_id",
+            "remarks"
         ];
 
         protected $dates = ['deleted_at'];
@@ -47,6 +47,11 @@ class MeetingAttendanceRequiredFacultyList extends Model
          return $this->belongsTo(Faculty::class)->withDefault();
      }
 
+     public function meeting_submitted()
+     {
+        return $this->hasMany(MeetingSubmittedProofOfAttendance::class, 'marf_id')->without('marf_faculty_lists', 'created_by_user', 'updated_by_user');
+    }
+
      // End of [Declare relationships here]
 
     // [Default relationship]       - Default
@@ -60,7 +65,7 @@ class MeetingAttendanceRequiredFacultyList extends Model
         return $this->belongsTo(User::class,'updated_by');
     }
 
-    protected $with = ['meeting', 'faculty','created_by_user','updated_by_user'];
+    protected $with = ['meeting_submitted','meeting', 'faculty','created_by_user','updated_by_user'];
 
     // [Added for UUID Incrementation]      - Default
     public $incrementing = false;

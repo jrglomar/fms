@@ -16,6 +16,332 @@
         let MEETING_ID = "{{ $meeting_id }}"
         // END OF GLOBAL VARIABLE
 
+// ------------------------------------------------------------------------------------------------- //
+
+    // FUNCTION TO CHANGE CONTENT
+    function updateMeetingStatus(){
+        $.ajax({
+            url: BASE_API + MEETING_ID,
+            type: "GET",
+            dataType: "JSON",
+            success: function (responseData) 
+            {  
+                var meeting_status = responseData.status
+                var current_time = new Date(); // current time
+                var hours = current_time.getHours();
+                var mins = current_time.getMinutes();
+                if(mins < 10)
+                {
+                    mins = "0"+mins
+                }
+                else
+                {
+                    mins = mins;
+                }
+                
+                var moment_current_date = moment(current_time).format('L')
+                var moment_meeting_date = moment(responseData.date).format('L');
+
+                var now = hours+":"+mins+":00";
+                // console.log("the end time is: " + responseData.end_time + ",and the current time is: " + now)
+
+                if(meeting_status == "Pending")
+                {
+                    // var add_required_faculty_button = "";
+
+                    // add_required_faculty_button = '<button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>';
+                    
+                    // $("#add_required_faculty").html(add_required_faculty_button);
+
+                    if(moment_meeting_date == moment_current_date && now >= responseData.start_time &&  now <= responseData.end_time) 
+                    {
+                        let data = {
+                            "title": responseData.title,
+                            "meeting_type_id": responseData.meeting_type_id,
+                            "description": responseData.description,
+                            "agenda": responseData.agenda,
+                            "location": responseData.location,
+                            "date": responseData.date,
+                            "start_time": responseData.start_time,
+                            "end_time": responseData.end_time,
+                            "is_required": responseData.is_required,
+                            "status": "On Going",
+                        }
+                        $.ajax({
+                            url: BASE_API + MEETING_ID,
+                            method: "PUT",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data)
+                            {
+                                setInterval(() => {
+                                        location.reload()
+                                    }, 500);
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                    else if(moment_current_date > moment_meeting_date)
+                    {
+                        let data = {
+                            "title": responseData.title,
+                            "meeting_type_id": responseData.meeting_type_id,
+                            "description": responseData.description,
+                            "agenda": responseData.agenda,
+                            "location": responseData.location,
+                            "date": responseData.date,
+                            "start_time": responseData.start_time,
+                            "end_time": responseData.end_time,
+                            "is_required": responseData.is_required,
+                            "status": "Done",
+                        }
+                        $.ajax({
+                            url: BASE_API + MEETING_ID,
+                            method: "PUT",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data)
+                            {
+                                setInterval(() => {
+                                        location.reload()
+                                    }, 500);
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                    else if(moment_current_date == moment_meeting_date && now > responseData.end_time)
+                    {
+                        let data = {
+                            "title": responseData.title,
+                            "meeting_type_id": responseData.meeting_type_id,
+                            "description": responseData.description,
+                            "agenda": responseData.agenda,
+                            "location": responseData.location,
+                            "date": responseData.date,
+                            "start_time": responseData.start_time,
+                            "end_time": responseData.end_time,
+                            "is_required": responseData.is_required,
+                            "status": "Done",
+                        }
+                        $.ajax({
+                            url: BASE_API + MEETING_ID,
+                            method: "PUT",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data)
+                            {
+                                setInterval(() => {
+                                        location.reload()
+                                    }, 500);
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                }
+                else if(meeting_status == "On Going")
+                {
+                    // var add_required_faculty_button = "";
+
+                    // add_required_faculty_button = '<button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>';
+
+                    // $("#add_required_faculty").html(add_required_faculty_button);
+                    
+                    if(moment_current_date > moment_meeting_date)
+                    {
+                        let data = {
+                            "title": responseData.title,
+                            "meeting_type_id": responseData.meeting_type_id,
+                            "description": responseData.description,
+                            "agenda": responseData.agenda,
+                            "location": responseData.location,
+                            "date": responseData.date,
+                            "start_time": responseData.start_time,
+                            "end_time": responseData.end_time,
+                            "is_required": responseData.is_required,
+                            "status": "Done",
+                        }
+                        $.ajax({
+                            url: BASE_API + MEETING_ID,
+                            method: "PUT",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data)
+                            {
+                                setInterval(() => {
+                                        location.reload()
+                                    }, 500);
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                    else if(moment_current_date == moment_meeting_date && now > responseData.end_time)
+                    {
+                        let data = {
+                            "title": responseData.title,
+                            "meeting_type_id": responseData.meeting_type_id,
+                            "description": responseData.description,
+                            "agenda": responseData.agenda,
+                            "location": responseData.location,
+                            "date": responseData.date,
+                            "start_time": responseData.start_time,
+                            "end_time": responseData.end_time,
+                            "is_required": responseData.is_required,
+                            "status": "Done",
+                        }
+                        $.ajax({
+                            url: BASE_API + MEETING_ID,
+                            method: "PUT",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data)
+                            {
+                                setInterval(() => {
+                                        location.reload()
+                                    }, 500);
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                }
+                else if(meeting_status == "Done" || meeting_status == "done")
+                {
+                    $.ajax({
+                        url: APP_URL + "/api/v1/meeting_attendance_required_faculty_list/faculty_list_time_out_null/" + MEETING_ID,
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function (responseData) 
+                        {  
+                            console.log(responseData)
+                            if (responseData.length != 0)
+                            {
+                                $.each(responseData, function (i, dataOptions) 
+                                {
+                                    var time_in = responseData[i].time_in
+                                    var time_out = responseData[i].time_out
+                                    var attendance_status = responseData[i].attendance_status
+                                    var remarks = responseData[i].remarks
+                                    var proof_of_attendance_file_link = responseData[i].proof_of_attendance_file_link
+                                    var faculty_id = responseData[i].faculty_id
+                                    var meeting_id = responseData[i].meeting_id
+                                    var id = responseData[i].id
+
+                                    $.ajax(
+                                    {
+                                        url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/' + id,
+                                        type: "PUT",
+                                        data: JSON.stringify(
+                                        {		
+                                            "time_in": time_in,
+                                            "time_out": time_out,
+                                            "attendance_status": "Absent",
+                                            "remarks": remarks,
+                                            "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                                            "faculty_id": faculty_id,
+                                            "meeting_id": meeting_id,
+                                        }),
+                                        dataType: "JSON",
+                                        contentType: 'application/json',
+                                        processData: false,
+                                        cache: false,
+                                        success: function (responseJSON) 
+                                        {                          
+                                        },
+                                        error: function(error){
+                                            $.each(error.responseJSON.errors, function(key,value) {
+                                                swalAlert('warning', value)
+                                            });
+                                            console.log(error)
+                                            console.log(`message: ${error.responseJSON.message}`)
+                                            console.log(`status: ${error.status}`)
+                                        },
+                                    });
+                                });
+                            }
+                        }
+                    });
+                }
+            },
+            error: function(error)
+            {
+                $.each(error.responseJSON.errors, function(key,value) {
+                    swalAlert('warning', value)
+                });
+                console.log(error)
+                console.log(`message: ${error.responseJSON.message}`)
+                console.log(`status: ${error.status}`)
+            },
+        });
+    };
+    updateMeetingStatus();
+
+
+// ------------------------------------------------------------------------------------------------- //
+
         // FUNCTION TO CHANGE CONTENT
         function getMeetingDetails(){
             $.ajax({
@@ -24,11 +350,17 @@
                 dataType: "JSON",
                 success: function (responseData) 
                 {   
-                    console.log(responseData)
+                    
 
                     var isRequired = responseData.is_required
                     var status = responseData.status
+
                     
+                    $("#pdf_title").val("Meeting_"+moment(responseData.created_at).format('YYYY_MMMM_DD'))
+                    $("#pdf_filename").val("Meeting_"+moment(responseData.created_at).format('YYYY_MMMM_DD'))
+
+                    var pdf_title = $("#pdf_title").val()
+                    var pdf_filename = $("#pdf_filename").val()
 
                     // Changing Boolean value of is_required to text
                     if(isRequired == true)
@@ -43,470 +375,380 @@
                     // IF Else Condition to specify if the Status is Done or Pending
                     if(status == "Pending")
                     {
-                        status = '<span class="badge badge-warning">' + responseData.status + '</span>'
+                        status = '<span class="badge badge-warning">Meeting Status: ' + responseData.status + '</span>'
                     }
-                    else if(status == "Done")
+                    else if(status == "Done" || status == "done")
                     {
-                        status = '<span class="badge badge-success">' + responseData.status + '</span>'
+                        status = '<span class="badge badge-success">Meeting Status: ' + responseData.status + '</span>'
+                    } 
+                    else if(status == "On Going")
+                    {
+                        status = '<span class="badge badge-info">Meeting Status: ' + responseData.status + '</span>'
                     } 
 
 
                     // For meeting_view_content> div#row_left
-                    var row_left = '<div class="card card-info">' +
-                                        '<div class="card-header">' +
-                                            '<div class="col-12">' +
-                                                '<h3 class="text-primary card-title"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + 
-                                                    '<span>' + responseData.title + '</span>' +
-                                                '</h3>' +
-                                                '<span style="color:black"><b>' + responseData.meeting_type.title + '</b></span>' +
-                                                '<div class="float-right">' +
-                                                    status +
+                    var row_left = '<div class="col-12 col-sm-12 col-lg-12">' +
+                                        '<div class="hero text-white hero-bg-image hero-bg-parallax"' +
+                                        'style="background-image: url({{ URL::to("/images/designs/meeting_card_lightblue.png") }})">' +
+                                            '<div class="hero-inner">' +
+                                                '<div class="col-12">' +
+                                                    '<h3 class="card-title text-center"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + 
+                                                        '<span>' + responseData.title + '</span>' +
+                                                    '</h3>' +
+                                                    
+                                                    '<span class="badge badge-info" style="color:black"><b>' + responseData.meeting_type.title + '</b></span>' +
+                                                    '<div class="float-right"><b>' +
+                                                        status +
+                                                    '</b></div>' +
                                                 '</div>' +
                                             '</div>' +
+                                            '<br>' +
+                                            '<div class="hero-inner">' +
+                                                '<div class="col-md-12">' +
+                                                    '<span><b>Agenda: </b>' +
+                                                '</div>' +
+                                                '<div class="col-md-12">' +
+                                                    '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;' +responseData.agenda +   
+                                                '</div>' + 
+                                                '<br>' + 
+                                                '<div class="col-md-12">' +
+                                                    '<span><b>Description: </b>' +
+                                                '</div>' +
+                                                '<div class="col-md-12">' +
+                                                    '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;' +responseData.description +   
+                                                '</div>' + 
+                                            '</div>' + 
                                         '</div>' +
-                                        '<div class="card-body">' +
-                                            '<div class="col-md-12">' +
-                                                '<span style="color:black"><b>Agenda: </b>' +
-                                            '</div>' +
-                                            '<div class="col-md-12">' +
-                                                '<span style="white:space: pre-line; color:black; text-align: justify; display:block;">&emsp;' +responseData.agenda +   
-                                            '</div>' + 
-                                            '<br>' + 
-                                            '<div class="col-md-12">' +
-                                                '<span style="color:black"><b>Description: </b>' +
-                                            '</div>' +
-                                            '<div class="col-md-12">' +
-                                                '<span style="white:space: pre-line; color:black; text-align: justify; display:block;">&emsp;' +responseData.description +   
-                                            '</div>' + 
-                                        '</div>' + 
-                                    '</div>' ;
+                                    '</div>' +
+                                    '<br>';
 
                     // CHECK THE USER ROLE
-                    if(USER_ROLE.user_role[0].role.title == "Academic Head")
+
+                    let arrayOfUserRole = []
+                    $.each(USER_ROLE.user_role, function(i){
+                        arrayOfUserRole.push(USER_ROLE.user_role[i].role.title)
+                        
+                    })
+                    // if(USER_ROLE.user_role[0].role.title == "Academic Head")
+                    if(jQuery.inArray("Academic Head", arrayOfUserRole) !== -1)
                     {
                         // For meeting_view_content> div#row_right - card bottom
                         var row_right_bottom = '<div class="card card-success">' +
-                                            '<div class="card-body">' +
-                                                '<div class="align-items-start">' +
-                                                    '<h5 class="text-primary card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> ' + 
-                                                        '<span>Meeting Details: </span>' +
-                                                    '</h5>' +
-                                                '</div>' +
-                                                '<div class="text-dark">' + 
-                                                    '<div class="col-md-12">' +
-                                                        '<b>Date: </b>' +
-                                                    '</div>' +
-                                                    '<div class="col-md-12"> -- ' +
-                                                        moment(responseData.date).format('dddd, MMMM D, YYYY') +   
-                                                    '</div>' +  
-                                                    '<div class="col-md-12">' +
-                                                        '<b>Location: </b>' +
-                                                    '</div>' +
-                                                    '<div class="col-md-12"> -- ' +
-                                                        responseData.location +   
+                                                    '<div class="card-body">' +
+                                                        '<div class="align-items-start">' +
+                                                            '<h5 class="text-primary card-title"><i class="fa fa-info-circle" aria-hidden="true"></i> ' + 
+                                                                '<span>Meeting Details: </span>' +
+                                                            '</h5>' +
+                                                        '</div>' +
+                                                        '<div class="text-dark">' + 
+                                                            '<div class="col-md-12">' +
+                                                                '<b>Date: </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                moment(responseData.date).format('dddd, MMMM D, YYYY') +   
+                                                            '</div>' +  
+                                                            '<div class="col-md-12">' +
+                                                                '<b>Location: </b>' +
+                                                            '</div>' +
+                                                            '<div class="col-md-12"> -- ' +
+                                                                responseData.location +   
+                                                            '</div>' + 
+                                                            '<div class="row">' +
+                                                                '<div class="col-md-6">' +
+                                                                    '<div class="col-md-12">' +
+                                                                        '<b>From: </b>' +
+                                                                    '</div>' +
+                                                                    '<div class="col-md-12"> -- ' +
+                                                                        moment("2022-06-27 "+responseData.start_time ).format('LT') +   
+                                                                    '</div>' + 
+                                                                '</div>' +
+                                                                '<div class="col-md-6">' +
+                                                                    '<div class="col-md-12">' +
+                                                                        '<b>To: </b>' +
+                                                                    '</div>' +
+                                                                    '<div class="col-md-12"> -- ' +
+                                                                        moment("2022-06-27 "+responseData.end_time ).format('LT') +   
+                                                                    '</div>' + 
+                                                                '</div>' +
+                                                            '</div> ' +
+                                                        '</div>' + 
                                                     '</div>' + 
-                                                    '<div class="row">' +
-                                                        '<div class="col-md-7">' +
-                                                            '<div class="col-md-12">' +
-                                                                '<b>From: </b>' +
-                                                            '</div>' +
-                                                            '<div class="col-md-12"> -- ' +
-                                                                moment("2022-06-27 "+responseData.start_time ).format('LT') +   
-                                                            '</div>' + 
-                                                        '</div>' +
-                                                        '<div class="col-md-5">' +
-                                                            '<div class="col-md-12">' +
-                                                                '<b>To: </b>' +
-                                                            '</div>' +
-                                                            '<div class="col-md-12"> -- ' +
-                                                                moment("2022-06-27 "+responseData.end_time ).format('LT') +   
-                                                            '</div>' + 
-                                                        '</div>' +
-                                                    '</div> ' +
-                                                    '<div class="col-md-12">' +
-                                                        '<b>Required? </b>' +
-                                                    '</div>' +
-                                                    '<div class="col-md-12"> -- ' +
-                                                        isRequired +
-                                                    '</div>' +  
-                                                '</div>' + 
-                                            '</div>' + 
-                                        '</div>' ;
+                                                '</div>' ;
                                     
                         $("#row_left").html(row_left);
                         $("#row_right").html(row_right_bottom);
                     }
                 },
-                error: function ({ responseJSON }) {},
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                },
             });
         };
 
         getMeetingDetails();
         // END FUNCTION TO CHANGE CONTENT
 
+// ------------------------------------------------------------------------------------------------- //
+
         // FUNCTION FOR REQUIRED FACULTY DATATABLE
-        function requiredFacultyDatatable(){
-            requiredFacultyDatatable = $('#requiredFacultyDatatable').DataTable()
-        }
-
-        requiredFacultyDatatable()
-        // END FUNCTION FOR REQUIRED FACULTY DATATABLE
-
-        // DATA TABLES FUNCTION
-        function dataTable(){
-                dataTable = $('#dataTable').DataTable({
+        function requiredFacultyDatatable()
+        {
+            dataTable = $('#requiredFacultyDatatable').DataTable({
                 "ajax": {
-                    url: BASE_API, 
+                    url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search/' + MEETING_ID, 
                     dataSrc: ''
                 },
+                "dom": 'Bfrtip',
+                "buttons":[
+                    {
+                        extend: 'pdfHtml5', 
+                        text: 'Save to PDF File',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: [ 1, 2, 3, 4, 5, 6, 7 ],
+                            modifier: { order: 'index' }
+                        },
+                        title: function() {
+                            return $('#pdf_title').val()
+                        },
+                        titleAttr : 'PDF',
+                        filename: function() {
+                            return $('#pdf_filename').val()
+                        },
+                        // customize: function (doc) {
+                        //    console.log(doc)
+                        // }
+                    }
+                ],
                 "columns": [
                     { data: "id"},
-                    { data: "created_at"},
-                    { data: "title"},
-                    { data: "meeting_type.title"},
-                    { data: "agenda"},
-                    { data: "location"},
-                    { data: "start_time", render: function(data, type, row){
-                        console.log("0000-00-00 "+data)
-                        console.log(row.date)
-                        return `${moment(row.date).format('LL')} <br> ${moment("2022-06-27 "+data).format('LT')} - ${moment("2022-06-27 "+row.end_time).format('LT')}`
-                    }}, // merge date (to be add), start_time, end_time
-                    { data: "is_required", render: function (data, type, row) { // required
-                          console.log(data)
-                          if(data == true)
-                          {
-                            return `<p>Yes</p>`
-                          }
-                          else
-                          {
-                            return `<p>No</p>`
-                          }
+                    { data: "created_at", render: function(data, type, row){
+                        return moment(row.created_at).format('LL')
+                    }},
+                    { data: "faculty.first_name", render: function(data, type, row){
+                        let html = ''
+                        html += row.faculty.first_name + ' ' + row.faculty.last_name
+                        return html
+                    }},
+                    { data: "time_in", render: function(data, type, row){
+                        if(data == null)
+                        {
+                            return "<p>-----</p>"
                         }
-                    },
-                    { data: "status"},
-                    { data: "deleted_at", render: function(data, type, row){    
-                                if (data == null){
-                                    return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
-                                        <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View Meeting</div></div>
-                                        <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit Meeting</div></div>
-                                            <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete Meeting</div></div></div></div>`;
-                                }
-                                else{
-                                    return '<button class="btn btn-danger btn-sm">Activate</button>';
-                                }
-                            }
+                        else
+                        {
+                            return data
                         }
-                    ],
+                    }},
+                    { data: "time_out", render: function(data, type, row){
+                        if(data == null)
+                        {
+                            return "<p>-----</p>"
+                        }
+                        else
+                        {
+                            return data
+                        }
+                    }},
+                    { data: "attendance_status", render: function(data, type, row){
+                        if(data == null)
+                        {
+                            return "<p>-----</p>"
+                        }
+                        else
+                        {
+                            return data
+                        }
+                    }},
+                    { data: "id", render: function(data, type, row){
+                        if(row.meeting_submitted.length != 0)
+                        {
+                            return `</div>
+                                    <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.faculty_id}">
+                                        <div>Check Proof of Attendance</div>
+                                    </button>`
+                        }
+                        else
+                        {
+                            return `</div>
+                                        <div>-----</div>`                         
+                        }
+                    }},
+                    { data: "proof_of_attendance_file_link", render: function(data, type, row){
+                        if(data == null)
+                        {
+                            return "<p>-----</p>"
+                        }
+                        else
+                        {
+                            return data
+                        }
+                    }},
+                ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
                 "order": [[1, "desc"]]
                 })
         }
-        // END OF DATATABLE FUNCTION
 
-        // CALLING DATATABLE FUNCTION
-        dataTable()
+            // CALLING DATATABLE FUNCTION
+            requiredFacultyDatatable()
 
-        // REFRESH DATATABLE FUNCTION
-        function refresh(){
-            let url = BASE_API;
+        // END FUNCTION FOR REQUIRED FACULTY DATATABLE
 
-            dataTable.ajax.url(url).load()
-        }
-        // REFRESH DATATABLE FUNCTION
+// ------------------------------------------------------------------------------------------------- //
+        
+    $(document).on("click", ".btnViewDetails", function(){
+        var faculty_id = this.id
 
-        // LOAD MEETING TYPES
-        function loadMeetingTypes(){
-            $.ajax({
-                url: APP_URL+'/api/v1/meeting_type/',
-                type: "GET",
-                dataType: "JSON",
-                success: function (responseData) 
-                {   
-                    $.each(responseData, function (i, dataOptions) 
-                    {
-                        var options = "";
+        console.log(MEETING_ID)
+        console.log(faculty_id)
+        
+        $.ajax({
+            url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + faculty_id,
+            type: "GET",
+            dataType: "JSON",
+            success: function (responseData)
+            {   
+                let html = `<li class="list-group-item d-flex justify-content-between" disabled="">
+                                                <span class="text-primary"><strong>Submitted File/s</strong></span>
+                                                <span class="text-primary"><strong>Date Submitted</strong></span>
+                                            </li>`
 
-                        options =
-                            "<option value='" +
-                            dataOptions.id +
-                            "'>" +
-                            dataOptions.title +
-                            "</option>";
+                let header = `<h5 class="text-dark">Faculty: ${responseData[0].faculty.last_name}, ${responseData[0].faculty.first_name}</h5>`
 
-                        $("#meeting_types_id").append(options);
-                        $("#meeting_types_id_edit").append(options);
-                    });
-                    
-                },
-                error: function ({ responseJSON }) {},
-            });
-        };
+                // IF FACULTY DOES NOT HAVE ANY SUBMITTED REQUIREMENTS YET
+                if(responseData[0].meeting_submitted.length == 0){
+                    html += `&nbsp;<div class="text-center">Empty Submission
+                        </div>`
+                }
 
-        loadMeetingTypes();
-        // END LOAD MEETING TYPES
+                // PASSING SUBMITTED REQUIREMENTS DATA INTO HTML VAR TO PASS IT TO DOM
+                $.each(responseData[0].meeting_submitted, function(i){
+                    let file_id = responseData[0].meeting_submitted[i].id
+                    let proof_of_attendance_file_directory = APP_URL + "/" + responseData[0].meeting_submitted[i].proof_of_attendance_file_directory
+                    let file_name = responseData[0].meeting_submitted[i].file_name
+                    let date_submitted = responseData[0].meeting_submitted[i].date_submitted
 
-        // SUBMIT FUNCTION
-        $('#createForm').on('submit', function(e){
-            e.preventDefault();
-
-            var form_url = BASE_API;
-            var form = $("#createForm").serializeArray();
-            let data = {}
-
-            $.each(form, function(){
-                data[[this.name]] = this.value;
-            })
-            console.log(JSON.stringify(data))
-
-            var startTime = $('#start_time').val();
-            var endTime = $('#end_time').val();
-
-            console.log(startTime);
-            console.log(endTime);
-
-            if(endTime < startTime)
-            {
-                alert("The meeting End Time is Less than to your Start Time. Please pick time properly")
-            }
-            else
-            {
-                // ajax opening tag
-                $.ajax({
-                    url: form_url,
-                    method: "POST",
-                    data: JSON.stringify(data),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        "Content-Type": "application/json"
-                    },
-                    success: function(data){
-                        console.log(data)
-                        $("#createForm").trigger("reset")
-                        $("#create_card").collapse("hide")
-                        refresh();
-                    },
-                    error: function(error){
-                        console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
-                // ajax closing tag
+                    html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                <button class="btn btn-info" onclick="window.open('${proof_of_attendance_file_directory}')" target="_blank">${file_name}</button>
+                                
+                                <span class="badge badge-light">${moment(date_submitted).format('lll')}</span>
+                                </li>`
                 })
-            }
+
+                // PASSING VAR DATA TO DOM
+                $('#fileModalHeader').html(header)
+                $('#fileModalBody').html(html)
+                $('#fileViewerModal').modal('show')
+            },
         });
-        // END OF SUBMIT FUNCTION
+    });
 
-        // VIEW FUNCTION
-        $(document).on("click", ".btnView", function(){
-            var meeting_id = this.id;
-            window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id);
+// ------------------------------------------------------------------------------------------------- //
 
-            // $.ajax({
-            //     url: form_url,
-            //     method: "GET",
-            //     headers: {
-            //         "Accept": "application/json",
-            //         "Authorization": API_TOKEN,
-            //         "Content-Type": "application/json"
-            //     },
+    // REFRESH DATATABLE FUNCTION
+    function refresh(){
+        let url = APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search/' + MEETING_ID;
 
-            //     success: function(data){
-            //         let created_at = moment(data.created_at).format('LLL');
-            //         let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
+        dataTable.ajax.url(url).load()
+    }
+    // END REFRESH DATATABLE FUNCTION
 
-            //         $('#id_view').html(data.id);
-            //         $('#title_view').html(data.title);
-            //         $('#meeting_types_id_view').html(data.meeting_type.title);
-            //         $('#agenda_view').html(data.agenda);
-            //         $('#description_view').html(data.description);
-            //         $('#start_time_view').html(data.start_time);
-            //         $('#end_time_view').html(data.end_time);
-            //         if(data.is_required == 0) // true
-            //         {
-            //             data.is_required = "No"
-            //         }
-            //         else
-            //         {
-            //             data.is_required = "Yes"
-            //         }
-            //         $('#is_required_view').html(data.is_required);
-            //         $('#status_view').html(data.status);
-            //         $('#created_at_view').html(created_at);
+// ------------------------------------------------------------------------------------------------- //
 
-            //         $('#viewModal').modal('show');
-            //     }
-            // // ajax closing tag
-            // })
-        });
-        // END OF VIEW FUNCTION
+        // FUNCTION ON EDIT REQUIRED FACULTY LIST BUTTON
+        $('#btnEditRequiredFaculty').on('click', function(){
+            let form_url = APP_URL+'/api/v1/faculty/get_all_faculties_that_does_not_on_meeting/' + MEETING_ID
 
-        // EDIT FUNCTION
-        $(document).on("click", ".btnEdit", function(){
-            var id = this.id;
-            let form_url = BASE_API+id
-
-            $.ajax({
-                url: form_url,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
+            $('#requiredFacultyDatatableModal').DataTable().destroy()
+            requiredFacultyDatatableModal = $('#requiredFacultyDatatableModal').DataTable({
+                "ajax": {
+                    url: form_url,
+                    dataSrc: "",
                 },
-                success: function(data){
-                    $('#id_edit').val(data.id);
-                    $('#title_edit').val(data.title);
-                    $('#meeting_types_id_edit').val(data.meeting_types_id);
-                    $('#agenda_edit').val(data.agenda);
-                    $('#location_edit').val(data.location);
-                    $('#description_edit').val(data.description);
-                    $('#date_edit').val(data.date);
-                    $('#start_time_edit').val(data.start_time);
-                    $('#end_time_edit').val(data.end_time);
-                    $('#is_required_edit').val(data.is_required);
-                    $('#status_edit').val(data.status);
-                    $('#editModal').modal('show');
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            // ajax closing tag
-            })
-        });
-        // END OF EDIT FUNCTION
+                "async": true,
+                "columns": [
+                    { data: "id"},
+                    { data: "created_at"},
+                    { data: "user.email", render: function(data, type, row){
+                        return data
+                    }},
+                    { data: "first_name", render: function(data, type, row){
+                        let html = ''
+                        html += row.first_name + ' ' + row.last_name
+                        return html
+                    }},
+                    { data: "id", render: function(data, type, row){
+                        return `<div class="custom-control custom-switch">
+                                    <input type="checkbox" name="faculty_required[]" class="custom-control-input faculty_status" id="${row.id}" value="${row.id}" checked>
+                                    <label id="status_label" class="custom-control-label" for="${row.id}">Yes</label>
+                                </div>`
+                    }}
+                ],
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
+                "order": [[1, "desc"]],
+                "bPaginate": false,
+            });
 
-        // UPDATE FUNCTION
-        $('#updateForm').on('submit', function(e){
+            $('#editRequiredFacultyModal').modal('show');
+        })
+
+        $('#updateRequiredFacultyForm').on('submit', function(e){
             e.preventDefault()
-            var id = $('#id_edit').val();
-            var form_url = BASE_API+id
+            // Swal.fire({
+            //     icon: 'warning',
+            //     text: 'This feature is still under development'
+            // })
 
-            let data = {
-                "title": $('#title_edit').val(),
-                "meeting_types_id": $('#meeting_types_id_edit').val(),
-                "description": $('#description_edit').val(),
-                "agenda": $('#agenda_edit').val(),
-                "location": $('#location_edit').val(),
-                "date": $('#date_edit').val(),
-                "start_time": $('#start_time_edit').val(),
-                "end_time": $('#end_time_edit').val(),
-                "is_required": $('#is_required_edit').val(),
-                "status": $('#status_edit').val(),
-            }
+            let required_faculty = $("input[name='faculty_required[]']:checked")
+              .map(function(){
+                return {
+                "meeting_id": MEETING_ID,
+                "faculty_id": $(this).val()
+                }
+            }).get();
 
-            $.ajax({
+            let form_url = APP_URL + '/api/v1/meeting_attendance_required_faculty_list/multi_insert'
+
+
+             // ajax opening tag
+             $.ajax({
                 url: form_url,
-                method: "PUT",
-                data: JSON.stringify(data),
+                method: "POST",
+                data: JSON.stringify(required_faculty),
                 dataType: "JSON",
                 headers: {
                     "Accept": "application/json",
                     "Authorization": API_TOKEN,
                     "Content-Type": "application/json"
                 },
-
                 success: function(data){
-                    refresh()
-                    $('#editModal').modal('hide');
+                    console.log(data)
+                    notification('success', 'Required Faculty');
+                    $('#editRequiredFacultyModal').modal('hide');
+                    refresh();
                 },
                 error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
                     console.log(error)
                     console.log(`message: ${error.responseJSON.message}`)
                     console.log(`status: ${error.status}`)
                 }
-            // ajax closing tag
             })
-
-
-        });
-        // END OF UPDATE FUNCTION
-
-        // DEACTIVATE FUNCTION
-        $(document).on("click", ".btnDeactivate", function(){
-            var id = this.id;
-            let form_url = BASE_API+id
-
-            $.ajax({
-                url: form_url,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-
-                success: function(data){
-                    $('#id_delete').val(data.id);
-                    $('#title_delete').html(data.title);
-                    $('#meeting_type_delete').html(data.meeting_types_id);
-                    $('#agenda_delete').html(data.agenda);
-                    $('#location_delete').html(data.location);
-                    $('#description_delete').html(data.description);
-                    $('#date_delete').html(data.date);
-                    $('#start_time_delete').html(data.start_time);
-                    $('#end_time_delete').html(data.end_time);
-                    $('#is_required_delete').html(data.is_required);
-                    $('#status_delete').html(data.status);
-
-                    $('#deactivateModal').modal('show');
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
             // ajax closing tag
-            })
-        });
-        // END OF DEACTIVATE FUNCTION
+        })
+        // ENDFUNCTION ON EDIT REQUIRED FACULTY LIST BUTTON
 
-        // DEACTIVATE SUBMIT FUNCTION
-        $('#deactivateForm').on('submit', function(e){
-            e.preventDefault()
-            var id = $('#id_delete').val();
-            var form_url = BASE_API+'destroy/'+id
-
-            $.ajax({
-                url: form_url,
-                method: "DELETE",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-
-                success: function(data){
-                    refresh()
-                    $('#deactivateModal').modal('hide');
-                },
-                error: function(error){
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            // ajax closing tag
-            })
-        });
-        // END OF DEACTIVATE SUBMIT FUNCTION
-
-        // ACTIVATE FUNCTION
-        $(document).on("click", ".btnActivate", function(){
-            var id = this.id;
-            console.log(id)
-        });
-        // END OF ACTIVATE FUNCTION
+// ------------------------------------------------------------------------------------------------- //
 
         removeLoader()
     // END OF JQUERY FUNCTIONS
