@@ -8,6 +8,7 @@
 </style>
 
       <div class="row">
+
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
           <div class="card card-statistic-1">
             <div class="card-icon bg-primary">
@@ -23,6 +24,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
           <div class="card card-statistic-1">
             <div class="card-icon bg-danger">
@@ -38,6 +40,7 @@
             </div>
           </div>
         </div>
+
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
           <div class="card card-statistic-1">
             <div class="card-icon bg-warning">
@@ -54,42 +57,41 @@
           </div>
         </div>                 
       </div>
+
       <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
           <div class="card card-statistic-1">
-            <canvas id="status_donut" height="200" style="min-height: 250px; height: 300px; max-height: 250px; max-width: 100%;"></canvas>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
-          <div class="card card-statistic-1">
-            <div class="card-icon bg-danger">
-              <i class="far fa-user"></i>
+            <div class="card-header">
+              <label>Submitted Requirements Status</label>
             </div>
-            <div class="card-wrap">
-              <div class="card-header">
-                <h4>Total Meetings</h4>
-              </div>
-              <div class="card-body" id="total_meeting">
-                
-              </div>
+            <div>
+              <canvas id="rsb_donut"></canvas>
             </div>
           </div>
         </div>
+
         <div class="col-lg-4 col-md-6 col-sm-6 col-12">
           <div class="card card-statistic-1">
-            <div class="card-icon bg-warning">
-              <i class="far fa-user"></i>
+            <div class="card-header">
+              <label>Meeting Status</label>
             </div>
-            <div class="card-wrap">
-              <div class="card-header">
-                <h4>Total Activities</h4>
-              </div>
-              <div class="card-body" id="total_activity">
-                
-              </div>
+            <div>
+              <canvas id="meeting_donut"></canvas>
             </div>
           </div>
-        </div>                 
+        </div>
+
+        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
+          <div class="card card-statistic-1">
+            <div class="card-header">
+              <label>Activity Status</label>
+            </div>
+            <div>
+              <canvas id="activity_donut"></canvas>
+            </div>
+          </div>
+        </div>  
+
       </div>
       
 
