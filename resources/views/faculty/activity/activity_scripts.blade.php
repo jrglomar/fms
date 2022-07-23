@@ -13,6 +13,7 @@
 
         // DATA TABLES FUNCTION
         function dataTable(){
+                date = moment(new Date).format()
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
                     url: BASE_API + 'get_required_activity/' + FACULTY_ID, 
@@ -24,8 +25,18 @@
                     { data: "title"},
                     { data: "activity_type.title"},
                     { data: "description"},
-                    { data: "status"},
-                    { data: "start_datetime", render: function(data, row){
+                    { data: "status", render: function(data, type, row){
+                        if (moment(row.start_datetime).format() < date && moment(row.end_datetime).format() > date){
+                            return "Ongoing"
+                        }
+                        else if (date > moment(row.end_datetime).format() ){
+                            return "Ended"
+                        }
+                        else{
+                            return data
+                        }
+                    }},
+                    { data: "start_datetime", render: function(data, type, row){
                         return `<span class="badge badge-info">${moment(data).format('LLL')} - ${moment(row.end_datetime).format('LLL')}</span>` 
                     }},
                     { data: "deleted_at", render: function(data, type, row){
