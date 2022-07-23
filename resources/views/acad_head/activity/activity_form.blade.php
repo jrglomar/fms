@@ -57,7 +57,7 @@
                                 <li id="status-errors"></li>
                             </ul>
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-6" hidden>
                             <label class="required-input">Required to attend</label>
                             <select class="form-control select2" id="is_required"
                                 name="is_required" required
