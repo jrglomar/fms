@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     
     <!--====== Title ======-->
-    <title>Consult - Business Consultancy Agency Template | Home</title>
+    <title>PUPQC - Faculty Monitoring System | Home</title>
     
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
