@@ -161,6 +161,8 @@
                 },
 
                 success: function(data){
+                    console.log('specific')
+                    console.log(data)
                     $('#email').val(data.email);
 
                     $.each(data.user_role, function(i){

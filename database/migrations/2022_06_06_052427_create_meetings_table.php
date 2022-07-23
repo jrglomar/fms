@@ -30,7 +30,7 @@ class CreateMeetingsTable extends Migration
              $table->string('agenda')->nullable();
              $table->longText('description')->nullable();
              $table->boolean('is_required')->nullable();
-             $table->string('status');
+             $table->string('status')->default('Pending');
 
              // Relationship sample
              $table->foreignUuid('meeting_types_id')->constrained('meeting_types')->onDelete('cascade')->onUpdate('cascade'); 
