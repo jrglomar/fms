@@ -1,7 +1,5 @@
-
 <script>
     $(document).ready(function(){
-
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
@@ -9,18 +7,15 @@
         var BASE_API = APP_URL + '/api/v1/meeting/'
         console.log(API_TOKEN)
         console.log(JSON.parse(USER_DATA))
-
         var USERDATA = JSON.parse(USER_DATA)
         var FACULTY_ID = USERDATA.faculty.id
-
         console.log(FACULTY_ID)
         // END OF GLOBAL VARIABLE
-
         // DATA TABLES FUNCTION
         function dataTable(){
             dataTable = $('#dataTable').DataTable({
                 "ajax": {
-                    url: BASE_API+"get_specific_meeting_of_faculty/"+FACULTY_ID, 
+                    url: BASE_API+"get_specific_meeting_of_faculty/"+FACULTY_ID,
                     dataSrc: ''
                 },
                 "columns": [
@@ -33,7 +28,7 @@
                     { data: "start_time", render: function(data, type, row){
                         console.log("0000-00-00 "+data)
                         console.log(row.date)
-                        return `<span class="badge badge-info">${moment(row.date).format('LL')}, 
+                        return `<span class="badge badge-info">${moment(row.date).format('LL')},
                             ${moment("2022-06-27 "+data).format('LT')} - ${moment("2022-06-27 "+row.end_time).format('LT')
                             }</span>`
                     }}, // merge date (to be add), start_time, end_time
@@ -50,7 +45,7 @@
                         }
                     },
                     { data: "status"},
-                    { data: "deleted_at", render: function(data, type, row){  
+                    { data: "deleted_at", render: function(data, type, row){
                         console.log(row);
                                 if (data == null){
                                     return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
@@ -70,68 +65,55 @@
                 })
         }
         // END OF DATATABLE FUNCTION
-
         // CALLING DATATABLE FUNCTION
         dataTable()
-
         // REFRESH DATATABLE FUNCTION
         function refresh(){
             let url = BASE_API;
-
             dataTable.ajax.url(url).load()
         }
         // REFRESH DATATABLE FUNCTION
-
         // LOAD MEETING TYPES
         function loadMeetingTypes(){
             $.ajax({
                 url: APP_URL+'/api/v1/meeting_type/',
                 type: "GET",
                 dataType: "JSON",
-                success: function (responseData) 
-                {   
-                    $.each(responseData, function (i, dataOptions) 
+                success: function (responseData)
+                {
+                    $.each(responseData, function (i, dataOptions)
                     {
                         var options = "";
-
                         options =
                             "<option value='" +
                             dataOptions.id +
                             "'>" +
                             dataOptions.title +
                             "</option>";
-
                         $("#meeting_types_id").append(options);
                         $("#meeting_types_id_edit").append(options);
                     });
-                    
+
                 },
                 error: function ({ responseJSON }) {},
             });
         };
-
         loadMeetingTypes();
         // END LOAD MEETING TYPES
-
         // SUBMIT FUNCTION
         $('#createForm').on('submit', function(e){
             e.preventDefault();
-
             var form_url = BASE_API;
             var form = $("#createForm").serializeArray();
             let data = {}
-
             $.each(form, function(){
                 data[[this.name]] = this.value;
             })
             console.log(JSON.stringify(data))
-
             var startTime = $('#start_time').val();
             var endTime = $('#end_time').val();
-
             console.log(startTime);
             console.log(endTime);
-
             if(endTime < startTime)
             {
                 alert("The meeting End Time is Less than to your Start Time. Please pick time properly")
@@ -165,7 +147,6 @@
             }
         });
         // END OF SUBMIT FUNCTION
-
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var meeting_id = this.id;
@@ -525,12 +506,10 @@
             // window.location.replace(APP_URL + '/faculty/meeting/'+meeting_id);
         });
         // END OF VIEW FUNCTION
-
         // EDIT FUNCTION
         $(document).on("click", ".btnEdit", function(){
             var id = this.id;
             let form_url = BASE_API+id
-
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -562,13 +541,11 @@
             })
         });
         // END OF EDIT FUNCTION
-
         // UPDATE FUNCTION
         $('#updateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_edit').val();
             var form_url = BASE_API+id
-
             let data = {
                 "title": $('#title_edit').val(),
                 "meeting_types_id": $('#meeting_types_id_edit').val(),
@@ -581,7 +558,6 @@
                 "is_required": $('#is_required_edit').val(),
                 "status": $('#status_edit').val(),
             }
-
             $.ajax({
                 url: form_url,
                 method: "PUT",
@@ -592,7 +568,6 @@
                     "Authorization": API_TOKEN,
                     "Content-Type": "application/json"
                 },
-
                 success: function(data){
                     refresh()
                     $('#editModal').modal('hide');
@@ -604,16 +579,12 @@
                 }
             // ajax closing tag
             })
-
-
         });
         // END OF UPDATE FUNCTION
-
         // DEACTIVATE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
             let form_url = BASE_API+id
-
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -622,7 +593,6 @@
                     "Authorization": API_TOKEN,
                     "Content-Type": "application/json"
                 },
-
                 success: function(data){
                     $('#id_delete').val(data.id);
                     $('#title_delete').html(data.title);
@@ -635,7 +605,6 @@
                     $('#end_time_delete').html(data.end_time);
                     $('#is_required_delete').html(data.is_required);
                     $('#status_delete').html(data.status);
-
                     $('#deactivateModal').modal('show');
                 },
                 error: function(error){
@@ -647,13 +616,11 @@
             })
         });
         // END OF DEACTIVATE FUNCTION
-
         // DEACTIVATE SUBMIT FUNCTION
         $('#deactivateForm').on('submit', function(e){
             e.preventDefault()
             var id = $('#id_delete').val();
             var form_url = BASE_API+'destroy/'+id
-
             $.ajax({
                 url: form_url,
                 method: "DELETE",
@@ -662,7 +629,6 @@
                     "Authorization": API_TOKEN,
                     "Content-Type": "application/json"
                 },
-
                 success: function(data){
                     refresh()
                     $('#deactivateModal').modal('hide');
@@ -676,14 +642,12 @@
             })
         });
         // END OF DEACTIVATE SUBMIT FUNCTION
-
         // ACTIVATE FUNCTION
         $(document).on("click", ".btnActivate", function(){
             var id = this.id;
             console.log(id)
         });
         // END OF ACTIVATE FUNCTION
-
         removeLoader()
     // END OF JQUERY FUNCTIONS
     });
