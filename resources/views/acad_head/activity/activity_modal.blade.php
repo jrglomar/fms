@@ -122,34 +122,16 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label class="required-input">Status</label>
-                                <select class="form-control" id="status_edit"
-                                    name="status_edit" required
-                                    data-parsley-errors-container="#status-edit-errors">
-                                    <option value="" disabled>-- Select Status --</option>
-                                    <option value="Pending">Pending</option>
-                                    <option value="Ongoing">Ongoing</option>
-                                    <option value="Ended">Ended</option>
-                                </select>
-                                <ul class="parsley-err-msg">
-                                    <li id="status-edit-errors"></li>
-                                </ul>
+                            <div class="form-group col-md-6 additional-input">
+                                <label class="required-input">Start time</label>
+                                <input type="datetime-local" class="form-control" id="start_datetime_edit" name="start_datetime"
+                                tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:00:00"); }}" data-parsley-excluded="true">
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="required-input">Required to attend</label>
-                                <select class="form-control" id="is_required_edit"
-                                    name="is_required_edit" required
-                                    data-parsley-errors-container="#req-edit-errors">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
-                                </select>
-                                <ul class="parsley-err-msg">
-                                    <li id="req-edit-errors"></li>
-                                </ul>
+                            <div class="form-group col-md-6 additional-input">
+                                <label class="required-input">End time</label>
+                                <input type="datetime-local" class="form-control" id="end_datetime_edit" name="end_datetime"
+                                tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:01:00"); }}" data-parsley-excluded="true">
                             </div>
-                        </div>
-                        <div class="row">
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">

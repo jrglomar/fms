@@ -21,9 +21,11 @@
                             <tr class="bg-primary text-light">
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Email</th>
+                                <th>Deleted at</th>
                                 <th>Name</th>
                                 <th>Status</th>
+                                <th>Time in</th>
+                                <th>Time out</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
