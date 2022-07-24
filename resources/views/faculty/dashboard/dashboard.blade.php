@@ -35,7 +35,7 @@
 
     {{-- CONTENT --}}
     @section('content')
-        @include('admin.dashboard.dashboard_content')
+        @include('faculty.dashboard.dashboard_content')
     @endsection
 
 {{-- FOOTER --}}
@@ -44,6 +44,6 @@
 @endsection
 
 @section('script')
-    @include('admin.dashboard.dashboard_scripts')
+    @include('faculty.dashboard.dashboard_scripts')
 @endsection
 
