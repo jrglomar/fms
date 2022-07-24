@@ -1,7 +1,7 @@
 
 <script>
 
-    
+
 
     $(document).ready(function(){
 
@@ -16,8 +16,8 @@
         let RR_FACULTY_LIST_ID = "{{ $rr_faculty_list_id }}"
         let R_BIN_ID = "{{ $requirement_bin_id }}"
         // END OF GLOBAL VARIABLE
-        
-        $("#fileupload").dropzone({ 
+
+        $("#fileupload").dropzone({
             url: APP_URL+'/api/v1/submitted_requirement/file_uploads',
             acceptedFiles: '.xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf',
             addRemoveLinks: true,
@@ -46,8 +46,16 @@
                     url: APP_URL+'/api/v1/requirement_required_faculty_list/' + RR_FACULTY_LIST_ID ,
                     type: "GET",
                     dataType: "JSON",
-                    success: function (data) 
-                    {   
+                    success: function (data)
+                    {
+                        console.log(data)
+                        if(data.submission_status == 'Submitted'){
+                            myDropzone.disable();
+                            $('#btnMDone').attr('class', 'btn btn-secondary');
+                            $('#btnMDone').html('Unsubmit');
+                        }
+
+                        removeLoader()
                         $.each(data.submitted_requirements, function(i){
                             let mockFile = { name: data.submitted_requirements[i].file_name,
                                              id: data.submitted_requirements[i].id,
@@ -55,14 +63,14 @@
                                             };
                             myDropzone.files.push(mockFile)
                             myDropzone.emit("addedfile", mockFile);
-                            myDropzone.emit("complete", mockFile); 
+                            myDropzone.emit("complete", mockFile);
                         })
                     },
                     error: function ({ responseJSON }) {},
                 });
 
                 myDropzone.on("complete", function(file) {
-                    
+
                     file.previewElement.querySelector('.dz-size').innerHTML = '';
                     file.previewElement.querySelector('.dz-image').innerHTML = `<img src="${APP_URL + '/images/designs/file_upload.png'}">`;
 
@@ -81,7 +89,7 @@
                     });
                 });
 
-                
+
             },
 
             success: function(response, data, file){
@@ -165,20 +173,131 @@
         });
 
         $('#btnDone').on('click', function(){
-            swalAlert('warning', 'This feature is under maintenance')
-        })
+            let btnStatus = $('#btnMDone').html()
+            console.log(btnStatus)
 
+            if(btnStatus == 'Unsubmit'){
+                // UPDATING RR_FACULTY AND BTN
+                $.ajax({
+                    url: APP_URL+'/api/v1/requirement_required_faculty_list/' + RR_FACULTY_LIST_ID,
+                    method: "PUT",
+                    data: JSON.stringify({"submission_status": ""}),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        $('#btnMDone').attr('class', 'btn btn-warning');
+                        $('#btnMDone').html('Mark as Done');
+                        notification('custom', 'Files unsubmitted')
+                        setInterval(() => {
+                            location.reload()
+                        }, 1000);
+
+                    },
+                    error: function(error){
+                        console.log(error)
+                        $.each(error.responseJSON.errors, function(key, value){
+                                swalAlert('warning', value)
+                        })
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                })
+            // ajax closing tag
+            }
+            else{
+                // ajax opening tag
+                $.ajax({
+                    url: APP_URL+'/api/v1/requirement_required_faculty_list/' + RR_FACULTY_LIST_ID,
+                    method: "GET",
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        notification('custom', 'Submitted Requirements marked as Done')
+                        $.each(data.submitted_requirements, function(i){
+                                $.ajax({
+                                    url: APP_URL+'/api/v1/submitted_requirement/' + data.submitted_requirements[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify({"status": "Submitted"}),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data){
+
+                                    },
+                                    error: function(error){
+                                        console.log(error)
+                                        $.each(error.responseJSON.errors, function(key, value){
+                                                swalAlert('warning', value)
+                                        })
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                })
+                            // ajax closing tag
+                            })
+                    },
+                    error: function(error){
+                        console.log(error)
+                        $.each(error.responseJSON.errors, function(key, value){
+                                swalAlert('warning', value)
+                        })
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                })
+
+                $.ajax({
+                    url: APP_URL+'/api/v1/requirement_required_faculty_list/' + RR_FACULTY_LIST_ID,
+                    method: "PUT",
+                    data: JSON.stringify({"submission_status": "Submitted"}),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        $('#btnMDone').attr('class', 'btn btn-secondary');
+                        $('#btnMDone').html('Unsubmit');
+                        console.log(data)
+                        setInterval(() => {
+                            location.reload()
+                        }, 1000);
+                    },
+                    error: function(error){
+                        console.log(error)
+                        $.each(error.responseJSON.errors, function(key, value){
+                                swalAlert('warning', value)
+                        })
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                })
+            }
+
+
+        })
 
         // FUNCTION TO CHANGE PAGE HEADER/TITLE
         function getRequirementBinDetails(){
-            console.log('test')
 
             $.ajax({
                 url: APP_URL+'/api/v1/requirement_bin/' + R_BIN_ID ,
                 type: "GET",
                 dataType: "JSON",
-                success: function (responseData) 
-                {   
+                success: function (responseData)
+                {
                     var title = responseData.title;
                     var deadline = responseData.deadline
                     var description = responseData.description
@@ -210,7 +329,7 @@
         // END FUNCTION TO CHANGE PAGE HEADER/TITLE
 
         // DATA TABLES FUNCTION
-        
+
 
         // LOAD REQUIREMENT TYPES
         function loadRequirementTypes(){
@@ -218,10 +337,10 @@
                 url: APP_URL+'/api/v1/requirement_type/',
                 type: "GET",
                 dataType: "JSON",
-                success: function (responseData) 
-                {   
+                success: function (responseData)
+                {
                     let html = ""
-                    $.each(responseData, function (i, dataOptions) 
+                    $.each(responseData, function (i, dataOptions)
                     {
                         html +=
                             "<option value='" +
@@ -235,17 +354,18 @@
                     $("#requirement_type_id_edit").html(html);
                     $("#requirement_type_id2").html(html);
                     $("#requirement_type_id_edit2").html(html);
-                    
+
                 },
                 error: function ({ responseJSON }) {},
             });
         };
 
+
         loadRequirementTypes();
         // END LOAD REQUIREMENT TYPES
- 
 
-        removeLoader()
+
+
     // END OF JQUERY FUNCTIONS
     });
 </script>

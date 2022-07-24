@@ -99,6 +99,8 @@
 
                     console.log(data)
 
+                    date = moment(new Date).format()
+
                     let created_at = moment(data.created_at).format('LLL');
                     let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
                     let is_required_view = ""
@@ -126,21 +128,20 @@
                         document.getElementById("time_button").id = "newid";
                     }
 
-                    if(data.status == "Pending"){
+                    if(moment(data.start_datetime).format() < date && moment(data.end_datetime).format() > date){
                         $('#status').html(`<span class="badge badge-warning">
-                                <span>${data.status}</span>
+                                <span>Ongoing</span>
                                 </span>`);
-                        //$('#status').addClass('text-primary');
                     }
-                    else if(data.status == "Ended"){
+                    else if(date > moment(data.end_datetime).format()){
                         $('#status').html(`<span class="badge badge-warning">
-                                <span>${data.status}</span>
+                                <span>Ended</span>
                                 </span>`);
                         //$('#status').addClass('text-success');
                     }
-                    else if(data.status == "Ongoing"){
+                    else{
                         $('#status').html(`<span class="badge badge-warning">
-                                <span>${data.status}</span>
+                                <span>Pending</span>
                                 </span>`);
                         //$('#status').addClass('text-warning');
                     }
@@ -280,15 +281,39 @@
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
-                    { data: "faculty.user.email", render: function(data, type, row){
-                        return data
-                    }},
+                    { data: "deleted_at"},
                     { data: "faculty.first_name", render: function(data, type, row){
                         let html = ''
                         html += row.faculty.first_name + ' ' + row.faculty.last_name
                         return html
                     }},
-                    { data: "attendance_status"},
+                    { data: "status", render: function(data, type, row){
+                        if (moment(row.start_datetime).format() < date && moment(row.end_datetime).format() > date){
+                            return "Ongoing"
+                        }
+                        else if (date > moment(row.end_datetime).format() ){
+                            return "Ended"
+                        }
+                        else{
+                            return data
+                        }
+                    }},
+                    { data: "time_in", render: function(data, type, row){
+                        if (data == null){
+                            return "Not yet"
+                        }
+                        else{
+                            return moment(data).format('LLL')
+                        }
+                    }},
+                    { data: "time_out", render: function(data, type, row){
+                        if (data == null){
+                            return "Not yet"
+                        }
+                        else{
+                            return moment(data).format('LLL')
+                        }
+                    }},
                     { data: "faculty_id", render: function(data, type, row){
                         if (data == USER_ROLE.faculty.id){
                             return `</div>
@@ -302,7 +327,7 @@
                         }
                     }}
                 ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 2] }],
                 "order": [[1, "desc"]]
                 });
         };

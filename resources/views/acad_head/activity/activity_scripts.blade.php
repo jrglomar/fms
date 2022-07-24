@@ -11,6 +11,9 @@
 
         // DATA TABLES FUNCTION
         function dataTable(){
+                date = moment(new Date()).format() 
+                console.log(date)
+
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
                     url: BASE_API, 
@@ -22,8 +25,18 @@
                     { data: "title"},
                     { data: "activity_type.title"},
                     { data: "description"},
-                    { data: "status"},
-                    { data: "start_datetime", render: function(data, row){
+                    { data: "status", render: function(data, type, row){
+                        if (moment(row.start_datetime).format() < date && moment(row.end_datetime).format() > date){
+                            return "Ongoing"
+                        }
+                        else if (date > moment(row.end_datetime).format() ){
+                            return "Ended"
+                        }
+                        else{
+                            return data
+                        }
+                    }},
+                    { data: "start_datetime", render: function(data, type, row){
                         return `<span class="badge badge-info">${moment(data).format('LLL')} - ${moment(row.end_datetime).format('LLL')}</span>` 
                     }},
                     { data: "deleted_at", render: function(data, type, row){
@@ -85,46 +98,6 @@
 
         // CALLING ACTIVITY TYPE FUNCTION
         activity_type()
-
-        $('#status').change(function(){
-            if(this.value == "Pending" || "Ongoing" || "Ended") {
-                html = '<div class="form-group col-md-6 additional-input">' +
-                            '<label class="required-input">Start time</label>' +
-                            '<input type="datetime-local" class="form-control" id="start_datetime" name="start_datetime"' +
-                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:00:00"); }}" data-parsley-excluded="true">' +
-                        '</div>' +
-                        '<div class="form-group col-md-6 additional-input">' +
-                            '<label class="required-input">End time</label>' +
-                            '<input type="datetime-local" class="form-control" id="end_datetime" name="end_datetime"' +
-                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:01:00"); }}" data-parsley-excluded="true">' +
-                        '</div>'
-
-                $('.additional-form').html(html);
-            }
-            else{
-                $(".additional-input").remove()
-            }
-        });
-
-        $('#status_edit').change(function(){
-            if(this.value == "Pending" || "Ongoing" || "Ended") {
-                html = '<div class="form-group col-md-6 additional-input">' +
-                            '<label class="required-input">Start time</label>' +
-                            '<input type="datetime-local" class="form-control" id="start_datetime_edit" name="start_datetime_edit"' +
-                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:01:00"); }}" required> data-parsley-excluded="true"' +
-                        '</div>' +
-                        '<div class="form-group col-md-6 additional-input">' +
-                            '<label class="required-input">End time</label>' +
-                            'tabindex="1" value="{{ date("Y-m-d 00:00:00"); }}" min="{{ date("Y-m-d 00:01:00"); }}" data-parsley-excluded="true"' +
-                            'tabindex="1">' +
-                        '</div>'
-
-                $('.additional-form-edit').html(html);
-            }
-            else{
-                $(".additional-input-edit").remove()
-            }
-        });
         
         // REFRESH DATATABLE FUNCTION
         function refresh(){
@@ -172,13 +145,14 @@
                         "start_datetime": $('#start_datetime').val(),
                         "end_datetime": $('#end_datetime').val(),
                         "activity_type_id": $('#activity_type_id').val(),
-                        "status": $('#status').val(),
-                        "is_required": $('#is_required').val(),
+                        "status": "Pending",
+                        "is_required": 1,
                         "memorandum_file_directory": "NA"
                     }
 
                     console.log(data_form)
-                        if($('#start_datetime').val() > "{{ date('Y-m-d 00:00:00'); }}" && $('#end_datetime').val() > "{{ date('Y-m-d 00:01:00'); }}" ){
+                        if($('#start_datetime').val() > "{{ date('Y-m-d 00:00:00'); }}" && $('#end_datetime').val() > "{{ date('Y-m-d 00:01:00'); }}" &&
+                        $('#start_datetime').val() < $('#end_datetime').val()){
                             //ajax opening tag
                             $.ajax({
                                 url: form_url_no_memo,
@@ -309,11 +283,10 @@
                     $('#description_edit').val(data.description);
                     $('#activity_type_id_edit').val(data.activity_type.id);
                     //console.log(data.activity_type.id)
-                    
-                    $('#status_edit').val(data.status);
 
-                    $('#is_required_edit').val(data.is_required);
                     $('#location_edit').val(data.location);
+                    $('#start_datetime_edit').val(data.start_datetime);
+                    $('#end_datetime_edit').val(data.end_datetime);
                     $('#memorandum_path').val(data.memorandum_file_directory);
                     //console.log(data.is_required)
 
@@ -354,14 +327,17 @@
                     "description": $('#description_edit').val(),
                     "location": $('#location_edit').val(),
                     "activity_type_id": $('#activity_type_id_edit').val(),
-                    "status": $('#status_edit').val(),
-                    "is_required": $('#is_required_edit').val(),
+                    "start_datetime": $('#start_datetime_edit').val(),
+                    "end_datetime": $('#end_datetime_edit').val(),
+                    "status": "Pending",
+                    "is_required": 1,
                     "memorandum_file_directory": new_memo_path
                 }
 
                 console.log(data_form)
 
-                if($('#start_datetime_edit').val() > "{{ date('Y-m-d 00:00:00'); }}" && $('#end_datetime_edit').val() > "{{ date('Y-m-d 00:00:01'); }}" ){
+                if($('#start_datetime_edit').val() > "{{ date('Y-m-d 00:00:00'); }}" && $('#end_datetime_edit').val() > "{{ date('Y-m-d 00:00:01'); }}" &&
+                        $('#start_datetime_edit').val() < $('#end_datetime_edit').val()){
                     $.ajax({
                         url: form_url,
                         method: "PUT",
@@ -431,8 +407,10 @@
                             "description": $('#description_edit').val(),
                             "location": $('#location_edit').val(),
                             "activity_type_id": $('#activity_type_id_edit').val(),
-                            "status": $('#status_edit').val(),
-                            "is_required": $('#is_required_edit').val(),
+                            "start_datetime": $('#start_datetime_edit').val(),
+                            "end_datetime": $('#end_datetime_edit').val(),
+                            "status": "Pending",
+                            "is_required": 1,
                             "memorandum_file_directory": new_memo_path
                         }
                         
