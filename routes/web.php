@@ -164,6 +164,20 @@ Route::group(['middleware' => ['role.faculty'],
         Route::get('/activity/{id}', function ($id) {
             return view('faculty/activity_view/activity_view', ['page_title' => 'Activity', 'activity_id' => $id]);
         })->name('faculty_activity_view');
+
+        // ------------REPORTS--------------- //
+            // ------------SRD REPORTS--------------- //
+            Route::get('/srd_report', function () {
+                return view('faculty/report/srd_report', ['page_title' => 'SRD Reports']);
+            })->name('srd_report');
+            // ------------MEETING REPORTS--------------- //
+            Route::get('/meeting_report', function () {
+                return view('faculty/report/meeting_report', ['page_title' => 'Meeting Reports']);
+            })->name('meeting_report');
+            // ------------ACTIVITY REPORTS--------------- //
+            Route::get('/activity_report', function () {
+                return view('faculty/report/activity_report', ['page_title' => 'Activity Reports']);
+            })->name('activity_report');
 });
 
 
@@ -210,6 +224,20 @@ Route::group(['middleware' => ['role.acadhead'],
     Route::get('/activity/{id}', function ($id) {
         return view('acad_head/activity_view/activity_view', ['page_title' => 'Activity', 'activity_id'=> $id]);
     })->name('ActivityView');
+
+    // ------------REPORTS--------------- //
+        // ------------SRD REPORTS--------------- //
+        Route::get('/srd_report', function () {
+            return view('acad_head/report/srd_report', ['page_title' => 'SRD Reports']);
+        })->name('srd_report');
+        // ------------MEETING REPORTS--------------- //
+        Route::get('/meeting_report', function () {
+            return view('acad_head/report/meeting_report', ['page_title' => 'Meeting Reports']);
+        })->name('meeting_report');
+        // ------------ACTIVITY REPORTS--------------- //
+        Route::get('/activity_report', function () {
+            return view('acad_head/report/activity_report', ['page_title' => 'Activity Reports']);
+        })->name('activity_report');
 
 });
 

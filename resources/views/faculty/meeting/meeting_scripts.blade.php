@@ -238,6 +238,10 @@
                             // ajax closing tag
                             })
                         }
+                        else if(moment_current_date < moment_meeting_date)
+                        {
+                            window.location.replace(APP_URL + '/faculty/meeting/'+meeting_id);
+                        }
                         else if(moment_current_date > moment_meeting_date)
                         {
                             let data = {
@@ -318,52 +322,11 @@
                         }
                         else if(moment_current_date == moment_meeting_date && now < responseData.start_time && now < responseData.end_time)
                         {
-                            let data = {
-                                "title": responseData.title,
-                                "meeting_type_id": responseData.meeting_type_id,
-                                "description": responseData.description,
-                                "agenda": responseData.agenda,
-                                "location": responseData.location,
-                                "date": responseData.date,
-                                "start_time": responseData.start_time,
-                                "end_time": responseData.end_time,
-                                "is_required": responseData.is_required,
-                                "status": "Pending",
-                            }
-                            $.ajax({
-                                url: BASE_API + meeting_id,
-                                method: "PUT",
-                                data: JSON.stringify(data),
-                                dataType: "JSON",
-                                headers: {
-                                    "Accept": "application/json",
-                                    "Authorization": API_TOKEN,
-                                    "Content-Type": "application/json"
-                                },
-                                success: function(data)
-                                {
-                                    window.location.replace(APP_URL + '/faculty/meeting/'+meeting_id);
-                                },
-                                error: function(error){
-                                    $.each(error.responseJSON.errors, function(key,value) {
-                                        swalAlert('warning', value)
-                                    });
-                                    console.log(error)
-                                    console.log(`message: ${error.responseJSON.message}`)
-                                    console.log(`status: ${error.status}`)
-                                }
-                            // ajax closing tag
-                            })
+                            window.location.replace(APP_URL + '/faculty/meeting/'+meeting_id);
                         }
                     }
                     else if(meeting_status == "On Going")
                     {
-                        // var add_required_faculty_button = "";
-
-                        // add_required_faculty_button = '<button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>';
-
-                        // $("#add_required_faculty").html(add_required_faculty_button);
-                        
                         if(moment_current_date > moment_meeting_date)
                         {
                             let data = {

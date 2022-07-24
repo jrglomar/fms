@@ -348,6 +348,10 @@
                             // ajax closing tag
                             })
                         }
+                        else if(moment_current_date < moment_meeting_date)
+                        {
+                            setInterval(window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id), 1500)
+                        }
                         else if(moment_current_date == moment_meeting_date && now > responseData.end_time)
                         {
                             let data = {
@@ -389,42 +393,7 @@
                         }
                         else if(moment_current_date == moment_meeting_date && now < responseData.start_time && now < responseData.end_time)
                         {
-                            let data = {
-                                "title": responseData.title,
-                                "meeting_type_id": responseData.meeting_type_id,
-                                "description": responseData.description,
-                                "agenda": responseData.agenda,
-                                "location": responseData.location,
-                                "date": responseData.date,
-                                "start_time": responseData.start_time,
-                                "end_time": responseData.end_time,
-                                "is_required": responseData.is_required,
-                                "status": "Pending",
-                            }
-                            $.ajax({
-                                url: BASE_API + meeting_id,
-                                method: "PUT",
-                                data: JSON.stringify(data),
-                                dataType: "JSON",
-                                headers: {
-                                    "Accept": "application/json",
-                                    "Authorization": API_TOKEN,
-                                    "Content-Type": "application/json"
-                                },
-                                success: function(data)
-                                {
-                                    setInterval(window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id), 1500)
-                                },
-                                error: function(error){
-                                    $.each(error.responseJSON.errors, function(key,value) {
-                                        swalAlert('warning', value)
-                                    });
-                                    console.log(error)
-                                    console.log(`message: ${error.responseJSON.message}`)
-                                    console.log(`status: ${error.status}`)
-                                }
-                            // ajax closing tag
-                            })
+                            setInterval(window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id), 1500)
                         }
                     }
                     else if(meeting_status == "On Going")
