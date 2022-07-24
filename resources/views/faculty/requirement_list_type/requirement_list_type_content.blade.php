@@ -39,10 +39,10 @@
                             <button id="createRequiredDocument" type="button" class="btn btn-warning btn-sm">Edit List <i class="fa fa-edit" aria-hidden="true"></i></button>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="card-body">
-                    
+
                 </div>
             </div>
         </div> --}}
@@ -63,7 +63,7 @@
                             <form class="dropzone" style="border: 2px dashed #a6c4ff"
                                     id="fileupload">
 
-                                    
+
                             </form>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                     </div>
                     &nbsp;
                     <div id="btnDone" class="d-flex justify-content-center">
-                        <button type="button" class="btn btn-warning">Mark as Done</button>
+                        <button id="btnMDone" type="button" class="btn btn-warning">Mark as Done</button>
                     </div>
                 </div>
             </div>
