@@ -12,42 +12,42 @@
         // DATA TABLES FUNCTION
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
-                "ajax": {
-                    url: BASE_API, 
-                    dataSrc: ''
-                },
-                "columns": [
-                    { data: "id"},
-                    { data: "created_at"},
-                    { data: "title"},
-                    { data: "activity_type.title"},
-                    { data: "description"},
-                    { data: "status"},
-                    { data: "start_datetime", render: function(data, row){
-                        return `<span class="badge badge-info">${moment(data).format('LLL')} - ${moment(row.end_datetime).format('LLL')}</span>` 
-                    }},
-                    { data: "deleted_at", render: function(data, type, row){
-                                if (data == null){
-                                    return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
-                                        <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View</div></div>
-                                        <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit</div></div>
-                                            <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete</div></div></div></div>`;
-                                }
-                                else{
-                                    return '<button class="btn btn-danger btn-sm">Activate</button>';
-                                }
-                            }
-                        }
-                    ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 4] }],
+                // "ajax": {
+                //     url: BASE_API, 
+                //     dataSrc: ''
+                // },
+                // "columns": [
+                //     { data: "id"},
+                //     { data: "created_at"},
+                //     { data: "title"},
+                //     { data: "activity_type.title"},
+                //     { data: "description"},
+                //     { data: "status"},
+                //     { data: "start_datetime", render: function(data, row){
+                //         return `<span class="badge badge-info">${moment(data).format('LLL')} - ${moment(row.end_datetime).format('LLL')}</span>` 
+                //     }},
+                //     { data: "deleted_at", render: function(data, type, row){
+                //                 if (data == null){
+                //                     return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
+                //                     <div class="dropdown-menu dropdown-menu-right">
+                //                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
+                //                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
+                //                         <div>View</div></div>
+                //                         <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
+                //                             <div style="width: 2rem"><i class="fas fa-edit"></i></div>
+                //                             <div>Edit</div></div>
+                //                             <div class="dropdown-divider"</div></div>
+                //                             <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
+                //                             <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
+                //                             <div style="color: red">Delete</div></div></div></div>`;
+                //                 }
+                //                 else{
+                //                     return '<button class="btn btn-danger btn-sm">Activate</button>';
+                //                 }
+                //             }
+                //         }
+                //     ],
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 6] }],
                 "order": [[1, "desc"]]
                 })
         }

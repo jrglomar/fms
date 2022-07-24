@@ -21,9 +21,9 @@
                             <tr class="bg-primary text-light">
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Title</th>
-                                <th>Type</th>
-                                <th>Description</th>
+                                <th>Faculty</th>
+                                <th>Day</th>
+                                <th>Time</th>
                                 <th>Status</th>
                                 <th width="25%">Date</th>
                                 <th class="text-center">Action</th>

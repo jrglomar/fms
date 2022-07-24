@@ -22,7 +22,8 @@ class RequirementRequiredFacultyList extends Model
                 "requirement_bin_id",
                 "faculty_id",
                 "remarks",
-                "status"
+                "status",
+                "submission_status"
             ];
 
 

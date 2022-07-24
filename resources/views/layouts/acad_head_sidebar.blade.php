@@ -62,6 +62,8 @@
                             </li>
                         </ul>
                     </li>
+                    
+
                         {{-- SRD MANAGEMENT --}}
                         <li class="menu-header">SRD Management</li>
                         <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 
@@ -120,7 +122,31 @@
                         </ul>
                     </li>
 
+                    <li class="menu-header">Reports</li>
+                        <li class="dropdown {{ Request::segment(2) == 'srd_report' || 
+                                                Request::segment(2) == 'meeting_report' ||
+                                                Request::segment(2) == 'activity_report' 
+                                                ? 'active' : ''}}">
+                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                class="fas fa-book-reader"></i>
+                        <span>Reports</span></a>
+                        <ul class="dropdown-menu">
+                            <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                            <li class="{{ Request::segment(2) == 'srd_report' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/acad_head/srd_report">
+                                        <span>SRD Report</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'meeting_report' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/acad_head/meeting_report">
+                                        <span>Meeting Report</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'activity_report' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/acad_head/activity_report">
+                                        <span>Activity Report</span></a>
+                                </li>
+                        </ul>
                     </ul>
+                    
 
                     <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
                         <button type="button" class="btn btn-danger btn-lg btn-block btn-icon-split logout-btn" onclick="location.href='/logout'"
