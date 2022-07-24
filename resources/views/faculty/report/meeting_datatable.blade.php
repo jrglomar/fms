@@ -1,18 +1,31 @@
 <style>
     .btn-report{
-    border: none;
-    background-color: inherit;
-    cursor: pointer;
-    display: inline-block;
+        border: none;
+        background-color: inherit;
+        cursor: pointer;
+        display: inline-block;
     }
 
     .btn-report:hover {background: #eee;}
+
+    .btn-reset{
+        border: none;
+        background-color: inherit;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .btn-reset:hover {background: #fff;}
 
     .success {color: green;}
     .info {color: dodgerblue;}
     .warning {color: orange;}
     .danger {color: red;}
     .default {color: black;}
+
+    .input-group-addon{
+        font-size: 16px;
+    }
 </style>
 <div>
     <div class="row">
