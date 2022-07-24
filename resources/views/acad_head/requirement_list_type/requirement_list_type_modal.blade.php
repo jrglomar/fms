@@ -42,7 +42,7 @@
 {{-- END OF VIEW MODAL --}}
 
 {{-- EDIT MODAL --}}
-<div id="editModal" class="modal fade" tabindex="-1" role="dialog">
+{{-- <div id="editModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -75,7 +75,7 @@
                 </form>
         </div>
     </div>
-</div>
+</div> --}}
 {{-- END OF VIEW MODAL --}}
 
 {{-- DEACTIVATE MODAL --}}
@@ -166,7 +166,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="requiredFacultyModalBody">
                 
                 <div class="col-12 d-flex justify-content-end">
                     <div class="custom-control custom-switch">
