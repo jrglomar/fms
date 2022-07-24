@@ -262,9 +262,11 @@
                         filename: function() {
                             return $('#pdf_filename').val()
                         },
-                        // customize: function (doc) {
-                        //    console.log(doc)
-                        // }
+                        customize: function(doc) {
+                            doc.content[1].table.widths =Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                            doc.defaultStyle.alignment = 'center';
+                            doc.styles.tableHeader.alignment = 'center';
+                        },
                     }
                 ],
                 "columns": [

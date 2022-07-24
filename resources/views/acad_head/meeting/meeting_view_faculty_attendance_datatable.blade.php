@@ -24,8 +24,8 @@
                                 <th>Time In</th>
                                 <th>Time Out</th>
                                 <th>Attendance Status</th>
-                                <th>Proof of Attendance File Directory</th>
-                                <th>Proof of Attendance File Link</th>
+                                <th>Proof of Attendance / Excuse Reason File Directory</th>
+                                <th>Proof of Attendance Link / Excuse Reason</th>
                             </tr>
                         </thead>
                         <tbody>

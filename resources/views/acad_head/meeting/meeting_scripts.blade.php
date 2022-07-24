@@ -243,6 +243,8 @@
                             notification("success", "Meeting");
                             $("#createForm").trigger("reset");
                             $("#create_card").collapse("hide");
+                            $('#agenda').summernote('reset');
+                            $('#description').summernote('reset');
                             $('.select2').val('').trigger("change");
                             refresh();
                         },
@@ -285,6 +287,15 @@
                     {
                         mins = mins;
                     }
+                    if(hours < 10)
+                    {
+                        hours = "0"+hours
+                    }
+                    else
+                    {
+                        hours = hours;
+                    }
+                    
                     
                     var moment_current_date = moment(current_time).format('L')
                     var moment_meeting_date = moment(responseData.date).format('L');
@@ -294,9 +305,14 @@
 
                     if(meeting_status == "Pending")
                     {
-
                         if(moment_meeting_date == moment_current_date && now >= responseData.start_time &&  now <= responseData.end_time) 
                         {
+                            console.log("Pending to On Going 299")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             let data = {
                                 "title": responseData.title,
                                 "meeting_type_id": responseData.meeting_type_id,
@@ -336,6 +352,12 @@
                         }
                         else if(moment_current_date > moment_meeting_date)
                         {
+                            console.log("Pending to Done 344")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             let data = {
                                 "title": responseData.title,
                                 "meeting_type_id": responseData.meeting_type_id,
@@ -375,10 +397,22 @@
                         }
                         else if(moment_current_date < moment_meeting_date)
                         {
+                            console.log("Pending to Pending 389")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             setInterval(window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id), 1500)
                         }
-                        else if(moment_current_date == moment_meeting_date && now > responseData.end_time)
+                        else if((moment_current_date == moment_meeting_date) && (now > responseData.end_time))
                         {
+                            console.log("Pending to Done 399")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             let data = {
                                 "title": responseData.title,
                                 "meeting_type_id": responseData.meeting_type_id,
@@ -418,19 +452,32 @@
                         }
                         else if(moment_current_date == moment_meeting_date && now < responseData.start_time && now < responseData.end_time)
                         {
+                            console.log("Pending to Pending 444")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             setInterval(window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id), 1500)
                         }
                     }
                     else if(meeting_status == "On Going")
                     {
-                        // var add_required_faculty_button = "";
+                        
+                        var add_required_faculty_button = "";
 
-                        // add_required_faculty_button = '<button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>';
+                        add_required_faculty_button = '<button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>';
 
-                        // $("#add_required_faculty").html(add_required_faculty_button);
+                        $("#add_required_faculty").html(add_required_faculty_button);
                         
                         if(moment_current_date > moment_meeting_date)
                         {
+                            console.log("On Going to Done 364")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             let data = {
                                 "title": responseData.title,
                                 "meeting_type_id": responseData.meeting_type_id,
@@ -470,6 +517,12 @@
                         }
                         else if(moment_current_date == moment_meeting_date && now > responseData.end_time)
                         {
+                            console.log("On Going to Done 509")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             let data = {
                                 "title": responseData.title,
                                 "meeting_type_id": responseData.meeting_type_id,
@@ -509,11 +562,23 @@
                         }
                         else
                         {
+                            console.log("On Going to On Going 554")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             setInterval(window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id), 1500)
                         }
                     }
                     else if(meeting_status == "Done" || meeting_status == "done")
                     {
+                            console.log("Done to Update Faculty Status 565")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                         $.ajax({
                             url: APP_URL + "/api/v1/meeting_attendance_required_faculty_list/faculty_list_time_out_null/" + meeting_id,
                             type: "GET",
