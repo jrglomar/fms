@@ -215,7 +215,7 @@
                     }
                     else if (responseData.length > 0)
                     {
-                        swalAlert('custom', 'The required document is already added.')
+                        swalAlert('warning', 'The required document is already added.')
                     }        
                 },
                 error: function(error){
@@ -336,6 +336,7 @@
 
         });
         // END OF UPDATE FUNCTION
+        
 
         // DEACTIVATE FUNCTION
         $(document).on("click", ".btnDeactivateRequiredDocument", function(){
@@ -401,6 +402,8 @@
             })
         });
         // END OF DEACTIVATE FUNCTION
+
+        
 
         // DEACTIVATE SUBMIT FUNCTION
         $('#deactivateForm').on('submit', function(e){

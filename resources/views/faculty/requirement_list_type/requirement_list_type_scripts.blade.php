@@ -59,7 +59,8 @@
                         $.each(data.submitted_requirements, function(i){
                             let mockFile = { name: data.submitted_requirements[i].file_name,
                                              id: data.submitted_requirements[i].id,
-                                             path: APP_URL + "/" + data.submitted_requirements[i].file_link_directory
+                                             path: APP_URL + "/" + data.submitted_requirements[i].file_link_directory,
+                                             status: data.submitted_requirements[i].status
                                             };
                             myDropzone.files.push(mockFile)
                             myDropzone.emit("addedfile", mockFile);
@@ -70,10 +71,15 @@
                 });
 
                 myDropzone.on("complete", function(file) {
-
-                    file.previewElement.querySelector('.dz-size').innerHTML = '';
-                    file.previewElement.querySelector('.dz-image').innerHTML = `<img src="${APP_URL + '/images/designs/file_upload.png'}">`;
-
+                    if(file.status == 'Submitted'){ 
+                        file.previewElement.querySelector('.dz-size').innerHTML = '';
+                        file.previewElement.querySelector('.dz-image').innerHTML = `<img src="${APP_URL + '/images/designs/file_submitted.png'}">`;
+                    }
+                    else{
+                        file.previewElement.querySelector('.dz-size').innerHTML = '';
+                        file.previewElement.querySelector('.dz-image').innerHTML = `<img src="${APP_URL + '/images/designs/file_upload.png'}">`;
+                    }
+                    
                     file.previewElement.addEventListener("click", function() {
                         // console.log(file)
                         window.open(file.path);

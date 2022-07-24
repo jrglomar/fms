@@ -35,7 +35,7 @@
                         orientation: 'landscape',
                         pageSize: 'LEGAL',
                         exportOptions: {
-                            columns: [ 1, 2, 3, 4, 5, 6 ],
+                            columns: ':visible',
                             modifier: { order: 'index' },
                             alignment: 'center'
                         },
@@ -65,7 +65,7 @@
                         text: 'Export as XLS',
                         extension: '.xlsx',
                         exportOptions: {
-                            columns: [ 1, 2, 3, 4, 5, 6 ],
+                            columns: ':visible',    
                             modifier: { order: 'index' }
                         },
                         filename: function() {
