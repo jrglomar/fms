@@ -27,7 +27,7 @@ class CreateMeetingsTable extends Migration
              $table->date('date');
              $table->time('start_time');
              $table->time('end_time');
-             $table->string('agenda')->nullable();
+             $table->longText('agenda')->nullable();
              $table->longText('description')->nullable();
              $table->boolean('is_required')->nullable();
              $table->string('status')->default('Pending');

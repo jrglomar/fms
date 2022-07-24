@@ -1,6 +1,38 @@
 
 <script>
     $(document).ready(function(){
+
+    // Initialize the Summernote WYSIWYG TEXT AREA
+        $('#agenda').summernote({
+            placeholder: 'Agenda...',
+            tabsize: 2,
+            height: 100,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen']],
+            ]
+        });
+        $('#description').summernote({
+            placeholder: 'Description...',
+            tabsize: 2,
+            height: 100,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen']],
+            ]
+        });
+    // END Initialize the Summernote WYSIWYG TEXT AREA
+
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
@@ -52,15 +84,11 @@
                     { data: "agenda"},
                     { data: "location"},
                     { data: "start_time", render: function(data, type, row){
-                        console.log("0000-00-00 "+data)
-                        console.log(row.date)
-                        
                         return `<span class="badge badge-info">${moment(row.date).format('LL')}, 
                             ${moment("2022-06-27 "+data).format('LT')} - ${moment("2022-06-27 "+row.end_time).format('LT')
                             }</span>`
                     }}, // merge date (to be add), start_time, end_time
                     { data: "is_required", render: function (data, type, row) { // required
-                          console.log(data)
                           if(data == true)
                           {
                             return `<p>Yes</p>`
@@ -184,13 +212,10 @@
             $.each(form, function(){
                 data[[this.name]] = this.value;
             })
-            console.log(JSON.stringify(data))
 
             var startTime = $('#start_time').val();
             var endTime = $('#end_time').val();
-
-            console.log(startTime);
-            console.log(endTime);   
+  
             var meeting_type = $("#meeting_types_id").val()
 
                 if(endTime < startTime)
@@ -215,7 +240,6 @@
                             "Content-Type": "application/json"
                         },
                         success: function(data){
-                            console.log(data);
                             notification("success", "Meeting");
                             $("#createForm").trigger("reset");
                             $("#create_card").collapse("hide");
@@ -248,6 +272,7 @@
                 dataType: "JSON",
                 success: function (responseData) 
                 {  
+                    
                     var meeting_status = responseData.status
                     var current_time = new Date(); // current time
                     var hours = current_time.getHours();
@@ -495,7 +520,6 @@
                             dataType: "JSON",
                             success: function (responseData) 
                             {  
-                                console.log(responseData)
                                 if (responseData.length != 0)
                                 {
                                     $.each(responseData, function (i, dataOptions) 
@@ -663,7 +687,6 @@
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
             let form_url = BASE_API + id
-            console.log(id)
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -674,7 +697,6 @@
                 },
 
                 success: function(data){
-                    console.log(data)
                     Swal.fire({
                         title: "Are you sure?",
                         text: "You won't able to remove this.",
@@ -759,7 +781,6 @@
         // ACTIVATE FUNCTION
         $(document).on("click", ".btnActivate", function(){
             var id = this.id;
-            console.log(id)
         });
         // END OF ACTIVATE FUNCTION
 

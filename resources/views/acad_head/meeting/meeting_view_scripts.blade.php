@@ -26,6 +26,70 @@
                 dataType: "JSON",
                 success: function (responseData) 
                 {   
+                    var meeting_status = responseData.status
+
+                    if(meeting_status == "Done" || meeting_status == "done")
+                    {
+                        $.ajax({
+                            url: APP_URL + "/api/v1/meeting_attendance_required_faculty_list/faculty_list_time_out_null/" + MEETING_ID,
+                            type: "GET",
+                            dataType: "JSON",
+                            success: function (responseData) 
+                            {  
+                                if (responseData.length != 0)
+                                {
+                                    $.each(responseData, function (i, dataOptions) 
+                                    {
+                                        var time_in = responseData[i].time_in
+                                        var time_out = responseData[i].time_out
+                                        var attendance_status = responseData[i].attendance_status
+                                        var remarks = responseData[i].remarks
+                                        var proof_of_attendance_file_link = responseData[i].proof_of_attendance_file_link
+                                        var faculty_id = responseData[i].faculty_id
+                                        var meeting_id = responseData[i].meeting_id
+                                        var id = responseData[i].id
+
+                                        $.ajax(
+                                        {
+                                            url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/' + id,
+                                            type: "PUT",
+                                            data: JSON.stringify(
+                                            {		
+                                                "time_in": time_in,
+                                                "time_out": time_out,
+                                                "attendance_status": "Absent",
+                                                "remarks": remarks,
+                                                "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                                                "faculty_id": faculty_id,
+                                                "meeting_id": meeting_id,
+                                            }),
+                                            dataType: "JSON",
+                                            contentType: 'application/json',
+                                            processData: false,
+                                            cache: false,
+                                            success: function (responseJSON) 
+                                            {     
+                                                refresh();                    
+                                            },
+                                            error: function(error){
+                                                $.each(error.responseJSON.errors, function(key,value) {
+                                                    swalAlert('warning', value)
+                                                });
+                                                console.log(error)
+                                                console.log(`message: ${error.responseJSON.message}`)
+                                                console.log(`status: ${error.status}`)
+                                            },
+                                        });
+                                    });
+                                }
+                                else
+                                {
+                                    refresh();
+                                }
+                            }
+                        });
+                        refresh();
+                    }
                     
 
                     var isRequired = responseData.is_required
@@ -85,14 +149,14 @@
                                                     '<span><b>Agenda: </b>' +
                                                 '</div>' +
                                                 '<div class="col-md-12">' +
-                                                    '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;' +responseData.agenda +   
+                                                    '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;&emsp;&emsp;' +responseData.agenda +   
                                                 '</div>' + 
                                                 '<br>' + 
                                                 '<div class="col-md-12">' +
                                                     '<span><b>Description: </b>' +
                                                 '</div>' +
                                                 '<div class="col-md-12">' +
-                                                    '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;' +responseData.description +   
+                                                    '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;&emsp;&emsp;' +responseData.description +   
                                                 '</div>' + 
                                             '</div>' + 
                                         '</div>' +
@@ -425,7 +489,64 @@
         // ENDFUNCTION ON EDIT REQUIRED FACULTY LIST BUTTON
 
 // ------------------------------------------------------------------------------------------------- //
+    // UNSELECT ALL BUTTON ON REQUIRED FACULTY LIST MODAL
+        $('#btn_select_all').on('change', function(){
 
+            let status = $('#btn_select_all').is(":checked")
+
+            if(status == true){
+                $('#select_all_label').html('Unselect all')
+                $("input[name='faculty_required[]']").prop('checked', true)
+            }
+            else{
+                $('#select_all_label').html('Select all')
+                $("input[name='faculty_required[]']").prop('checked', false)
+            }
+        })
+    // END UNSELECT ALL BUTTON ON REQUIRED FACULTY LIST MODAL
+// ------------------------------------------------------------------------------------------------- //
+
+        // FUNCTION FOR UPDATING SUBMITTED REQUIREMENTS
+        $('.btnSubmittedUpdate').on('click', function(e){
+            let status = $('#marf_status').val()
+            let remarks = $('#marf_remarks').val()
+            let id = $('#marf_id').val()
+
+            let form_url = BASE_API + id
+            let form_data = {
+                "status": status,
+                "remarks": remarks
+            }
+
+            $.ajax({
+                    url: form_url,
+                    method: "PUT",
+                    data: JSON.stringify(form_data),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        console.log(data)
+                        notification('info', 'Submitted Requirement/s')
+                        $('#fileViewerModal').modal('hide');
+                        refresh()
+                    },
+                    error: function(error){
+                        $.each(error.responseJSON.errors, function(key,value) {
+                            swalAlert('warning', value)
+                        });
+                        console.log(error)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                // ajax closing tag
+            })
+        })
+
+// ------------------------------------------------------------------------------------------------- //
         removeLoader()
     // END OF JQUERY FUNCTIONS
     });
