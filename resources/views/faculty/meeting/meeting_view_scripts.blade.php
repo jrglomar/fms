@@ -557,6 +557,128 @@
                         {   
                             console.log("This is it")
                             console.log(marfData)
+                            var current_time = new Date(); // current time
+                            var hours = current_time.getHours();
+                            var mins = current_time.getMinutes();
+                            if(mins < 10)
+                            {
+                                mins = "0"+mins
+                            }
+                            else
+                            {
+                                mins = mins;
+                            }
+                            if(hours < 10)
+                            {
+                                hours = "0"+hours
+                            }
+                            else
+                            {
+                                hours = hours;
+                            }
+
+                            var moment_current_date = moment(current_time).format('L')
+                            var moment_meeting_date = moment(responseData.date).format('L');
+
+                            var now = hours+":"+mins+":00";
+
+                            var meeting_status = responseData.status
+
+                            if(meeting_status == "On Going")
+                            {
+                                if(moment_current_date > moment_meeting_date)
+                                {
+                                    console.log("On Going to Done 364")
+                                    console.log("Now: "+now)
+                                    console.log("Meeting Date: " + moment_meeting_date)
+                                    console.log("Current Date: " + moment_current_date)
+                                    console.log("Start Time: " + responseData.start_time)
+                                    console.log("End Time: " + responseData.end_time)
+                                    let data = {
+                                        "title": responseData.title,
+                                        "meeting_type_id": responseData.meeting_type_id,
+                                        "description": responseData.description,
+                                        "agenda": responseData.agenda,
+                                        "location": responseData.location,
+                                        "date": responseData.date,
+                                        "start_time": responseData.start_time,
+                                        "end_time": responseData.end_time,
+                                        "is_required": responseData.is_required,
+                                        "status": "Done",
+                                    }
+                                    $.ajax({
+                                        url: BASE_API + meeting_id,
+                                        method: "PUT",
+                                        data: JSON.stringify(data),
+                                        dataType: "JSON",
+                                        headers: {
+                                            "Accept": "application/json",
+                                            "Authorization": API_TOKEN,
+                                            "Content-Type": "application/json"
+                                        },
+                                        success: function(data)
+                                        {
+                                            
+                                        },
+                                        error: function(error){
+                                            $.each(error.responseJSON.errors, function(key,value) {
+                                                swalAlert('warning', value)
+                                            });
+                                            console.log(error)
+                                            console.log(`message: ${error.responseJSON.message}`)
+                                            console.log(`status: ${error.status}`)
+                                        }
+                                    // ajax closing tag
+                                    })
+                                }
+                                if(moment_current_date == moment_meeting_date && now > responseData.end_time)
+                                {
+                                    console.log("On Going to Done 567")
+                                    console.log("Now: "+now)
+                                    console.log("Meeting Date: " + moment_meeting_date)
+                                    console.log("Current Date: " + moment_current_date)
+                                    console.log("Start Time: " + responseData.start_time)
+                                    console.log("End Time: " + responseData.end_time)
+                                    let data = {
+                                        "title": responseData.title,
+                                        "meeting_type_id": responseData.meeting_type_id,
+                                        "description": responseData.description,
+                                        "agenda": responseData.agenda,
+                                        "location": responseData.location,
+                                        "date": responseData.date,
+                                        "start_time": responseData.start_time,
+                                        "end_time": responseData.end_time,
+                                        "is_required": responseData.is_required,
+                                        "status": "Done",
+                                    }
+                                    $.ajax({
+                                        url: BASE_API + MEETING_ID,
+                                        method: "PUT",
+                                        data: JSON.stringify(data),
+                                        dataType: "JSON",
+                                        headers: {
+                                            "Accept": "application/json",
+                                            "Authorization": API_TOKEN,
+                                            "Content-Type": "application/json"
+                                        },
+                                        success: function(data)
+                                        {
+                                            
+                                        },
+                                        error: function(error){
+                                            $.each(error.responseJSON.errors, function(key,value) {
+                                                swalAlert('warning', value)
+                                            });
+                                            console.log(error)
+                                            console.log(`message: ${error.responseJSON.message}`)
+                                            console.log(`status: ${error.status}`)
+                                        }
+                                    // ajax closing tag
+                                    })
+                                }
+                            }
+
+
                             var isRequired = responseData.is_required
                             var status = responseData.status
                             
@@ -737,17 +859,34 @@
                                             var headerForTab2 = 'Reason Why....';
                                             $("#header5forTab2").html(headerForTab2);
 
-                                            row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                            if(marfData[0].proof_of_attendance_file_link == null)
+                                            {
+                                                row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
                                                                     '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
                                                                     '<div class="alert-body text-center">' +
-                                                                        '<b>Meeting was already done</b>' +
+                                                                        '<b>Meeting was already done. Your Request was also Submitted, Please Upload a Valid reason to Check</b>' +
                                                                     '</div>' +
                                                                 '</div>' +
-                                                                '<br>';
+                                                                '<br>' +
                                                                 '<div class="col-12">' +
-                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Check My Uploaded Reason Why</b></button>' +
+                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Upload Reason Why</b></button>' +
                                                                 '</div>' +
                                                                 '<br>';
+                                            }
+                                            else
+                                            {
+                                                row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        '<b>Meeting was already done. You was also Request Submitted, Please Upload a Valid reason to Check</b>' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<br>' +
+                                                                '<div class="col-12">' +
+                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Check my Uploaded Reason Why</b></button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                            }
                                         }
                                         console.log("559")
                                         
@@ -779,17 +918,34 @@
                                             var headerForTab2 = 'Reason Why....';
                                             $("#header5forTab2").html(headerForTab2);
 
-                                            row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                            if(marfData[0].proof_of_attendance_file_link == null)
+                                            {
+                                                row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
                                                                     '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
                                                                     '<div class="alert-body text-center">' +
-                                                                        '<b>Meeting was already done</b>' +
+                                                                        '<b>Meeting was already done. Your Request was also Submitted, Please Upload a Valid reason to Check</b>' +
                                                                     '</div>' +
                                                                 '</div>' +
                                                                 '<br>' +
                                                                 '<div class="col-12">' +
-                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Check My Uploaded Reason Why</b></button>' +
+                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Upload Reason Why</b></button>' +
                                                                 '</div>' +
                                                                 '<br>';
+                                            }
+                                            else
+                                            {
+                                                row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        '<b>Meeting was already done. Your Request was also Submitted, Please Upload a Valid reason to Check</b>' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<br>' +
+                                                                '<div class="col-12">' +
+                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Check my Uploaded Reason Why</b></button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                            }
                                         }
                                     }
                                 }

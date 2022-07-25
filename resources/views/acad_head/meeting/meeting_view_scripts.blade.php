@@ -69,7 +69,7 @@
                                             cache: false,
                                             success: function (responseJSON) 
                                             {     
-                                                refresh();                    
+                                                refresh();       
                                             },
                                             error: function(error){
                                                 $.each(error.responseJSON.errors, function(key,value) {
@@ -348,6 +348,7 @@
         
     $(document).on("click", ".btnViewDetails", function(){
         var faculty_id = this.id
+        $('#marf_id').val(faculty_id)
 
         console.log(MEETING_ID)
         console.log(faculty_id)
@@ -358,6 +359,7 @@
             dataType: "JSON",
             success: function (responseData)
             {   
+                console.log()
                 let html = `<li class="list-group-item d-flex justify-content-between" disabled="">
                                                 <span class="text-primary"><strong>Submitted File/s</strong></span>
                                                 <span class="text-primary"><strong>Date Submitted</strong></span>
@@ -512,40 +514,60 @@
         $('.btnSubmittedUpdate').on('click', function(e){
             let status = $('#marf_status').val()
             let remarks = $('#marf_remarks').val()
-            let id = $('#marf_id').val()
+            let faculty_id = $('#marf_id').val()
 
-            let form_url = BASE_API + id
-            let form_data = {
-                "status": status,
-                "remarks": remarks
-            }
+            $.ajax(
+            {
+                url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + faculty_id,
+                type: "GET",
+                dataType: "json",
+                success: function (data) 
+                { 
+                    var time_in = data[0].time_in
+                    var time_out = data[0].time_out
+                    var attendance_status = data[0].attendance_status
+                    var proof_of_attendance_file_link = data[0].proof_of_attendance_link
+                    var faculty_id = faculty_id
+                    var meeting_id = MEETING_ID
+                    var id = data[0].id
 
-            $.ajax({
-                    url: form_url,
-                    method: "PUT",
-                    data: JSON.stringify(form_data),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        "Content-Type": "application/json"
-                    },
-                    success: function(data){
-                        console.log(data)
-                        notification('info', 'Submitted Requirement/s')
-                        $('#fileViewerModal').modal('hide');
-                        refresh()
-                    },
-                    error: function(error){
-                        $.each(error.responseJSON.errors, function(key,value) {
-                            swalAlert('warning', value)
-                        });
-                        console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
-                // ajax closing tag
-            })
+                    $.ajax(
+                    {
+                        url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/' + id,
+                        type: "PUT",
+                        data: JSON.stringify(
+                        {		
+                            "time_in": time_in,
+                            "time_out": time_out,
+                            "attendance_status": attendance_status,
+                            "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                            "remarks": remarks,
+                            "status": status,
+                            "faculty_id": faculty_id,
+                            "meeting_id": meeting_id,
+                        }),
+                        dataType: "JSON",
+                        contentType: 'application/json',
+                        processData: false,
+                        cache: false,
+                        success: function (responseJSON) 
+                        {
+                            console.log(data)
+                            notification('info', 'Submitted Proof/s / Submitten Reason/s')
+                            $('#fileViewerModal').modal('hide');
+                            refresh()                         
+                        },
+                        error: function(error){
+                            $.each(error.responseJSON.errors, function(key,value) {
+                                swalAlert('warning', value)
+                            });
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        },
+                    }); 
+                }
+            });
         })
 
 // ------------------------------------------------------------------------------------------------- //
