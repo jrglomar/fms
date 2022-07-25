@@ -1,6 +1,38 @@
 
 <script>
     $(document).ready(function(){
+
+    // Initialize the Summernote WYSIWYG TEXT AREA
+        $('#agenda').summernote({
+            placeholder: 'Agenda...',
+            tabsize: 2,
+            height: 100,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen']],
+            ]
+        });
+        $('#description').summernote({
+            placeholder: 'Description...',
+            tabsize: 2,
+            height: 100,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen']],
+            ]
+        });
+    // END Initialize the Summernote WYSIWYG TEXT AREA
+
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
@@ -52,15 +84,11 @@
                     { data: "agenda"},
                     { data: "location"},
                     { data: "start_time", render: function(data, type, row){
-                        console.log("0000-00-00 "+data)
-                        console.log(row.date)
-                        
                         return `<span class="badge badge-info">${moment(row.date).format('LL')}, 
                             ${moment("2022-06-27 "+data).format('LT')} - ${moment("2022-06-27 "+row.end_time).format('LT')
                             }</span>`
                     }}, // merge date (to be add), start_time, end_time
                     { data: "is_required", render: function (data, type, row) { // required
-                          console.log(data)
                           if(data == true)
                           {
                             return `<p>Yes</p>`
@@ -184,13 +212,10 @@
             $.each(form, function(){
                 data[[this.name]] = this.value;
             })
-            console.log(JSON.stringify(data))
 
             var startTime = $('#start_time').val();
             var endTime = $('#end_time').val();
-
-            console.log(startTime);
-            console.log(endTime);   
+  
             var meeting_type = $("#meeting_types_id").val()
 
                 if(endTime < startTime)
@@ -215,10 +240,11 @@
                             "Content-Type": "application/json"
                         },
                         success: function(data){
-                            console.log(data);
                             notification("success", "Meeting");
                             $("#createForm").trigger("reset");
                             $("#create_card").collapse("hide");
+                            $('#agenda').summernote('reset');
+                            $('#description').summernote('reset');
                             $('.select2').val('').trigger("change");
                             refresh();
                         },
@@ -248,6 +274,7 @@
                 dataType: "JSON",
                 success: function (responseData) 
                 {  
+                    
                     var meeting_status = responseData.status
                     var current_time = new Date(); // current time
                     var hours = current_time.getHours();
@@ -260,6 +287,15 @@
                     {
                         mins = mins;
                     }
+                    if(hours < 10)
+                    {
+                        hours = "0"+hours
+                    }
+                    else
+                    {
+                        hours = hours;
+                    }
+                    
                     
                     var moment_current_date = moment(current_time).format('L')
                     var moment_meeting_date = moment(responseData.date).format('L');
@@ -269,9 +305,14 @@
 
                     if(meeting_status == "Pending")
                     {
-
                         if(moment_meeting_date == moment_current_date && now >= responseData.start_time &&  now <= responseData.end_time) 
                         {
+                            console.log("Pending to On Going 299")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             let data = {
                                 "title": responseData.title,
                                 "meeting_type_id": responseData.meeting_type_id,
@@ -311,6 +352,12 @@
                         }
                         else if(moment_current_date > moment_meeting_date)
                         {
+                            console.log("Pending to Done 344")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             let data = {
                                 "title": responseData.title,
                                 "meeting_type_id": responseData.meeting_type_id,
@@ -350,10 +397,22 @@
                         }
                         else if(moment_current_date < moment_meeting_date)
                         {
+                            console.log("Pending to Pending 389")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             setInterval(window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id), 1500)
                         }
-                        else if(moment_current_date == moment_meeting_date && now > responseData.end_time)
+                        else if((moment_current_date == moment_meeting_date) && (now > responseData.end_time))
                         {
+                            console.log("Pending to Done 399")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             let data = {
                                 "title": responseData.title,
                                 "meeting_type_id": responseData.meeting_type_id,
@@ -393,11 +452,18 @@
                         }
                         else if(moment_current_date == moment_meeting_date && now < responseData.start_time && now < responseData.end_time)
                         {
+                            console.log("Pending to Pending 444")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             setInterval(window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id), 1500)
                         }
                     }
                     else if(meeting_status == "On Going")
                     {
+                        
                         // var add_required_faculty_button = "";
 
                         // add_required_faculty_button = '<button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>';
@@ -406,6 +472,12 @@
                         
                         if(moment_current_date > moment_meeting_date)
                         {
+                            console.log("On Going to Done 364")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             let data = {
                                 "title": responseData.title,
                                 "meeting_type_id": responseData.meeting_type_id,
@@ -445,6 +517,12 @@
                         }
                         else if(moment_current_date == moment_meeting_date && now > responseData.end_time)
                         {
+                            console.log("On Going to Done 509")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             let data = {
                                 "title": responseData.title,
                                 "meeting_type_id": responseData.meeting_type_id,
@@ -484,18 +562,29 @@
                         }
                         else
                         {
+                            console.log("On Going to On Going 554")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                             setInterval(window.location.replace(APP_URL + '/acad_head/meeting/'+meeting_id), 1500)
                         }
                     }
                     else if(meeting_status == "Done" || meeting_status == "done")
                     {
+                            console.log("Done to Update Faculty Status 565")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
                         $.ajax({
                             url: APP_URL + "/api/v1/meeting_attendance_required_faculty_list/faculty_list_time_out_null/" + meeting_id,
                             type: "GET",
                             dataType: "JSON",
                             success: function (responseData) 
                             {  
-                                console.log(responseData)
                                 if (responseData.length != 0)
                                 {
                                     $.each(responseData, function (i, dataOptions) 
@@ -663,7 +752,6 @@
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
             let form_url = BASE_API + id
-            console.log(id)
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -674,7 +762,6 @@
                 },
 
                 success: function(data){
-                    console.log(data)
                     Swal.fire({
                         title: "Are you sure?",
                         text: "You won't able to remove this.",
@@ -759,7 +846,6 @@
         // ACTIVATE FUNCTION
         $(document).on("click", ".btnActivate", function(){
             var id = this.id;
-            console.log(id)
         });
         // END OF ACTIVATE FUNCTION
 

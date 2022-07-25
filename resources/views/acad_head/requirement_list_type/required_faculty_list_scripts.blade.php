@@ -43,10 +43,14 @@
 
                     }},
                     { data: "id", render: function(data, type, row){
-                        return `</div>
+                        return `
                                     <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.id}">
-                                    <div>Check Uploaded Files</div>
-                                </button>`
+                                        <div>Check Uploaded Files</div>
+                                    </button>&nbsp;
+                                    <button type="button" class="btn btn-sm btn-danger btnRemoveRequired" id="${row.id}">
+                                        Unrequire
+                                    </button>
+                                `
                     }}
                 ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1,] }],
@@ -163,12 +167,23 @@
                         let file_link_directory = APP_URL + "/" + data.submitted_requirements[i].file_link_directory
                         let file_name = data.submitted_requirements[i].file_name
                         let date_submitted = data.submitted_requirements[i].date_submitted
+                        let status = data.submitted_requirements[i].status
 
-                        html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                        if(status == 'Submitted'){
+                            html += `<li class="list-group-item d-flex justify-content-between align-items-center">
                                     <button class="btn btn-info" onclick="window.open('${file_link_directory}')" target="_blank">${file_name}</button>
                                     
-                                    <span class="badge badge-light">${moment(date_submitted).format('lll')}</span>
-                                 </li>`
+                                    <span class="badge badge-light">${moment(date_submitted).format('lll')} - ${status}</span>
+                                    
+                                    </li>`
+                        }
+                        else{
+                            html += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <button class="btn btn-info" onclick="window.open('${file_link_directory}')" target="_blank">${file_name}</button>
+                                    
+                                    <span class="badge badge-light">${moment(date_submitted).format('lll')} - Uploaded</span>
+                                    </li>`
+                        }
                     })
 
                     // PASSING VAR DATA TO DOM
@@ -286,6 +301,70 @@
                 // ajax closing tag
             })
         })
+
+        // DEACTIVATE FUNCTION
+        $(document).on("click", ".btnRemoveRequired", function(){
+            var id = this.id;
+            let form_url = BASE_API + id
+
+            $.ajax({
+                url: form_url,
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    "Content-Type": "application/json"
+                },
+
+                success: function(data){
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't able to remove this.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes, remove it!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: BASE_API + 'destroy/' + data.id,
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data){
+                                    notification('error', 'Required User')
+                                    setInterval(() => {
+                                        location.reload()
+                                    }, 1000);
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    });
+                },
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
+            // ajax closing tag
+            })
+        });
+        // END OF DEACTIVATE FUNCTION
 
         loadRequirementTypes();
         requiredFacultyDatatable();

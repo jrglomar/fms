@@ -170,6 +170,14 @@
                     {
                         mins = mins;
                     }
+                    if(hours < 10)
+                    {
+                        hours = "0"+hours
+                    }
+                    else
+                    {
+                        hours = hours;
+                    }
                     
                     var moment_current_date = moment(current_time).format('L')
                     var moment_meeting_date = moment(responseData.date).format('L');

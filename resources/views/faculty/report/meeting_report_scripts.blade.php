@@ -35,21 +35,48 @@
                         orientation: 'landscape',
                         pageSize: 'LEGAL',
                         exportOptions: {
-                            columns: [ 1, 2, 3, 4, 5, 6, 8, 9 ],
-                            modifier: { order: 'index' }
+                            columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
+                            modifier: { order: 'current' }
                         },
                         className: 'btn-report info',
                         titleAttr: 'PDF export.',
                         extension: '.pdf',
+                        // download: 'open', // FOR NOT DOWNLOADING THE FILE AND OPEN IN NEW TAB
                         title: function() {
                             var current_time = new Date(); // current time
-                            return "Meeting_Report" 
-                            // + moment(current_time).format('YYYY_MMMM_DD')
+                            var date_filter_from = $('#min-date').val();
+                            var date_filter_to = $('#max-date').val();
+
+                            if(( date_filter_from == "") && (date_filter_to == ""))
+                            {
+                                console.log(date_filter_from)
+                                console.log(date_filter_to)
+                                return "Meeting_Report"
+                            }
+                            else if((date_filter_from != null || date_filter_from != "") && (date_filter_to != null || date_filter_to != ""))
+                            {
+                                console.log(date_filter_from)
+                                console.log(date_filter_to)
+                                return "Meeting_Report_from_" + moment(date_filter_from).format('YYYY_MMMM_DD') + "_to_" + moment(date_filter_to).format('YYYY_MMMM_DD')
+                            }
                         },
                         filename: function() {
                             var current_time = new Date(); // current time
-                            return "Meeting_Report" 
-                            // + moment(current_time).format('YYYY_MMMM_DD')
+                            var date_filter_from = $('#min-date').val();
+                            var date_filter_to = $('#max-date').val();
+
+                            if(( date_filter_from == "") && (date_filter_to == ""))
+                            {
+                                console.log(date_filter_from)
+                                console.log(date_filter_to)
+                                return "Meeting_Report"
+                            }
+                            else if((date_filter_from != null || date_filter_from != "") && (date_filter_to != null || date_filter_to != ""))
+                            {
+                                console.log(date_filter_from)
+                                console.log(date_filter_to)
+                                return "Meeting_Report_from_" + moment(date_filter_from).format('YYYY_MMMM_DD') + "_to_" + moment(date_filter_to).format('YYYY_MMMM_DD')
+                            }
                         },
                         customize: function(doc) {
                             doc.content[1].table.widths =Array(doc.content[1].table.body[0].length + 1).join('*').split('');
@@ -64,18 +91,44 @@
                         text: 'Export as XLS',
                         extension: '.xlsx',
                         exportOptions: {
-                            columns: [ 1, 2, 3, 4, 5, 6, 7, 9 ],
-                            modifier: { order: 'index' }
+                            columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
+                            modifier: { order: 'current' }
                         },
                         filename: function() {
                             var current_time = new Date(); // current time
-                            return "Meeting_Report" 
-                            // + moment(current_time).format('YYYY_MMMM_DD')
+                            var date_filter_from = $('#min-date').val();
+                            var date_filter_to = $('#max-date').val();
+
+                            if(( date_filter_from == "") && (date_filter_to == ""))
+                            {
+                                console.log(date_filter_from)
+                                console.log(date_filter_to)
+                                return "Meeting_Report"
+                            }
+                            else if((date_filter_from != null || date_filter_from != "") && (date_filter_to != null || date_filter_to != ""))
+                            {
+                                console.log(date_filter_from)
+                                console.log(date_filter_to)
+                                return "Meeting_Report_from_" + moment(date_filter_from).format('YYYY_MMMM_DD') + "_to_" + moment(date_filter_to).format('YYYY_MMMM_DD')
+                            }
                         },
                         title: function() {
                             var current_time = new Date(); // current time
-                            return "Meeting_Report" 
-                            // + moment(current_time).format('YYYY_MMMM_DD')
+                            var date_filter_from = $('#min-date').val();
+                            var date_filter_to = $('#max-date').val();
+
+                            if(( date_filter_from == "") && (date_filter_to == ""))
+                            {
+                                console.log(date_filter_from)
+                                console.log(date_filter_to)
+                                return "Meeting_Report"
+                            }
+                            else if((date_filter_from != null || date_filter_from != "") && (date_filter_to != null || date_filter_to != ""))
+                            {
+                                console.log(date_filter_from)
+                                console.log(date_filter_to)
+                                return "Meeting_Report_from_" + moment(date_filter_from).format('YYYY_MMMM_DD') + "_to_" + moment(date_filter_to).format('YYYY_MMMM_DD')
+                            }
                         },
                     }]
                 },

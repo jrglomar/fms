@@ -159,7 +159,7 @@
                     { data: "status"},
                 ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 8] }],
-                "order": [[2, "desc"]]
+                "order": [[2, "asc"]]
                 })
         }
         // END OF MEETING DATATABLE FUNCTION

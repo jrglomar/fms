@@ -32,6 +32,8 @@
             $("#createForm").trigger("reset")
             $("#create_card").collapse("hide")
             $('#createForm').parsley().reset();
+            $('#agenda').summernote('reset');
+            $('#description').summernote('reset');
         });
 
         $('#editModal').on('show.bs.modal', function() {

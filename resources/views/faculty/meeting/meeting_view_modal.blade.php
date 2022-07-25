@@ -1,4 +1,4 @@
-{{-- UPLOAD PROOF OF ATTENDANCE MODAL --}}
+{{-- UPLOAD PROOF OF ATTENDANCE / VALID REASON (FOR EXCUSE) MODAL --}}
     <!-- Modal-->
     <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
         <div role="document" class="modal-dialog modal-lg">
@@ -8,7 +8,7 @@
                         <h6 class="font-weight-bold">Upload File</h6>
                     </div>
                     <div class="tabs" id="tab02">
-                        <h6 class="text-muted">Upload Link</h6>
+                        
                     </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -41,11 +41,10 @@
                     </fieldset>
                     <fieldset id="tab021">
                         <div class="bg-light">
-                            <h5 class="text-center mb-4 mt-0 pt-4">Upload Link</h5>
+                            <h5 class="text-center mb-4 mt-0 pt-4" id="header5forTab2"></h5>
                             <form id="proofLinkForm" data-parsley-validate>
-                                <div class="form-group pb-2 px-3">
-                                    <input type="text" class="form-control" id="proof_of_attendance_file_link" name="proof_of_attendance_file_link"
-                                    placeholder="Link" tabindex="1" required>
+                                <div class="form-group col-md-12" id ="LinkOrReasonContent">
+                                    
                                 </div>
                                 <div class="form-group pb-5 row justify-content-center">
                                     <button type="submit" id="proofCreateBtn" class="btn btn-success px-3"></button>
@@ -61,4 +60,4 @@
         </div>
     </div>
 
-{{-- END UPLOAD PROOF OF ATTENDANCE MODAL --}}
+{{-- END UPLOAD PROOF OF ATTENDANCE / VALID REASON (FOR EXCUSE) MODAL --}}

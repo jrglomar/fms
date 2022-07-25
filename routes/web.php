@@ -197,14 +197,24 @@ Route::group(['middleware' => ['role.acadhead'],
     })->name('acad_head_profile');
 
     // ------------MEETING--------------- //
+    Route::get('/observation', function () {
+        return view('acad_head/observation/observation', ['page_title' => 'Observation']);
+    })->name('acad_head_observation');
+
+    // ------------MEETING - VIEW --------------- //
+    Route::get('/meeting/{id}', function ($id) {
+        return view('acad_head/meeting/meeting_view', ['page_title' => 'Meeting', 'meeting_id' => $id]);
+    })->name('acad_head_meeting_view');
+
+    // ------------MEETING--------------- //
     Route::get('/meeting', function () {
         return view('acad_head/meeting/meeting', ['page_title' => 'Meeting']);
     })->name('acad_head_meeting');
 
-        // ------------MEETING - VIEW --------------- //
-        Route::get('/meeting/{id}', function ($id) {
-            return view('acad_head/meeting/meeting_view', ['page_title' => 'Meeting', 'meeting_id' => $id]);
-        })->name('acad_head_meeting_view');
+    // ------------MEETING - VIEW --------------- //
+    Route::get('/meeting/{id}', function ($id) {
+        return view('acad_head/meeting/meeting_view', ['page_title' => 'Meeting', 'meeting_id' => $id]);
+    })->name('acad_head_meeting_view');
 
     // ------------REQUIREMENTS BIN--------------- //
     Route::get('/requirement_bin', function () {

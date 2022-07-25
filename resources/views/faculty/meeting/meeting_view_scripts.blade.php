@@ -139,26 +139,31 @@
                             "file_name": response.upload.filename
                         }]
                         // ajax opening tag
-                            $.ajax({
-                                url: APP_URL + '/api/v1/meeting_submitted_proof/multi_insert',
-                                method: "POST",
-                                data: JSON.stringify(submission_data),
-                                dataType: "JSON",
-                                headers: {
-                                    "Accept": "application/json",
-                                    "Authorization": API_TOKEN,
-                                    "Content-Type": "application/json"
-                                },
-                                success: function(data){
-                                    if(data.status == "success"){
-                                        notification('success', response.upload.filename)
-                                    }
-                                },
-                                error: function(error){
-                                    $.each(error.responseJSON.errors, function(key, value){
-                                            swalAlert('warning', value)
-                                    })
+                        $.ajax({
+                            url: APP_URL + '/api/v1/meeting_submitted_proof/multi_insert',
+                            method: "POST",
+                            data: JSON.stringify(submission_data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data){
+                                if(data.status == "success"){
+                                    notification('success', response.upload.filename)
                                 }
+                            },
+                            complete: function() {
+                                setInterval(() => {
+                                        location.reload()
+                                    }, 1000);
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key, value){
+                                        swalAlert('warning', value)
+                                })
+                            }
                         })
                         // ajax closing tag
                     },
@@ -211,7 +216,6 @@
                 console.log(`message: ${error.responseJSON.message}`)
                 console.log(`status: ${error.status}`)
             },
-            
         });
 
         $('#btnDone').on('click', function(){
@@ -254,6 +258,14 @@
                             else
                             {
                                 mins = mins;
+                            }
+                            if(hours < 10)
+                            {
+                                hours = "0"+hours
+                            }
+                            else
+                            {
+                                hours = hours;
                             }
                             var moment_current_date = moment(current_time).format('LL')
                             var now = hours+":"+mins+":00";
@@ -317,6 +329,113 @@
         }
         // END TIME IN BUTTON FUNCTION
 
+        // REQUEST TO EXCUSE BUTTON FUNCTION
+        requestToExcuse = () => 
+        {
+            Swal.fire(
+            {
+                title: "Are you sure you?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: !0,
+                confirmButtonColor: "#34c38f",
+                cancelButtonColor: "#f46a6a",
+                confirmButtonText: "Yes!",
+            })
+            .then(function (t) 
+            {
+                // if user clickes yes.
+                if (t.value) 
+                {
+                    console.log("Excused")
+                    $.ajax(
+                    {
+                        url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
+                        type: "GET",
+                        dataType: "json",
+                        success: function (data) 
+                        {
+                            var current_time = new Date(); // current time
+                            var hours = current_time.getHours();
+                            var mins = current_time.getMinutes();
+                            if(mins < 10)
+                            {
+                                mins = "0"+mins
+                            }
+                            else
+                            {
+                                mins = mins;
+                            }
+                            if(hours < 10)
+                            {
+                                hours = "0"+hours
+                            }
+                            else
+                            {
+                                hours = hours;
+                            }
+                            var moment_current_date = moment(current_time).format('LL')
+                            var now = hours+":"+mins+":00";
+
+                            var time_in = data[0].time_in
+                            var time_out = data[0].time_out
+                            var attendance_status = data[0].attendance_status
+                            var remarks = data[0].remarks
+                            var proof_of_attendance_file_link = data[0].proof_of_attendance_file_link
+                            var faculty_id = FACULTY_ID
+                            var meeting_id = MEETING_ID
+                            var id = data[0].id
+
+                            $.ajax(
+                            {
+                                url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/' + id,
+                                type: "PUT",
+                                data: JSON.stringify(
+                                {		
+                                    "time_in": time_in,
+                                    "time_out": time_out,
+                                    "attendance_status": "Request to Excuse",
+                                    "remarks": remarks,
+                                    "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                                    "faculty_id": faculty_id,
+                                    "meeting_id": meeting_id,
+                                }),
+                                dataType: "JSON",
+                                contentType: 'application/json',
+                                processData: false,
+                                cache: false,
+                                success: function (responseJSON) 
+                                {
+                                    // notification("success", "Success!"); 
+                                    $(".button-block").prop('disabled', true); // disable button
+                                    setInterval(() => {
+                                        location.reload()
+                                    }, 1000);                         
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                },
+                            }); 
+                        },
+                        error: function(error){
+                            $.each(error.responseJSON.errors, function(key,value) {
+                                swalAlert('warning', value)
+                            });
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        },
+                    });
+                }
+            });
+        }
+        // END REQUEST TO EXCUSE BUTTON FUNCTION
+
         // TIME OUT BUTTON FUNCTION
         timeOut = () => 
         {
@@ -352,6 +471,14 @@
                             else
                             {
                                 mins = mins;
+                            }
+                            if(hours < 10)
+                            {
+                                hours = "0"+hours
+                            }
+                            else
+                            {
+                                hours = hours;
                             }
                             var moment_current_date = moment(current_time).format('LL')
                             var now = hours+":"+mins+":00";
@@ -428,6 +555,130 @@
                         dataType: "JSON",
                         success: function (responseData) 
                         {   
+                            console.log("This is it")
+                            console.log(marfData)
+                            var current_time = new Date(); // current time
+                            var hours = current_time.getHours();
+                            var mins = current_time.getMinutes();
+                            if(mins < 10)
+                            {
+                                mins = "0"+mins
+                            }
+                            else
+                            {
+                                mins = mins;
+                            }
+                            if(hours < 10)
+                            {
+                                hours = "0"+hours
+                            }
+                            else
+                            {
+                                hours = hours;
+                            }
+
+                            var moment_current_date = moment(current_time).format('L')
+                            var moment_meeting_date = moment(responseData.date).format('L');
+
+                            var now = hours+":"+mins+":00";
+
+                            var meeting_status = responseData.status
+
+                            if(meeting_status == "On Going")
+                            {
+                                if(moment_current_date > moment_meeting_date)
+                                {
+                                    console.log("On Going to Done 364")
+                                    console.log("Now: "+now)
+                                    console.log("Meeting Date: " + moment_meeting_date)
+                                    console.log("Current Date: " + moment_current_date)
+                                    console.log("Start Time: " + responseData.start_time)
+                                    console.log("End Time: " + responseData.end_time)
+                                    let data = {
+                                        "title": responseData.title,
+                                        "meeting_type_id": responseData.meeting_type_id,
+                                        "description": responseData.description,
+                                        "agenda": responseData.agenda,
+                                        "location": responseData.location,
+                                        "date": responseData.date,
+                                        "start_time": responseData.start_time,
+                                        "end_time": responseData.end_time,
+                                        "is_required": responseData.is_required,
+                                        "status": "Done",
+                                    }
+                                    $.ajax({
+                                        url: BASE_API + meeting_id,
+                                        method: "PUT",
+                                        data: JSON.stringify(data),
+                                        dataType: "JSON",
+                                        headers: {
+                                            "Accept": "application/json",
+                                            "Authorization": API_TOKEN,
+                                            "Content-Type": "application/json"
+                                        },
+                                        success: function(data)
+                                        {
+                                            
+                                        },
+                                        error: function(error){
+                                            $.each(error.responseJSON.errors, function(key,value) {
+                                                swalAlert('warning', value)
+                                            });
+                                            console.log(error)
+                                            console.log(`message: ${error.responseJSON.message}`)
+                                            console.log(`status: ${error.status}`)
+                                        }
+                                    // ajax closing tag
+                                    })
+                                }
+                                if(moment_current_date == moment_meeting_date && now > responseData.end_time)
+                                {
+                                    console.log("On Going to Done 567")
+                                    console.log("Now: "+now)
+                                    console.log("Meeting Date: " + moment_meeting_date)
+                                    console.log("Current Date: " + moment_current_date)
+                                    console.log("Start Time: " + responseData.start_time)
+                                    console.log("End Time: " + responseData.end_time)
+                                    let data = {
+                                        "title": responseData.title,
+                                        "meeting_type_id": responseData.meeting_type_id,
+                                        "description": responseData.description,
+                                        "agenda": responseData.agenda,
+                                        "location": responseData.location,
+                                        "date": responseData.date,
+                                        "start_time": responseData.start_time,
+                                        "end_time": responseData.end_time,
+                                        "is_required": responseData.is_required,
+                                        "status": "Done",
+                                    }
+                                    $.ajax({
+                                        url: BASE_API + MEETING_ID,
+                                        method: "PUT",
+                                        data: JSON.stringify(data),
+                                        dataType: "JSON",
+                                        headers: {
+                                            "Accept": "application/json",
+                                            "Authorization": API_TOKEN,
+                                            "Content-Type": "application/json"
+                                        },
+                                        success: function(data)
+                                        {
+                                            
+                                        },
+                                        error: function(error){
+                                            $.each(error.responseJSON.errors, function(key,value) {
+                                                swalAlert('warning', value)
+                                            });
+                                            console.log(error)
+                                            console.log(`message: ${error.responseJSON.message}`)
+                                            console.log(`status: ${error.status}`)
+                                        }
+                                    // ajax closing tag
+                                    })
+                                }
+                            }
+
+
                             var isRequired = responseData.is_required
                             var status = responseData.status
                             
@@ -515,6 +766,14 @@
                                 {
                                     mins = mins;
                                 }
+                                if(hours < 10)
+                                {
+                                    hours = "0"+hours
+                                }
+                                else
+                                {
+                                    hours = hours;
+                                }
                                 
 
                                 var moment_current_date = moment(current_time).format('L')
@@ -528,10 +787,37 @@
                                     //20:07        //19:38               //19:51           //20:38             
                                     if(moment_meeting_date == moment_current_date && now >= responseData.start_time &&  now <= responseData.end_time) 
                                     {
-                                        row_right_top +=    '<div class="col-12">' +
+                                        console.log(marfData[0])
+                                        if(marfData[0].attendance_status == null)
+                                        {
+                                            row_right_top +=    '<div class="col-12">' +
                                                                 '<button type="button" onClick="return timeIn()" class="btn btn-icon icon-left btn-success btn-lg button-block"><i class="fas fa-check"></i> Time in</button>' +
-                                                            '</div>' +
-                                                            '<br>';
+                                                                '</div>' +
+                                                                '<br>' +
+                                                                '<div class="col-12">' +
+                                                                    '<button type="button" onClick="requestToExcuse()" class="btn btn-icon icon-left btn-danger btn-lg button-block"> Request to Excuse </button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                        }
+                                        else if (marfData[0].attendance_status == "Request to Excuse" || marfData[0].attendance_status == "Excused")
+                                        {
+                                            var modalTab02 = '<h6 class="text-muted">Upload Reason Why</h6>';
+                                            $("#tab02").html(modalTab02);
+                                            var headerForTab2 = 'Reason Why....';
+                                            $("#header5forTab2").html(headerForTab2);
+
+                                            row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
+                                                                '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
+                                                                '<div class="alert-body text-center">' +
+                                                                    'Request Submitted, Please Upload a Valid reason to Check' +
+                                                                '</div>' +
+                                                                '</div>' +
+                                                                '<div class="col-12">' +
+                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Upload</b></button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                        }
+                                        
                                     }
                                     else if(moment_meeting_date == moment_current_date && now < responseData.start_time &&  now < responseData.end_time) 
                                     {
@@ -545,6 +831,7 @@
                                     }
                                     else if(moment_meeting_date > moment_current_date) 
                                     {
+                                        
                                         row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
                                                                 '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
                                                                 '<div class="alert-body text-center">' +
@@ -555,23 +842,111 @@
                                     }
                                     else if(moment_meeting_date < moment_current_date) 
                                     {
-                                        row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
-                                                                '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
-                                                                '<div class="alert-body text-center">' +
-                                                                    '<b>Meeting was already done</b>' +
+                                        if(marfData[0].attendance_status == null)
+                                        {
+                                            row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        '<b>Meeting was already done</b>' +
+                                                                    '</div>' +
                                                                 '</div>' +
-                                                            '</div>' +
-                                                            '<br>';
+                                                                '<br>';
+                                        }
+                                        else if (marfData[0].attendance_status == "Request to Excuse" || marfData[0].attendance_status == "Excused")
+                                        {
+                                            var modalTab02 = '<h6 class="text-muted">Upload Reason Why</h6>';
+                                            $("#tab02").html(modalTab02);
+                                            var headerForTab2 = 'Reason Why....';
+                                            $("#header5forTab2").html(headerForTab2);
+
+                                            if(marfData[0].proof_of_attendance_file_link == null)
+                                            {
+                                                row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        '<b>Meeting was already done. Your Request was also Submitted, Please Upload a Valid reason to Check</b>' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<br>' +
+                                                                '<div class="col-12">' +
+                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Upload Reason Why</b></button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                            }
+                                            else
+                                            {
+                                                row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        '<b>Meeting was already done. You was also Request Submitted, Please Upload a Valid reason to Check</b>' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<br>' +
+                                                                '<div class="col-12">' +
+                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Check my Uploaded Reason Why</b></button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                            }
+                                        }
+                                        console.log("559")
+                                        
                                     }
                                     else if(moment_meeting_date > moment_current_date || now > responseData.start_time &&  now > responseData.end_time) 
                                     {
-                                        row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
-                                                                '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
-                                                                '<div class="alert-body text-center">' +
-                                                                    '<b>Meeting was already done</b>' +
+                                        console.log("570")
+                                        console.log("Pending to On Going 299")
+                                        console.log("Now: "+now)
+                                        console.log("Meeting Date: " + moment_meeting_date)
+                                        console.log("Current Date: " + moment_current_date)
+                                        console.log("Start Time: " + responseData.start_time)
+                                        console.log("End Time: " + responseData.end_time)
+                                        console.log(marfData[0].attendance_status)
+                                        if(marfData[0].attendance_status == null)
+                                        {
+                                            row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        '<b>Meeting was already done</b>' +
+                                                                    '</div>' +
                                                                 '</div>' +
-                                                            '</div>' +
-                                                            '<br>';
+                                                                '<br>';
+                                        }
+                                        else if (marfData[0].attendance_status == "Request to Excuse" || marfData[0].attendance_status == "Excused")
+                                        {
+                                            var modalTab02 = '<h6 class="text-muted">Upload Reason Why</h6>';
+                                            $("#tab02").html(modalTab02);
+                                            var headerForTab2 = 'Reason Why....';
+                                            $("#header5forTab2").html(headerForTab2);
+
+                                            if(marfData[0].proof_of_attendance_file_link == null)
+                                            {
+                                                row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        '<b>Meeting was already done. Your Request was also Submitted, Please Upload a Valid reason to Check</b>' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<br>' +
+                                                                '<div class="col-12">' +
+                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Upload Reason Why</b></button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                            }
+                                            else
+                                            {
+                                                row_right_top +=    '<div class="alert alert-secondary alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fa fa-exclamation" aria-hidden="true"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        '<b>Meeting was already done. Your Request was also Submitted, Please Upload a Valid reason to Check</b>' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<br>' +
+                                                                '<div class="col-12">' +
+                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Check my Uploaded Reason Why</b></button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                            }
+                                        }
                                     }
                                 }
                                 else
@@ -619,20 +994,52 @@
                                     {
                                         if(marfData[0].meeting_submitted.length == 0)
                                         {
-                                            console.log("Meeting Submitted equal to zero")
-                                            row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
-                                                                '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
-                                                                '<div class="alert-body text-center">' +
-                                                                    'You already Timed Out and Meeting was already done.' +
+                                            if (marfData[0].proof_of_attendance_file_link != null)
+                                            {
+                                                var modalTab02 = '<h6 class="text-muted">Upload Link</h6>';
+                                                $("#tab02").html(modalTab02);
+                                                var headerForTab2 = 'Upload Link';
+                                                $("#header5forTab2").html(headerForTab2);
+                                                
+                                                console.log("Meeting Submitted not equal to zero")
+                                                row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        'You already Timed Out and Meeting was already done.' +
+                                                                    '</div>' +
                                                                 '</div>' +
-                                                            '</div>' +
-                                                            '<div class="col-12">' +
-                                                                '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Upload a Proof of Attendance</b></button>' +
-                                                            '</div>' +
-                                                            '<br>';
+                                                                '<div class="col-12">' +
+                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-success btn-lg button-block"><b>Check Uploaded Files / Link</b></button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                            }
+                                            else
+                                            {
+                                                var modalTab02 = '<h6 class="text-muted">Upload Link</h6>';
+                                                $("#tab02").html(modalTab02);
+                                                var headerForTab2 = 'Upload Link';
+                                                $("#header5forTab2").html(headerForTab2);
+
+                                                console.log("Meeting Submitted equal to zero")
+                                                row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
+                                                                    '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
+                                                                    '<div class="alert-body text-center">' +
+                                                                        'You already Timed Out and Meeting was already done.' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<div class="col-12">' +
+                                                                    '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-warning btn-lg button-block"><b>Upload a Proof of Attendance (File / Link)</b></button>' +
+                                                                '</div>' +
+                                                                '<br>';
+                                            }
                                         }
                                         else
                                         {
+                                            var modalTab02 = '<h6 class="text-muted">Upload Link</h6>';
+                                            $("#tab02").html(modalTab02);
+                                            var headerForTab2 = 'Upload Link';
+                                            $("#header5forTab2").html(headerForTab2);
+                                            
                                             console.log("Meeting Submitted not equal to zero")
                                             row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
                                                                 '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
@@ -641,7 +1048,7 @@
                                                                 '</div>' +
                                                             '</div>' +
                                                             '<div class="col-12">' +
-                                                                '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-success btn-lg button-block"><b>Check Uploaded Files</b></button>' +
+                                                                '<button type="button" onClick="" data-toggle="modal" data-target="#myModal" class="btn btn-icon icon-left btn-success btn-lg button-block"><b>Check Uploaded Files / Link</b></button>' +
                                                             '</div>' +
                                                             '<br>';
                                         }   
@@ -825,96 +1232,202 @@
             {
                 if (data[0].proof_of_attendance_file_link == null)
                 { 
-                    var proofSubmitBtn = "Submit";
-                    $("#proofCreateBtn").html(proofSubmitBtn);
+                    if (data[0].time_in != null)
+                    {
+                        var LinkOrReasonContent =   `<input type="text" class="form-control" id="proof_of_attendance_file_link" name="proof_of_attendance_file_link"
+                                                    placeholder="Link" tabindex="1" required>`;
+                        $("#LinkOrReasonContent").html(LinkOrReasonContent);
+                        var proofSubmitBtn = "Submit";
+                        $("#proofCreateBtn").html(proofSubmitBtn);
 
-                    $('#proofLinkForm').on('submit', function(e){
-                        e.preventDefault();
+                        $('#proofLinkForm').on('submit', function(e){
+                            e.preventDefault();
 
-                        var proof_of_attendance_link = $("#proof_of_attendance_file_link").val()
-                        console.log(proof_of_attendance_link);
-                        $.ajax(
-                        {
-                            url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
-                            type: "GET",
-                            dataType: "json",
-                            success: function (data) 
-                            { 
-                                var time_in = data[0].time_in
-                                var time_out = data[0].time_out
-                                var attendance_status = data[0].attendance_status
-                                var proof_of_attendance_file_link = proof_of_attendance_link
-                                var faculty_id = FACULTY_ID
-                                var meeting_id = MEETING_ID
-                                var id = data[0].id
+                            var proof_of_attendance_link = $("#proof_of_attendance_file_link").val()
+                            console.log(proof_of_attendance_link);
+                            $.ajax(
+                            {
+                                url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
+                                type: "GET",
+                                dataType: "json",
+                                success: function (data) 
+                                { 
+                                    var time_in = data[0].time_in
+                                    var time_out = data[0].time_out
+                                    var attendance_status = data[0].attendance_status
+                                    var proof_of_attendance_file_link = proof_of_attendance_link
+                                    var faculty_id = FACULTY_ID
+                                    var meeting_id = MEETING_ID
+                                    var id = data[0].id
 
-                                $.ajax(
-                                {
-                                    url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/' + id,
-                                    type: "PUT",
-                                    data: JSON.stringify(
-                                    {		
-                                        "time_in": time_in,
-                                        "time_out": time_out,
-                                        "attendance_status": attendance_status,
-                                        "proof_of_attendance_file_link": proof_of_attendance_file_link,
-                                        "faculty_id": faculty_id,
-                                        "meeting_id": meeting_id,
-                                    }),
-                                    dataType: "JSON",
-                                    contentType: 'application/json',
-                                    processData: false,
-                                    cache: false,
-                                    success: function (responseJSON) 
+                                    $.ajax(
                                     {
-                                        notification("success", "Success!");
-                                        setInterval(() => {
-                                            location.reload()
-                                        }, 1000);                           
-                                    },
-                                    error: function(error){
-                                        $.each(error.responseJSON.errors, function(key,value) {
-                                            swalAlert('warning', value)
-                                        });
-                                        console.log(error)
-                                        console.log(`message: ${error.responseJSON.message}`)
-                                        console.log(`status: ${error.status}`)
-                                    },
-                                }); 
-                            }
-                        })
-                    });
+                                        url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/' + id,
+                                        type: "PUT",
+                                        data: JSON.stringify(
+                                        {		
+                                            "time_in": time_in,
+                                            "time_out": time_out,
+                                            "attendance_status": attendance_status,
+                                            "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                                            "faculty_id": faculty_id,
+                                            "meeting_id": meeting_id,
+                                        }),
+                                        dataType: "JSON",
+                                        contentType: 'application/json',
+                                        processData: false,
+                                        cache: false,
+                                        success: function (responseJSON) 
+                                        {
+                                            notification("success", "Success!");
+                                            setInterval(() => {
+                                                location.reload()
+                                            }, 1000);                           
+                                        },
+                                        error: function(error){
+                                            $.each(error.responseJSON.errors, function(key,value) {
+                                                swalAlert('warning', value)
+                                            });
+                                            console.log(error)
+                                            console.log(`message: ${error.responseJSON.message}`)
+                                            console.log(`status: ${error.status}`)
+                                        },
+                                    }); 
+                                }
+                            })
+                        });
+                    }
+                    else
+                    {
+                        var LinkOrReasonContent =   `<textarea class="form-control" rows="4" cols="50" id="proof_of_attendance_file_link" 
+                                                    name="proof_of_attendance_file_link" form="createForm" placeholder="" tabindex="1" required></textarea>`;
+                        $("#LinkOrReasonContent").html(LinkOrReasonContent);
+                        var proofSubmitBtn = "Submit";
+                        $("#proofCreateBtn").html(proofSubmitBtn);
+
+                        $('#proofLinkForm').on('submit', function(e){
+                            e.preventDefault();
+                            Swal.fire(
+                            {
+                                title: "Are you sure you?",
+                                text: "You won't be able to revert this!",
+                                icon: "warning",
+                                showCancelButton: !0,
+                                confirmButtonColor: "#34c38f",
+                                cancelButtonColor: "#f46a6a",
+                                confirmButtonText: "Yes!",
+                            })
+                            .then(function (t) 
+                            {
+                                // if user clickes yes.
+                                if (t.value) 
+                                {
+                                    var proof_of_attendance_link = $("#proof_of_attendance_file_link").val()
+                                    console.log(proof_of_attendance_link);
+                                    $.ajax(
+                                    {
+                                        url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
+                                        type: "GET",
+                                        dataType: "json",
+                                        success: function (data) 
+                                        { 
+                                            var time_in = data[0].time_in
+                                            var time_out = data[0].time_out
+                                            var attendance_status = data[0].attendance_status
+                                            var proof_of_attendance_file_link = proof_of_attendance_link
+                                            var faculty_id = FACULTY_ID
+                                            var meeting_id = MEETING_ID
+                                            var id = data[0].id
+
+                                            $.ajax(
+                                            {
+                                                url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/' + id,
+                                                type: "PUT",
+                                                data: JSON.stringify(
+                                                {		
+                                                    "time_in": time_in,
+                                                    "time_out": time_out,
+                                                    "attendance_status": attendance_status,
+                                                    "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                                                    "faculty_id": faculty_id,
+                                                    "meeting_id": meeting_id,
+                                                }),
+                                                dataType: "JSON",
+                                                contentType: 'application/json',
+                                                processData: false,
+                                                cache: false,
+                                                success: function (responseJSON) 
+                                                {
+                                                    notification("success", "Success!");
+                                                    setInterval(() => {
+                                                        location.reload()
+                                                    }, 1000);                           
+                                                },
+                                                error: function(error){
+                                                    $.each(error.responseJSON.errors, function(key,value) {
+                                                        swalAlert('warning', value)
+                                                    });
+                                                    console.log(error)
+                                                    console.log(`message: ${error.responseJSON.message}`)
+                                                    console.log(`status: ${error.status}`)
+                                                },
+                                            }); 
+                                        }
+                                    })
+                                }
+                            }); 
+                        });
+                    }
                 }
                 else
                 {
-                    console.log(data[0].proof_of_attendance_file_link)
-                    var proofSubmitBtn = "Update";
-                    $("#proofCreateBtn").html(proofSubmitBtn);
-                    $('#proof_of_attendance_file_link').val(data[0].proof_of_attendance_file_link);
+                    console.log(data)
+                    if (data[0].attendance_status == "Request to Excuse" || data[0].attendance_status == "Excused")
+                    {
+                        // var proofSubmitBtn = "Update";
+                        // $("#proofCreateBtn").html(proofSubmitBtn);
+                        document.getElementById('proofCreateBtn').style.visibility = 'hidden'
+                        $('#proof_of_attendance_file_link').val(data[0].proof_of_attendance_file_link);
 
-                    $('#proofLinkForm').on('submit', function(e){
-                        e.preventDefault();
-                        var proof_of_attendance_link = $("#proof_of_attendance_file_link").val()
-                        console.log(proof_of_attendance_link);
-                        $.ajax(
-                        {
-                            url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
-                            type: "GET",
-                            dataType: "json",
-                            success: function (data) 
-                            { 
-                                var time_in = data[0].time_in
-                                var time_out = data[0].time_out
-                                var attendance_status = data[0].attendance_status
-                                var proof_of_attendance_file_link = proof_of_attendance_link
-                                var faculty_id = FACULTY_ID
-                                var meeting_id = MEETING_ID
-                                var id = data[0].id
-                                notification("success", "Link");
-                                console.log(data)
-                            }
+                        var LinkOrReasonContent =   '<div class="col-md-12">' +
+                                                        '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;' + data[0].proof_of_attendance_file_link +   
+                                                    '</div>';
+                        $("#LinkOrReasonContent").html(LinkOrReasonContent);
+                    }
+                    else
+                    {
+                        console.log(data[0])
+                        var LinkOrReasonContent =   `<input type="text" class="form-control" id="proof_of_attendance_file_link" name="proof_of_attendance_file_link"
+                                                    placeholder="Link" tabindex="1" required>`;
+                        $("#LinkOrReasonContent").html(LinkOrReasonContent);
+                        var proofSubmitBtn = "Update";
+                        $("#proofCreateBtn").html(proofSubmitBtn);
+                        $('#proof_of_attendance_file_link').val(data[0].proof_of_attendance_file_link);
+
+                        $('#proofLinkForm').on('submit', function(e){
+                            e.preventDefault();
+                            var proof_of_attendance_link = $("#proof_of_attendance_file_link").val()
+                            console.log(proof_of_attendance_link);
+                            $.ajax(
+                            {
+                                url: APP_URL + '/api/v1/meeting_attendance_required_faculty_list/search_specific_meeting_and_faculty/' + MEETING_ID + "/" + FACULTY_ID,
+                                type: "GET",
+                                dataType: "json",
+                                success: function (data) 
+                                { 
+                                    var time_in = data[0].time_in
+                                    var time_out = data[0].time_out
+                                    var attendance_status = data[0].attendance_status
+                                    var proof_of_attendance_file_link = proof_of_attendance_link
+                                    var faculty_id = FACULTY_ID
+                                    var meeting_id = MEETING_ID
+                                    var id = data[0].id
+                                    notification("success", "Link");
+                                    console.log(data)
+                                }
+                            });
                         });
-                    });
+                    }
                 }
             }
         });
