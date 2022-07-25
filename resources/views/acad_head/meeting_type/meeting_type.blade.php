@@ -2,42 +2,42 @@
 
 {{-- NAVBAR --}}
 @section('navbar')
-    @include('layouts.admin_navbar')
+    @include('layouts.acad_head_navbar')
 @endsection
 
 {{-- SIDEBAR --}}
 @section('sidebar')
-    @include('layouts.admin_sidebar')
+    @include('layouts.acad_head_sidebar')
 @endsection
 
 @section('section_header')
 <div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
-    @include('admin/activity_type/activity_type_breadcrumbs')
+    @include('acad_head/meeting_type/meeting_type_breadcrumbs')
 </div>
 @endsection
 
     {{-- MODAL --}}
-    @include('admin/activity_type/activity_type_modal')
+    @include('acad_head/meeting_type/meeting_type_modal')
 
     {{-- CONTENT --}}
     @section('content')
-        
+
             {{-- FORM --}}
-            @include('admin/activity_type/activity_type_form')
+            @include('acad_head/meeting_type/meeting_type_form')
 
             {{-- DATATABLE --}}
-            @include('admin/activity_type/activity_type_datatable')
+            @include('acad_head/meeting_type/meeting_type_datatable')
     @endsection
 
 
 
 {{-- FOOTER --}}
 @section('footer')
-    @include('layouts.admin_footer')
+    @include('layouts.acad_head_footer')
 @endsection
 
 
 @section('script')
-    @include('admin/activity_type/activity_type_scripts')
+    @include('acad_head/meeting_type/meeting_type_scripts')
 @endsection

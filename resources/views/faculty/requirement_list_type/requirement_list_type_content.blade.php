@@ -6,25 +6,25 @@
                 <div class="col-12">
                         <h3 class="text-center"><span id="title"></span></h3>
                         <span class="badge">
-                            <span>Posted by </span><span id="created_by"></span>
+                            <span style="font-size: 16px">Posted by </span><span style="font-size: 16px" id="created_by"></span>
                         </span>
                         <div class="text-dark float-right">
                             <span class="badge badge-warning">
-                                <span>Due</span>
-                                <span id="created_at"></span>
+                                <span style="font-size: 16px">Due</span>
+                                <span style="font-size: 16px" id="created_at"></span>
                             </span>
                         </div>
                 </div>
                 &nbsp;
                 <div class="col-12">
                     <div class="float-left">
-                        <span class="badge badge-info" id="requiredDocumentList"></span>
+                        <span class="badge badge-info" id="requiredDocumentList" style="font-size: 16px"></span>
                     </div>
                 </div>
             </div>
             &nbsp;
             <div class="hero-inner text-center">
-                <span class="" style="white-space: pre-line" id="description">
+                <span class="" style="white-space: pre-line" style="font-size: 14px" id="description">
             </div>
         </div>
     </div>&nbsp;

@@ -51,15 +51,15 @@
                     // IF Else Condition to specify if the Status is Done or Pending
                     if(status == "Pending")
                     {
-                        status = '<span class="badge badge-warning">Meeting Status: ' + responseData.status + '</span>'
+                        status = '<span class="badge badge-warning" style="font-size: 16px">Meeting Status: ' + responseData.status + '</span>'
                     }
                     else if(status == "Done" || status == "done")
                     {
-                        status = '<span class="badge badge-success">Meeting Status: ' + responseData.status + '</span>'
+                        status = '<span class="badge badge-success" style="font-size: 16px">Meeting Status: ' + responseData.status + '</span>'
                     } 
                     else if(status == "On Going")
                     {
-                        status = '<span class="badge badge-info">Meeting Status: ' + responseData.status + '</span>'
+                        status = '<span class="badge badge-info" style="font-size: 16px">Meeting Status: ' + responseData.status + '</span>'
                     } 
 
 
@@ -70,10 +70,10 @@
                                             '<div class="hero-inner">' +
                                                 '<div class="col-12">' +
                                                     '<h3 class="card-title text-center"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + 
-                                                        '<span>' + responseData.title + '</span>' +
+                                                        '<span >' + responseData.title + '</span>' +
                                                     '</h3>' +
                                                     
-                                                    '<span class="badge badge-info" style="color:black"><b>' + responseData.meeting_type.title + '</b></span>' +
+                                                    '<span class="badge badge-info" style="color:black; font-size: 16px" ><b>' + responseData.meeting_type.title + '</b></span>' +
                                                     '<div class="float-right"><b>' +
                                                         status +
                                                     '</b></div>' +
@@ -82,14 +82,14 @@
                                             '<br>' +
                                             '<div class="hero-inner">' +
                                                 '<div class="col-md-12">' +
-                                                    '<span><b>Agenda: </b>' +
+                                                    '<span style="font-size: 16px"><b>Agenda: </b>' +
                                                 '</div>' +
                                                 '<div class="col-md-12">' +
                                                     '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;' +responseData.agenda +   
                                                 '</div>' + 
                                                 '<br>' + 
                                                 '<div class="col-md-12">' +
-                                                    '<span><b>Description: </b>' +
+                                                    '<span style="font-size: 16px"><b>Description: </b>' +
                                                 '</div>' +
                                                 '<div class="col-md-12">' +
                                                     '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;' +responseData.description +   

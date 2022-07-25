@@ -95,20 +95,6 @@ Route::group(['middleware' => ['role.admin'],
             return view('admin/academic_rank/academic_rank', ['page_title' => 'Academic Rank']);
         })->name('admin_academic_rank');
 
-        //ACTIVITY TYPE
-        Route::get('/activity_type', function () {
-            return view('admin/activity_type/activity_type', ['page_title' => 'Activity Type']);
-        })->name('admin_activity_type');
-
-        //MEETING TYPE
-        Route::get('/meeting_type', function () {
-            return view('admin/meeting_type/meeting_type', ['page_title' => 'Meeting Type']);
-        })->name('admin_meeting_type');
-
-        //REQUIREMENT TYPE
-        Route::get('/requirement_type', function () {
-            return view('admin/requirement_type/requirement_type', ['page_title' => 'Requirement Type']);
-        })->name('admin_requirement_type');
 
         //REQUIREMENT LIST TYPE
         Route::get('/requirement_list_type', function () {
@@ -185,6 +171,21 @@ Route::group(['middleware' => ['role.faculty'],
 
 Route::group(['middleware' => ['role.acadhead'],
     'prefix' => '/acad_head',], function(){
+
+    //ACTIVITY TYPE
+    Route::get('/activity_type', function () {
+        return view('acad_head/activity_type/activity_type', ['page_title' => 'Activity Type']);
+    })->name('acad_head_activity_type');
+
+    //MEETING TYPE
+    Route::get('/meeting_type', function () {
+        return view('acad_head/meeting_type/meeting_type', ['page_title' => 'Meeting Type']);
+    })->name('acad_head_meeting_type');
+
+    //REQUIREMENT TYPE
+    Route::get('/requirement_type', function () {
+        return view('acad_head/requirement_type/requirement_type', ['page_title' => 'Requirement Type']);
+    })->name('acad_head_requirement_type');
         
     // ------------DASHBOARD--------------- //
     Route::get('/dashboard', function () {

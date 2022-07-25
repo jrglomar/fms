@@ -47,9 +47,9 @@
                         <span>Reports</span></a>
                         <ul class="dropdown-menu">
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                            <li class="{{ Request::segment(2) == 'srd_report' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/faculty/srd_report">
-                                        <span>SRD Report</span></a>
+                            <li style="padding-bottom: 1rem" class="{{ Request::segment(2) == 'srd_report' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/faculty/srd_report" >
+                                        <span >Submission of Documents Report</span></a>
                                 </li>
                                 <li class="{{ Request::segment(2) == 'meeting_report' ? 'active' : ''}}">
                                     <a class="nav-link" href="/faculty/meeting_report">
@@ -62,14 +62,14 @@
                         </ul>
 
                             {{-- SRD MANAGEMENT --}}
-                            <li class="menu-header">SRD Management</li>
+                            <li class="menu-header">Submission of Documents Management</li>
                             <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 
                                                     Request::segment(2) == 'requirement_bin' ||
                                                     Request::segment(2) == 'requirement_list_type' 
                                                     ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
-                            <span>SRD</span></a>
+                            <span>Submission of Documents</span></a>
                             <ul class="dropdown-menu">
                                 <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
                                 <li class="{{ Request::segment(2) == 'requirement_bin' || 

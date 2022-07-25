@@ -65,16 +65,16 @@
                                         <span>Activity Report</span></a>
                                 </li>
                         </ul>
-
+                        
                         {{-- SRD MANAGEMENT --}}
-                        <li class="menu-header">SRD Management</li>
-                        <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 
+                        <li class="menu-header" style="padding-bottom: 12px">Documents Management</li>
+                        <li class="dropdown" style="padding-bottom: 12px" {{ Request::segment(2) == 'requirement_type' || 
                                                 Request::segment(2) == 'requirement_bin' ||
                                                 Request::segment(2) == 'requirement_list_type' 
                                                 ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
-                        <span>SRD</span></a>
+                        <span>Submission of Documents</span></a>
                         <ul class="dropdown-menu">
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
                             <li class="{{ Request::segment(2) == 'requirement_bin' || 
@@ -83,6 +83,10 @@
                                             ? 'active' : ''}}">
                                 <a class="nav-link" href="/acad_head/requirement_bin">
                                     <span>Requirement Bins</span></a>
+                            </li>
+                            <li class="{{ Request::segment(2) == 'requirement_type' ? 'active' : ''}}">
+                                <a class="nav-link" href="/acad_head/requirement_type">
+                                    <span>Requirement Types</span></a>
                             </li>
                         </ul>
                     </li>
@@ -100,6 +104,10 @@
                             <li class="{{ Request::segment(2) == 'meeting' ? 'active' : ''}}">
                                 <a class="nav-link" href="/acad_head/meeting">
                                     <span>Meetings</span></a>
+                            </li>
+                            <li class="{{ Request::segment(2) == 'meeting_type' ? 'active' : ''}}">
+                                <a class="nav-link" href="/acad_head/meeting_type">
+                                    <span>Meeting Types</span></a>
                             </li>
                         </ul>
                     </li>
@@ -120,6 +128,10 @@
                             ? 'active' : ''}}">
                                 <a class="nav-link" href="/acad_head/activity">
                                     <span>Activities</span></a>
+                            </li>
+                            <li class="{{ Request::segment(2) == 'activity_type' ? 'active' : ''}}">
+                                <a class="nav-link" href="/acad_head/activity_type">
+                                    <span>Activity Types</span></a>
                             </li>
                         </ul>
                     </li>
