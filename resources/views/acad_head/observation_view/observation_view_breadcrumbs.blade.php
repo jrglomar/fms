@@ -11,23 +11,23 @@
         <li class="breadcrumb-item">
             Observation
         </li>
-        <li class="breadcrumb-item" id="acad_head_activity">
-        <a href="/acad_head/activity">Schedules</a>
+        <li class="breadcrumb-item" id="acad_head_observation">
+        <a href="/acad_head/observation">Schedules</a>
             <script>
-                if(window.location.pathname == '/acad_head/activity')
+                if(window.location.pathname == '/acad_head/observation')
                 {
-                    document.getElementById("acad_head_activity").classList.add('active');
-                    document.getElementById("acad_head_activity").setAttribute("aria-current", "page")
+                    document.getElementById("acad_head_observation").classList.add('active');
+                    document.getElementById("acad_head_observation").setAttribute("aria-current", "page")
                 }
             </script>
         </li>
-        <li class="breadcrumb-item" id="acad_head_view_activity">
+        <li class="breadcrumb-item" id="acad_head_view_observation">
         <a href="javascript:window.location.reload();">Observation</a>
             <script>
-                if(window.location.pathname == '/acad_head/activity')
+                if(window.location.pathname == '/acad_head/observation')
                 {
-                    document.getElementById("acad_head_view_activity").classList.add('active');
-                    document.getElementById("acad_head_view_activity").setAttribute("aria-current", "page")
+                    document.getElementById("acad_head_view_observation").classList.add('active');
+                    document.getElementById("acad_head_view_observation").setAttribute("aria-current", "page")
                 }
             </script>
         </li>

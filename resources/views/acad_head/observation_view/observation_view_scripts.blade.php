@@ -23,8 +23,39 @@
             }
         })
 
-        console.log(CLASS_SCHEDULE_DATA)
-        removeLoader()
+
+        function getSchedule(){
+
+            let data = CLASS_SCHEDULE_DATA
+            console.log(data)
+
+            // ROOM DETAILS
+            $('#room_building').html(data.room.building)
+            $('#room_floor').html(data.room.floor)
+            $('#room_status').html(data.room.status)
+            $('#room_number').html(data.room.room_number)
+            $('#room_type').html(data.room.room_type)
+
+            // SUBJECT DETAILS
+            $('#subject_code').html(data.subject_code)
+            $('#subject_time').html(data.time)
+            $('#subject_status').html(data.subject_offering.status)
+            $('#teaching_hours').html(data.subject_offering.teaching_hours)
+            $('#subject_description').html(data.subject_offering.curriculum_subject.subject.title)
+            
+            // FACULTY DETAILS
+            $('#faculty_image').html(APP_URL + "/" + data.faculty.image)
+            $('#faculty_name').html(data.faculty.full_name)
+            $('#faculty_type').html(data.faculty.faculty_type.title)
+            $('#faculty_role').html()
+            $('#faculty_designation').html()
+            $('#faculty_specialization').html()
+            $('#faculty_program').html()
+
+            removeLoader()
+        }
+
+        getSchedule()
         
         function getActivity(){
             $.ajax({
@@ -402,6 +433,10 @@
             navigator.clipboard.writeText(copyText.value);
 
         });
+
+        $('.btnSetObservation').on('click', function(){
+            console.log(SCHEDULE_ID)
+        })
 
     });
 </script>

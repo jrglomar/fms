@@ -38,6 +38,17 @@
 
                         return requirement_list_type;
                     }},
+                    { data: "status", render: function(data, type, row){
+                        if(data == 'Approved'){
+                            return `<span class="badge badge-success">${data}</span>`
+                        }
+                        else if(data == 'Declined'){
+                            return `<span class="badge badge-danger">${data}</span>`
+                        }
+                        else if(data == 'For Revision'){
+                            return `<span class="badge badge-warning">${data}</span>`
+                        }
+                    }},
                     { data: "deadline", render: function(data, type, row){
                         return `<span class="badge badge-info">${moment(data).format('LLL')}</span>`
                     }},

@@ -12,6 +12,8 @@
         let class_sched_data = class_schedule_response.data
         console.log(class_sched_data)
 
+
+
         // DATA TABLES FUNCTION
         function dataTable(){
                 dataTable = $('#dataTable').DataTable({
@@ -24,15 +26,13 @@
                     { data: "id"},
                     { data: "created_at"},
                     { data: "faculty", render: function(data, row){
-                        // let html = ''
-                        // html += row.faculty.first_name + ' ' + row.faculty.last_name
                         return data.first_name + ' ' + data.last_name;
                     }},
-                    { data: "day"},
-                    { data: "section_name"},
-                    { data: "status"},
-                    { data: "start_time", render: function(data, row){
-                        return `<span class="badge badge-info">${moment(row.start_time).format('LLL')} - ${moment(row.end_time).format('LLL')}</span>` 
+                    { data: "subject_code"},
+                    { data: "subject_offering.curriculum_subject.subject.title"},
+                    { data: "subject_offering.section.name"},
+                    { data: "start_time", render: function(data, type, row){
+                        return `${row.day} - ${moment('2022-08-05' + ' ' + row.start_time).format('LT')} - ${moment('2022-08-05' + ' ' + row.end_time).format('LT')}` 
                     }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
@@ -41,13 +41,10 @@
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
                                         <div>View</div></div>
-                                        <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit</div></div>
                                             <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete</div></div></div></div>`;
+                                            <div class="dropdown-item d-flex btnSetObservation" id="${row.id}" role="button">
+                                            <div style="width: 2rem"><i class="fas fa-eye"></i></div>
+                                            <div> Make Observation</div></div></div></div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -583,6 +580,15 @@
         $(document).on("click", ".btnActivate", function(){
             var id = this.id;
             console.log(id)
+        });
+        // END OF ACTIVATE FUNCTION
+
+        // ACTIVATE FUNCTION
+        $(document).on("click", ".btnSetObservation", function(){
+            var id = this.id;
+            console.log(id)
+
+            
         });
         // END OF ACTIVATE FUNCTION
 

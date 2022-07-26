@@ -22,10 +22,10 @@
                                 <th>ID</th>
                                 <th>Created at</th>
                                 <th>Faculty</th>
-                                <th>Day</th>
-                                <th>Time</th>
-                                <th>Status</th>
-                                <th width="25%">Date</th>
+                                <th>Subject Code</th>
+                                <th>Subject Title</th>
+                                <th>Section</th>
+                                <th>Schedule</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>

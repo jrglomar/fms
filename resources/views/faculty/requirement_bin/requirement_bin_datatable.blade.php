@@ -20,6 +20,7 @@
                                 <th>Created at</th>
                                 <th width="35%">Title</th>
                                 <th width="25%">Requirements</th>
+                                <th width="25%">Status</th>
                                 <th width="20%">Deadline</th>
                                 <th width="10%" class="text-center">Action</th>
                             </tr>
