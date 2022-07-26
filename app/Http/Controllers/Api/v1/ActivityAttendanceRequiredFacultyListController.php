@@ -160,4 +160,12 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         ->where('faculty_id', 'like', '%'.$faculty_id.'%')
         ->get();
     }
+
+    public function faculty_list_time_out_null($activity_id)
+    {
+        return ActivityAttendanceRequiredFacultyList::where('activity_id', 'like', '%'.$activity_id.'%')
+        ->whereNull('time_out')
+        ->whereNull('attendance_status')
+        ->get();
+    }
 }
