@@ -167,8 +167,16 @@
                 </button>
             </div>
             <div class="modal-body" id="requiredFacultyModalBody">
-                
-                <div class="col-12 d-flex justify-content-end">
+                <div class="col-10">
+                    <div class="float-left">
+                        <label id="" class="" for="role_filter">Filter by Role:</label>
+                        <select id="role_filter" class="">
+                            <option value="Faculty">Faculty</option>
+                            <option value="Admin">Admin</option>
+                        </select>  
+                    </div>
+                </div>
+                <div class="col-2 d-flex justify-content-end">
                     <div class="custom-control custom-switch">
                         <input type="checkbox" id="btn_select_all" class="custom-control-input" checked>
                         <label id="select_all_label" class="custom-control-label" for="btn_select_all">Unselect All</label>

@@ -260,6 +260,38 @@
             }
         })
 
+        function get_roles(){
+
+        activity_type_url = APP_URL+'/api/v1/role'
+
+            $.ajax({
+            url: activity_type_url,
+            type: "GET",
+            dataType: "JSON",
+
+            success: function(data){
+
+                var html = ""
+
+                for(var i=0; i < data.length; i++){
+                html += `<option value="${data[i].title}">${data[i].title}</option>`
+                }
+                
+                $('#role_filter').html(html);
+
+                }
+            })
+        }
+
+        get_roles()
+
+        $('#role_filter').on('change', function(){
+
+            var table = $('#requiredFacultyDatatableModal').DataTable();
+
+            table.column(4).search(this.value).draw();
+        })
+
 
         // FUNCTION FOR UPDATING SUBMITTED REQUIREMENTS
         $('.btnSubmittedUpdate').on('click', function(e){
