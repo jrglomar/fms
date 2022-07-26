@@ -12,16 +12,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 // ADDED FOR CREATED AND UPDATED BY AUTOMATION
 use Illuminate\Support\Facades\Auth;
 
-
-class UserRole extends Model
+class FacultyEducationProfile extends Model
 {
     // -----  [[DEFAULT]]  -----  //
         use HasFactory, SoftDeletes;
 
         // [Modify this fillable base on tables]      - Can be modified
             protected $fillable = [
-                'user_id',
-                'role_id',
+                'degree',
+                'program',
+                'school',
+                'year_of_attendance',
+                'faculty_id',
                 'created_by',
                 'updated_by',
             ];
@@ -29,16 +31,10 @@ class UserRole extends Model
             protected $dates = ['deleted_at'];
 
         // [Declare relationships here]
-            public function user()
+            public function faculty()
             {
-                return $this->belongsTo(User::class, 'user_id')->without('user_role');
+                return $this->belongsTo(Faculty::class, 'faculty_id')->without('faculty_education_profile');
             }
-
-            public function role()
-            {
-                return $this->belongsTo(Role::class, 'role_id');
-            }
-
 
         // End of [Declare relationships here]
 
@@ -53,7 +49,7 @@ class UserRole extends Model
             return $this->belongsTo(User::class,'updated_by');
         }
 
-        protected $with = ['user', 'role'];
+        protected $with = ['faculty'];
 
         // [Added for UUID Incrementation]      - Default
         public $incrementing = false;

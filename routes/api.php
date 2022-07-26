@@ -31,6 +31,9 @@ use App\Http\Controllers\Api\v1\ActivityAttendanceRequiredFacultyListController;
 use App\Http\Controllers\Api\v1\ActivityAttendanceSubmittedFileController;
 use App\Http\Controllers\Api\v1\RoomController;
 use App\Http\Controllers\Api\v1\ClassScheduleController;
+use App\Http\Controllers\Api\v1\SpecializationController;
+use App\Http\Controllers\Api\v1\ProgramController;
+use App\Http\Controllers\Api\v1\FacultyEducationProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +78,25 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
         Route::get('/designation/{id}', [DesignationController::class, 'show']);
         Route::get('/designation/search/{name}', [DesignationController::class, 'search']);
         Route::get('/designation/show_soft_deleted/{all}', [DesignationController::class, 'show_soft_deleted']);
+        
+        // Specialization
+        Route::get('/specialization', [SpecializationController::class, 'index']);
+        Route::get('/specialization/{id}', [SpecializationController::class, 'show']);
+        Route::get('/specialization/search/{name}', [SpecializationController::class, 'search']);
+        Route::get('/specialization/show_soft_deleted/{all}', [SpecializationController::class, 'show_soft_deleted']);
+
+        // Program
+        Route::get('/program', [ProgramController::class, 'index']);
+        Route::get('/program/{id}', [ProgramController::class, 'show']);
+        Route::get('/program/search/{name}', [ProgramController::class, 'search']);
+        Route::get('/program/show_soft_deleted/{all}', [ProgramController::class, 'show_soft_deleted']);
+
+        // Faculty Education Profile
+        Route::get('/faculty_education_profile', [FacultyEducationProfileController::class, 'index']);
+        Route::get('/faculty_education_profile/{id}', [FacultyEducationProfileController::class, 'show']);
+        Route::get('/faculty_education_profile/get_all_educational_background_of_faculty/{faculty_id}', [FacultyEducationProfileController::class, 'get_all_educational_background_of_faculty']);
+        Route::get('/faculty_education_profile/search/{name}', [FacultyEducationProfileController::class, 'search']);
+        Route::get('/faculty_education_profile/show_soft_deleted/{all}', [FacultyEducationProfileController::class, 'show_soft_deleted']);
 
         // Faculty
         Route::get('/faculty', [FacultyController::class, 'index']);
@@ -229,6 +251,24 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/designation/{id}', [DesignationController::class, 'update']);
         Route::delete('/designation/destroy/{id}', [DesignationController::class, 'destroy']);
         Route::put('/designation/restore/{id}', [DesignationController::class, 'restore']);
+
+        // Specialization
+        Route::post('/specialization', [SpecializationController::class, 'store']);
+        Route::put('/specialization/{id}', [SpecializationController::class, 'update']);
+        Route::delete('/specialization/destroy/{id}', [SpecializationController::class, 'destroy']);
+        Route::put('/specialization/restore/{id}', [SpecializationController::class, 'restore']);
+
+        // Program
+        Route::post('/program', [ProgramController::class, 'store']);
+        Route::put('/program/{id}', [ProgramController::class, 'update']);
+        Route::delete('/program/destroy/{id}', [ProgramController::class, 'destroy']);
+        Route::put('/program/restore/{id}', [ProgramController::class, 'restore']);
+
+        // Faculty Education Profile
+        Route::post('/faculty_education_profile', [FacultyEducationProfileController::class, 'store']);
+        Route::put('/faculty_education_profile/{id}', [FacultyEducationProfileController::class, 'update']);
+        Route::delete('/faculty_education_profile/destroy/{id}', [FacultyEducationProfileController::class, 'destroy']);
+        Route::put('/faculty_education_profile/restore/{id}', [FacultyEducationProfileController::class, 'restore']);
 
         // Faculty
         Route::post('/faculty', [FacultyController::class, 'store']);

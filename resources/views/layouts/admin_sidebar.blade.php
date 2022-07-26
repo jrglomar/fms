@@ -38,6 +38,8 @@
                         <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
                         <li class="dropdown {{ Request::segment(2) == 'role' ||
                                                 Request::segment(2) == 'designation' ||
+                                                Request::segment(2) == 'specialization' ||
+                                                Request::segment(2) == 'program' ||
                                                 Request::segment(2) == 'academic_rank' ||
                                                 Request::segment(2) == 'faculty_type'
                                             ? 'active' : ''}}">
@@ -53,6 +55,14 @@
                                 <li class="{{ Request::segment(2) == 'designation' ? 'active' : ''}}">
                                     <a class="nav-link" href="/admin/designation">
                                         <span>Designation</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'specialization' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/specialization">
+                                        <span>Specialization</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'program' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/program">
+                                        <span>Program</span></a>
                                 </li>
                                 <li class="{{ Request::segment(2) == 'academic_rank' ? 'active' : ''}}">
                                     <a class="nav-link" href="/admin/academic_rank">

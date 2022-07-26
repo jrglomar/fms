@@ -90,6 +90,99 @@
                         });
                         refresh();
                     }
+                    else if(meeting_status == "On Going")
+                    {
+                        if(moment_current_date > moment_meeting_date)
+                        {
+                            console.log("On Going to Done 364")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
+                            let data = {
+                                "title": responseData.title,
+                                "meeting_type_id": responseData.meeting_type_id,
+                                "description": responseData.description,
+                                "agenda": responseData.agenda,
+                                "location": responseData.location,
+                                "date": responseData.date,
+                                "start_time": responseData.start_time,
+                                "end_time": responseData.end_time,
+                                "is_required": responseData.is_required,
+                                "status": "Done",
+                            }
+                            $.ajax({
+                                url: BASE_API + meeting_id,
+                                method: "PUT",
+                                data: JSON.stringify(data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"      
+                                },
+                                success: function(data)
+                                {
+                                    
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                        if(moment_current_date == moment_meeting_date && now > responseData.end_time)
+                        {
+                            console.log("On Going to Done 567")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
+                            let data = {
+                                "title": responseData.title,
+                                "meeting_type_id": responseData.meeting_type_id,
+                                "description": responseData.description,
+                                "agenda": responseData.agenda,
+                                "location": responseData.location,
+                                "date": responseData.date,
+                                "start_time": responseData.start_time,
+                                "end_time": responseData.end_time,
+                                "is_required": responseData.is_required,
+                                "status": "Done",
+                            }
+                            $.ajax({
+                                url: BASE_API + MEETING_ID,
+                                method: "PUT",
+                                data: JSON.stringify(data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data)
+                                {
+                                    
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    }
                     
 
                     var isRequired = responseData.is_required

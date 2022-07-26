@@ -164,6 +164,39 @@
         }
         // END OF SRD DATATABLE FUNCTION
 
+        // DATE FILTERING
+            // EXTEND DATATABLE SEARCH
+            $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = $('#min-date').val();
+                var max = $('#max-date').val();
+                var createdAt = data[2] || 0; // CREATED_AT IN TABLE
+
+                if ((min == "" || max == "") || (moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max))) 
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            });
+
+            // REDRAW DATATABLE DATE RANGE FILTER CHANGE
+            $('.date-range-filter').change(function() {
+                dataTable.draw();
+            });
+
+            $('#MEETINGdataTable_filter').hide();
+
+            // RESET BUTTON FOR THE DATATABLE DATE FILTERING
+            $(document).on("click", "#reset_date_filter", function(){
+                $("input[type=date]").val("");
+                // REDRAW DATATABLE DATE RANGE FILTER CHANGE
+                dataTable.columns().search("").draw();
+            })
+        // END DATE FILTERING
+
         // CALLING ALL DATATABLE FUNCTION
         SRDdataTable()
 

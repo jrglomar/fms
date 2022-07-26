@@ -44,6 +44,16 @@ Route::group(['middleware' => ['role.admin'],
             return view('admin/designation/designation', ['page_title' => 'Designation']);
         })->name('admin_designation');
 
+        //SPECIALIZATION
+        Route::get('/specialization', function () {
+            return view('admin/specialization/specialization', ['page_title' => 'Specialization']);
+        })->name('admin_specialization');
+
+        //PROGRAM
+        Route::get('/program', function () {
+            return view('admin/program/program', ['page_title' => 'Program']);
+        })->name('admin_program');
+
         //FACULTY TYPE
         Route::get('/faculty_type', function () {
             return view('admin/faculty_type/faculty_type', ['page_title' => 'Faculty Type']);

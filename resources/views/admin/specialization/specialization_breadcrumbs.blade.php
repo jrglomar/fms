@@ -6,20 +6,20 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="background-color: #FFFFFF; padding-left: 0px; margin-bottom: 0px">
         <li class="breadcrumb-item">
-            Dashboard
-        </li>
-        <li class="breadcrumb-item" id="acad_head_profile">
-        <a href="javascript:window.location.reload();">Profile</a>
-            <script>
-                if(window.location.pathname == '/acad_head/profile')
-                {
-                    document.getElementById("acad_head_profile").classList.add('active');
-                    document.getElementById("acad_head_profile").setAttribute("aria-current", "page")
-                }
-            </script>
+            System Setup
         </li>
         <li class="breadcrumb-item">
-            User Details
+            Account
+        </li>
+        <li class="breadcrumb-item" id="admin_specialization">
+        <a href="/admin/specialization">Specialization</a>
+            <script>
+                if(window.location.pathname == '/admin/specialization')
+                {
+                    document.getElementById("admin_specialization").classList.add('active');
+                    document.getElementById("admin_specialization").setAttribute("aria-current", "page")
+                }
+            </script>
         </li>
     </ol>
 </nav>

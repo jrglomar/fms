@@ -994,6 +994,8 @@
                                     {
                                         if(marfData[0].meeting_submitted.length == 0)
                                         {
+                                            console.log("Marf Data")
+                                            console.log(marfData[0].meeting_submitted)
                                             if (marfData[0].proof_of_attendance_file_link != null)
                                             {
                                                 var modalTab02 = '<h6 class="text-muted">Upload Link</h6>';
@@ -1001,6 +1003,8 @@
                                                 var headerForTab2 = 'Upload Link';
                                                 $("#header5forTab2").html(headerForTab2);
                                                 
+                                                console.log("Marf Data")
+                                                console.log(marfData[0].meeting_submitted)
                                                 console.log("Meeting Submitted not equal to zero")
                                                 row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
                                                                     '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
@@ -1020,6 +1024,8 @@
                                                 var headerForTab2 = 'Upload Link';
                                                 $("#header5forTab2").html(headerForTab2);
 
+                                                console.log("Marf Data")
+                                                console.log(marfData[0].meeting_submitted)
                                                 console.log("Meeting Submitted equal to zero")
                                                 row_right_top +=    '<div class="alert alert-light alert-has-icon">' +
                                                                     '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
@@ -1035,6 +1041,8 @@
                                         }
                                         else
                                         {
+                                            console.log("Marf Data")
+                                            console.log(marfData[0].meeting_submitted)
                                             var modalTab02 = '<h6 class="text-muted">Upload Link</h6>';
                                             $("#tab02").html(modalTab02);
                                             var headerForTab2 = 'Upload Link';

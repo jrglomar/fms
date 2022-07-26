@@ -34,7 +34,7 @@
                     let is_required_view = ""
 
                     $('#id_view').html(data.id);
-                    $('#title').html(data.title);
+                    $('#title').html('<i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + data.title);
                     $('#description').html(data.description);
                     $('#start_time').html(moment(data.start_datetime).format('LLL'));
                     $('#end_time').html(moment(data.end_datetime).format('LLL'));
