@@ -151,6 +151,7 @@
                     }
 
                     console.log(data_form)
+                    
                         if($('#start_datetime').val() > "{{ date('Y-m-d 00:00:00'); }}" && $('#end_datetime').val() > "{{ date('Y-m-d 00:01:00'); }}" &&
                         $('#start_datetime').val() < $('#end_datetime').val()){
                             //ajax opening tag
@@ -204,6 +205,8 @@
                 let formdata = {}
 
                 formdata['memorandum_file_directory'] = data.path
+                formdata['is_required'] = 1
+                formdata['status'] = "Pending"
 
                 $.each(form, function(){
                     formdata[[this.name]] = this.value;

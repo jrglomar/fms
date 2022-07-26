@@ -6,7 +6,7 @@
                 <div class="col-12">
                         <h3 class="text-center"><span id="title"></span></h3>
                         <span class="badge badge-info">
-                            <span>Posted by </span><span id="created_by"></span>
+                            <span style="font-size: 18px">Posted by </span><span  style="font-size: 18px" id="created_by" ></span>
                         </span>
                         <div class="text-dark float-right">
                             <span class="badge badge-warning">
