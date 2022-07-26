@@ -163,6 +163,7 @@ class MeetingAttendanceRequiredFacultyListController extends Controller
         ->where('faculty_id', 'like', '%'.$faculty_id.'%')
         ->get();
     }
+    
     public function faculty_list_time_out_null($meeting_id)
     {
         return MeetingAttendanceRequiredFacultyList::where('meeting_id', 'like', '%'.$meeting_id.'%')

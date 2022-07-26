@@ -1,5 +1,9 @@
+<style>
+    #agenda_div{
+        visibility: "hidden";
+    }
+</style>
 {{-- CREATE FORM --}}
-
 <div class="row">
     <div class="col-md-12 collapse" id="create_card">
         <div class="card card-primary">
@@ -19,13 +23,18 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label class="required-input">Activity Type</label>
-                            <select class="form-control select2" id="activity_type_id"
-                                name="activity_type_id" required
-                                data-parsley-errors-container="#activity-type-errors">
+                            <select class="form-control select2" id="activity_type_id" name="activity_type_id" required data-parsley-errors-container="#activity-type-errors">
+                                <option disabled selected>List of Activity Type/s</option>
                             </select>
                             <ul class="parsley-err-msg">
                                 <li id="activity-type-errors"></li>
                             </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12" id="agenda_div">
+                            <label class="required-input">Agenda</label>
+                            <textarea class="form-control" rows="4" cols="50" id="agenda" name="agenda" form="createForm" placeholder="Agenda" tabindex="1"></textarea>
                         </div>
                     </div>
                     <div class="row">

@@ -211,7 +211,8 @@ use App\Http\Controllers\Api\v1\FacultyEducationProfileController;
         Route::get('/activity_attendance/search/{id}', [ActivityAttendanceRequiredFacultyListController::class, 'search']);
         Route::get('/activity_attendance/show_soft_deleted/{all}', [ActivityAttendanceRequiredFacultyListController::class, 'show_soft_deleted']);
         Route::get('/activity_attendance/unrequired_faculty/{activity_id}', [ActivityAttendanceRequiredFacultyListController::class, 'get_unrequired_faculty']);
-
+        Route::get('/activity_attendance/search_specific_activity_and_faculty/{activity_id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'search_specific_activity_and_faculty']); //
+        
         // Activity Submitted Proof
         Route::get('/activity_submitted_proof', [ActivityAttendanceSubmittedFileController::class, 'index']);
          Route::get('/activity_submitted_proof/{id}', [ActivityAttendanceSubmittedFileController::class, 'show']);

@@ -43,7 +43,7 @@ class ActivityController extends Controller
         $request->validate([
             'title' => 'required',
             'status' => 'required',
-            'is_required' => 'required',
+            'is_required',
             'activity_type_id' => 'required'
         ]);
 
@@ -171,15 +171,31 @@ class ActivityController extends Controller
 
         return Activity::where('email', 'like', '%'.$title.'%')->get();
     }
-
     public function get_required_activity($faculty_id)
     {
-        $activity = Activity::select("*")
+        $activities = Activity::select(
+            "activities.id", 
+            "activities.created_at",
+            "activities.created_by",
+            "activities.updated_at",
+            "activities.updated_by",
+            "activities.deleted_at",
+            "activities.title",
+            "activities.location",
+            "activities.start_datetime",
+            "activities.end_datetime",
+            "activities.agenda",
+            "activities.description",
+            "activities.is_required",
+            "activities.status",
+            "activities.memorandum_file_directory",
+            "activities.activity_type_id",
+            "activity_attendance_required_faculty_lists.faculty_id as f_id" 
+        )
         ->join("activity_attendance_required_faculty_lists", "activity_attendance_required_faculty_lists.activity_id", "=", "activities.id")
         ->where('faculty_id', $faculty_id)
         ->get();
 
-        return $activity;
-
+        return $activities;
     }
 }

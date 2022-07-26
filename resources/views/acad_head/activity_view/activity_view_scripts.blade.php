@@ -24,23 +24,47 @@
                 },
 
                 success: function(data){
-
-                    console.log(data)
-
                     date = moment(new Date).format()
 
                     let created_at = moment(data.created_at).format('LLL');
                     let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
                     let is_required_view = ""
+                    
+                    var hero_body = "";
 
-                    $('#id_view').html(data.id);
-                    $('#title').html('<i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + data.title);
-                    $('#description').html(data.description);
-                    $('#start_time').html(moment(data.start_datetime).format('LLL'));
-                    $('#end_time').html(moment(data.end_datetime).format('LLL'));
-                    $('#act_type').html(data.activity_type.title); 
-                    $('#created_by').html(data.created_by_user.faculty.first_name); 
-                    console.log(data.activity_type)  
+                    if(data.activity_type.category == "Activity")
+                    {
+                        hero_body = '<span><b>Description: </b> <br>' +
+                                    '<span class="" style="white-space: pre-line; text-align: justify; display:block;" id="description">' +
+                                        '&emsp;&emsp;&nbsp;' + data.description +
+                                    '</span>';
+                    }
+                    else if (data.activity_type.category == "Meeting")
+                    {
+                        var agenda = data.agenda;
+
+                        console.log(data)
+
+                        if(agenda == null)
+                        {
+                            agenda = "No agenda given"
+                        }
+                        else
+                        {
+                            agenda = data.agenda;
+                        }
+                        hero_body = '<span><b>Agenda: </b> <br>' +
+                                    '<span class="" style="white-space: pre-line; text-align: justify; display:block;" id="agenda">' +
+                                        '&emsp;&emsp;&nbsp;' + agenda +
+                                    '</span>' +
+                                    '<br>' +
+                                    '<span><b>Description: </b> <br>' +
+                                    '<span class="" style="white-space: pre-line; text-align: justify; display:block;" id="description">' +
+                                        '&emsp;&emsp;&nbsp;' + data.description +
+                                    '</span>';
+                    }
+
+                    $('#hero_body').html(hero_body);
 
                     if(data.is_required == 0){
                         is_required_view = "Not required to attend"
@@ -48,20 +72,68 @@
                         is_required_view = "Required to attend"
                     }
 
-                    if(moment(data.start_datetime).format() < date && moment(data.end_datetime).format() > date){
+                    console.log(data.title)
+                    var hero_header =   
+                                        '<div class="row">' +
+                                            '<div class="col-md-10">' +
+                                                '<h3 class="text-center"><span id="title"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' +
+                                                    data.title +
+                                                '</span></h3>' +
+                                            '</div>' +
+                                            '<div class="col-md-2">' +
+                                                '<div>' +
+                                                    '<button type="button" class="btn btn-primary"' +
+                                                    'data-toggle="modal" data-target="#memo_card" role="button" aria-expanded="false" aria-controls="memo_card"' +
+                                                    '>View Memo</button>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                        '<br>' +
+                                        '<div class="col-12">' +
+                                            '<span class="badge badge-info">' +
+                                                '<span>Posted by </span><span id="created_by">' +
+                                                    data.created_by_user.faculty.last_name + ", " + data.created_by_user.faculty.first_name +
+                                                '</span>' +
+                                            '</span>' +
+                                            '<div class="text-dark float-right">' +
+                                                '<span class="badge badge-warning">' +
+                                                    '<span id="act_type">' +
+                                                        data.activity_type.title +
+                                                    '</span>' +
+                                                    '<span> • </span>' +
+                                                    '<span id="is_required">' +
+                                                        is_required_view +
+                                                    '</span>' +
+                                                '</span>' +
+                                            '</div>' +
+                                        '</div>';
+                    $('#hero_header').html(hero_header);
+                                        
+    
+                    $('#id_view').html(data.id);
+                    $('#start_time').html(moment(data.start_datetime).format('LLL'));
+                    $('#end_time').html(moment(data.end_datetime).format('LLL'));
+                 
+
+                    activity_status = data.status;
+
+                    if(activity_status == "Pending")
+                    {
                         $('#status').html(`<span class="badge badge-warning">
-                                <span>Ongoing</span>
+                                <span>Pending</span>
                                 </span>`);
                     }
-                    else if(date > moment(data.end_datetime).format()){
+                    else if(activity_status == "On Going")
+                    {
                         $('#status').html(`<span class="badge badge-warning">
-                                <span>Ended</span>
+                                <span>On Going</span>
                                 </span>`);
                         //$('#status').addClass('text-success');
                     }
-                    else{
+                    else if(activity_status == "Done")
+                    {
                         $('#status').html(`<span class="badge badge-warning">
-                                <span>Pending</span>
+                                <span>Done</span>
                                 </span>`);
                         //$('#status').addClass('text-warning');
                     }
@@ -77,7 +149,15 @@
                     //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
 
                     if(data.memorandum_file_directory == "NA"){
-                        $('#if_memo').html("<span>No Memorandum uploaded</span>")
+                        var if_memo =   '<span>No Memorandum uploaded</span>' +
+                                        '<br>' +
+                                        '<br>' +
+                                        '<form class="dropzone"' +
+                                                'id="memo_upload">' +
+                                        '</form>';
+
+
+                        $('#if_memo').html(if_memo)
                     }
                     else{
                         $('#if_memo').html('<div class="embed-responsive embed-responsive-16by9">'
@@ -89,8 +169,8 @@
             // ajax closing tag
             })
         }
-
         getActivity()
+        
 
         function requiredFacultyDatatable(){
             requiredFacultyDatatable = $('#requiredFacultyDatatable').DataTable({

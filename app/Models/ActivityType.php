@@ -19,6 +19,7 @@ class ActivityType extends Model
     protected $fillable = [
         "title",
         "description",
+        "category",
         'created_by',
         'updated_by',
     ];
