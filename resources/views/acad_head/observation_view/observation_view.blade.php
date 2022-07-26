@@ -13,21 +13,19 @@
 @section('section_header')
 <div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
-    @include('acad_head/observation/observation_breadcrumbs')
+    @include('acad_head/observation_view/observation_view_breadcrumbs')
 </div>
 @endsection
 
-    {{-- MODAL --}}
-    @include('acad_head/observation/observation_modal')
+{{-- MODAL --}}
+@include('acad_head/observation_view/observation_view_modal')
 
     {{-- CONTENT --}}
     @section('content')
+        
+            {{-- MAIN CONTENT --}}
+            @include('acad_head/observation_view/observation_view_content')
 
-            {{-- FORM --}}
-            @include('acad_head/observation/observation_form')
-
-            {{-- DATATABLE --}}
-            @include('acad_head/observation/observation_datatable')
     @endsection
 
 
@@ -40,5 +38,5 @@
 
 @section('script')
     @include('acad_head/observation/class_schedule_response')
-    @include('acad_head/observation/observation_scripts')
+    @include('acad_head/observation_view/observation_view_scripts')
 @endsection

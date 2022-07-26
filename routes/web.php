@@ -195,10 +195,15 @@ Route::group(['middleware' => ['role.acadhead'],
         return view('acad_head/profile/profile', ['page_title' => 'Profile', 'user_id' => $id]);
     })->name('acad_head_profile');
 
-    // ------------MEETING--------------- //
+    // ------------OBSERVATION--------------- //
     Route::get('/observation', function () {
         return view('acad_head/observation/observation', ['page_title' => 'Observation']);
     })->name('acad_head_observation');
+
+    // ------------OBSERVATION--------------- //
+    Route::get('/observation/{id}', function ($id) {
+        return view('acad_head/observation_view/observation_view', ['page_title' => 'Observation', 'schedule_id' => $id]);
+    })->name('acad_head_observation_view');
 
     // ------------MEETING - VIEW --------------- //
     Route::get('/meeting/{id}', function ($id) {

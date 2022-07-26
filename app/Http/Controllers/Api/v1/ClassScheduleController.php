@@ -23,7 +23,8 @@ class ClassScheduleController extends Controller
         // return ClassSchedule::where('active_status', 'Active')->get();
 
         // All data
-        return ClassSchedule::all();
+        // return ClassSchedule::all();
+
         
         // Return with relationships
             
