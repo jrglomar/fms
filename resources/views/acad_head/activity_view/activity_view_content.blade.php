@@ -6,7 +6,7 @@
                 <div class="col-12">
                         <h3 class="text-center"><span id="title"></span></h3>
                         <span class="badge badge-info">
-                            <span>Posted by </span><span id="created_by"></span>
+                            <span style="font-size: 18px">Posted by </span><span  style="font-size: 18px" id="created_by" ></span>
                         </span>
                         <div class="text-dark float-right">
                             <span class="badge badge-warning">
@@ -19,11 +19,6 @@
                 <div class="card-body">
                     <span class="" style="white-space: pre-line" id="description"></h3>
                 </div>
-                <div>
-                    <button type="button" class="btn btn-primary"
-                    data-toggle="modal" data-target="#memo_card" role="button" aria-expanded="false" aria-controls="memo_card"
-                    >View Memo</button>
-                </div>
             </div>
            
         </div>
@@ -33,9 +28,16 @@
         <div class="hero text-white hero-bg-image hero-bg-parallax"
         style="background-image: url({{ URL::to('/images/designs/green_activity.png') }})">
             <div class="hero-inner">
-                <div class="d-flex justify-content-between">
-                    <h5> <i class="fa fa-info-circle"></i> Activity Details</h5>
-                </div>          
+                <div class="row"> 
+                    <div class="d-flex justify-content-between col-md-9">
+                        <h5> <i class="fa fa-info-circle"></i> Activity Details</h5>
+                    </div>   
+                    <div>
+                        <button type="button" class="btn btn-primary"
+                        data-toggle="modal" data-target="#memo_card" role="button" aria-expanded="false" aria-controls="memo_card"
+                        >View Memo</button>
+                    </div> 
+                </div>      
             </div>
             <div class="card-body">
                 <div class="row">

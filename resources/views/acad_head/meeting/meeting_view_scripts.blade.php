@@ -90,6 +90,99 @@
                         });
                         refresh();
                     }
+                    else if(meeting_status == "On Going")
+                    {
+                        if(moment_current_date > moment_meeting_date)
+                        {
+                            console.log("On Going to Done 364")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
+                            let data = {
+                                "title": responseData.title,
+                                "meeting_type_id": responseData.meeting_type_id,
+                                "description": responseData.description,
+                                "agenda": responseData.agenda,
+                                "location": responseData.location,
+                                "date": responseData.date,
+                                "start_time": responseData.start_time,
+                                "end_time": responseData.end_time,
+                                "is_required": responseData.is_required,
+                                "status": "Done",
+                            }
+                            $.ajax({
+                                url: BASE_API + meeting_id,
+                                method: "PUT",
+                                data: JSON.stringify(data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"      
+                                },
+                                success: function(data)
+                                {
+                                    
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                        if(moment_current_date == moment_meeting_date && now > responseData.end_time)
+                        {
+                            console.log("On Going to Done 567")
+                            console.log("Now: "+now)
+                            console.log("Meeting Date: " + moment_meeting_date)
+                            console.log("Current Date: " + moment_current_date)
+                            console.log("Start Time: " + responseData.start_time)
+                            console.log("End Time: " + responseData.end_time)
+                            let data = {
+                                "title": responseData.title,
+                                "meeting_type_id": responseData.meeting_type_id,
+                                "description": responseData.description,
+                                "agenda": responseData.agenda,
+                                "location": responseData.location,
+                                "date": responseData.date,
+                                "start_time": responseData.start_time,
+                                "end_time": responseData.end_time,
+                                "is_required": responseData.is_required,
+                                "status": "Done",
+                            }
+                            $.ajax({
+                                url: BASE_API + MEETING_ID,
+                                method: "PUT",
+                                data: JSON.stringify(data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data)
+                                {
+                                    
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    }
                     
 
                     var isRequired = responseData.is_required
@@ -115,15 +208,15 @@
                     // IF Else Condition to specify if the Status is Done or Pending
                     if(status == "Pending")
                     {
-                        status = '<span class="badge badge-warning">Meeting Status: ' + responseData.status + '</span>'
+                        status = '<span class="badge badge-warning" style="font-size: 16px">Meeting Status: ' + responseData.status + '</span>'
                     }
                     else if(status == "Done" || status == "done")
                     {
-                        status = '<span class="badge badge-success">Meeting Status: ' + responseData.status + '</span>'
+                        status = '<span class="badge badge-success" style="font-size: 16px">Meeting Status: ' + responseData.status + '</span>'
                     } 
                     else if(status == "On Going")
                     {
-                        status = '<span class="badge badge-info">Meeting Status: ' + responseData.status + '</span>'
+                        status = '<span class="badge badge-info" style="font-size: 16px">Meeting Status: ' + responseData.status + '</span>'
                     } 
 
 
@@ -134,10 +227,10 @@
                                             '<div class="hero-inner">' +
                                                 '<div class="col-12">' +
                                                     '<h3 class="card-title text-center"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + 
-                                                        '<span>' + responseData.title + '</span>' +
+                                                        '<span >' + responseData.title + '</span>' +
                                                     '</h3>' +
                                                     
-                                                    '<span class="badge badge-info" style="color:black"><b>' + responseData.meeting_type.title + '</b></span>' +
+                                                    '<span class="badge badge-info" style="color:black; font-size: 16px" ><b>' + responseData.meeting_type.title + '</b></span>' +
                                                     '<div class="float-right"><b>' +
                                                         status +
                                                     '</b></div>' +
@@ -146,14 +239,14 @@
                                             '<br>' +
                                             '<div class="hero-inner">' +
                                                 '<div class="col-md-12">' +
-                                                    '<span><b>Agenda: </b>' +
+                                                    '<span style="font-size: 16px"><b>Agenda: </b>' +
                                                 '</div>' +
                                                 '<div class="col-md-12">' +
                                                     '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;&emsp;&emsp;' +responseData.agenda +   
                                                 '</div>' + 
                                                 '<br>' + 
                                                 '<div class="col-md-12">' +
-                                                    '<span><b>Description: </b>' +
+                                                    '<span style="font-size: 16px"><b>Description: </b>' +
                                                 '</div>' +
                                                 '<div class="col-md-12">' +
                                                     '<span style="white:space: pre-line; text-align: justify; display:block;">&emsp;&emsp;&emsp;' +responseData.description +   

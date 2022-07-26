@@ -105,6 +105,40 @@ class PresentationsSeeder extends Seeder
             'title' => 'Faculty Extensionist',
             'description' => 'Faculty Extensionist'
         ]);
+        
+        DB::table('specializations')->insert([
+            'id' => 'dc7c6fa9-da61-4c2d-adbc-43o8f13b7af8',
+            'created_at' => '2022-06-22 16:33:33',
+            'updated_at' => '2022-06-22 16:33:33',
+            'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',
+            'title' => 'Human Resource Management',
+            'description' => 'Human Resource Management'
+        ]);
+        DB::table('specializations')->insert([
+            'id' => 'ddf1cd40-1da3-4773-81d7-6be2131a73e2',
+            'created_at' => '2022-06-22 16:33:33',
+            'updated_at' => '2022-06-22 16:33:33',
+            'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',
+            'title' => 'Guidance and Counseling/ Psychology',
+            'description' => 'Guidance and Counseling/ Psychology'
+        ]);
+
+        DB::table('programs')->insert([
+            'id' => 'dd7a6fa9-dd61-4c2d-acbd-43o8c13d7af8',
+            'created_at' => '2022-06-22 16:33:33',
+            'updated_at' => '2022-06-22 16:33:33',
+            'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',
+            'title' => 'BSBA - HRM',
+            'description' => 'BSBA - HRM'
+        ]);
+        DB::table('programs')->insert([
+            'id' => 'adf1ac40-1df3-4773-81d7-6bb2131c73f2',
+            'created_at' => '2022-06-22 16:33:33',
+            'updated_at' => '2022-06-22 16:33:33',
+            'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',
+            'title' => 'Gen Ed',
+            'description' => 'Gen Ed'
+        ]);
 
         DB::table('faculty_types')->insert([
             'id' => '00515f7c-b267-4f4e-870e-5cc9a9e84a43',
@@ -321,7 +355,9 @@ class PresentationsSeeder extends Seeder
             'user_id' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',
             'faculty_type_id' => '00515f7c-b267-4f4e-870e-5cc9a9e84a43',
             'academic_rank_id' => 'c77357e3-66a5-4f67-8b41-4cc6bc19ef7a',
-            'designation_id' => 'fdd1cd40-1da3-4773-81c7-6be2131a73f2'
+            'designation_id' => 'fdd1cd40-1da3-4773-81c7-6be2131a73f2',
+            'specialization_id' => 'dc7c6fa9-da61-4c2d-adbc-43o8f13b7af8',
+            'program_id' => 'adf1ac40-1df3-4773-81d7-6bb2131c73f2'
         ]);
 
         // ACAD HEAD ACCOUNT
@@ -346,7 +382,9 @@ class PresentationsSeeder extends Seeder
             'user_id' => '2cb47788-c907-4196-8960-9b26fa699ec4',
             'faculty_type_id' => '000267aa-d29c-4e91-afd6-0f68a5d86f4a',
             'academic_rank_id' => '260bbc2f-3310-49a3-b8d7-6d9a51f404e0',
-            'designation_id' => 'dc7c6ba9-da51-4c2d-aacc-43c8f13b6af8'
+            'designation_id' => 'dc7c6ba9-da51-4c2d-aacc-43c8f13b6af8',
+            'specialization_id' => 'ddf1cd40-1da3-4773-81d7-6be2131a73e2',
+            'program_id' => 'dd7a6fa9-dd61-4c2d-acbd-43o8c13d7af8'
         ]);
 
         // FACULTY ONE ACCOUNT
@@ -371,7 +409,9 @@ class PresentationsSeeder extends Seeder
             'user_id' => 'aeed01a8-0e42-4c45-bdf1-90b3bc8e7027',
             'faculty_type_id' => '7fab7e70-8bc4-4384-881f-654b40e19cf3',
             'academic_rank_id' => '260bbc2f-3310-49a3-b8d7-6d9a51f404e0',
-            'designation_id' => 'dc7c6ba9-da51-4c2d-aacc-43c8f13b6af8'
+            'designation_id' => 'dc7c6ba9-da51-4c2d-aacc-43c8f13b6af8',
+            'specialization_id' => 'dc7c6fa9-da61-4c2d-adbc-43o8f13b7af8',
+            'program_id' => 'adf1ac40-1df3-4773-81d7-6bb2131c73f2'
         ]);
 
         // FACULTY TWO ACCOUNT
@@ -396,7 +436,9 @@ class PresentationsSeeder extends Seeder
             'user_id' => 'bc118579-e632-4221-9521-f5f40aee62d6',
             'faculty_type_id' => '7fab7e70-8bc4-4384-881f-654b40e19cf3',
             'academic_rank_id' => '2e7e0dc1-c10d-4eb8-97a5-7c016281808e',
-            'designation_id' => 'dc7c6ba9-da51-4c2d-aacc-43c8f13b6af8'
+            'designation_id' => 'dc7c6ba9-da51-4c2d-aacc-43c8f13b6af8',
+            'specialization_id' => 'ddf1cd40-1da3-4773-81d7-6be2131a73e2',
+            'program_id' => 'dd7a6fa9-dd61-4c2d-acbd-43o8c13d7af8'
         ]);
 
         // REQUIREMENT BINS

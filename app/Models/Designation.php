@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Designation extends Model
 {
-        // -----  [[DEFAULT]]  -----  //
+    // -----  [[DEFAULT]]  -----  //
         use HasFactory, SoftDeletes;
         // [Modify this fillable base on tables]      - Can be modified
             protected $fillable = [

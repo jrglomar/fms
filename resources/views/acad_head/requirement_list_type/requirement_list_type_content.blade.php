@@ -6,19 +6,19 @@
                 <div class="col-12">
                         <h3 class="text-center"><span id="title"></span></h3>
                         <span class="badge badge-info">
-                            <span>Posted by </span><span id="created_by"></span>
+                            <span style="font-size: 18px">Posted by </span><span style="font-size: 18px" id="created_by"></span>
                         </span>
-                        <div class="text-dark float-right">
+                        <div class="text-dark float-right" >
                             <span class="badge badge-warning">
-                                <span>Due</span>
-                                <span id="created_at"></span>
+                                <span style="font-size: 18px" >Due</span>
+                                <span style="font-size: 18px" id="created_at"></span>
                             </span>
                         </div>
                 </div>
             </div>
             &nbsp;
             <div class="hero-inner">
-                <span class="text-white" style="white-space: pre-line" id="description"><span>
+                <span class="text-white" style="white-space: pre-line; font-size: 18px" id="description"><span>
             </div>
         </div>
     </div>
@@ -48,7 +48,8 @@
                 <div class="d-flex justify-content-between">
                     <h5> Required Document List</h5>
                     <div class="card-header-action">
-                        <button id="createRequiredDocument" type="button" class="btn btn-warning btn-sm">Edit List <i class="fa fa-edit" aria-hidden="true"></i></button>
+                        <button id="createRequiredDocument" type="button" class="btn btn-warning btn-sm" style="font-size: 14px">
+                            Edit List <i class="fa fa-edit" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 

@@ -17,6 +17,9 @@
 </div>
 @endsection
 
+    {{-- MODAL --}}
+    @include('faculty/profile/profile_modal')
+
     {{-- CONTENT --}}
     @section('content')
         

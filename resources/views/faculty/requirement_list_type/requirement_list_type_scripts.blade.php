@@ -311,18 +311,21 @@
                     let requiredDocumentList = 'Required Document/s: '
 
                         $.each(responseData.requirement_list_type, function(i){
-                            if(i < (responseData.requirement_list_type.length) - 1){
-                                requiredDocumentList += responseData.requirement_list_type[i].requirement_type.title + ', '
-                            }
-                            else{
-                                requiredDocumentList += responseData.requirement_list_type[i].requirement_type.title
-                            }
+                            requiredDocumentList += '<li class="">' + responseData.requirement_list_type[i].requirement_type.title + '</li>'
                         })
 
 
+                    if(moment(responseData.deadline).format() < moment(new Date).format()){
+                        document.getElementById("date_badge").classList.add('badge-danger');
+                    }
+                    else if(moment(responseData.deadline).format() > moment(new Date).format()){
+                        document.getElementById("date_badge").classList.add('badge-success');
+                    }
+
+                    $("#created_at").html(moment(responseData.deadline).format('LL'));
                     $('#requiredDocumentList').html(requiredDocumentList)
                     $("#created_by").html(`${responseData.created_by_user.faculty.first_name} ${responseData.created_by_user.faculty.last_name}` );
-                    $("#created_at").html(moment(responseData.deadline).format('LL'));
+                    
                     $("#title").html(title);
                     // $("#deadline").html("Deadline: " + deadline);
                     $("#description").html(description);

@@ -40,7 +40,9 @@ class Faculty extends Model
                 'user_id',
                 'academic_rank_id',
                 'faculty_type_id',
-                'designation_id'
+                'designation_id',
+                'specialization_id',
+                'program_id'
             ];
 
             protected $dates = ['deleted_at'];
@@ -68,6 +70,16 @@ class Faculty extends Model
             {
                 return $this->belongsTo(Designation::class);
             }
+
+            public function specialization()
+            {
+                return $this->belongsTo(Specialization::class);
+            }
+
+            public function program()
+            {
+                return $this->belongsTo(Program::class);
+            }
             
             public function requirement_required_faculty_list()
             {
@@ -84,6 +96,11 @@ class Faculty extends Model
                 return $this->hasMany(MeetingAttendanceRequiredFacultyList::class)->without('faculty', 'created_by_user', 'updated_by_user', 'meeting');
             }
 
+            public function faculty_education_profile()
+            {
+                return $this->hasMany(FacultyEducationProfile::class)->without('faculty');
+            }
+
         // End of [Declare relationships here]
 
         // [Default relationship]       - Default
@@ -97,9 +114,9 @@ class Faculty extends Model
             return $this->belongsTo(User::class,'updated_by');
         }
 
-        protected $with = ['academic_rank', 'designation', 'faculty_type', 'user', 
+        protected $with = ['academic_rank', 'designation', 'program', 'specialization', 'faculty_type', 'user', 
         'created_by_user','updated_by_user', 'requirement_required_faculty_list',
-        'activity_attendance_required_faculty_list', 'meeting_attendance_required_faculty_list'];
+        'activity_attendance_required_faculty_list', 'meeting_attendance_required_faculty_list', 'faculty_education_profile'];
 
 
         // [Added for UUID Incrementation]      - Default

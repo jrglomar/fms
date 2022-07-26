@@ -34,6 +34,7 @@
             $('#createForm').parsley().reset();
             $('#agenda').summernote('reset');
             $('#description').summernote('reset');
+            $('#degree').val('').trigger("change");
         });
 
         $('#editModal').on('show.bs.modal', function() {

@@ -13,21 +13,22 @@
 @section('section_header')
 <div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
-    @include('admin/activity_type/activity_type_breadcrumbs')
+    @include('admin/specialization/specialization_breadcrumbs')
 </div>
 @endsection
 
     {{-- MODAL --}}
-    @include('admin/activity_type/activity_type_modal')
+    @include('admin/specialization/specialization_modal')
 
     {{-- CONTENT --}}
     @section('content')
         
+
             {{-- FORM --}}
-            @include('admin/activity_type/activity_type_form')
+            @include('admin/specialization/specialization_form')
 
             {{-- DATATABLE --}}
-            @include('admin/activity_type/activity_type_datatable')
+            @include('admin/specialization/specialization_datatable')
     @endsection
 
 
@@ -39,5 +40,6 @@
 
 
 @section('script')
-    @include('admin/activity_type/activity_type_scripts')
+    @include('layouts/global_custom_scripts')
+    @include('admin/specialization/specialization_scripts')
 @endsection

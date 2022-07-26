@@ -13,21 +13,22 @@
 @section('section_header')
 <div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
-    @include('admin/meeting_type/meeting_type_breadcrumbs')
+    @include('admin/program/program_breadcrumbs')
 </div>
 @endsection
 
     {{-- MODAL --}}
-    @include('admin/meeting_type/meeting_type_modal')
+    @include('admin/program/program_modal')
 
     {{-- CONTENT --}}
     @section('content')
+        
 
             {{-- FORM --}}
-            @include('admin/meeting_type/meeting_type_form')
+            @include('admin/program/program_form')
 
             {{-- DATATABLE --}}
-            @include('admin/meeting_type/meeting_type_datatable')
+            @include('admin/program/program_datatable')
     @endsection
 
 
@@ -39,5 +40,6 @@
 
 
 @section('script')
-    @include('admin/meeting_type/meeting_type_scripts')
+    @include('layouts/global_custom_scripts')
+    @include('admin/program/program_scripts')
 @endsection

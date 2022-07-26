@@ -16,68 +16,68 @@ use Illuminate\Support\Facades\Auth;
 class UserRole extends Model
 {
     // -----  [[DEFAULT]]  -----  //
-    use HasFactory, SoftDeletes;
+        use HasFactory, SoftDeletes;
 
-    // [Modify this fillable base on tables]      - Can be modified
-        protected $fillable = [
-            'user_id',
-            'role_id',
-            'created_by',
-            'updated_by',
-        ];
+        // [Modify this fillable base on tables]      - Can be modified
+            protected $fillable = [
+                'user_id',
+                'role_id',
+                'created_by',
+                'updated_by',
+            ];
 
-        protected $dates = ['deleted_at'];
+            protected $dates = ['deleted_at'];
 
-    // [Declare relationships here]
-        public function user()
+        // [Declare relationships here]
+            public function user()
+            {
+                return $this->belongsTo(User::class, 'user_id')->without('user_role');
+            }
+
+            public function role()
+            {
+                return $this->belongsTo(Role::class, 'role_id');
+            }
+
+
+        // End of [Declare relationships here]
+
+        // [Default relationship]       - Default
+        public function created_by_user()
         {
-            return $this->belongsTo(User::class, 'user_id')->without('user_role');
+            return $this->belongsTo(User::class,'created_by');
         }
 
-        public function role()
+        public function updated_by_user()
         {
-            return $this->belongsTo(Role::class, 'role_id');
+            return $this->belongsTo(User::class,'updated_by');
         }
 
+        protected $with = ['user', 'role'];
 
-    // End of [Declare relationships here]
+        // [Added for UUID Incrementation]      - Default
+        public $incrementing = false;
 
-    // [Default relationship]       - Default
-    public function created_by_user()
-    {
-        return $this->belongsTo(User::class,'created_by');
-    }
+        protected $keyType = 'string';
 
-    public function updated_by_user()
-    {
-        return $this->belongsTo(User::class,'updated_by');
-    }
+        public static function boot(){
+            parent::boot();
 
-    protected $with = ['user', 'role'];
+            static::creating(function ($issue) {
+                $issue->id = Str::uuid(36);
+            });
 
-    // [Added for UUID Incrementation]      - Default
-    public $incrementing = false;
+            // [Added for Automation of Created_by and Updated_by]      - Default
+            static::creating(function ($model) {
+                $model->created_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
+                $model->updated_by = NULL;
+            });
 
-    protected $keyType = 'string';
-
-    public static function boot(){
-        parent::boot();
-
-        static::creating(function ($issue) {
-            $issue->id = Str::uuid(36);
-        });
-
-        // [Added for Automation of Created_by and Updated_by]      - Default
-        static::creating(function ($model) {
-            $model->created_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
-            $model->updated_by = NULL;
-        });
-
-        static::updating(function ($model) {
-            $model->updated_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
-        });
-        // END [Added for Automation of Created_by and Updated_by]      - Default
-    }
-    //
-// -----  [[DEFAULT]]  -----  //
+            static::updating(function ($model) {
+                $model->updated_by = is_object(Auth::guard(config('app.guards.web'))->user()) ? Auth::guard(config('app.guards.web'))->user()->id : 1;
+            });
+            // END [Added for Automation of Created_by and Updated_by]      - Default
+        }
+        //
+    // -----  [[DEFAULT]]  -----  //
 }

@@ -38,6 +38,8 @@
                         <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
                         <li class="dropdown {{ Request::segment(2) == 'role' ||
                                                 Request::segment(2) == 'designation' ||
+                                                Request::segment(2) == 'specialization' ||
+                                                Request::segment(2) == 'program' ||
                                                 Request::segment(2) == 'academic_rank' ||
                                                 Request::segment(2) == 'faculty_type'
                                             ? 'active' : ''}}">
@@ -54,6 +56,14 @@
                                     <a class="nav-link" href="/admin/designation">
                                         <span>Designation</span></a>
                                 </li>
+                                <li class="{{ Request::segment(2) == 'specialization' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/specialization">
+                                        <span>Specialization</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'program' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/admin/program">
+                                        <span>Program</span></a>
+                                </li>
                                 <li class="{{ Request::segment(2) == 'academic_rank' ? 'active' : ''}}">
                                     <a class="nav-link" href="/admin/academic_rank">
                                         <span>Academic Rank</span></a>
@@ -61,52 +71,6 @@
                                 <li class="{{ Request::segment(2) == 'faculty_type' ? 'active' : ''}}">
                                     <a class="nav-link" href="/admin/faculty_type">
                                         <span>Faculty Type</span></a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 
-                                                Request::segment(2) == 'requirement_bin' ||
-                                                Request::segment(2) == 'requirement_list_type' 
-                                                
-
-                                            ? 'active' : ''}}">
-                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                                    class="fas fa-file-archive"></i>
-                                <span>SRD</span></a>
-                            <ul class="dropdown-menu">
-                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                                <li class="{{ Request::segment(2) == 'requirement_type' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/admin/requirement_type">
-                                        <span>Requirement Types</span></a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <li class="dropdown {{ Request::segment(2) == 'meeting_type' || 
-                                                Request::segment(2) == 'meeting'
-
-                                            ? 'active' : ''}}">
-                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                                    class="fas fa-calendar"></i>
-                                <span>Meeting</span></a>
-                            <ul class="dropdown-menu">
-                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                                <li class="{{ Request::segment(2) == 'meeting_type' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/admin/meeting_type">
-                                        <span>Meeting Types</span></a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown {{ Request::segment(2) == 'activity_type' ? 'active' : ''}}">
-                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                                    class="fas fa-clipboard"></i>
-                                <span>Activity</span></a>
-                            <ul class="dropdown-menu">
-                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                                <li class="{{ Request::segment(2) == 'activity_type' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/admin/activity_type">
-                                        <span>Activity Types</span></a>
                                 </li>
                             </ul>
                         </li>
