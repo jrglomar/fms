@@ -6,14 +6,11 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
-        var BASE_API = APP_URL + '/api/v1/activity_view/'
-        var ATTENDANCE_API = APP_URL + '/api/v1/activity_attendance/'
+        var BASE_API = APP_URL + '/api/v1/observation/'
         var SCHEDULE_ID = "{{ $schedule_id }}"
         var CLASS_SCHEDULE_ID
         var CLASS_SCHEDULE_DATA
         // END OF GLOBAL VARIABLE
-
-        console.log(class_schedule_response.data)
 
         let class_schedule = class_schedule_response.data
 
@@ -29,6 +26,8 @@
             let data = CLASS_SCHEDULE_DATA
             console.log(data)
 
+            $('#class_schedule_id').val(data.id)
+
             // ROOM DETAILS
             $('#room_building').html(data.room.building)
             $('#room_floor').html(data.room.floor)
@@ -37,8 +36,9 @@
             $('#room_type').html(data.room.room_type)
 
             // SUBJECT DETAILS
+            $('#assignment_code').html(data.assignment_code)
             $('#subject_code').html(data.subject_code)
-            $('#subject_time').html(data.time)
+            $('#subject_schedule').html(data.day_time)
             $('#subject_status').html(data.subject_offering.status)
             $('#teaching_hours').html(data.subject_offering.teaching_hours)
             $('#subject_description').html(data.subject_offering.curriculum_subject.subject.title)
@@ -52,8 +52,39 @@
             $('#faculty_specialization').html()
             $('#faculty_program').html()
 
+            $('#start_time_input').val(data.start_time)
+            $('#end_time_input').val(data.end_time)
+
+            let dayEnabled
+            if(data.day == "Sunday"){dayEnabled = 0}
+            else if(data.day == "Monday"){dayEnabled = 1}
+            else if(data.day == "Tuesday"){dayEnabled = 2}
+            else if(data.day == "Wednesday"){dayEnabled = 3}
+            else if(data.day == "Thursday"){dayEnabled = 4}
+            else if(data.day == "Friday"){dayEnabled = 5}
+            else if(data.day == "Saturday"){dayEnabled = 6}
+
+            console.log(moment().format('L'))
+            let today = moment().format('YYYY-MM-DD')
+            let time = data.end_time
+
+
+            $("#date_of_observation").flatpickr({
+                altInput: true,
+                altFormat: "F j, Y",
+                dateFormat: "Y-m-d" + ' ' + data.start_time,
+                minDate: moment(today + ' ' + data.end_time).format('YYYY-MM-DD HH:MM'),
+                "disable": [
+                    function(date) {
+                        return (date.getDay() != dayEnabled);  // disable weekends
+                    }
+                ]
+            });
+
             removeLoader()
         }
+
+
 
         getSchedule()
         
@@ -421,21 +452,52 @@
             })
         })
 
-        $(document).on("click", "#copyURL", function(){
-            /* Get the text field */
-            var copyText = document.getElementById("proof_link_view");
-
-            /* Select the text field */
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); /* For mobile devices */
-
-            /* Copy the text inside the text field */
-            navigator.clipboard.writeText(copyText.value);
-
-        });
 
         $('.btnSetObservation').on('click', function(){
             console.log(SCHEDULE_ID)
+            let data = CLASS_SCHEDULE_DATA;
+
+            $('#observationModal').modal('show')
+        })
+
+        $('.btnSubmitObservation').on('click', function(e){
+            e.preventDefault()
+
+            var form_url = BASE_API
+            var form = $("#setObservationForm").serializeArray();
+            let data = {}
+
+            $.each(form, function(){
+                data[[this.name]] = this.value;
+            })
+
+            console.log(data)
+            $.ajax({
+                    url: form_url,
+                    method: "POST",
+                    data: JSON.stringify(data),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        notification('success', 'Observation Schedule')
+                        $("#setObservationForm").trigger("reset")
+                        $("#observationModal").modal("hide")
+                    },
+                    error: function(error){
+                        $.each(error.responseJSON.errors, function(key,value) {
+                            swalAlert('warning', value)
+                        });
+                        console.log(error)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                // ajax closing tag
+                })
+
         })
 
     });

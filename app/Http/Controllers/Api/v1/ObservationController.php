@@ -38,11 +38,8 @@ class ObservationController extends Controller
     {
         //
         $request->validate([
-            'proof_of_observation_file_directory' => 'required',
-            'proof_of_observation_file_link' => 'required',
-            'remarks' => 'required',
             'date_of_observation' => 'required',
-            'schedule_id' => 'required'
+            'class_schedule_id' => 'required'
         ]);
 
         return Observation::create($request->all());

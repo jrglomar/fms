@@ -2,13 +2,63 @@
     <div class="col-12">
         <div class="float-right">
             
-            <button class="btn btn-primary btnSetObservation"><i class="fas fa-eye"></i> Make Observation</button>
+            <button class="btn btn-primary btnSetObservation"><i class="fas fa-eye"></i> Set Observation</button>
         </div>
     </div>
 </div>
 &nbsp;
 
 <div class="row">
+    <div class="col-6">
+        <div class="hero bg-white text-dark">
+            <div class="hero-inner">
+                <div class="d-flex justify-content-between">
+                    <h5> Subject Details </h5>
+                </div>          
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="text-dark" style="margin-bottom: 0px">
+                            <label class="font-weight-bold" for="">Assignment Code: <span id="assignment_code" class="font-weight-light">-</span></label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-dark" style="margin-bottom: 0px">
+                            <label class="font-weight-bold" for="">Teaching Hours: <span id="teaching_hours" class="font-weight-light">-</span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="text-dark" style="margin-bottom: 0px">
+                            <label class="font-weight-bold" for="">Subject Code: <span id="subject_code" class="font-weight-light">-</span></label>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="text-dark" style="margin-bottom: 0px">
+                            <label class="font-weight-bold" for="">Status: <span id="subject_status" class="font-weight-light">-</span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-dark" style="margin-bottom: 0px">
+                            <label class="font-weight-bold" for="">Subject Schedule: <span id="subject_schedule" class="font-weight-light">-</span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-dark" style="margin-bottom: 0px">
+                            <label class="font-weight-bold" for="">Subject Description: <span id="subject_description" class="font-weight-light">-</span></label>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
     <div class="col-6">
         <div class="hero bg-white text-dark">
             <div class="hero-inner">
@@ -51,48 +101,7 @@
             </div>
         </div>
     </div>
-    <div class="col-6">
-        <div class="hero bg-white text-dark">
-            <div class="hero-inner">
-                <div class="d-flex justify-content-between">
-                    <h5> Subject Details </h5>
-                </div>          
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="text-dark" style="margin-bottom: 0px">
-                            <label class="font-weight-bold" for="">Code: <span id="subject_code" class="font-weight-light">-</span></label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="text-dark" style="margin-bottom: 0px">
-                            <label class="font-weight-bold" for="">Teaching Hours: <span id="teaching_hours" class="font-weight-light">-</span></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="text-dark" style="margin-bottom: 0px">
-                            <label class="font-weight-bold" for="">Subject Time: <span id="subject_time" class="font-weight-light">-</span></label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="text-dark" style="margin-bottom: 0px">
-                            <label class="font-weight-bold" for="">Status: <span id="subject_status" class="font-weight-light">-</span></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="text-dark" style="margin-bottom: 0px">
-                            <label class="font-weight-bold" for="">Subject Description: <span id="subject_description" class="font-weight-light">-</span></label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 </div>
 &nbsp;
 <div class="row">

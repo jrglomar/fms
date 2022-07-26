@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="{{ asset('vendors/xbs-enjoyhint/enjoyhint.css') }}">
     {{-- <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/dropzonejs/dropzone.css"> --}}
     <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 
 
 
@@ -43,7 +44,6 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <!-- include summernote css -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-
     <style>
         #loading_cover {position: fixed; height: 100%; width: 100%; top:0; left: 0; background: rgb(255, 255, 255); z-index:9999;}
     </style>
@@ -112,14 +112,14 @@
         <script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
         {{-- <script src="https://demo.getstisla.com/assets/js/page/components-multiple-upload.js"></script> --}}
         <!-- get jQuery from somewhere; personally, I like the Google CDN: -->
-
         
-
 
         <!-- From external libraries -->
         {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/kineticjs/5.2.0/kinetic.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
         <script src="{{ asset('vendors/xbs-enjoyhint/enjoyhint.js') }}"></script>
         <script src="{{ asset('vendors/xbs-enjoyhint/enjoyhint.min.js') }}"></script>
@@ -129,7 +129,6 @@
         <script src="{{ asset('stisla/js/stisla.js') }}"></script>
         <script src="{{ asset('stisla/js/scripts.js') }}"></script>
         <script src="{{ asset('stisla/js/custom.js') }}"></script>
-
 
         <script src="{{ mix('js/app.js') }}"></script>
 

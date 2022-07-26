@@ -16,35 +16,39 @@
 
         // DATA TABLES FUNCTION
         function dataTable(){
+                $('#dataTable tfoot th').each( function (i) {
+                    var title = $('#dataTable thead th').eq( $(this).index() ).text();
+                    console.log(title)
+                    $(this).html( '<input size="15" class="form-control" type="text" placeholder="'+title+'" data-index="'+i+'" />');
+                } );
+
                 dataTable = $('#dataTable').DataTable({
                 // "ajax": {
                 //     url: BASE_API, 
                 //     dataSrc: ""
                 // },
                 "data": class_sched_data,
+                "paging": true,
+                "searching": false,
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
+                    { data: "assignment_code"},
                     { data: "faculty", render: function(data, row){
                         return data.first_name + ' ' + data.last_name;
                     }},
                     { data: "subject_code"},
                     { data: "subject_offering.curriculum_subject.subject.title"},
+                    { data: "subject_offering.curriculum_subject.subject.units"},
                     { data: "subject_offering.section.name"},
+                    { data: "room.room_building"},
                     { data: "start_time", render: function(data, type, row){
                         return `${row.day} - ${moment('2022-08-05' + ' ' + row.start_time).format('LT')} - ${moment('2022-08-05' + ' ' + row.end_time).format('LT')}` 
                     }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
-                                    return `<div class="text-center dropdown"><div class="btn btn-sm btn-default" data-toggle="dropdown" role="button"><i class="fas fa-ellipsis-v"></i></div>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
-                                        <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View</div></div>
-                                            <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnSetObservation" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                            <div> Make Observation</div></div></div></div>`;
+                                    return `
+                                            <button class="btn btn-info btn-sm btnView" id="${row.id}"><i class="fas fa-eye"></i></button>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -55,6 +59,14 @@
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
                 "order": [[1, "desc"]]
                 })
+
+                // Filter event handler
+                $(dataTable.table().container() ).on( 'keyup', 'tfoot input', function () {
+                    dataTable
+                        .column( $(this).data('index') )
+                        .search( this.value )
+                        .draw();
+                });
         }
         // END OF DATATABLE FUNCTION
 

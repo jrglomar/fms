@@ -21,7 +21,7 @@ class Observation extends Model
         "remarks",
         "proof_of_observation_file_directory",
         "proof_of_observation_file_link",
-        "schedule_id"
+        "class_schedule_id"
     ];
 
     protected $dates = ['deleted_at'];

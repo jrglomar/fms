@@ -21,12 +21,13 @@ class CreateObservationsTable extends Migration
             $table->foreignUuid('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->dateTime('date_of_observation');
-            $table->longText('remarks');
+            $table->longText('remarks')->nullable();
+            $table->longText('status')->nullable();
             $table->string('proof_of_observation_file_directory')->nullable();
             $table->string('proof_of_observation_file_link')->nullable();
 
-            $table->foreignUuid('schedule_id')->nullable();
-            // $table->foreign('schedule_id')->references('id')->on('schedules');
+            $table->foreignUuid('class_schedule_id')->nullable();
+            // $table->foreign('class_schedule_id')->references('id')->on('class_schedule');
         });
     }
 

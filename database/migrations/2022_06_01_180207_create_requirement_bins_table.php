@@ -23,7 +23,7 @@ class CreateRequirementBinsTable extends Migration
 
              // Fillables
              $table->string('title');
-             $table->longText('description')->nullable;
+             $table->longText('description')->nullable();
              $table->dateTime('deadline')->nullable();
 
              // Relationship sample

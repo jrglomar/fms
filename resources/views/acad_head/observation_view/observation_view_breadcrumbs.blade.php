@@ -12,7 +12,7 @@
             Observation
         </li>
         <li class="breadcrumb-item" id="acad_head_observation">
-        <a href="/acad_head/observation">Schedules</a>
+        <a href="/acad_head/observation">Class Schedule</a>
             <script>
                 if(window.location.pathname == '/acad_head/observation')
                 {

@@ -58,7 +58,7 @@
                                             
                                             ? 'active' : ''}}">
                                 <a class="nav-link" href="/acad_head/observation">
-                                    <span>Schedules</span></a>
+                                    <span>Class Schedules</span></a>
                             </li>
                         </ul>
                     </li>
