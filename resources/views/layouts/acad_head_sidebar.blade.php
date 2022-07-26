@@ -61,13 +61,9 @@
                                     <span>Schedules</span></a>
                             </li>
                         </ul>
-<<<<<<< HEAD
-                        
-=======
                     </li>
                     
 
->>>>>>> 379e9c840bce53e86f6f134d31cc05e248c9a6e9
                         {{-- SRD MANAGEMENT --}}
                         <li class="menu-header" style="padding-bottom: 12px">Documents Management</li>
                         <li class="dropdown" style="padding-bottom: 12px" {{ Request::segment(2) == 'requirement_type' || 

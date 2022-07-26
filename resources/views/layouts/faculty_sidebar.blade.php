@@ -38,7 +38,6 @@
                             <a class="nav-link" href="/faculty/profile/{{ Auth::user()->id }}">
                         <i class="fas fa-user"></i><span>Profile</span></a></li>
 
-<<<<<<< HEAD
                         <li class="dropdown {{ Request::segment(2) == 'srd_report' || 
                                                 Request::segment(2) == 'meeting_report' ||
                                                 Request::segment(2) == 'activity_report' 
@@ -61,9 +60,6 @@
                                         <span>Activity Report</span></a>
                                 </li>
                         </ul>
-=======
-                        
->>>>>>> 379e9c840bce53e86f6f134d31cc05e248c9a6e9
 
                             {{-- SRD MANAGEMENT --}}
                             <li class="menu-header">Submission of Documents Management</li>
