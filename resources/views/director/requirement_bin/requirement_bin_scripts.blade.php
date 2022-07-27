@@ -148,7 +148,7 @@
             var requirement_bin_id = this.id;
             // let form_url =APP_URL+'/api/v1/requirement_bin/'+requirement_bin_id
 
-            window.location.replace(APP_URL + '/acad_head/requirement_list_type/'+requirement_bin_id);
+            window.location.replace(APP_URL + '/director/requirement_list_type/'+requirement_bin_id);
 
             // $.ajax({
             //     url: form_url,

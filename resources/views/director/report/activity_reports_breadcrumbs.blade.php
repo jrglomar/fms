@@ -11,7 +11,7 @@
         <li class="breadcrumb-item">
             Academic Head Reports
         </li>
-        <li class="breadcrumb-item" id="acad_head_requirement_bin">
+        <li class="breadcrumb-item" id="director_requirement_bin">
         <a href="#">Activity Reports</a>
         </li>
     </ol>

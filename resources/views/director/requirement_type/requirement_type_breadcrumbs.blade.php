@@ -11,13 +11,13 @@
         <li class="breadcrumb-item">
             SRD
         </li>
-        <li class="breadcrumb-item" id="admin_requirement_type">
-        <a href="/admin/requirement_type">Requirement Type</a>
+        <li class="breadcrumb-item" id="director_requirement_type">
+        <a href="/director/requirement_type">Requirement Type</a>
             <script>
-                if(window.location.pathname == '/admin/requirement_type')
+                if(window.location.pathname == '/director/requirement_type')
                 {
-                    document.getElementById("admin_requirement_type").classList.add('active');
-                    document.getElementById("admin_requirement_type").setAttribute("aria-current", "page")
+                    document.getElementById("director_requirement_type").classList.add('active');
+                    document.getElementById("director_requirement_type").setAttribute("aria-current", "page")
                 }
             </script>
         </li>

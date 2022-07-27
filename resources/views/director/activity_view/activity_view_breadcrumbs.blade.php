@@ -11,23 +11,23 @@
         <li class="breadcrumb-item">
             Activity
         </li>
-        <li class="breadcrumb-item" id="acad_head_activity">
-        <a href="/acad_head/activity">Activities</a>
+        <li class="breadcrumb-item" id="director_activity">
+        <a href="/director/activity">Activities</a>
             <script>
-                if(window.location.pathname == '/acad_head/activity')
+                if(window.location.pathname == '/director/activity')
                 {
-                    document.getElementById("acad_head_activity").classList.add('active');
-                    document.getElementById("acad_head_activity").setAttribute("aria-current", "page")
+                    document.getElementById("director_activity").classList.add('active');
+                    document.getElementById("director_activity").setAttribute("aria-current", "page")
                 }
             </script>
         </li>
-        <li class="breadcrumb-item" id="acad_head_view_activity">
+        <li class="breadcrumb-item" id="director_view_activity">
         <a href="javascript:window.location.reload();">Activity Details</a>
             <script>
-                if(window.location.pathname == '/acad_head/activity')
+                if(window.location.pathname == '/director/activity')
                 {
-                    document.getElementById("acad_head_view_activity").classList.add('active');
-                    document.getElementById("acad_head_view_activity").setAttribute("aria-current", "page")
+                    document.getElementById("director_view_activity").classList.add('active');
+                    document.getElementById("director_view_activity").setAttribute("aria-current", "page")
                 }
             </script>
         </li>
