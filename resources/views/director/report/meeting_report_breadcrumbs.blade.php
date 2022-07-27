@@ -9,7 +9,7 @@
             PUPQC FMS
         </li>
         <li class="breadcrumb-item">
-            Academic Head Reports
+            Director Reports
         </li>
         <li class="breadcrumb-item" id="acad_head_requirement_bin">
         <a href="#">Meeting Reports</a>
