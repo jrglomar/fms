@@ -2,12 +2,12 @@
 
 {{-- NAVBAR --}}
 @section('navbar')
-    @include('layouts.acad_head_navbar')
+    @include('layouts.director_navbar')
 @endsection
 
 {{-- SIDEBAR --}}
 @section('sidebar')
-    @include('layouts.acad_head_sidebar')
+    @include('layouts.director_sidebar')
 @endsection
 
 @section('section_header')
@@ -18,13 +18,13 @@
             <li class="breadcrumb-item">
                 Dashboard
             </li>
-            <li class="breadcrumb-item" id="acad_head_dashboard">
-            <a href="/acad_head/dashboard">Dashboard</a>
+            <li class="breadcrumb-item" id="director_dashboard">
+            <a href="/director/dashboard">Dashboard</a>
                 <script>
-                    if(window.location.pathname == '/acad_head/dashboard')
+                    if(window.location.pathname == '/director/dashboard')
                     {
-                        document.getElementById("acad_head_dashboard").classList.add('active');
-                        document.getElementById("acad_head_dashboard").setAttribute("aria-current", "page")
+                        document.getElementById("director_dashboard").classList.add('active');
+                        document.getElementById("director_dashboard").setAttribute("aria-current", "page")
                     }
                 </script>
             </li>
@@ -35,15 +35,15 @@
 
     {{-- CONTENT --}}
     @section('content')
-        @include('acad_head.dashboard.dashboard_content')
+        @include('director.dashboard.dashboard_content')
     @endsection
 
 {{-- FOOTER --}}
 @section('footer')
-    @include('layouts.acad_head_footer')
+    @include('layouts.director_footer')
 @endsection
 
 @section('script')
-    @include('acad_head.dashboard.dashboard_scripts')
+    @include('director.dashboard.dashboard_scripts')
 @endsection
 
