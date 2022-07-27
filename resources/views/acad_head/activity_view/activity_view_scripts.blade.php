@@ -453,6 +453,19 @@
                         html += row.first_name + ' ' + row.last_name
                         return html
                     }},
+                    { data: "user_id", render: function(data, type, row){
+                        let user_role = ''
+                        
+                        $.each(row.user.user_role, function(i){
+                            if(i < (row.user.user_role.length) - 1){
+                                user_role += row.user.user_role[i].role.title + ', '
+                            }
+                            else{
+                                user_role += row.user.user_role[i].role.title
+                            }
+                        })
+                        return user_role
+                    }},
                     { data: "id", render: function(data, type, row){
                         return `<div class="custom-control custom-switch">
                                     <input type="checkbox" name="faculty_required[]" class="custom-control-input faculty_status" id="${row.id}" value="${row.id}">
@@ -664,6 +677,38 @@
             navigator.clipboard.writeText(copyText.value);
 
         });
+        
+        function get_roles(){
+
+        activity_type_url = APP_URL+'/api/v1/role'
+
+            $.ajax({
+            url: activity_type_url,
+            type: "GET",
+            dataType: "JSON",
+
+            success: function(data){
+
+                var html = ""
+
+                for(var i=0; i < data.length; i++){
+                html += `<option value="${data[i].title}">${data[i].title}</option>`
+                }
+                
+                $('#role_filter').html(html);
+
+                }
+            })
+        }
+
+        get_roles()
+
+        $('#role_filter').on('change', function(){
+
+            var table = $('#requiredFacultyDatatableModal').DataTable();
+
+            table.column(4).search(this.value).draw();
+        })
 
     });
 </script>
