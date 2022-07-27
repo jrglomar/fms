@@ -452,6 +452,7 @@ class PresentationsSeeder extends Seeder
             'title' => 'Getting Started with Interview Preparation – Free online Course in Simplilearn',
             'description' => 'Please print or take screenshot of your Certificates in completing the course of “Getting Started with Interview Preparation”. A submission bin will be uploaded in your google classroom.',
             'deadline' => '2022-11-30 17:00:00',
+            'status' => 'On Going'
         ]);
         // REQUIREMENT BINS
         DB::table('requirement_bins')->insert([
@@ -462,6 +463,7 @@ class PresentationsSeeder extends Seeder
             'title' => 'PUP Socioeconomic Survey',
             'description' => 'Please answer the PUP Socioeconomic Survey on or before July 1, 2022 12:00nn. You may access the survey in your SIS account. Thank you.',
             'deadline' => '2022-11-30 17:00:00',
+            'status' => 'On Going'
         ]);
         // REQUIREMENT BINS
         DB::table('requirement_bins')->insert([
@@ -472,6 +474,7 @@ class PresentationsSeeder extends Seeder
             'title' => 'November Flag Raising Ceremony Attendance Form',
             'description' => 'Answer an attendance form that contains a person\'s name and their attendance information. To find out who was there that day, managers, supervisors, or teachers might look at the attendance sheet.',
             'deadline' => '2022-11-07 08:00:00',
+            'status' => 'On Going'
         ]);
 
         // MEETINGS

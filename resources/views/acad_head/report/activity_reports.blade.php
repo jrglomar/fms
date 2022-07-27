@@ -13,19 +13,15 @@
 @section('section_header')
 <div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
-    @include('acad_head/report/srd_report_breadcrumbs')
+    @include('acad_head/report/activity_reports_breadcrumbs')
 </div>
 @endsection
-
-    {{-- MODAL --}}
     
-
     {{-- CONTENT --}}
     @section('content')
-            {{-- FORM --}}
           
             {{-- DATATABLE --}}
-            @include('acad_head/report/requirement_bin_datatable')
+            @include('acad_head/report/activity_reports_datatable')
     @endsection
 
 
@@ -36,5 +32,5 @@
 @endsection
 
 @section('script')
-    @include('acad_head/report/srd_report_scripts')
+    @include('acad_head/report/activity_reports_scripts')
 @endsection

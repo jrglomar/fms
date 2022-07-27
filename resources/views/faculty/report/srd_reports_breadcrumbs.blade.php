@@ -9,10 +9,10 @@
             PUPQC FMS
         </li>
         <li class="breadcrumb-item">
-            Faculty Reports
+            Faculty Head Reports
         </li>
         <li class="breadcrumb-item" id="acad_head_requirement_bin">
-        <a href="#">SRD Reports</a>
+        <a href="#">Submission of Required Document Reports</a>
         </li>
     </ol>
 </nav>

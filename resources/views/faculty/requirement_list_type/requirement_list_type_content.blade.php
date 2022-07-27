@@ -1,25 +1,33 @@
 <div class="containeer">
     <div class="row">
         <div class="col-md-8">
-            <div class="hero text-dark hero-bg-parallax shadow-sm bg-white rounded"
-            style="height: 450px">
+            <div class="hero hero-bg-parallax shadow-sm bg-white rounded"
+            style="background-color: white">
                 <div class="hero-inner">
                     <div class="col-12">
                             <h3 class="text-center"><span id="title"></span></h3>
-                            <span class="badge badge-success">
-                                <span style="font-size: 14px">Posted by </span><span style="font-size: 14px" id="created_by"></span>
-                            </span>
-                            <div class="text-dark float-right">
-                                <span class="badge" id="date_badge">
-                                    <span style="font-size: 14px">Due</span>
-                                    <span style="font-size: 14px" id="created_at"></span>
-                                </span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <span class="badge badge-info">
+                                        <span style="font-size: 14px">Posted by </span><span style="font-size: 14px" id="created_by"></span>
+                                    </span>
+                                </div>
+                                <div class="col-md-4 text-center" id="status">
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-dark float-right" >
+                                    <span class="badge" id="date_badge">
+                                        <span style="font-size: 14px">Deadline: </span>
+                                        <span style="font-size: 14px" id="created_at"></span>
+                                    </span>
+                                    </div>
+                                </div>
                             </div>
                     </div>
                     &nbsp;
                     <div class="col-12">
                         <div class="hero-inner">
-                            <h5>Description:</h5>
+                            <h6>Description:</h6>
                             <span class="" style="white-space: pre-line" style="font-size: 14px" id="description">
                         </div>
 

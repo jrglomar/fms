@@ -21,7 +21,8 @@ class RequirementBin extends Model
             protected $fillable = [
                 "title",
                 "description",
-                "deadline"
+                "deadline",
+                "status"
             ];
 
             protected $dates = ['deleted_at'];

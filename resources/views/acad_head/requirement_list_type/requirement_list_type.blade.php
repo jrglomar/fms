@@ -17,6 +17,7 @@
         <button id="btnTour" class="btn btn-primary btn-sm float-right">Start Page Tour</button>
     </div>
     @include('acad_head/requirement_list_type/requirement_list_type_breadcrumbs')
+    
 </div>
             
 @endsection
