@@ -29,6 +29,20 @@
                 </button>
             </div>
             <div class="modal-body">
+                <div class="col-10">
+                    <div class="float-left">
+                        <label id="" class="" for="role_filter">Filter by Role:</label>
+                        <select id="role_filter" class="">
+                            
+                        </select>  
+                    </div>
+                </div>
+                <div class="col-2 d-flex justify-content-end">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" id="btn_select_all" class="custom-control-input" checked>
+                        <label id="select_all_label" class="custom-control-label" for="btn_select_all">Unselect All</label>
+                    </div>
+                </div>
                 <form id="updateRequiredFacultyForm">
                     <table class="table table-hover table-sm" id="requiredFacultyDatatableModal" style="width:100%">
                         <thead>
@@ -37,6 +51,7 @@
                             <th>Created at</th>
                             <th>Email</th>
                             <th>Name</th>
+                            <th>Roles</th>
                             <th>Required</th>
                         </tr>
                         </thead>
