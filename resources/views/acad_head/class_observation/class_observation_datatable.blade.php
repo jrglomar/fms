@@ -50,7 +50,7 @@
                                 <th>Created at</th>
                                 <th>Faculty</th>
                                 <th>Date of Observation</th>
-                                <th>Status</th>
+                                <th>Status</th> 
                             </tr>
                         </tfoot>
                     </table>

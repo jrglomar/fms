@@ -292,3 +292,17 @@ Route::group(['middleware' => ['role.checker'],
     })->name('checker_dashboard');
 
 });
+
+
+
+//-------------DIRECTOR----------------//
+
+Route::group(['middleware' => ['role.director'],
+    'prefix' => '/director',], function(){
+        
+    // ------------DASHBOARD--------------- //
+    Route::get('/dashboard', function () {
+        return view('director/dashboard/dashboard', ['page_title' => 'Dashboard']);
+    })->name('director_dashboard');
+
+});
