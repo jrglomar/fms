@@ -64,6 +64,7 @@
 
             $('#start_time_input').val(data.start_time)
             $('#end_time_input').val(data.end_time)
+            
 
             let dayEnabled
             if(data.day == "Sunday"){dayEnabled = 0}
@@ -90,6 +91,22 @@
                     }
                 ]
             });
+
+            $("#date_of_class_a").flatpickr({
+                altInput: true,
+                altFormat: "F j, Y",
+                dateFormat: "Y-m-d",
+                minDate: moment(today + ' ' + data.end_time).format('YYYY-MM-DD HH:MM'),
+                "disable": [
+                    function(date) {
+                        return (date.getDay() != dayEnabled);  // disable weekends
+                    }
+                ]
+            });
+
+            $('#start_time_input_a').val(data.start_time)
+            $('#end_time_input_a').val(data.end_time)
+            $('#class_schedule_id_a').val(data.id)
 
             removeLoader()
         }
