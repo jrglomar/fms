@@ -296,7 +296,7 @@
                             var hours = current_time.getHours();
                             var mins = current_time.getMinutes();
             
-                            var moment_current_date = moment(current_time).format('L')
+                            var moment_current_date = moment(current_time).format('YYYY-MM-DD')
                             var moment_start_date = moment(data.start_datetime).format('L');
                             var moment_end_date = moment(data.end_datetime).format('L');
 
@@ -489,7 +489,7 @@
                             var hours = current_time.getHours();
                             var mins = current_time.getMinutes();
             
-                            var moment_current_date = moment(current_time).format('L')
+                            var moment_current_date = moment(current_time).format('YYYY-MM-DD')
                             var moment_start_date = moment(data.start_datetime).format('L');
                             var moment_end_date = moment(data.end_datetime).format('L');
 
@@ -1046,17 +1046,11 @@
                             {
                                 if(marfData[0].time_out == null)
                                 {
-                                    if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date))
-                                    {
-                                        right_side +=    '<div class="alert alert-info alert-has-icon">' +
-                                                                '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
-                                                                '<div class="alert-body text-center">' +
-                                                                    'You already Timed In. Please wait for the activity to end. <b>Note: </b> Please time out within 10 mins after the activity, and upload your proof of attendance.' +
-                                                                '</div>' +
-                                                            '</div>' +
-                                                            '<br>';
-                                    }
-                                    else if((moment_end_date == moment_current_date) && (now > start_time &&  now > end_time))
+                                    console.log("Here1")
+                                    console.log(moment_current_date)
+                                    console.log(moment_start_date)
+                                    console.log(moment_end_date)
+                                    if((moment_end_date == moment_current_date) && (now > start_time &&  now > end_time))
                                     {
                                         right_side +=    '<div class="alert alert-light alert-has-icon">' +
                                                                 '<div class="alert-icon"><i class="far fa-lightbulb"></i></div>' +
@@ -1066,6 +1060,17 @@
                                                             '</div>' +
                                                             '<div class="col-12">' +
                                                                 '<button type="button" onClick="return timeOut()" class="btn btn-icon icon-left btn-success btn-lg button-block"><b>Time Out</b></button>' +
+                                                            '</div>' +
+                                                            '<br>';
+                                    }
+                                    else if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date))
+                                    {
+                                        console.log("Here2")
+                                        right_side +=    '<div class="alert alert-info alert-has-icon">' +
+                                                                '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
+                                                                '<div class="alert-body text-center">' +
+                                                                    'You already Timed In. Please wait for the activity to end. <b>Note: </b> Please time out within 10 mins after the activity, and upload your proof of attendance.' +
+                                                                '</div>' +
                                                             '</div>' +
                                                             '<br>';
                                     }
