@@ -285,7 +285,7 @@
                                             '<div class="col-md-2">' +
                                                 '<div>' +
                                                     '<button type="button" class="btn btn-info"' +
-                                                    'data-toggle="modal" data-target="#memo_card" role="button" aria-expanded="false" aria-controls="memo_card"' +
+                                                    ' role="button" aria-expanded="false" id="view_memo"' +
                                                     '>View Memo</button>' +
                                                 '</div>' +
                                             '</div>' +
@@ -350,16 +350,17 @@
                     //document.getElementById("memorandum_view").src=APP_URL + data.memorandum_file_directory;
                     //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
 
-                    if(data.memorandum_file_directory == "NA"){
-                        var if_memo =   '<span>No Memorandum uploaded</span>' ;
-                        $('#if_memo').html(if_memo)
-                    }
-                    else{
-                        $('#if_memo').html('<div class="embed-responsive embed-responsive-16by9">'
-                        +'<iframe id="memo" class="embed-responsive-item" src="..."></iframe></div>')
-                        
-                        document.getElementById("memo").src=APP_URL + "/" +data.memorandum_file_directory;
-                    }
+                    $('#view_memo').on('click', function(){
+
+                        if(data.memorandum_file_directory == "NA"){
+                            swalAlert('warning', 'No Memorandum Uploaded')
+                        }
+                        else{
+                            var tabOrWindow = window.open(APP_URL + "/" +data.memorandum_file_directory, '_blank');
+                            tabOrWindow.focus();   
+                        }
+
+                    });
                 }
             // ajax closing tag
             })
