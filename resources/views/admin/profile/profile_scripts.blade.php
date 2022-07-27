@@ -437,8 +437,8 @@
                     $('#faculty_type_id').val(data.faculty.faculty_type_id);
                     $('#academic_rank_id').val(data.faculty.academic_rank_id);
                     $('#designation_id').val(data.faculty.designation_id);
-                    $('#specialization_id').val(data.faculty.specialization_id).trigger('change');
-                    $('#program_id').val(data.faculty.program_id).trigger('change');
+                    $('#specialization_id').val(data.faculty.specialization_id);
+                    $('#program_id').val(data.faculty.program_id);
                     $('#barangay').val(data.faculty.barangay);
                     $('#birthdate').val(data.faculty.birthdate);
                     $('#birthplace').val(data.faculty.birthplace);
