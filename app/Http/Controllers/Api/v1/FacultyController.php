@@ -69,7 +69,7 @@ class FacultyController extends Controller
             'academic_rank_id' => 'required',
             'faculty_type_id' => 'required',
             'designation_id' => 'required',
-            'specialization' => 'required',
+            'specialization_id' => 'required',
             'program_id' => 'required',
         ]);
 

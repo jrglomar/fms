@@ -25,6 +25,7 @@ class CreateRequirementBinsTable extends Migration
              $table->string('title');
              $table->longText('description')->nullable();
              $table->dateTime('deadline')->nullable();
+             $table->string('status')->nullable();
 
              // Relationship sample
             // $table->foreignUuid('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');

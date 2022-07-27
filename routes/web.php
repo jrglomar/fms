@@ -163,13 +163,13 @@ Route::group(['middleware' => ['role.faculty'],
 
         // ------------REPORTS--------------- //
             // ------------SRD REPORTS--------------- //
-            Route::get('/srd_report', function () {
-                return view('faculty/report/srd_report', ['page_title' => 'SRD Reports']);
-            })->name('srd_report');
+            Route::get('/srd_reports', function () {
+                return view('faculty/report/srd_reports', ['page_title' => 'SRD Reports']);
+            })->name('srd_reports');
             // ------------MEETING REPORTS--------------- //
-            Route::get('/meeting_report', function () {
+            Route::get('/meeting_reports', function () {
                 return view('faculty/report/meeting_report', ['page_title' => 'Meeting Reports']);
-            })->name('meeting_report');
+            })->name('meeting_reports');
             // ------------ACTIVITY REPORTS--------------- //
             Route::get('/activity_report', function () {
                 return view('faculty/report/activity_report', ['page_title' => 'Activity Reports']);
@@ -198,6 +198,11 @@ Route::group(['middleware' => ['role.faculty'],
         Route::get('/schedule/{id}', function ($id) {
             return view('faculty/observation_view/observation_view', ['page_title' => 'Schedule', 'schedule_id' => $id]);
         })->name('faculty_schedule_view');
+
+        // ACTIVITY REPORTS
+            Route::get('/activity_reports', function () {
+                return view('faculty/report/activity_reports', ['page_title' => 'Activity Reports']);
+            })->name('activity_reports');
 });
 
 
@@ -291,17 +296,17 @@ Route::group(['middleware' => ['role.acadhead'],
 
     // ------------REPORTS--------------- //
         // ------------SRD REPORTS--------------- //
-        Route::get('/srd_report', function () {
-            return view('acad_head/report/srd_report', ['page_title' => 'SRD Reports']);
-        })->name('srd_report');
+        Route::get('/srd_reports', function () {
+            return view('acad_head/report/srd_reports', ['page_title' => 'SRD Reports']);
+        })->name('srd_reports');
         // ------------MEETING REPORTS--------------- //
         Route::get('/meeting_report', function () {
             return view('acad_head/report/meeting_report', ['page_title' => 'Meeting Reports']);
         })->name('meeting_report');
         // ------------ACTIVITY REPORTS--------------- //
-        Route::get('/activity_report', function () {
-            return view('acad_head/report/activity_report', ['page_title' => 'Activity Reports']);
-        })->name('activity_report');
+        Route::get('/activity_reports', function () {
+            return view('acad_head/report/activity_reports', ['page_title' => 'Activity Reports']);
+        })->name('activity_reports');
 });
 
 
@@ -393,15 +398,15 @@ Route::group(['middleware' => ['role.director'],
 
     // ------------REPORTS--------------- //
         // ------------SRD REPORTS--------------- //
-        Route::get('/srd_report', function () {
-            return view('director/report/srd_report', ['page_title' => 'SRD Reports']);
+        Route::get('/srd_reports', function () {
+            return view('director/report/srd_reports', ['page_title' => 'SRD Reports']);
         })->name('srd_report');
         // ------------MEETING REPORTS--------------- //
-        Route::get('/meeting_report', function () {
+        Route::get('/meeting_reports', function () {
             return view('director/report/meeting_report', ['page_title' => 'Meeting Reports']);
         })->name('meeting_report');
         // ------------ACTIVITY REPORTS--------------- //
-        Route::get('/activity_report', function () {
-            return view('director/report/activity_report', ['page_title' => 'Activity Reports']);
+        Route::get('/activity_reports', function () {
+            return view('director/report/activity_reports', ['page_title' => 'Activity Reports']);
         })->name('activity_report');
 });

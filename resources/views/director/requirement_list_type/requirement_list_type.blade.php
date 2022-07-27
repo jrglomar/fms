@@ -2,12 +2,12 @@
 
 {{-- NAVBAR --}}
 @section('navbar')
-    @include('layouts.acad_head_navbar')
+    @include('layouts.director_navbar')
 @endsection
 
 {{-- SIDEBAR --}}
 @section('sidebar')
-    @include('layouts.acad_head_sidebar')
+    @include('layouts.director_sidebar')
 @endsection
 
 @section('section_header')
@@ -16,14 +16,14 @@
         <h1>{{ $page_title }}</h1>
         <button id="btnTour" class="btn btn-primary btn-sm float-right">Start Page Tour</button>
     </div>
-    @include('acad_head/requirement_list_type/requirement_list_type_breadcrumbs')
+    @include('director/requirement_list_type/requirement_list_type_breadcrumbs')
 </div>
             
 @endsection
 
 
     {{-- MODAL --}}
-    @include('acad_head/requirement_list_type/requirement_list_type_modal')
+    @include('director/requirement_list_type/requirement_list_type_modal')
 
     {{-- CONTENT --}}
     @section('content')
@@ -32,13 +32,13 @@
         <!-- <p class="section-lead" id="description_paragraph"></p> -->
 
             {{-- DETAILS --}}
-            @include('acad_head/requirement_list_type/requirement_list_type_content')
+            @include('director/requirement_list_type/requirement_list_type_content')
 
             {{-- FORM --}}
-            @include('acad_head/requirement_list_type/requirement_list_type_form')
+            @include('director/requirement_list_type/requirement_list_type_form')
 
             {{-- DATATABLE --}}
-            @include('acad_head/requirement_list_type/required_faculty_list_datatable')
+            @include('director/requirement_list_type/required_faculty_list_datatable')
     @endsection
 
 
@@ -50,7 +50,7 @@
 
 
 @section('script')
-    @include('acad_head/requirement_list_type/requirement_list_type_scripts')
-    @include('acad_head/requirement_list_type/required_faculty_list_scripts')
-    @include('acad_head/requirement_list_type/requirement_list_type_tour_scripts')
+    @include('director/requirement_list_type/requirement_list_type_scripts')
+    @include('director/requirement_list_type/required_faculty_list_scripts')
+    @include('director/requirement_list_type/requirement_list_type_tour_scripts')
 @endsection

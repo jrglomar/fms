@@ -81,10 +81,10 @@
 
                         {{-- SRD MANAGEMENT --}}
                         <li class="menu-header" style="padding-bottom: 12px">Documents Management</li>
-                        <li class="dropdown" style="padding-bottom: 12px" {{ Request::segment(2) == 'requirement_type' || 
+                        <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 
                                                 Request::segment(2) == 'requirement_bin' ||
                                                 Request::segment(2) == 'requirement_list_type' 
-                                                ? 'active' : ''}}">
+                                                ? 'active' : ''}}" style="padding-bottom: 12px">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
                         <span>Submission of Documents</span></a>
@@ -92,7 +92,6 @@
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
                             <li class="{{ Request::segment(2) == 'requirement_bin' || 
                                             Request::segment(2) == 'requirement_list_type' 
-                                            
                                             ? 'active' : ''}}">
                                 <a class="nav-link" href="/acad_head/requirement_bin">
                                     <span>Requirement Bins</span></a>
@@ -150,25 +149,25 @@
                     </li>
 
                     <li class="menu-header">Reports</li>
-                        <li class="dropdown {{ Request::segment(2) == 'srd_report' || 
-                                                Request::segment(2) == 'meeting_report' ||
-                                                Request::segment(2) == 'activity_report' 
+                        <li class="dropdown {{ Request::segment(2) == 'srd_reports' || 
+                                                Request::segment(2) == 'meeting_reports' ||
+                                                Request::segment(2) == 'activity_reports' 
                                                 ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
                         <span>Reports</span></a>
                         <ul class="dropdown-menu">
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                            <li class="{{ Request::segment(2) == 'srd_report' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/acad_head/srd_report">
+                            <li class="{{ Request::segment(2) == 'srd_reports' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/acad_head/srd_reports">
                                         <span>SRD Report</span></a>
                                 </li>
-                                <li class="{{ Request::segment(2) == 'meeting_report' ? 'active' : ''}}">
+                                <!-- <li class="{{ Request::segment(2) == 'meeting_reports' ? 'active' : ''}}">
                                     <a class="nav-link" href="/acad_head/meeting_report">
                                         <span>Meeting Report</span></a>
-                                </li>
-                                <li class="{{ Request::segment(2) == 'activity_report' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/acad_head/activity_report">
+                                </li> -->
+                                <li class="{{ Request::segment(2) == 'activity_reports' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/acad_head/activity_reports">
                                         <span>Activity Report</span></a>
                                 </li>
                         </ul>

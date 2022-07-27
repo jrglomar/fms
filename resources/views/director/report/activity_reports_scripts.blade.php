@@ -12,8 +12,16 @@
         console.log(JSON.parse(USER_DATA))
         // END OF GLOBAL VARIABLE
 
+        
+
         // ACTIVITY DATATABLES FUNCTION
         function ACTIVITYdataTable(){
+                // FOR FOOTER GENERATE OF INPUT
+                $('#ACTIVITYdataTable tfoot th').each( function (i) {
+                    var title = $('#ACTIVITYdataTable thead th').eq( $(this).index() ).text();
+                    $(this).html( '<input size="15" class="form-control" type="text" placeholder="'+title+'" data-index="'+i+'" />');
+                });
+
                 dataTable = $('#ACTIVITYdataTable').DataTable({
                 "ajax": {
                     url: ACTIVITY_BASE_API, 
@@ -36,14 +44,14 @@
                             columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
                             modifier: { order: 'current' }
                         },
-                        className: 'btn-report info',
+                        className: 'btn btn-primary mr-2',
                         titleAttr: 'PDF export.',
                         extension: '.pdf',
                         // download: 'open', // FOR NOT DOWNLOADING THE FILE AND OPEN IN NEW TAB
                         title: function() {
                             var current_time = new Date(); // current time
-                            var date_filter_from = $('#min-date').val();
-                            var date_filter_to = $('#max-date').val();
+                            var date_filter_from = $('#date_from').val();
+                            var date_filter_to = $('#date_to').val();
 
                             if(( date_filter_from == "") && (date_filter_to == ""))
                             {
@@ -60,8 +68,8 @@
                         },
                         filename: function() {
                             var current_time = new Date(); // current time
-                            var date_filter_from = $('#min-date').val();
-                            var date_filter_to = $('#max-date').val();
+                            var date_filter_from = $('#date_from').val();
+                            var date_filter_to = $('#date_to').val();
 
                             if(( date_filter_from == "") && (date_filter_to == ""))
                             {
@@ -84,7 +92,7 @@
                     }, 
                     {
                         extend: 'excelHtml5',
-                        className: 'btn-report info',
+                        className: 'btn btn-success',
                         titleAttr: 'Excel export.',
                         text: 'Export as XLS',
                         extension: '.xlsx',
@@ -132,66 +140,177 @@
                 },
                 "columns": [
                     { data: "id"},
-                    { data: "created_by", render: function(data, type, row){
-                        console.log(row)
-                        return row.created_by_user.faculty.first_name + " " + row.created_by_user.faculty.last_name
-                    }},
                     { data: "created_at", render: function(data, type, row){
                         return moment(row.created_at).format('LL')
                     }},
                     { data: "title"},
-                    { data: "activity_type.title"},
-                    { data: "description"},
-                    { data: "status"},
-                    { data: "start_datetime", render: function(data, row){
-                        return `${moment(data).format('LLL')} - ${moment(row.end_datetime).format('LLL')}` 
+                    { data: "activity_type_id", render:function(data, type, row){
+                        return row.activity_type.title + " (" + row.activity_type.category + ")"
                     }},
+                    { data: "description"},
+                    { data: "agenda", render:function(data, type, row){
+                        if(data == null || data == "NA")
+                        {
+                            return "-----"
+                        }
+                        else
+                        {
+                            return data
+                        }
+                    }},
+                    { data: "status", render: function(data, type, row){
+                        let status_html
+                        if(data == 'Done'){
+                            status_html = `<span class="badge badge-success">${data}</span>`
+                        }
+                        else if(data == 'Ongoing' || data == 'On Going'){
+                            status_html = `<span class="badge badge-info">${data}</span>`
+                        }
+                        else if(data == 'Cancelled'){
+                            status_html = `<span class="badge badge-danger">${data}</span>`
+                        }
+                        else if(data == 'Pending'){
+                            status_html = `<span class="badge badge-secondary">${data}</span>`
+                        }
+                        else{
+                            status_html = data
+                        }
+                        return status_html
+                    }},
+                    { data: "start_datetime", render: function(data, row){
+                        return `${moment(data).format('LL')} - ${moment(row.end_datetime).format('LL')}` 
+                    }},
+                    { data: "memorandum_file_directory", render:function(data, type, row){
+                        if(data == null || data == "NA")
+                        {
+                            return "-----"
+                        }
+                        else
+                        {
+                            return data
+                        }
+                    }},
+                    { data: "start_datetime"},
                 ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0] }],
-                "order": [[1, "desc"]]
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 9] }],
+                "order": [[1, "asc"]]
                 })
+
+
+                // Filter event handler
+                $(dataTable.table().container() ).on( 'keyup', 'tfoot input', function () {
+                    console.log(this.value)
+                    console.log(dataTable)
+                    dataTable
+                        .column( $(this).data('index') )
+                        .search( this.value )
+                        .draw();
+                });
+
+                // Extend dataTables search
+                $.fn.dataTable.ext.search.push(
+                function(settings, data, dataIndex) {
+                    var min = $('#date_from').val();
+                    var max = $('#date_to').val();
+                    var dateActivity = data[9]; // DATE IN TABLE
+
+                    if ((min == "" || max == "") || (moment(dateActivity).isSameOrAfter(min) && moment(dateActivity).isSameOrBefore(max))) 
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                });
+
+                // Re-draw the table when the a date range filter changes
+                $('.date-range-filter').change( function() {
+                    dataTable.draw();
+                });
         }
         // END OF DATATABLE FUNCTION
 
-        // DATE FILTERING
+        $('.btnChangeStatus').on('change', function(){
+            let checked = $('input[name="status_options"]:checked').val();
+            console.log(checked)
+            if(checked == 'All'){
+                    dataTable
+                        .column(6)
+                        .search("")
+                        .draw();
+            }
+            else if(checked == 'Pending'){
+                dataTable
+                        .column(6)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'On Going' || checked == 'Ongoing'){
+                dataTable
+                        .column(6)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'Cancelled'){
+                dataTable
+                        .column(6)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'Done'){
+                dataTable
+                        .column(6)
+                        .search($(this).val())
+                        .draw();
+            }
+        })
+
+        $('#btnDateReset').on('click', function(){
+            $('.date-range-filter').val("")
+
+            dataTable.draw();
+        })
+
+        // // DATE FILTERING
             // EXTEND DATATABLE SEARCH
-            $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
-                var min = $('#min-date').val();
-                var max = $('#max-date').val();
-                var createdAt = data[2] || 0; // CREATED_AT IN TABLE
+            // $.fn.dataTable.ext.search.push(
+            // function(settings, data, dataIndex) {
+            //     var min = $('#min-date').val();
+            //     var max = $('#max-date').val();
+            //     var createdAt = data[2] || 0; // CREATED_AT IN TABLE
 
-                if ((min == "" || max == "") || (moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max))) 
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            });
+            //     if ((min == "" || max == "") || (moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max))) 
+            //     {
+            //         return true;
+            //     }
+            //     else
+            //     {
+            //         return false;
+            //     }
+            // });
 
-            // REDRAW DATATABLE DATE RANGE FILTER CHANGE
-            $('.date-range-filter').change(function() {
-                dataTable.draw();
-            });
+        //     // REDRAW DATATABLE DATE RANGE FILTER CHANGE
+        //     $('.date-range-filter').change(function() {
+        //         dataTable.draw();
+        //     });
 
-            $('#MEETINGdataTable_filter').hide();
+        //     $('#MEETINGdataTable_filter').hide();
 
-            // RESET BUTTON FOR THE DATATABLE DATE FILTERING
-            $(document).on("click", "#reset_date_filter", function(){
-                $("input[type=date]").val("");
-                // REDRAW DATATABLE DATE RANGE FILTER CHANGE
-                dataTable.columns().search("").draw();
-            })
-        // END DATE FILTERING
+        //     // RESET BUTTON FOR THE DATATABLE DATE FILTERING
+        //     $(document).on("click", "#reset_date_filter", function(){
+        //         $("input[type=date]").val("");
+        //         // REDRAW DATATABLE DATE RANGE FILTER CHANGE
+        //         dataTable.columns().search("").draw();
+        //     })
+        // // END DATE FILTERING
 
         // CALLING ALL DATATABLE FUNCTION
         ACTIVITYdataTable()
 
         // REFRESH DATATABLE FUNCTION
         function refresh(){
-            let url = SRD_BASE_API
+            let url = ACTIVITY_BASE_API
 
             dataTable.ajax.url(url).load()
         }

@@ -2,43 +2,43 @@
 
 {{-- NAVBAR --}}
 @section('navbar')
-    @include('layouts.acad_head_navbar')
+    @include('layouts.director_navbar')
 @endsection
 
 {{-- SIDEBAR --}}
 @section('sidebar')
-    @include('layouts.acad_head_sidebar')
+    @include('layouts.director_sidebar')
 @endsection
 
 @section('section_header')
 <div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
-    @include('acad_head/requirement_bin/requirement_bin_breadcrumbs')
+    @include('director/requirement_bin/requirement_bin_breadcrumbs')
 </div>
 @endsection
 
     {{-- MODAL --}}
-    @include('acad_head/requirement_bin/requirement_bin_modal')
+    @include('director/requirement_bin/requirement_bin_modal')
 
     {{-- CONTENT --}}
     @section('content')
         
 
             {{-- FORM --}}
-            @include('acad_head/requirement_bin/requirement_bin_form')
+            @include('director/requirement_bin/requirement_bin_form')
 
             {{-- DATATABLE --}}
-            @include('acad_head/requirement_bin/requirement_bin_datatable')
+            @include('director/requirement_bin/requirement_bin_datatable')
     @endsection
 
 
 
 {{-- FOOTER --}}
 @section('footer')
-    @include('layouts.acad_head_footer')
+    @include('layouts.director_footer')
 @endsection
 
 
 @section('script')
-    @include('acad_head/requirement_bin/requirement_bin_scripts')
+    @include('director/requirement_bin/requirement_bin_scripts')
 @endsection

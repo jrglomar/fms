@@ -129,25 +129,25 @@
                             </li>
 
                             <li class="menu-header">Reports</li>
-                            <li class="dropdown {{ Request::segment(2) == 'srd_report' || 
-                                                Request::segment(2) == 'meeting_report' ||
-                                                Request::segment(2) == 'activity_report' 
+                            <li class="dropdown {{ Request::segment(2) == 'srd_reports' || 
+                                                Request::segment(2) == 'meeting_reports' ||
+                                                Request::segment(2) == 'activity_reports' 
                                                 ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
                         <span>Reports</span></a>
                         <ul class="dropdown-menu">
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                            <li style="padding-bottom: 1rem" class="{{ Request::segment(2) == 'srd_report' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/faculty/srd_report" >
+                            <li style="padding-bottom: 1rem" class="{{ Request::segment(2) == 'srd_reports' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/faculty/srd_reports" >
                                         <span >Submission of Documents Report</span></a>
                                 </li>
-                                <li class="{{ Request::segment(2) == 'meeting_report' ? 'active' : ''}}">
+                                <!-- <li class="{{ Request::segment(2) == 'meeting_reports' ? 'active' : ''}}">
                                     <a class="nav-link" href="/faculty/meeting_report">
                                         <span>Meeting Report</span></a>
-                                </li>
-                                <li class="{{ Request::segment(2) == 'activity_report' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/faculty/activity_report">
+                                </li> -->
+                                <li class="{{ Request::segment(2) == 'activity_reports' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/faculty/activity_reports">
                                         <span>Activity Report</span></a>
                                 </li>
                         </ul>

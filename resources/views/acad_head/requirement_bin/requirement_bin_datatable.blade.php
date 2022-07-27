@@ -6,7 +6,7 @@
                     <h4 class="text-dark">List of Requirement Bin</h4>
                     <div class="card-header-action">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
-                        aria-expanded="false" aria-controls="create_card" style="font-size: 18px">New Requirement Bin <i
+                        aria-expanded="false" aria-controls="create_card" style="font-size: 14px">New Requirement Bin <i
                         class="fas fa-plus"></i></button>
                     </div>
                 </div>
@@ -24,7 +24,8 @@
                                 <th width="25%">Title</th>
                                 <th width="35%">Requirements</th>
                                 <th width="20%">Deadline</th>
-                                <th width="10%" class="text-center">Action</th>
+                                <th width="5%">Status</th>
+                                <th width="5%" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -1,7 +1,6 @@
 
 <script>
     $(document).ready(function(){
-
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
@@ -10,6 +9,147 @@
         console.log(API_TOKEN)
         console.log(JSON.parse(USER_DATA))
         // END OF GLOBAL VARIABLE
+
+        // Initialize the Summernote WYSIWYG TEXT AREA
+        $('#description').summernote({
+            placeholder: 'Description...',
+            tabsize: 2,
+            height: 100,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['font', ['bold', 'underline', 'clear']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen']],
+            ]
+        });
+        // END Initialize the Summernote WYSIWYG TEXT AREA
+
+        function updateRequirementBinStatus()
+        {
+            $.ajax({
+                url: APP_URL+'/api/v1/requirement_bin/',
+                type: "GET",
+                dataType: "JSON",
+                success: function (responseData) 
+                {   
+                    $.each(responseData, function (i, dataOptions) 
+                    {
+                        var title = responseData[i].title;
+                        var description = responseData[i].description
+                        var status = responseData[i].status
+
+                        var deadline = responseData[i].deadline
+                        var deadline_hours = new Date(deadline).getHours();
+                        var deadline_mins = new Date(deadline).getMinutes();
+                        
+                        if (deadline_hours < 10)
+                        {
+                            deadline_hours = "0"+deadline_hours
+                        }
+                        if (deadline_mins < 10)
+                        {
+                            deadline_mins = "0"+deadline_mins
+                        }
+
+                        var current_time = new Date(); // current time
+                        var hours = current_time.getHours();
+                        var mins = current_time.getMinutes();
+                        if (hours < 10)
+                        {
+                            hours = "0"+hours
+                        }
+                        if (mins < 10)
+                        {
+                            mins = "0"+mins
+                        }
+        
+                        var moment_current_date = moment(current_time).format('YYYY-MM-DD')
+                        var moment_deadline = moment(deadline).format('YYYY-MM-DD');
+
+                        var now = hours+":"+mins+":00";
+                        var deadline_time = deadline_hours + ":" + deadline_mins + ":00"
+
+                        console.log("Moment Current Date: " + moment_current_date)
+                        console.log("Moment Start Date: " + moment_deadline)
+                        console.log("Now: " + now)
+                        console.log("Deadline in Time: " + deadline_time)
+
+                        if(status == "On Going")
+                        {
+                            if(moment_current_date > moment_deadline)
+                            {
+                                let data_data = {
+                                    "title": responseData[i].title,
+                                    "description": responseData[i].description,
+                                    "deadline": responseData[i].deadline,
+                                    "status": "Done",
+                                }
+                                $.ajax({
+                                    url: APP_URL+"/api/v1/requirement_bin/"+responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data_data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"      
+                                    },
+                                    success: function(data)
+                                    {
+                                        
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            if(moment_current_date == moment_deadline && now > deadline_time)
+                            {                   
+                                    
+                                let data_data = {
+                                    "title": responseData[i].title,
+                                    "description": responseData[i].description,
+                                    "deadline": responseData[i].deadline,
+                                    "status": "Done",
+                                }
+                                $.ajax({
+                                    url: APP_URL+"/api/v1/requirement_bin/"+responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data_data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        updateRequirementBinStatus()
+        
 
         // DATA TABLES FUNCTION
         function dataTable(){
@@ -38,6 +178,25 @@
                     }},
                     { data: "deadline", render: function(data, type, row){
                         return `<span class="badge badge-info">${moment(data).format('LLL')}</span>`
+                    }},
+                    { data: "status", render: function(data, type, row){
+                        let status_html
+                        if(data == 'Done'){
+                            status_html = `<span class="badge badge-success">${data}</span>`
+                        }
+                        else if(data == 'Ongoing' || data == 'On Going'){
+                            status_html = `<span class="badge badge-info">${data}</span>`
+                        }
+                        else if(data == 'Cancelled'){
+                            status_html = `<span class="badge badge-danger">${data}</span>`
+                        }
+                        else if(data == 'Pending'){
+                            status_html = `<span class="badge badge-secondary">${data}</span>`
+                        }
+                        else{
+                            status_html = data
+                        }
+                        return status_html
                     }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
@@ -120,9 +279,12 @@
                         "Content-Type": "application/json"
                     },
                     success: function(data){
-                        notification('success', 'Requirement Bin')
-                        $("#createForm").trigger("reset")
-                        $("#create_card").collapse("hide")
+                        updateRequirementBinStatus();
+
+                        notification('success', 'Requirement Bin');
+                        $("#createForm").trigger("reset");
+                        $("#create_card").collapse("hide");
+
                         refresh();
                     },
                     error: function(error){
@@ -196,6 +358,7 @@
                     $('#title_edit').val(data.title);
                     $('#description_edit').val(data.description);
                     $('#deadline_edit').val(data.deadline);
+                    $('#status_edit').val(data.status);
 
                     $('#editModal').modal('show');
                 },
@@ -221,7 +384,8 @@
             let data = {
                 "title": $('#title_edit').val(),
                 "description": $('#description_edit').val(),
-                "deadline": $('#deadline_edit').val()
+                "deadline": $('#deadline_edit').val(),
+                "status": $('#status_edit').val()
             }
 
             $.ajax({

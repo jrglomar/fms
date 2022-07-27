@@ -304,9 +304,121 @@
                 dataType: "JSON",
                 success: function (responseData)
                 {
+                    console.log("307")
+                    console.log(responseData)
                     var title = responseData.title;
-                    var deadline = responseData.deadline
                     var description = responseData.description
+
+                    var deadline = responseData.deadline
+                    var deadline_hours = new Date(deadline).getHours();
+                    var deadline_mins = new Date(deadline).getMinutes();
+                    
+                    if (deadline_hours < 10)
+                    {
+                        deadline_hours = "0"+deadline_hours
+                    }
+                    if (deadline_mins < 10)
+                    {
+                        deadline_mins = "0"+deadline_mins
+                    }
+
+                    var current_time = new Date(); // current time
+                    var hours = current_time.getHours();
+                    var mins = current_time.getMinutes();
+                    if (hours < 10)
+                    {
+                        hours = "0"+hours
+                    }
+                    if (mins < 10)
+                    {
+                        mins = "0"+mins
+                    }
+      
+                    var moment_current_date = moment(current_time).format('YYYY-MM-DD')
+                    var moment_deadline = moment(deadline).format('YYYY-MM-DD');
+
+
+                    var now = hours+":"+mins+":00";
+                    var deadline_time = deadline_hours + ":" + deadline_mins + ":00"
+
+                    console.log("Moment Current Date: " + moment_current_date)
+                    console.log("Moment Start Date: " + moment_deadline)
+                    console.log("Now: " + now)
+                    console.log("Deadline in Time: " + deadline_time)
+                    
+                    console.log("Deadline")
+                    console.log(deadline)
+
+                    if(responseData.status == "On Going")
+                    {
+                        if(moment_current_date > moment_deadline)
+                        {
+                            let data_data = {
+                                "title": title,
+                                "description": description,
+                                "deadline": deadline,
+                                "status": "Done",
+                            }
+                            $.ajax({
+                                url: APP_URL+"/api/v1/requirement_bin/"+R_BIN_ID,
+                                method: "PUT",
+                                data: JSON.stringify(data_data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"      
+                                },
+                                success: function(data)
+                                {
+                                    
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                        if(moment_current_date == moment_deadline && now > deadline_time)
+                        {                   
+                                  
+                            let data_data = {
+                                "title": title,
+                                "description": description,
+                                "deadline": deadline,
+                                "status": "Done",
+                            }
+                            $.ajax({
+                                url: APP_URL+"/api/v1/requirement_bin/"+R_BIN_ID,
+                                method: "PUT",
+                                data: JSON.stringify(data_data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data)
+                                {
+                                    
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    }
 
                     let requiredDocumentList = 'Required Document/s: '
 
@@ -325,8 +437,24 @@
                     $("#created_at").html(moment(responseData.deadline).format('LL'));
                     $('#requiredDocumentList').html(requiredDocumentList)
                     $("#created_by").html(`${responseData.created_by_user.faculty.first_name} ${responseData.created_by_user.faculty.last_name}` );
-                    
                     $("#title").html(title);
+                    var status_html = "";
+                    var status = responseData.status
+                    console.log(responseData);
+
+                    // if(status == "On Going" || status == "Ongoing")
+                    // {
+                    //     status_html =   '<span class="badge badge-info">' + 
+                    //                         '<span style="font-size: 14px">Status: </span><span style="font-size: 14px">' + status + '</span>' +
+                    //                     '</span>';
+                    // }
+                    // else if(status == "Done")
+                    // {
+                    //     status_html =   '<span class="badge badge-danger">' + 
+                    //                         '<span style="font-size: 14px">Status: </span><span style="font-size: 14px">Past Due</span>' +
+                    //                     '</span>';
+                    // }
+                    $("#status").html(status_html);
                     // $("#deadline").html("Deadline: " + deadline);
                     $("#description").html(description);
                 },
