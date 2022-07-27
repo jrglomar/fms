@@ -43,7 +43,7 @@
                             columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
                             modifier: { order: 'current' }
                         },
-                        className: 'btn-report info',
+                        className: 'btn btn-primary mr-2',
                         titleAttr: 'PDF export.',
                         extension: '.pdf',
                         // download: 'open', // FOR NOT DOWNLOADING THE FILE AND OPEN IN NEW TAB
@@ -91,7 +91,7 @@
                     }, 
                     {
                         extend: 'excelHtml5',
-                        className: 'btn-report info',
+                        className: 'btn btn-success',
                         titleAttr: 'Excel export.',
                         text: 'Export as XLS',
                         extension: '.xlsx',
@@ -192,7 +192,7 @@
                     }},
                 ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
-                "order": [[1, "desc"]]
+                "order": [[1, "asc"]]
                 })
 
 
@@ -254,31 +254,31 @@
             console.log(checked)
             if(checked == 'All'){
                     dataTable
-                        .column(5)
+                        .column(6)
                         .search("")
                         .draw();
             }
             else if(checked == 'Pending'){
                 dataTable
-                        .column(5)
+                        .column(6)
                         .search($(this).val())
                         .draw();
             }
             else if(checked == 'On Going' || checked == 'Ongoing'){
                 dataTable
-                        .column(5)
+                        .column(6)
                         .search($(this).val())
                         .draw();
             }
             else if(checked == 'Cancelled'){
                 dataTable
-                        .column(5)
+                        .column(6)
                         .search($(this).val())
                         .draw();
             }
             else if(checked == 'Done'){
                 dataTable
-                        .column(5)
+                        .column(6)
                         .search($(this).val())
                         .draw();
             }
