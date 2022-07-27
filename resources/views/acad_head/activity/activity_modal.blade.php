@@ -109,14 +109,14 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <label class="">Description</label>
+                                <label class="required-input">Description</label>
                                 <input type="text" class="form-control" id="description_edit" name="description_edit"
                                 placeholder="Description" tabindex="1" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <label class="">Location</label>
+                                <label class="required-input">Location</label>
                                 <input type="text" class="form-control" id="location_edit" name="location_edit"
                                 placeholder="Location" tabindex="1" required>
                             </div>
