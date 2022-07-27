@@ -32,7 +32,7 @@
                     window.location.href = "/faculty/dashboard"
                 }
                 else if(role.includes('Checker')){
-                    window.location.href = "/checker/dashboard"
+                    window.location.href = "/acad_head/dashboard"
                 }
                 else{
                     window.location.href = "/"
@@ -91,7 +91,7 @@
                             window.location.href = "/faculty/dashboard"
                         }
                         else if(role.includes('Checker')){
-                            window.location.href = "/checker/dashboard"
+                            window.location.href = "/acad_head/dashboard"
                         }
                         else{
                             window.location.href = "/"

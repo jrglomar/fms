@@ -22,7 +22,7 @@ class CreateObservationsTable extends Migration
 
             $table->dateTime('date_of_observation');
             $table->longText('remarks')->nullable();
-            $table->longText('status')->nullable();
+            $table->longText('status')->nullable()->default('Pending');
             $table->string('proof_of_observation_file_directory')->nullable();
             $table->string('proof_of_observation_file_link')->nullable();
 

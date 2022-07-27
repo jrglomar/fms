@@ -6,48 +6,113 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
-        var BASE_API = APP_URL + '/api/v1/activity/'
+        var BASE_API = APP_URL + '/api/v1/observation/'
         // END OF GLOBAL VARIABLE
 
         let class_sched_data = class_schedule_response.data
-        console.log(class_sched_data)
-
-
+        
         // DATA TABLES FUNCTION
         function dataTable(){
                 $('#dataTable tfoot th').each( function (i) {
                     var title = $('#dataTable thead th').eq( $(this).index() ).text();
-                    console.log(title)
                     $(this).html( '<input size="15" class="form-control" type="text" placeholder="'+title+'" data-index="'+i+'" />');
                 } );
 
                 dataTable = $('#dataTable').DataTable({
-                // "ajax": {
-                //     url: BASE_API, 
-                //     dataSrc: ""
-                // },
-                "data": class_sched_data,
+                "ajax": {
+                    url: BASE_API, 
+                    dataSrc: ""
+                },'dom': 'Bfrtip',
+                'buttons': {
+                    dom: {
+                    button: {
+                        tag: 'button',
+                        className: ''
+                    }
+                    },
+                    buttons: [{
+                        extend: 'pdfHtml5',  
+                        text: 'Export as PDF',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
+                            modifier: { order: 'current' }
+                        },
+                        className: 'btn btn-primary mr-2',
+                        titleAttr: 'PDF export.',
+                        extension: '.pdf',
+                        // download: 'open', // FOR NOT DOWNLOADING THE FILE AND OPEN IN NEW TAB
+                        title: function() {
+                            return "Class Observation Report"
+                        },
+                        filename: function() {
+                            return "Class Observation Report"
+                        },
+                        customize: function(doc) {
+                            doc.content[1].table.widths =Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                            doc.defaultStyle.alignment = 'center';
+                            doc.styles.tableHeader.alignment = 'center';
+                        },
+                    }, 
+                    {
+                        extend: 'excelHtml5',
+                        className: 'btn btn-success',
+                        titleAttr: 'Excel export.',
+                        text: 'Export as XLS',
+                        extension: '.xlsx',
+                        exportOptions: {
+                            columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
+                            modifier: { order: 'current' }
+                        },
+                        filename: function() {
+                            return "Class Observation Report"
+                        },
+                        title: function() {
+                            return "Class Observation Report"
+                        },
+                    }]
+                },
+                // "data": class_sched_data,
                 // "paging": true,
-                // "searching": false,
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
-                    { data: "assignment_code"},
-                    { data: "faculty", render: function(data, row){
-                        return data.first_name + ' ' + data.last_name;
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].faculty.full_name
                     }},
-                    { data: "subject_code"},
-                    { data: "subject_offering.curriculum_subject.subject.title"},
-                    { data: "subject_offering.curriculum_subject.subject.units"},
-                    { data: "subject_offering.section.name"},
-                    { data: "room.room_building"},
-                    { data: "start_time", render: function(data, type, row){
-                        return `${row.day} - ${moment('2022-08-05' + ' ' + row.start_time).format('LT')} - ${moment('2022-08-05' + ' ' + row.end_time).format('LT')}` 
+                    { data: "date_of_observation", render: function(data, type, row){
+                        let class_schedule_id = row.class_schedule_id
+                        let row_data = class_sched_data.filter( row => row.id == class_schedule_id)
+                        return `${moment(data).format('LL')}, ${row_data[0].time}`
                     }},
+                    { data: "status", render: function(data, type, row){
+                        let status_html
+                        if(data == 'Done'){
+                            status_html = `<span class="badge badge-success">${data}</span>`
+                        }
+                        else if(data == 'Ongoing'){
+                            status_html = `<span class="badge badge-info">${data}</span>`
+                        }
+                        else if(data == 'Cancelled'){
+                            status_html = `<span class="badge badge-danger">${data}</span>`
+                        }
+                        else if(data == 'Pending'){
+                            status_html = `<span class="badge badge-secondary">${data}</span>`
+                        }
+                        else{
+                            status_html = data
+                        }
+                        return status_html
+                    }},
+                    { data: "date_of_observation" },
                     { data: "deleted_at", render: function(data, type, row){
+                        let class_schedule_id = row.class_schedule_id
+                        let row_data = class_sched_data.filter( row => row.id == class_schedule_id)
                                 if (data == null){
                                     return `
-                                            <button class="btn btn-info btnView" id="${row.id}"><i class="fas fa-eye"></i></button>`;
+                                            <button class="btn btn-info btnView" id="${row.id}" data-value="${row_data[0].id}"><i class="fas fa-eye"></i></button>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -55,27 +120,89 @@
                             }
                         }
                     ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 5] }],
                 "order": [[1, "desc"]]
                 })
-
+                
                 // Filter event handler
                 $(dataTable.table().container() ).on( 'keyup', 'tfoot input', function () {
+                    console.log(this.value)
+                    console.log(dataTable)
                     dataTable
                         .column( $(this).data('index') )
                         .search( this.value )
                         .draw();
                 });
+
+                // Extend dataTables search
+                $.fn.dataTable.ext.search.push(
+                    function( settings, data, dataIndex ) {
+                        var min  = $('#date_from').val();
+                        var max  = $('#date_to').val();
+                        var dateOfObs = data[5] // Our date column in the table
+                        
+                        if  ( 
+                                ( min == "" || max == "" )
+                                || 
+                                ( moment(dateOfObs).isSameOrAfter(moment(min).format('YYYY-MM-DD' + ' 00:00:00')) && moment(dateOfObs).isSameOrBefore(moment(max).format('YYYY-MM-DD' + ' 23:59:59')) ) 
+                            )
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+
+                // Re-draw the table when the a date range filter changes
+                $('.date-range-filter').change( function() {
+                    dataTable.draw();
+                });
         }
         // END OF DATATABLE FUNCTION
+
+        $('.btnChangeStatus').on('change', function(){
+            let checked = $('input[name="status_options"]:checked').val();
+            console.log(checked)
+            if(checked == 'All'){
+                    dataTable
+                        .column(4)
+                        .search("")
+                        .draw();
+            }
+            else if(checked == 'Pending'){
+                dataTable
+                        .column(4)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'Ongoing'){
+                dataTable
+                        .column(4)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'Cancelled'){
+                dataTable
+                        .column(4)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'Done'){
+                dataTable
+                        .column(4)
+                        .search($(this).val())
+                        .draw();
+            }
+        })
+
+        
 
         // CALLING DATATABLE FUNCTION
         dataTable()
 
-        // ACTIVITY TYPE FUNCTION
         function activity_type(){
 
-            activity_type_url = APP_URL+'/api/v1/activity_type/'
+            activity_type_url = BASE_API
     
             $.ajax({
             url: activity_type_url,
@@ -84,20 +211,12 @@
 
             success: function(data){
 
-                var html = ""
-
-                for(var i=0; i < data.length; i++){
-                html += `<option value="${data[i].id}">${data[i].title}</option>`
-                }
+                console.log(data)
                 
-                $('#activity_type_id').html(html);
-                $('#activity_type_id_edit').html(html);
-                //$('#busTypeEdit').html(html);
 
             }
             })
         }
-        // END OF ACTIVITY TYPE FUNCTION
 
         // CALLING ACTIVITY TYPE FUNCTION
         activity_type()
@@ -295,8 +414,9 @@
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var id = this.id;
+            var class_schedule_id = $(this).attr('data-value')
 
-            window.location.replace(APP_URL+"/acad_head/schedule/"+id);
+            window.location.replace(APP_URL+"/acad_head/class_observation/"+class_schedule_id +"/"+id);
 
         });
         // END OF VIEW FUNCTION
