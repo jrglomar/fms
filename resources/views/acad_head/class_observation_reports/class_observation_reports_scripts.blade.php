@@ -158,6 +158,7 @@
                 $('.date-range-filter').change( function() {
                     dataTable.draw();
                 });
+                
         }
         // END OF DATATABLE FUNCTION
 
@@ -196,7 +197,11 @@
             }
         })
 
-        
+        $('#btnDateReset').on('click', function(){
+            $('.date-range-filter').val("")
+
+            dataTable.draw();
+        })
 
         // CALLING DATATABLE FUNCTION
         dataTable()
