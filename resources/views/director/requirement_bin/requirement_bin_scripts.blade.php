@@ -52,19 +52,6 @@
                                                         </div>
                                                         <div> View</div>
                                                     </div>
-                                                    <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-                                                        <div style="width: 2rem">
-                                                            <i class="fas fa-edit"></i>
-                                                        </div>
-                                                        <div> Edit</div>
-                                                    </div>
-                                                    <div class="dropdown-divider"</div>
-                                                </div>
-                                                <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                                    <div style="width: 2rem">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </div>
-                                                    <div style="color: red"> Delete</div>
                                                 </div>
                                             </div>
                                         </div>`;
@@ -148,7 +135,7 @@
             var requirement_bin_id = this.id;
             // let form_url =APP_URL+'/api/v1/requirement_bin/'+requirement_bin_id
 
-            window.location.replace(APP_URL + '/acad_head/requirement_list_type/'+requirement_bin_id);
+            window.location.replace(APP_URL + '/director/requirement_list_type/'+requirement_bin_id);
 
             // $.ajax({
             //     url: form_url,

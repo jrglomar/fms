@@ -4,11 +4,6 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <h4 class="text-dark">List of Requirement types</h4>
-                    <div class="card-header-action">
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
-                        aria-expanded="false" aria-controls="create_card">New requirement type <i
-                        class="fas fa-plus"></i></button>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="d-flex mb-3 justify-content-start">

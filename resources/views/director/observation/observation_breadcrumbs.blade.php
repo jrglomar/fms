@@ -11,13 +11,13 @@
         <li class="breadcrumb-item">
             Observation
         </li>
-        <li class="breadcrumb-item" id="acad_head_observation">
-        <a href="/acad_head/schedule">Schedules</a>
+        <li class="breadcrumb-item" id="director_observation">
+        <a href="/director/schedule">Schedules</a>
             <script>
-                if(window.location.pathname == '/acad_head/schedule')
+                if(window.location.pathname == '/director/schedule')
                 {
-                    document.getElementById("acad_head_observation").classList.add('active');
-                    document.getElementById("acad_head_observation").setAttribute("aria-current", "page")
+                    document.getElementById("director_observation").classList.add('active');
+                    document.getElementById("director_observation").setAttribute("aria-current", "page")
                 }
             </script>
         </li>

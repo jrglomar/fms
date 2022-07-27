@@ -14,7 +14,6 @@
 <div class='container-fluid'>
     <div class="col-12 d-flex justify-content-between">
         <h1>{{ $page_title }}</h1>
-        <button id="btnTour" class="btn btn-primary btn-sm float-right">Start Page Tour</button>
     </div>
     @include('director/requirement_list_type/requirement_list_type_breadcrumbs')
 </div>
@@ -52,5 +51,4 @@
 @section('script')
     @include('director/requirement_list_type/requirement_list_type_scripts')
     @include('director/requirement_list_type/required_faculty_list_scripts')
-    @include('director/requirement_list_type/requirement_list_type_tour_scripts')
 @endsection
