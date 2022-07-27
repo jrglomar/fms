@@ -279,14 +279,16 @@ class PresentationsSeeder extends Seeder
             'created_at' => '2022-06-22 16:33:33',
             'updated_at' => '2022-06-22 16:33:33',
             'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',
-            'title' => 'Online'
+            'title' => 'Faculty Meeting',
+            'category' => 'Meeting'
         ]);
         DB::table('activity_types')->insert([
             'id' => '2d4b3709-145c-4302-a9de-f782fcbceba7',
             'created_at' => '2022-06-22 16:33:33',
             'updated_at' => '2022-06-22 16:33:33',
             'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',
-            'title' => 'Face-to-Face'
+            'title' => 'Flag Raising Ceremony',
+            'category' => 'Activity'
         ]);
         DB::table('meeting_types')->insert([
             'id' => '4b66aad3-36e8-4eea-b75d-52b3864797b0',

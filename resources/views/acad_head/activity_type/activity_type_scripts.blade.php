@@ -20,6 +20,7 @@
                     { data: "id"},
                     { data: "created_at"},
                     { data: "title"},
+                    { data: "category"},
                     { data: "description"},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
@@ -127,6 +128,7 @@
 
                     $('#id_view').html(data.id);
                     $('#title_view').html(data.title);
+                    $('#category_view').html(data.category);
                     $('#description_view').html(data.description);
                     $('#created_at_view').html(created_at);
 
@@ -156,6 +158,7 @@
                     console.log(data)
                     $('#id_edit').val(data.id);
                     $('#title_edit').val(data.title);
+                    $('#category_edit').val(data.category);
                     $('#description_edit').val(data.description);
 
                     $('#editModal').modal('show');
@@ -181,6 +184,7 @@
 
             let data = {
                 "title": $('#title_edit').val(),
+                "category": $('#category_edit').val(),
                 "description": $('#description_edit').val()
             }
 

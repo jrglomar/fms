@@ -105,7 +105,7 @@
                     </li>
 
                     {{-- MEETING MANAGEMENT --}}
-                    <li class="menu-header">Meeting Management</li>
+                    <!-- <li class="menu-header">Meeting Management</li>
                     <li class="dropdown {{ Request::segment(2) == 'meeting_type' || 
                                             Request::segment(2) == 'meeting'
                                         ? 'active' : ''}}">
@@ -113,7 +113,7 @@
                                 class="fas fa-calendar"></i>
                         <span>Meeting</span></a>
                         <ul class="dropdown-menu">
-                            <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                            THIS IS REQUIRED FOR CHECKING ACTIVE CLASS
                             <li class="{{ Request::segment(2) == 'meeting' ? 'active' : ''}}">
                                 <a class="nav-link" href="/acad_head/meeting">
                                     <span>Meetings</span></a>
@@ -123,7 +123,7 @@
                                     <span>Meeting Types</span></a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
 
                     {{-- ACTIVITY MANAGEMENT --}}
                     <li class="menu-header">Activity Management</li>

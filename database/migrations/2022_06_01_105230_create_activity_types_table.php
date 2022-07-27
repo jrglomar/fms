@@ -22,6 +22,7 @@ class CreateActivityTypesTable extends Migration
 
             $table->string('title');
             $table->text('description')->nullable();
+            $table->string('category')->nullable();
         });
     }
 

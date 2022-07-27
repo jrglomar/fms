@@ -22,6 +22,7 @@ class Activity extends Model
         "memorandum_file_directory",
         "location",
         "description",
+        "agenda",
         "status",
         "start_datetime",
         "end_datetime",

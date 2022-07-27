@@ -20,10 +20,9 @@
                                 <th>Created at</th>
                                 <th>Deleted at</th>
                                 <th>Name</th>
-                                <th>Status</th>
+                                <th>Attendance Status</th>
                                 <th>Time in</th>
                                 <th>Time out</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>

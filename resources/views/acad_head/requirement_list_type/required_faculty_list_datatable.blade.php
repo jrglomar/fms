@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <h4 class="text-dark">Required Faculty List</h4>
                     <div class="card-header-action">
-                        <button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm" style="font-size: 16px">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>
+                        <button type="button" id="btnEditRequiredFaculty" class="btn btn-primary btn-sm" style="font-size: 14px">Edit Required Faculty List <i class="fa fa-edit" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 <div class="card-body">

@@ -36,6 +36,10 @@ class ActivityAttendanceRequiredFacultyList extends Model
     public function faculty(){
         return $this->belongsTo(Faculty::class)->withDefault();
     }
+    public function activity_submitted()
+    {
+       return $this->hasMany(ActivityAttendanceSubmittedFile::class, 'aa_faculty_id')->without('aa_faculty_lists', 'created_by_user', 'updated_by_user');
+    }
 
     // [Default relationship]       - Default
     public function created_by_user()
@@ -48,7 +52,7 @@ class ActivityAttendanceRequiredFacultyList extends Model
         return $this->belongsTo(User::class,'updated_by');
     }
 
-    protected $with = ['activity', 'faculty','created_by_user','updated_by_user'];
+    protected $with = ['activity_submitted', 'activity', 'faculty','created_by_user','updated_by_user'];
 
     // ADDED FOR UUID INCREMENT ERROR
     public $incrementing = false;

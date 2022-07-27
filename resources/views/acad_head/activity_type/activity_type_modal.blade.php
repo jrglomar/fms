@@ -26,6 +26,12 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">
+                                <label>Category</label>
+                                <p id="category_view" class="card-text"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-12">
                                 <label>Descrition</label>
                                 <p id="description_view" class="card-text"></p>
                             </div>
@@ -70,6 +76,14 @@
                                 <label class="required-input">Title</label>
                                 <input type="text" class="form-control" id="title_edit" name="title_edit"
                                 placeholder="Title" tabindex="1" required>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <label class="required-input" >Category</label>
+                                <select id="category" name="category" class="form-control select2" required>
+                                    <option disabled selected>List of category/s</option>
+                                    <option value="Activity">Activity</option>
+                                    <option value="Meeting">Meeting</option>
+                                </select>
                             </div>
                             <div class="form-group col-md-12">
                                 <label>Description</label>
