@@ -352,7 +352,7 @@
 
                     $('#view_memo').on('click', function(){
 
-                        if(data.memorandum_file_directory == "NA"){
+                        if(data.memorandum_file_directory == "NA" || data.memorandum_file_directory == null){
                             swalAlert('warning', 'No Memorandum Uploaded')
                         }
                         else{
@@ -468,7 +468,7 @@
                     }},
                     { data: "id", render: function(data, type, row){
                         return `<div class="custom-control custom-switch">
-                                    <input type="checkbox" name="faculty_required[]" class="custom-control-input faculty_status" id="${row.id}" value="${row.id}">
+                                    <input type="checkbox" name="faculty_required[]" class="custom-control-input faculty_status" id="${row.id}" value="${row.id}" checked>
                                     <label id="status_label" class="custom-control-label" for="${row.id}">Yes</label>
                                 </div>`
                     }}
@@ -709,6 +709,24 @@
 
             table.column(4).search(this.value).draw();
         })
+
+        // ------------------------------------------------------------------------------------------------- //
+            // UNSELECT ALL BUTTON ON REQUIRED FACULTY LIST MODAL
+                $('#btn_select_all').on('change', function(){
+
+                    let status = $('#btn_select_all').is(":checked")
+
+                    if(status == true){
+                        $('#select_all_label').html('Unselect all')
+                        $("input[name='faculty_required[]']").prop('checked', true)
+                    }
+                    else{
+                        $('#select_all_label').html('Select all')
+                        $("input[name='faculty_required[]']").prop('checked', false)
+                    }
+                })
+            // END UNSELECT ALL BUTTON ON REQUIRED FACULTY LIST MODAL
+        // ------------------------------------------------------------------------------------------------- //
 
     });
 </script>
