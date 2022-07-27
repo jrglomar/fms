@@ -223,7 +223,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label class="required-input">Program</label>
-                            <select id="program_id" name="program_id" class="form-control select2">
+                            <select id="program_id" name="program_id" class="form-control">
                                 <option disabled selected>List of program/s</option>
                             </select>
                         </div>
