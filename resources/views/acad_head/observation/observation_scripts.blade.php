@@ -61,7 +61,7 @@
                             }
                         }
                     ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [1] }],
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
                 "order": [[1, "desc"]]
                 })
 
