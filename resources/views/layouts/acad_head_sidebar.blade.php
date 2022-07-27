@@ -45,20 +45,35 @@
 
                         {{-- SCHEDULE MANAGEMENT --}}
                         <li class="menu-header">Schedule Management</li>
-                        <li class="dropdown {{ Request::segment(2) == 'observation' || 
-                                                Request::segment(2) == 'observation_view'
+                        <li class="dropdown {{ Request::segment(2) == 'schedule' || 
+                                                Request::segment(2) == 'schedule_view' ||
+                                                Request::segment(2) == 'class_observation' ||
+                                                Request::segment(2) == 'class_observation_view' ||
+                                                Request::segment(2) == 'class_observation_reports'
                                                 ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
                         <span>Observation</span></a>
                         <ul class="dropdown-menu">
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                            <li class="{{ Request::segment(2) == 'observation' || 
-                                            Request::segment(2) == 'observation_view' 
+                            <li class="{{ Request::segment(2) == 'schedule' || 
+                                            Request::segment(2) == 'schedule_view' 
                                             
                                             ? 'active' : ''}}">
-                                <a class="nav-link" href="/acad_head/observation">
+                                <a class="nav-link" href="/acad_head/schedule">
                                     <span>Class Schedules</span></a>
+                            </li>
+                            <li class="{{ Request::segment(2) == 'class_observation' || 
+                                            Request::segment(2) == 'class_observation_view' 
+                                            
+                                            ? 'active' : ''}}">
+                                <a class="nav-link" href="/acad_head/class_observation">
+                                    <span>Observation</span></a>
+                            </li>
+                            <li class="{{ Request::segment(2) == 'class_observation_reports'
+                                            ? 'active' : ''}}">
+                                <a class="nav-link" href="/acad_head/class_observation_reports">
+                                    <span>Class Observation Reports</span></a>
                             </li>
                         </ul>
                     </li>
@@ -90,7 +105,7 @@
                     </li>
 
                     {{-- MEETING MANAGEMENT --}}
-                    <li class="menu-header">Meeting Management</li>
+                    <!-- <li class="menu-header">Meeting Management</li>
                     <li class="dropdown {{ Request::segment(2) == 'meeting_type' || 
                                             Request::segment(2) == 'meeting'
                                         ? 'active' : ''}}">
@@ -98,7 +113,7 @@
                                 class="fas fa-calendar"></i>
                         <span>Meeting</span></a>
                         <ul class="dropdown-menu">
-                            <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                            THIS IS REQUIRED FOR CHECKING ACTIVE CLASS
                             <li class="{{ Request::segment(2) == 'meeting' ? 'active' : ''}}">
                                 <a class="nav-link" href="/acad_head/meeting">
                                     <span>Meetings</span></a>
@@ -108,7 +123,7 @@
                                     <span>Meeting Types</span></a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
 
                     {{-- ACTIVITY MANAGEMENT --}}
                     <li class="menu-header">Activity Management</li>

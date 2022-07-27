@@ -333,12 +333,12 @@
                                                             '</div>' +
                                                             '<br>' +
                                                             '<div class="row">' +
-                                                                '<div class="col-md-2" id="faculty_degree">' +
+                                                                '<div class="col-md-3" id="faculty_degree">' +
                                                                     '<div class="col-md-12">' +
                                                                         '<span><b>Degree: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ' + 
+                                                                        '<span>&nbsp;&nbsp;- ' + 
                                                                             responseData[i].degree +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -348,27 +348,27 @@
                                                                         '<span><b>Program: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ' + 
+                                                                        '<span>&nbsp;&nbsp;- ' + 
                                                                             responseData[i].program +
                                                                         '</span>' +
                                                                     '</div>' +
                                                                 '</div>' +
-                                                                '<div class="col-md-4" id="faculty_school">' +
+                                                                '<div class="col-md-3" id="faculty_school">' +
                                                                     '<div class="col-md-12">' +
                                                                         '<span><b>School: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ' + 
+                                                                        '<span>&nbsp;&nbsp;- ' + 
                                                                             school +
                                                                         '</span>' +
                                                                     '</div>' +
                                                                 '</div>' +
                                                                 '<div class="col-md-2" id="faculty_year_of_attendance">' +
-                                                                    '<div class="col-md-12">' +
+                                                                    '<div class="col-md-12 text-center">' +
                                                                         '<span><b>Year of Attendance: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- ' + 
+                                                                        '<span>&nbsp;&nbsp;- ' + 
                                                                             year_of_attendance +
                                                                         '</span>' +
                                                                     '</div>' +

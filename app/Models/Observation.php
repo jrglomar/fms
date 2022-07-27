@@ -18,6 +18,7 @@ class Observation extends Model
 
     protected $fillable = [
         "date_of_observation",
+        'status',
         "remarks",
         "proof_of_observation_file_directory",
         "proof_of_observation_file_link",

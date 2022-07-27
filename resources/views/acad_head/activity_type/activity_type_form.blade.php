@@ -17,6 +17,16 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-12">
+                            <label class="required-input" >Category</label>
+                            <select id="category" name="category" class="form-control select2">
+                                <option disabled selected>List of category/s</option>
+                                <option value="Activity">Activity</option>
+                                <option value="Meeting">Meeting</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
                             <label>Description</label>
                             <input type="text" class="form-control" id="description" name="description"
                             placeholder="Description" tabindex="1">

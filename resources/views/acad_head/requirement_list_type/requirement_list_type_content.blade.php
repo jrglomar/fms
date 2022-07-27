@@ -1,24 +1,24 @@
 <div class="row">
     <div class="col-8 col-sm-8 col-lg-8">
-        <div class="hero text-white hero-bg-image hero-bg-parallax"
-        style="background-image: url({{ URL::to('/images/designs/req_bin_card_yellow.png') }})">
+        <div class="hero hero-bg-parallax shadow-sm bg-white rounded"
+        style="background-color: white">
             <div class="hero-inner">
                 <div class="col-12">
                         <h3 class="text-center"><span id="title"></span></h3>
                         <span class="badge badge-info">
-                            <span style="font-size: 18px">Posted by </span><span style="font-size: 18px" id="created_by"></span>
+                            <span style="font-size: 14px">Posted by </span><span style="font-size: 14px" id="created_by"></span>
                         </span>
                         <div class="text-dark float-right" >
                             <span class="badge badge-warning">
-                                <span style="font-size: 18px" >Due</span>
-                                <span style="font-size: 18px" id="created_at"></span>
+                                <span style="font-size: 14px" >Due</span>
+                                <span style="font-size: 14px" id="created_at"></span>
                             </span>
                         </div>
                 </div>
             </div>
             &nbsp;
             <div class="hero-inner">
-                <span class="text-white" style="white-space: pre-line; font-size: 18px" id="description"><span>
+                <span class="text-black" style="white-space: pre-line; font-size: 14px" id="description"><span>
             </div>
         </div>
     </div>
@@ -42,8 +42,8 @@
         </div>
     </div> --}}
     <div class="col-4 col-sm-4 col-lg-4">
-        <div class="hero text-white hero-bg-image hero-bg-parallax"
-        style="background-image: url({{ URL::to('/images/designs/req_bin_card_blue.png') }})">
+        <div class="hero hero-bg-parallax shadow-sm bg-white rounded"
+        style="background-color: white">
             <div class="hero-inner">
                 <div class="d-flex justify-content-between">
                     <h5> Required Document List</h5>

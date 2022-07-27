@@ -22,6 +22,7 @@
                                 <th>ID</th>
                                 <th>Created at</th>
                                 <th>Title</th>
+                                <th>Category</th>
                                 <th>Description</th>
                                 <th class="text-center">Action</th>
                             </tr>

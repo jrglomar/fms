@@ -206,15 +206,29 @@ Route::group(['middleware' => ['role.acadhead'],
         return view('acad_head/profile/profile', ['page_title' => 'Profile', 'user_id' => $id]);
     })->name('acad_head_profile');
 
-    // ------------OBSERVATION--------------- //
-    Route::get('/observation', function () {
+    // ------------SCHEDULE--------------- //
+    Route::get('/schedule', function () {
         return view('acad_head/observation/observation', ['page_title' => 'Observation']);
     })->name('acad_head_observation');
 
     // ------------OBSERVATION--------------- //
-    Route::get('/observation/{id}', function ($id) {
+    Route::get('/class_observation', function () {
+        return view('acad_head/class_observation/class_observation', ['page_title' => 'Observation']);
+    })->name('acad_head_class_observation');
+
+    // ------------OBSERVATION - VIEW --------------- //
+    Route::get('/class_observation/{id}/{observation_id}', function ($id, $observation_id) {
+        return view('acad_head/class_observation_view/class_observation_view', ['page_title' => 'Observation', 'schedule_id' => $id, 'observation_id' => $observation_id]);
+    })->name('acad_head_class_observation_view');
+
+    Route::get('/class_observation_reports', function () {
+        return view('acad_head/class_observation_reports/class_observation_reports', ['page_title' => 'Observation']);
+    })->name('acad_head_class_observation_reports');
+
+    // ------------SCHEDULE VIEW--------------- //
+    Route::get('/schedule/{id}', function ($id) {
         return view('acad_head/observation_view/observation_view', ['page_title' => 'Observation', 'schedule_id' => $id]);
-    })->name('acad_head_observation_view');
+    })->name('acad_head_schedule_view');
 
     // ------------MEETING - VIEW --------------- //
     Route::get('/meeting/{id}', function ($id) {
@@ -264,7 +278,6 @@ Route::group(['middleware' => ['role.acadhead'],
         Route::get('/activity_report', function () {
             return view('acad_head/report/activity_report', ['page_title' => 'Activity Reports']);
         })->name('activity_report');
-
 });
 
 
@@ -277,5 +290,19 @@ Route::group(['middleware' => ['role.checker'],
     Route::get('/dashboard', function () {
         return view('checker/dashboard/dashboard', ['page_title' => 'Dashboard']);
     })->name('checker_dashboard');
+
+});
+
+
+
+//-------------DIRECTOR----------------//
+
+Route::group(['middleware' => ['role.director'],
+    'prefix' => '/director',], function(){
+        
+    // ------------DASHBOARD--------------- //
+    Route::get('/dashboard', function () {
+        return view('director/dashboard/dashboard', ['page_title' => 'Dashboard']);
+    })->name('director_dashboard');
 
 });

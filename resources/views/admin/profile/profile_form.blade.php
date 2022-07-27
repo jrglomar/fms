@@ -314,7 +314,9 @@
 </div>
 
 <div class="row" id="educ_profile">
-    <div class="col-md-12">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-8">
         <!-- EDUCATIONAL PROFILE -->
         <div class="card card-info">
             <div class="card-header">

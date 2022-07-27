@@ -38,28 +38,7 @@
                             <a class="nav-link" href="/faculty/profile/{{ Auth::user()->id }}">
                         <i class="fas fa-user"></i><span>Profile</span></a></li>
 
-                        <li class="dropdown {{ Request::segment(2) == 'srd_report' || 
-                                                Request::segment(2) == 'meeting_report' ||
-                                                Request::segment(2) == 'activity_report' 
-                                                ? 'active' : ''}}">
-                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
-                                class="fas fa-book-reader"></i>
-                        <span>Reports</span></a>
-                        <ul class="dropdown-menu">
-                            <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                            <li style="padding-bottom: 1rem" class="{{ Request::segment(2) == 'srd_report' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/faculty/srd_report" >
-                                        <span >Submission of Documents Report</span></a>
-                                </li>
-                                <li class="{{ Request::segment(2) == 'meeting_report' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/faculty/meeting_report">
-                                        <span>Meeting Report</span></a>
-                                </li>
-                                <li class="{{ Request::segment(2) == 'activity_report' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/faculty/activity_report">
-                                        <span>Activity Report</span></a>
-                                </li>
-                        </ul>
+                        
 
                             {{-- SRD MANAGEMENT --}}
                             <li class="menu-header">Submission of Documents Management</li>
@@ -82,20 +61,20 @@
                             </ul>
 
                             {{-- MEETING MANAGEMENT --}}
-                            <li class="menu-header">Meeting Management</li>
+                            <!-- <li class="menu-header">Meeting Management</li>
                             <li class="dropdown {{ Request::segment(2) == 'meeting'
                                                 ? 'active' : ''}}">
                                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                         class="fas fa-calendar"></i>
                                 <span>Meeting</span></a>
                                 <ul class="dropdown-menu">
-                                    <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                    THIS IS REQUIRED FOR CHECKING ACTIVE CLASS
                                     <li class="{{ Request::segment(2) == 'meeting' ? 'active' : ''}}">
                                         <a class="nav-link" href="/faculty/meeting">
                                             <span>Meetings</span></a>
                                     </li>
                                 </ul>
-                            </li>       
+                            </li>        -->
                             
                              {{-- ACTIVITY MANAGEMENT --}}
                             <li class="menu-header">Activity Management</li>
@@ -127,9 +106,9 @@
                         <span>Reports</span></a>
                         <ul class="dropdown-menu">
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                            <li class="{{ Request::segment(2) == 'srd_report' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/faculty/srd_report">
-                                        <span>SRD Report</span></a>
+                            <li style="padding-bottom: 1rem" class="{{ Request::segment(2) == 'srd_report' ? 'active' : ''}}">
+                                    <a class="nav-link" href="/faculty/srd_report" >
+                                        <span >Submission of Documents Report</span></a>
                                 </li>
                                 <li class="{{ Request::segment(2) == 'meeting_report' ? 'active' : ''}}">
                                     <a class="nav-link" href="/faculty/meeting_report">

@@ -153,4 +153,19 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
 
         return $faculties_per_meeting;
     }
+
+    public function search_specific_activity_and_faculty($activity_id, $faculty_id)
+    {
+        return ActivityAttendanceRequiredFacultyList::where('activity_id', 'like', '%'.$activity_id.'%')
+        ->where('faculty_id', 'like', '%'.$faculty_id.'%')
+        ->get();
+    }
+
+    public function faculty_list_time_out_null($activity_id)
+    {
+        return ActivityAttendanceRequiredFacultyList::where('activity_id', 'like', '%'.$activity_id.'%')
+        ->whereNull('time_out')
+        ->whereNull('attendance_status')
+        ->get();
+    }
 }

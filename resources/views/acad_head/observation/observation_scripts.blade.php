@@ -13,7 +13,6 @@
         console.log(class_sched_data)
 
 
-
         // DATA TABLES FUNCTION
         function dataTable(){
                 $('#dataTable tfoot th').each( function (i) {
@@ -28,8 +27,8 @@
                 //     dataSrc: ""
                 // },
                 "data": class_sched_data,
-                "paging": true,
-                "searching": false,
+                // "paging": true,
+                // "searching": false,
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
@@ -48,7 +47,7 @@
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
                                     return `
-                                            <button class="btn btn-info btn-sm btnView" id="${row.id}"><i class="fas fa-eye"></i></button>`;
+                                            <button class="btn btn-info btnView" id="${row.id}"><i class="fas fa-eye"></i></button>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -297,7 +296,7 @@
         $(document).on("click", ".btnView", function(){
             var id = this.id;
 
-            window.location.replace(APP_URL+"/acad_head/observation/"+id);
+            window.location.replace(APP_URL+"/acad_head/schedule/"+id);
 
         });
         // END OF VIEW FUNCTION

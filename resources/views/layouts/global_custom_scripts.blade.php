@@ -49,6 +49,13 @@
                 $("#create_btn").prop('disabled', false);
             });
 
+            // FOR DISABLING BUTTON BLOCK (TIME IN, TIME OUT, UPLOAD) BUTTON ON FACULTY VIEW ACTIVITIES
+            $(document).ajaxStart(function() {
+                $(".button-block").prop('disabled', true);
+            }).ajaxStop(function() {
+                $(".button-block").prop('disabled', false);
+            });
+
             // FOR DISABLING ADD REQUIRED DOCUMENT BUTTON ON BIN DETAILS
             $(document).ajaxStart(function() {
                 $("#btnAddRequiredDocu").prop('disabled', true);

@@ -24,23 +24,249 @@
                 },
 
                 success: function(data){
-
-                    console.log(data)
-
                     date = moment(new Date).format()
+
+                    var activity_status = data.status
+
+                    var start_date_hours = new Date(data.start_datetime).getHours();
+                    var start_date_mins = new Date(data.start_datetime).getMinutes();
+                    if (start_date_hours < 10)
+                    {
+                        start_date_hours = "0"+start_date_hours
+                    }
+                    if (start_date_mins < 10)
+                    {
+                        start_date_mins = "0"+start_date_mins
+                    }
+
+                    var end_date_hours = new Date(data.end_datetime).getHours();
+                    var end_date_mins = new Date(data.end_datetime).getMinutes();
+                    if (end_date_hours < 10)
+                    {
+                        end_date_hours = "0"+end_date_hours
+                    }
+                    if (end_date_mins < 10)
+                    {
+                        end_date_mins = "0"+end_date_mins
+                    }
+
+                    var current_time = new Date(); // current time
+                    var hours = current_time.getHours();
+                    var mins = current_time.getMinutes();
+                    if (hours < 10)
+                    {
+                        hours = "0"+hours
+                    }
+                    if (mins < 10)
+                    {
+                        mins = "0"+mins
+                    }
+      
+                    var moment_current_date = moment(current_time).format('L')
+                    var moment_start_date = moment(data.start_datetime).format('L');
+                    var moment_end_date = moment(data.end_datetime).format('L');
+
+
+                    var now = hours+":"+mins+":00";
+                    var start_time = start_date_hours + ":" + start_date_mins + ":00"
+                    var end_time = end_date_hours + ":" + end_date_mins + ":00"
+
+                    console.log("Moment Current Date: " + moment_current_date)
+                    console.log("Moment Start Date: " + moment_start_date)
+                    console.log("Moment End Date: " + moment_end_date)
+                    console.log("Now: " + now)
+                    console.log("Start Time: " + start_time)
+                    console.log("End Time: " + end_time)
+
+                    if(activity_status == "Done" || activity_status == "done")
+                    {
+                        $.ajax({
+                            url: APP_URL + "/api/v1/activity_attendance/faculty_list_time_out_null/" + ACTIVITY_ID,
+                            type: "GET",
+                            dataType: "JSON",
+                            success: function (responseData) 
+                            {  
+                                if (responseData.length != 0)
+                                {
+                                    $.each(responseData, function (i, dataOptions) 
+                                    {
+                                        var time_in = responseData[i].time_in
+                                        var time_out = responseData[i].time_out
+                                        var attendance_status = responseData[i].attendance_status
+                                        var remarks = responseData[i].remarks
+                                        var status = responseData[i].status
+                                        var proof_of_attendance_file_link = responseData[i].proof_of_attendance_file_link
+                                        var faculty_id = responseData[i].faculty_id
+                                        var activity_id = responseData[i].activity_id
+                                        var id = responseData[i].id
+
+                                        $.ajax(
+                                        {
+                                            url: APP_URL + '/api/v1/activity_attendance/' + id,
+                                            type: "PUT",
+                                            data: JSON.stringify(
+                                            {		
+                                                "time_in": time_in,
+                                                "time_out": time_out,
+                                                "attendance_status": "Absent",
+                                                "remarks": remarks,
+                                                "status": status,
+                                                "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                                                "faculty_id": faculty_id,
+                                                "activity_id": activity_id,
+                                            }),
+                                            dataType: "JSON",
+                                            contentType: 'application/json',
+                                            processData: false,
+                                            cache: false,
+                                            success: function (responseJSON) 
+                                            {     
+                                                refresh();       
+                                            },
+                                            error: function(error){
+                                                $.each(error.responseJSON.errors, function(key,value) {
+                                                    swalAlert('warning', value)
+                                                });
+                                                console.log(error)
+                                                console.log(`message: ${error.responseJSON.message}`)
+                                                console.log(`status: ${error.status}`)
+                                            },
+                                        });
+                                    });
+                                }
+                                else
+                                {
+                                    refresh();
+                                }
+                            }
+                        });
+                        refresh();
+                    }
+                    else if(activity_status == "On Going")
+                    {
+                        if(moment_current_date > moment_end_date)
+                        {
+                            let data_data = {
+                                "title": data.title,
+                                "activity_type_id": data.activity_type_id,
+                                "description": data.description,
+                                "agenda": data.agenda,
+                                "location": data.location,
+                                "date": data.date,
+                                "start_datetime": data.start_datetime,
+                                "end_datetime": data.end_datetime,
+                                "memorandum_file_directory": data.memorandum_file_directory,
+                                "is_required": data.is_required,
+                                "status": "Done",
+                            }
+                            $.ajax({
+                                url: APP_URL+"/api/v1/activity/"+ACTIVITY_ID,
+                                method: "PUT",
+                                data: JSON.stringify(data_data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"      
+                                },
+                                success: function(data)
+                                {
+                                    
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                        if(moment_current_date == moment_end_date && now > end_time)
+                        {                   
+                                  
+                            let data_data = {
+                                "title": data.title,
+                                "activity_type_id": data.activity_type_id,
+                                "description": data.description,
+                                "agenda": data.agenda,
+                                "location": data.location,
+                                "start_datetime": data.start_datetime,
+                                "end_datetime": data.end_datetime,
+                                "memorandum_file_directory": data.memorandum_file_directory,
+                                "is_required": data.is_required,
+                                "status": "Done",
+                            }
+                            console.log("Here")
+                            console.log(data_data)
+                            $.ajax({
+                                url: APP_URL+"/api/v1/activity/"+ACTIVITY_ID,
+                                method: "PUT",
+                                data: JSON.stringify(data_data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data)
+                                {
+                                    
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    }
 
                     let created_at = moment(data.created_at).format('LLL');
                     let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
                     let is_required_view = ""
+                    
+                    var hero_body = "";
 
-                    $('#id_view').html(data.id);
-                    $('#title').html('<i class="fa fa-users"aria-hidden="true"></i> &nbsp;' + data.title);
-                    $('#description').html(data.description);
-                    $('#start_time').html(moment(data.start_datetime).format('LLL'));
-                    $('#end_time').html(moment(data.end_datetime).format('LLL'));
-                    $('#act_type').html(data.activity_type.title); 
-                    $('#created_by').html(data.created_by_user.faculty.first_name); 
-                    console.log(data.activity_type)  
+                    if(data.activity_type.category == "Activity")
+                    {
+                        hero_body = '<span><b>Description: </b>' +
+                                    '<span class="" style="white-space: pre-line; text-align: justify; display:block;" id="description">' +
+                                        data.description +
+                                    '</span>';
+                    }
+                    else if (data.activity_type.category == "Meeting")
+                    {
+                        var agenda = data.agenda;
+
+                        console.log(data)
+
+                        if(agenda == null)
+                        {
+                            agenda = "No agenda given"
+                        }
+                        else
+                        {
+                            agenda = data.agenda;
+                        }
+                        hero_body = '<span><b>Agenda: </b>' +
+                                    '<span class="" style="white-space: pre-line; text-align: justify; display:block;" id="agenda">' +
+                                        agenda +
+                                    '</span>' +
+                                    '<br>' +
+                                    '<span><b>Description: </b>' +
+                                    '<span class="" style="white-space: pre-line; text-align: justify; display:block;" id="description">' +
+                                        data.description +
+                                    '</span>';
+                    }
+
+                    $('#hero_body').html(hero_body);
 
                     if(data.is_required == 0){
                         is_required_view = "Not required to attend"
@@ -48,20 +274,68 @@
                         is_required_view = "Required to attend"
                     }
 
-                    if(moment(data.start_datetime).format() < date && moment(data.end_datetime).format() > date){
-                        $('#status').html(`<span class="badge badge-warning">
-                                <span>Ongoing</span>
+                    console.log(data.title)
+                    var hero_header =   
+                                        '<div class="row">' +
+                                            '<div class="col-md-10">' +
+                                                '<h3 class="text-center"><span id="title"><i class="fa fa-users"aria-hidden="true"></i> &nbsp;' +
+                                                    data.title +
+                                                '</span></h3>' +
+                                            '</div>' +
+                                            '<div class="col-md-2">' +
+                                                '<div>' +
+                                                    '<button type="button" class="btn btn-info"' +
+                                                    ' role="button" aria-expanded="false" id="view_memo"' +
+                                                    '>View Memo</button>' +
+                                                '</div>' +
+                                            '</div>' +
+                                        '</div>' +
+                                        '<br>' +
+                                        '<div class="col-12">' +
+                                            '<span class="badge badge-info text-dark" style="font-size: 14px">' +
+                                                '<span>Posted by </span><span id="created_by">' +
+                                                    data.created_by_user.faculty.last_name + ", " + data.created_by_user.faculty.first_name +
+                                                '</span>' +
+                                            '</span>' +
+                                            '<div class="text-dark float-right">' +
+                                                '<span class="badge text-dark badge-warning" style="font-size: 14px">' +
+                                                    '<span id="act_type">' +
+                                                        data.activity_type.title +
+                                                    '</span>' +
+                                                    '<span> • </span>' +
+                                                    '<span id="is_required">' +
+                                                        is_required_view +
+                                                    '</span>' +
+                                                '</span>' +
+                                            '</div>' +
+                                        '</div>';
+                    $('#hero_header').html(hero_header);
+                                        
+    
+                    $('#id_view').html(data.id);
+                    $('#start_time').html(moment(data.start_datetime).format('LLL'));
+                    $('#end_time').html(moment(data.end_datetime).format('LLL'));
+                 
+
+                    activity_status = data.status;
+
+                    if(activity_status == "Pending")
+                    {
+                        $('#status').html(`<span class="badge badge-warning" style="font-size: 14px">
+                                <span>Pending</span>
                                 </span>`);
                     }
-                    else if(date > moment(data.end_datetime).format()){
-                        $('#status').html(`<span class="badge badge-warning">
-                                <span>Ended</span>
+                    else if(activity_status == "On Going")
+                    {
+                        $('#status').html(`<span class="badge badge-info" style="font-size: 14px">
+                                <span>On Going</span>
                                 </span>`);
                         //$('#status').addClass('text-success');
                     }
-                    else{
-                        $('#status').html(`<span class="badge badge-warning">
-                                <span>Pending</span>
+                    else if(activity_status == "Done")
+                    {
+                        $('#status').html(`<span class="badge badge-success" style="font-size: 14px">
+                                <span>Done</span>
                                 </span>`);
                         //$('#status').addClass('text-warning');
                     }
@@ -76,20 +350,21 @@
                     //document.getElementById("memorandum_view").src=APP_URL + data.memorandum_file_directory;
                     //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
 
-                    if(data.memorandum_file_directory == "NA"){
-                        $('#if_memo').html("<span>No Memorandum uploaded</span>")
-                    }
-                    else{
-                        $('#if_memo').html('<div class="embed-responsive embed-responsive-16by9">'
-                        +'<iframe id="memo" class="embed-responsive-item" src="..."></iframe></div>')
-                        
-                        document.getElementById("memo").src=APP_URL + "/" +data.memorandum_file_directory;
-                    }
+                    $('#view_memo').on('click', function(){
+
+                        if(data.memorandum_file_directory == "NA"){
+                            swalAlert('warning', 'No Memorandum Uploaded')
+                        }
+                        else{
+                            var tabOrWindow = window.open(APP_URL + "/" +data.memorandum_file_directory, '_blank');
+                            tabOrWindow.focus();   
+                        }
+
+                    });
                 }
             // ajax closing tag
             })
         }
-
         getActivity()
 
         function requiredFacultyDatatable(){

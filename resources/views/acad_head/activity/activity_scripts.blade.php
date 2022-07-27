@@ -1,6 +1,32 @@
 
 <script>
     $(document).ready(function(){
+        // Initialize the Summernote WYSIWYG TEXT AREA
+        document.getElementById("agenda_div").hidden = true
+        $('#agenda').summernote({
+            placeholder: 'Agenda...',
+            tabsize: 2,
+            height: 100,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['font', ['bold', 'underline', 'clear']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen']],
+            ]
+        });
+        // Initialize the Summernote WYSIWYG TEXT AREA
+        $('#description').summernote({
+            placeholder: 'Description...',
+            tabsize: 2,
+            height: 100,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['font', ['bold', 'underline', 'clear']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen']],
+            ]
+        });
+        // END Initialize the Summernote WYSIWYG TEXT AREA
 
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
@@ -8,6 +34,282 @@
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/activity/'
         // END OF GLOBAL VARIABLE
+
+        // FUNCTION TO UPDATE MEETING STATUS UPON VIEWING
+        function updateActivityStatus()
+        {
+            $.ajax({
+                url: BASE_API,
+                type: "GET",
+                dataType: "JSON",
+                success: function (responseData) 
+                {  
+                    $.each(responseData, function (i, dataOptions) 
+                    {
+                        var status = responseData[i].status
+
+                        var start_date_hours = new Date(responseData[i].start_datetime).getHours();
+                        var start_date_mins = new Date(responseData[i].start_datetime).getMinutes();
+                        if (start_date_hours < 10)
+                        {
+                            start_date_hours = "0"+start_date_hours
+                        }
+                        if (start_date_mins < 10)
+                        {
+                            start_date_mins = "0"+start_date_mins
+                        }
+
+                        var end_date_hours = new Date(responseData[i].end_datetime).getHours();
+                        var end_date_mins = new Date(responseData[i].end_datetime).getMinutes();
+                        if (end_date_hours < 10)
+                        {
+                            end_date_hours = "0"+end_date_hours
+                        }
+                        if (end_date_mins < 10)
+                        {
+                            end_date_mins = "0"+end_date_mins
+                        }
+
+                        var current_time = new Date(); // current time
+                        var hours = current_time.getHours();
+                        var mins = current_time.getMinutes();
+                        if (hours < 10)
+                        {
+                            hours = "0"+hours
+                        }
+                        if (mins < 10)
+                        {
+                            mins = "0"+mins
+                        }
+            
+                        var moment_current_date = moment(current_time).format('L')
+                        var moment_start_date = moment(responseData[i].start_datetime).format('L');
+                        var moment_end_date = moment(responseData[i].end_datetime).format('L');
+
+
+                        var now = hours+":"+mins+":00";
+                        var start_time = start_date_hours + ":" + start_date_mins + ":00"
+                        var end_time = end_date_hours + ":" + end_date_mins + ":00"
+
+                        if(status == "Pending")
+                        {
+                            if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date)) 
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "On Going",
+                                    
+                                }
+                                $.ajax({
+                                    url: BASE_API + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            else if(moment_current_date > moment_end_date)
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "Done",
+                                }
+                                $.ajax({
+                                    url: BASE_API + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            else if(moment_current_date < moment_start_date)
+                            {
+                                refresh()
+                            }
+                            else if((moment_current_date == moment_end_date) && (now > end_time))
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "Done",
+                                }
+                                $.ajax({
+                                    url: BASE_API + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            else if(moment_current_date == moment_start_date && now < start_time && now < end_time)
+                            {
+                                refresh()
+                            }
+                        }
+                        else if(status == "On Going")
+                        {                
+                            if(moment_current_date > moment_end_date)
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "Done",
+                                }
+                                $.ajax({
+                                    url: BASE_API + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            else if(moment_current_date == moment_end_date && now > end_time)
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "Done",
+                                }
+                                $.ajax({
+                                    url: BASE_API + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            else
+                            {
+                                refresh()
+                            }
+                        }
+                    });
+                },
+            });
+        }
+        updateActivityStatus()
 
         // DATA TABLES FUNCTION
         function dataTable(){
@@ -25,17 +327,7 @@
                     { data: "title"},
                     { data: "activity_type.title"},
                     { data: "description"},
-                    { data: "status", render: function(data, type, row){
-                        if (moment(row.start_datetime).format() < date && moment(row.end_datetime).format() > date){
-                            return "Ongoing"
-                        }
-                        else if (date > moment(row.end_datetime).format() ){
-                            return "Ended"
-                        }
-                        else{
-                            return data
-                        }
-                    }},
+                    { data: "status"},
                     { data: "start_datetime", render: function(data, type, row){
                         return `<span class="badge badge-info">${moment(data).format('LLL')} - ${moment(row.end_datetime).format('LLL')}</span>` 
                     }},
@@ -87,8 +379,8 @@
                 html += `<option value="${data[i].id}">${data[i].title}</option>`
                 }
                 
-                $('#activity_type_id').html(html);
-                $('#activity_type_id_edit').html(html);
+                $('#activity_type_id').append(html);
+                $('#activity_type_id_edit').append(html);
                 //$('#busTypeEdit').html(html);
 
             }
@@ -141,6 +433,7 @@
                     let data_form = {
                         "title": $('#title').val(),
                         "description": $('#description').val(),
+                        "agenda": $('#agenda').val(),
                         "location": $('#location').val(),
                         "start_datetime": $('#start_datetime').val(),
                         "end_datetime": $('#end_datetime').val(),
@@ -166,12 +459,12 @@
                                     "Content-Type": "application/json"
                                 },
                                 success: function(data){
-                                    console.log(data)
+                                    updateActivityStatus();
                                     $("#createForm").trigger("reset")
                                     $("#create_card").collapse("hide")
-                                    refresh();
-
                                     notification("success", "Activity")
+
+                                    refresh();
                                 },
                                 error: function(error){
                                     $.each(error.responseJSON.errors, function(key,value) {
@@ -255,10 +548,347 @@
 
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
-            var id = this.id;
+            var activity_id = this.id;
 
-            window.location.replace(APP_URL+"/acad_head/activity/"+id);
+            // FUNCTION TO UPDATE MEETING STATUS UPON VIEWING
+            $.ajax({
+                url: BASE_API + activity_id,
+                type: "GET",
+                dataType: "JSON",
+                success: function (responseData) 
+                {  
+                    var status = responseData.status
 
+                    var start_date_hours = new Date(responseData.start_datetime).getHours();
+                    var start_date_mins = new Date(responseData.start_datetime).getMinutes();
+                    if (start_date_hours < 10)
+                    {
+                        start_date_hours = "0"+start_date_hours
+                    }
+                    if (start_date_mins < 10)
+                    {
+                        start_date_mins = "0"+start_date_mins
+                    }
+
+                    var end_date_hours = new Date(responseData.end_datetime).getHours();
+                    var end_date_mins = new Date(responseData.end_datetime).getMinutes();
+                    if (end_date_hours < 10)
+                    {
+                        end_date_hours = "0"+end_date_hours
+                    }
+                    if (end_date_mins < 10)
+                    {
+                        end_date_mins = "0"+end_date_mins
+                    }
+
+                    var current_time = new Date(); // current time
+                    var hours = current_time.getHours();
+                    var mins = current_time.getMinutes();
+                    if (hours < 10)
+                    {
+                        hours = "0"+hours
+                    }
+                    if (mins < 10)
+                    {
+                        mins = "0"+mins
+                    }
+      
+                    var moment_current_date = moment(current_time).format('L')
+                    var moment_start_date = moment(responseData.start_datetime).format('L');
+                    var moment_end_date = moment(responseData.end_datetime).format('L');
+
+
+                    var now = hours+":"+mins+":00";
+                    var start_time = start_date_hours + ":" + start_date_mins + ":00"
+                    var end_time = end_date_hours + ":" + end_date_mins + ":00"
+
+                    console.log("Moment Current Date: " + moment_current_date)
+                    console.log("Moment Start Date: " + moment_start_date)
+                    console.log("Moment End Date: " + moment_end_date)
+                    console.log("Now: " + now)
+                    console.log("Start Time: " + start_time)
+                    console.log("End Time: " + end_time)
+
+                    if(status == "Pending")
+                    {
+                        if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date)) 
+                        {
+                            let data = {
+                                "title": responseData.title,
+                                "activity_type_id": responseData.activity_type_id,
+                                "description": responseData.description,
+                                "agenda": responseData.agenda,
+                                "location": responseData.location,
+                                "start_datetime": responseData.start_datetime,
+                                "end_datetime": responseData.end_datetime,
+                                "is_required": responseData.is_required,
+                                "memorandum_file_directory": responseData.memorandum_file_directory,
+                                "status": "On Going",
+                                
+                            }
+                            $.ajax({
+                                url: BASE_API + activity_id,
+                                method: "PUT",
+                                data: JSON.stringify(data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data)
+                                {
+                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                        else if(moment_current_date > moment_end_date)
+                        {
+                            let data = {
+                                "title": responseData.title,
+                                "activity_type_id": responseData.activity_type_id,
+                                "description": responseData.description,
+                                "agenda": responseData.agenda,
+                                "location": responseData.location,
+                                "start_datetime": responseData.start_datetime,
+                                "end_datetime": responseData.end_datetime,
+                                "is_required": responseData.is_required,
+                                "memorandum_file_directory": responseData.memorandum_file_directory,
+                                "status": "Done",
+                            }
+                            $.ajax({
+                                url: BASE_API + activity_id,
+                                method: "PUT",
+                                data: JSON.stringify(data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data)
+                                {
+                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                        else if(moment_current_date < moment_start_date)
+                        {
+                            setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                        }
+                        else if((moment_current_date == moment_end_date) && (now > end_time))
+                        {
+                            let data = {
+                                "title": responseData.title,
+                                "activity_type_id": responseData.activity_type_id,
+                                "description": responseData.description,
+                                "agenda": responseData.agenda,
+                                "location": responseData.location,
+                                "start_datetime": responseData.start_datetime,
+                                "end_datetime": responseData.end_datetime,
+                                "is_required": responseData.is_required,
+                                "memorandum_file_directory": responseData.memorandum_file_directory,
+                                "status": "Done",
+                            }
+                            $.ajax({
+                                url: BASE_API + activity_id,
+                                method: "PUT",
+                                data: JSON.stringify(data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data)
+                                {
+                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                        else if(moment_current_date == moment_start_date && now < start_time && now < end_time)
+                        {
+                            setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                        }
+                    }
+                    else if(status == "On Going")
+                    {                
+                        if(moment_current_date > moment_end_date)
+                        {
+                            let data = {
+                                "title": responseData.title,
+                                "activity_type_id": responseData.activity_type_id,
+                                "description": responseData.description,
+                                "agenda": responseData.agenda,
+                                "location": responseData.location,
+                                "start_datetime": responseData.start_datetime,
+                                "end_datetime": responseData.end_datetime,
+                                "is_required": responseData.is_required,
+                                "memorandum_file_directory": responseData.memorandum_file_directory,
+                                "status": "Done",
+                            }
+                            $.ajax({
+                                url: BASE_API + activity_id,
+                                method: "PUT",
+                                data: JSON.stringify(data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data)
+                                {
+                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                        else if(moment_current_date == moment_end_date && now > end_time)
+                        {
+                            let data = {
+                                "title": responseData.title,
+                                "activity_type_id": responseData.activity_type_id,
+                                "description": responseData.description,
+                                "agenda": responseData.agenda,
+                                "location": responseData.location,
+                                "start_datetime": responseData.start_datetime,
+                                "end_datetime": responseData.end_datetime,
+                                "is_required": responseData.is_required,
+                                "memorandum_file_directory": responseData.memorandum_file_directory,
+                                "status": "Done",
+                            }
+                            $.ajax({
+                                url: BASE_API + activity_id,
+                                method: "PUT",
+                                data: JSON.stringify(data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data)
+                                {
+                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                        else
+                        {
+                            setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                        }
+                    }
+                    else if(status == "Done" || status == "done")
+                    {    
+                        $.ajax({
+                            url: APP_URL + "/api/v1/activity_attendance/faculty_list_time_out_null/" + activity_id,
+                            type: "GET",
+                            dataType: "JSON",
+                            success: function (responseData) 
+                            {  
+                                if (responseData.length != 0)
+                                {
+                                    $.each(responseData, function (i, dataOptions) 
+                                    {
+                                        var time_in = responseData[i].time_in
+                                        var time_out = responseData[i].time_out
+                                        var attendance_status = responseData[i].attendance_status
+                                        var remarks = responseData[i].remarks
+                                        var status = responseData[i].status
+                                        var proof_of_attendance_file_link = responseData[i].proof_of_attendance_file_link
+                                        var faculty_id = responseData[i].faculty_id
+                                        var activity_id = responseData[i].activity_id
+                                        var id = responseData[i].id
+
+                                        $.ajax(
+                                        {
+                                            url: APP_URL + '/api/v1/activity_attendance/' + id,
+                                            type: "PUT",
+                                            data: JSON.stringify(
+                                            {		
+                                                "time_in": time_in,
+                                                "time_out": time_out,
+                                                "attendance_status": "Absent",
+                                                "remarks": remarks,
+                                                "status": status,
+                                                "proof_of_attendance_file_link": proof_of_attendance_file_link,
+                                                "faculty_id": faculty_id,
+                                                "activity_id": activity_id,
+                                            }),
+                                            dataType: "JSON",
+                                            contentType: 'application/json',
+                                            processData: false,
+                                            cache: false,
+                                            success: function (responseJSON) 
+                                            {     
+                                                setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)                     
+                                            },
+                                            error: function(error){
+                                                $.each(error.responseJSON.errors, function(key,value) {
+                                                    swalAlert('warning', value)
+                                                });
+                                                console.log(error)
+                                                console.log(`message: ${error.responseJSON.message}`)
+                                                console.log(`status: ${error.status}`)
+                                            },
+                                        });
+                                    });
+                                }
+                                else
+                                {
+                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                }
+                            }
+                        });
+                    }
+                },
+            // window.location.replace(APP_URL+"/acad_head/activity/"+id);
+            });
         });
         // END OF VIEW FUNCTION
 
@@ -454,10 +1084,43 @@
         });
         // END OF UPDATE FUNCTION
 
+        // FOR ACTIVITY TYPE DROPDOWN ON CHANGE
+        $(document).on("change", "#activity_type_id", function()
+        {
+            var activity_type_id = $("#activity_type_id").val()
+
+            console.log(activity_type_id)
+            $.ajax({
+                url: APP_URL + '/api/v1/activity_type/' + activity_type_id,
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    "Content-Type": "application/json"
+                },
+                success: function(data)
+                {
+                    console.log(data.category)
+                    if (data.category == "Meeting")
+                    {
+                        console.log("This is Meeting")
+                        document.getElementById("agenda_div").hidden = false;     // Show
+
+                    }    
+                    else if (data.category == "Activity")
+                    {
+                        console.log("This is Activity")
+                        document.getElementById("agenda_div").hidden = true;   // Hide
+                    } 
+                }
+            });
+        });
+        // END FOR ACTIVITY TYPE DROPDOWN ON CHANGE
+
         // DELETE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = BASE_API + id
+            let form_url = APP_URL + '/v1/activity_type/'  + id
             console.log(id)
             $.ajax({
                 url: form_url,
