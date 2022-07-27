@@ -602,6 +602,8 @@
                             updateActivityStatus();
                             $("#createForm").trigger("reset")
                             $("#create_card").collapse("hide")
+                            $('#agenda').summernote('reset');
+                            $('#description').summernote('reset');
                             refresh();
 
                             notification("success", "Activity")
@@ -989,13 +991,26 @@
                 success: function(data){
                     console.log(data)
 
+                    var memo_html = "";
 
+                    if(data.memorandum_file_directory == null)
+                    {
+                        memo_html = `<input type="file" accept=".jpg, .png, .jpeg, .pdf" class="form-control" id="memorandum_file_directory_edit" name="memorandum_file_directory_edit"
+                                tabindex="1">`;
+                    }
+                    else
+                    {
+                        let memorandum_file_directory = APP_URL + "/" + data.memorandum_file_directory
+
+                        memo_html += `<button class="btn btn-info" onclick="window.open('${memorandum_file_directory}')" target="_blank">Check Memo</button>`;
+                    }
+
+                    $('#memo_edit_modal').html(memo_html);
+                    
                     $('#id_edit').val(data.id);
                     $('#title_edit').val(data.title);
                     $('#description_edit').val(data.description);
                     $('#activity_type_id_edit').val(data.activity_type.id);
-                    //console.log(data.activity_type.id)
-
                     $('#location_edit').val(data.location);
                     $('#start_datetime_edit').val(data.start_datetime);
                     $('#end_datetime_edit').val(data.end_datetime);

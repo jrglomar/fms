@@ -22,6 +22,9 @@
                 ['view', ['fullscreen']],
             ]
         });
+        function htmlToPlaintext(text) {
+            return text ? String(text).replace(/<[^>]+>/gm, '') : '';
+        }
         // END Initialize the Summernote WYSIWYG TEXT AREA
 
         function updateRequirementBinStatus()
