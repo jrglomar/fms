@@ -26,7 +26,8 @@ class RequirementBinsSeeder extends Seeder
             'created_by' => 'b1fda120-82ae-49d3-811d-b3c9d5d747a1',
             'title' => 'Final Requirement [ Project Plan ]',
             'description' => 'Project planning is the process of d',
-            'deadline' => '2022-06-30 23:59:00'
+            'deadline' => '2022-06-30 23:59:00',
+            'status' => 'On Going'
         ]);
     }
 }

@@ -50,7 +50,8 @@ class RequirementBinController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'deadline' => 'required'
+            'deadline' => 'required',
+            'status' => 'required'
         ]);
 
         return RequirementBin::create($request->all());
@@ -136,9 +137,31 @@ class RequirementBinController extends Controller
 
     public function get_required_requirement_bin($faculty_id)
     {
-        $requirement_bin = RequirementBin::select("*")
+        $requirement_bin = RequirementBin::select(
+            "requirement_bins.id",
+            "requirement_bins.created_at",
+            "requirement_bins.created_by",
+            "requirement_bins.updated_at",
+            "requirement_bins.updated_by",
+            "requirement_bins.deleted_at",
+            "requirement_bins.title",
+            "requirement_bins.description",
+            "requirement_bins.deadline",
+            "requirement_bins.status",
+            "requirement_required_faculty_lists.created_at as rrf_list_created_at",
+            "requirement_required_faculty_lists.created_by as rrf_list_created_by",
+            "requirement_required_faculty_lists.updated_at as rrf_list_updated_at",
+            "requirement_required_faculty_lists.updated_by as rrf_list_updated_by",
+            "requirement_required_faculty_lists.deleted_at as rrf_list_deleted_at",
+            "requirement_required_faculty_lists.id as rrf_list_id",
+            "requirement_required_faculty_lists.requirement_bin_id",
+            "requirement_required_faculty_lists.remarks",
+            "requirement_required_faculty_lists.status as rrf_list_status",
+            "requirement_required_faculty_lists.submission_status",
+            "requirement_required_faculty_lists.faculty_id as f_id" 
+        )
         ->join("requirement_required_faculty_lists", "requirement_required_faculty_lists.requirement_bin_id", "=", "requirement_bins.id")
-        ->where('faculty_id', $faculty_id)
+        ->where('requirement_required_faculty_lists.faculty_id', $faculty_id)
         ->get();
 
         return $requirement_bin;

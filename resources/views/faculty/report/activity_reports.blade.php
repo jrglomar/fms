@@ -2,39 +2,35 @@
 
 {{-- NAVBAR --}}
 @section('navbar')
-    @include('layouts.acad_head_navbar')
+    @include('layouts.faculty_navbar')
 @endsection
 
 {{-- SIDEBAR --}}
 @section('sidebar')
-    @include('layouts.acad_head_sidebar')
+    @include('layouts.faculty_sidebar')
 @endsection
 
 @section('section_header')
 <div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
-    @include('acad_head/report/activity_report_breadcrumbs')
+    @include('faculty/report/activity_reports_breadcrumbs')
 </div>
 @endsection
-
-    {{-- MODAL --}}
     
-
     {{-- CONTENT --}}
     @section('content')
-            {{-- FORM --}}
           
             {{-- DATATABLE --}}
-            @include('acad_head/report/activity_datatable')
+            @include('faculty/report/activity_reports_datatable')
     @endsection
 
 
 
 {{-- FOOTER --}}
 @section('footer')
-    @include('layouts.acad_head_footer')
+    @include('layouts.faculty_footer')
 @endsection
 
 @section('script')
-    @include('acad_head/report/activity_report_scripts')
+    @include('faculty/report/activity_reports_scripts')
 @endsection

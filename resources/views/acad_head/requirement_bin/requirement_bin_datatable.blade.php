@@ -24,7 +24,8 @@
                                 <th width="25%">Title</th>
                                 <th width="35%">Requirements</th>
                                 <th width="20%">Deadline</th>
-                                <th width="10%" class="text-center">Action</th>
+                                <th width="5%">Status</th>
+                                <th width="5%" class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>

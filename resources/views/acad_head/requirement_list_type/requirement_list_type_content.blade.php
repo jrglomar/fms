@@ -5,14 +5,23 @@
             <div class="hero-inner">
                 <div class="col-12">
                         <h3 class="text-center"><span id="title"></span></h3>
-                        <span class="badge badge-info">
-                            <span style="font-size: 14px">Posted by </span><span style="font-size: 14px" id="created_by"></span>
-                        </span>
-                        <div class="text-dark float-right" >
-                            <span class="badge badge-warning">
-                                <span style="font-size: 14px" >Due</span>
-                                <span style="font-size: 14px" id="created_at"></span>
-                            </span>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <span class="badge badge-info">
+                                    <span style="font-size: 14px">Posted by </span><span style="font-size: 14px" id="created_by"></span>
+                                </span>
+                            </div>
+                            <div class="col-md-4 text-center" id="status">
+                                <!-- <span style="font-size: 14px">Status: </span><span style="font-size: 14px" id="status"></span> -->
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-dark float-right" >
+                                    <span class="badge badge-warning">
+                                        <span style="font-size: 14px" >Deadline: </span>
+                                        <span style="font-size: 14px" id="created_at"></span>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                 </div>
             </div>

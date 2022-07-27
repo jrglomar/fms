@@ -31,6 +31,13 @@
                             placeholder="Deadline" tabindex="1">
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="required-input">Status</label>
+                            <input type="text" class="form-control" id="status" name="status"
+                            value="On Going" placeholder="Status" tabindex="1" readonly>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-footer text-right">
                     <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#create_card"
