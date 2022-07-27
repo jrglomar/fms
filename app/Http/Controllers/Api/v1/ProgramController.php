@@ -48,7 +48,7 @@ class ProgramController extends Controller
     {
         //
         $request->validate([
-            'title' => 'required|unique:designations,deleted_at',
+            'title' => 'required|unique:programs,title,NULL,id,deleted_at,NULL'
         ]);
 
         return Program::create($request->all());

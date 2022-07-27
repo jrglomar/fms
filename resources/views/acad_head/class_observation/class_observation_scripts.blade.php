@@ -38,6 +38,26 @@
                         let row_data = class_sched_data.filter( row => row.id == class_schedule_id)
                         return `${moment(data).format('LL')}, ${row_data[0].time}`
                     }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].assignment_code
+                    }}, 
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].subject_offering.curriculum_subject.subject.title
+                    }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].subject_offering.section.name
+                    }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].room.room_building
+                    }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].day_time
+                    }},
                     { data: "status", render: function(data, type, row){
                         let status_html
                         if(data == 'Done'){

@@ -20,7 +20,7 @@
                                 <th>Type</th>
                                 <th>Description</th>
                                 <th>Status</th>
-                                <th width="25%">Date</th>
+                                <th>Date</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>

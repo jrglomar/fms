@@ -300,6 +300,84 @@
                                 // ajax closing tag
                                 })
                             }
+                            else if(moment_current_date < moment_start_date && moment_current_date < moment_end_date)
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "Pending",
+                                }
+                                $.ajax({
+                                    url: BASE_API + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            else if(moment_current_date == moment_start_date && now < start_time)
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "Pending",
+                                }
+                                $.ajax({
+                                    url: BASE_API + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
                             else
                             {
                                 refresh()
@@ -521,6 +599,7 @@
                         },
                         success: function(data){
                             console.log(data)
+                            updateActivityStatus();
                             $("#createForm").trigger("reset")
                             $("#create_card").collapse("hide")
                             refresh();

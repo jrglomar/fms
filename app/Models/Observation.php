@@ -27,10 +27,11 @@ class Observation extends Model
 
     protected $dates = ['deleted_at'];
 
-    // protected $with = ['users','created_by_user','updated_by_user'];
 
     // [Declare relationships here]
-
+    public function faculty(){
+        return $this->belongsTo(Faculty::class)->withDefault();
+    }
 
     // End of [Declare relationships here]
 
@@ -44,6 +45,9 @@ class Observation extends Model
     {
         return $this->belongsTo(User::class,'updated_by');
     }
+
+    
+    protected $with = ['created_by_user', 'faculty'];
 
     // ADDED FOR UUID INCREMENT ERROR
     public $incrementing = false;

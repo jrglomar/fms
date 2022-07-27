@@ -40,7 +40,7 @@ class ActivityTypeController extends Controller
     {
         //
         $request->validate([
-            'title' => 'required|unique:activity_types,deleted_at'
+            'title' => 'required|unique:activity_types,title,NULL,id,deleted_at,NULL'
         ]);
 
         return ActivityType::create($request->all());

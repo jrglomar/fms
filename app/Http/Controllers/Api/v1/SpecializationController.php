@@ -48,7 +48,7 @@ class SpecializationController extends Controller
     {
         //
         $request->validate([
-            'title' => 'required|unique:designations,deleted_at',
+            'title' => 'required|unique:specializations,title,NULL,id,deleted_at,NULL'
         ]);
 
         return Specialization::create($request->all());
