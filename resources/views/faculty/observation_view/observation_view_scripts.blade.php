@@ -8,7 +8,6 @@
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/observation/'
         var SCHEDULE_ID = "{{ $schedule_id }}"
-        var OBSERVATION_ID = "{{ $observation_id }}"
         var CLASS_SCHEDULE_ID
         var CLASS_SCHEDULE_DATA
         // END OF GLOBAL VARIABLE
@@ -20,7 +19,6 @@
                 CLASS_SCHEDULE_DATA = class_schedule[i]
             }
         })
-
 
 
         function getSchedule(){
@@ -86,45 +84,10 @@
             removeLoader()
         }
 
+
+
         getSchedule()
-
-        function getObservation(){
-            $.ajax({
-                url: BASE_API +OBSERVATION_ID,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-
-                success: function(data){
-                    let status_html
-                    if(data.status == 'Done'){
-                        status_html = `<span class="badge badge-success">${data.status}</span>`
-                    }
-                    else if(data.status == 'Ongoing'){
-                        status_html = `<span class="badge badge-info">${data.status}</span>`
-                    }
-                    else if(data.status == 'Cancelled'){
-                        status_html = `<span class="badge badge-danger">${data.status}</span>`
-                    }
-                    else if(data.status == 'Pending'){
-                        status_html = `<span class="badge badge-secondary">${data.status}</span>`
-                    }
-                    else{
-                        status_html = data.status
-                    }
-                    $('#observation_status').html(status_html)
-                    $('#observation_date_of_observation').html(`${moment(data.date_of_observation).format('LL')}, ${CLASS_SCHEDULE_DATA.time}`)
-                    $('#observation_remarks').html(data.remarks)
-                    $('#obs_status').val(data.status)
-                    $('#obs_remarks').val(data.remarks)
-                }
-            })
-        }
-        getObservation()
-
+        
         function getActivity(){
             $.ajax({
                 url: APP_URL+"/api/v1/activity/"+ACTIVITY_ID,
@@ -523,9 +486,6 @@
                         notification('success', 'Observation Schedule')
                         $("#setObservationForm").trigger("reset")
                         $("#observationModal").modal("hide")
-                        setInterval(() => {
-                            window.location.href = APP_URL+'/acad_head/class_observation';
-                        }, 1500);
                     },
                     error: function(error){
                         $.each(error.responseJSON.errors, function(key,value) {
@@ -538,55 +498,6 @@
                 // ajax closing tag
                 })
 
-        })
-
-        $('.btnUpdateStatus').on('click', function(e){
-            $('#updateStatusModal').modal('show')
-
-        })
-
-        $('.btnUpdateObservationStatus').on('click', function(e){
-            e.preventDefault()
-            let id = $('#class_schedule_id').val()
-            let status = $('#obs_status').val()
-            let remarks = $('#obs_remarks').val()
-
-            let form_url = BASE_API + OBSERVATION_ID
-            let form_data = {
-                "status": status,
-                "remarks": remarks
-            }
-
-            console.log(form_url)
-            console.log(form_data)
-
-            $.ajax({
-                    url: form_url,
-                    method: "PUT",
-                    data: JSON.stringify(form_data),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        "Content-Type": "application/json"
-                    },
-                    success: function(data){
-                        notification('info', 'Observation')
-                        $('#updateStatusModal').modal('hide');
-                        setInterval(() => {
-                            location.reload()
-                        }, 1500);
-                    },
-                    error: function(error){
-                        $.each(error.responseJSON.errors, function(key,value) {
-                            swalAlert('warning', value)
-                        });
-                        console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
-                // ajax closing tag
-            })
         })
 
     });

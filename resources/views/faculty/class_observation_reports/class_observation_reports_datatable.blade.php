@@ -87,18 +87,11 @@
                             <tr class="bg-primary text-light">
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Created by</th>
-                                <th>Date of Observation</th>
                                 <th>Faculty</th>
-                                <th>Asgmt Code</th>
-                                <th>Subject Code</th>
-                                <th>Subject Title</th>
-                                <th>Units</th>
-                                <th>Year & Section</th>
-                                <th>Room</th>
-                                <th>Subject Schedule</th>
+                                <th>Date of Observation</th>
                                 <th>Status</th>
                                 <th>Date of Observation</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,16 +101,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Created by</th>
-                                <th>Date of Observation</th>
                                 <th>Faculty</th>
-                                <th>Asgmt Code</th>
-                                <th>Subject Code</th>
-                                <th>Subject Title</th>
-                                <th>Units</th>
-                                <th>Year & Section</th>
-                                <th>Room</th>
-                                <th>Subject Schedule</th>
+                                <th>Date of Observation</th>
                                 <th>Status</th>
                                 <th>Date of Observation</th>
                             </tr>

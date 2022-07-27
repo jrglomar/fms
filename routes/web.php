@@ -174,6 +174,30 @@ Route::group(['middleware' => ['role.faculty'],
             Route::get('/activity_report', function () {
                 return view('faculty/report/activity_report', ['page_title' => 'Activity Reports']);
             })->name('activity_report');
+
+        // ------------SCHEDULE--------------- //
+        Route::get('/schedule', function () {
+            return view('faculty/observation/observation', ['page_title' => 'Observation']);
+        })->name('faculty_observation');
+
+        // ------------OBSERVATION--------------- //
+        Route::get('/class_observation', function () {
+            return view('faculty/class_observation/class_observation', ['page_title' => 'Observation']);
+        })->name('faculty_class_observation');
+
+        // ------------OBSERVATION - VIEW --------------- //
+        Route::get('/class_observation/{id}/{observation_id}', function ($id, $observation_id) {
+            return view('faculty/class_observation_view/class_observation_view', ['page_title' => 'Observation', 'schedule_id' => $id, 'observation_id' => $observation_id]);
+        })->name('faculty_class_observation_view');
+
+        Route::get('/class_observation_reports', function () {
+            return view('faculty/class_observation_reports/class_observation_reports', ['page_title' => 'Observation']);
+        })->name('faculty_class_observation_reports');
+
+        // ------------SCHEDULE VIEW--------------- //
+        Route::get('/schedule/{id}', function ($id) {
+            return view('faculty/observation_view/observation_view', ['page_title' => 'Observation', 'schedule_id' => $id]);
+        })->name('faculty_schedule_view');
 });
 
 

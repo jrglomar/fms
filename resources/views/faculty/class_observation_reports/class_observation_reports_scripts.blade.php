@@ -13,9 +13,9 @@
         
         // DATA TABLES FUNCTION
         function dataTable(){
+                // FOR FOOTER GENERATE OF INPUT
                 $('#dataTable tfoot th').each( function (i) {
                     var title = $('#dataTable thead th').eq( $(this).index() ).text();
-                    console.log(title)
                     $(this).html( '<input size="15" class="form-control" type="text" placeholder="'+title+'" data-index="'+i+'" />');
                 } );
 
@@ -23,6 +23,56 @@
                 "ajax": {
                     url: BASE_API, 
                     dataSrc: ""
+                },'dom': 'Bfrtip',
+                'buttons': {
+                    dom: {
+                    button: {
+                        tag: 'button',
+                        className: ''
+                    }
+                    },
+                    buttons: [{
+                        extend: 'pdfHtml5',  
+                        text: 'Export as PDF',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
+                            modifier: { order: 'current' }
+                        },
+                        className: 'btn btn-primary mr-2',
+                        titleAttr: 'PDF export.',
+                        extension: '.pdf',
+                        // download: 'open', // FOR NOT DOWNLOADING THE FILE AND OPEN IN NEW TAB
+                        title: function() {
+                            return "Class Observation Report"
+                        },
+                        filename: function() {
+                            return "Class Observation Report"
+                        },
+                        customize: function(doc) {
+                            doc.content[1].table.widths =Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                            doc.defaultStyle.alignment = 'center';
+                            doc.styles.tableHeader.alignment = 'center';
+                        },
+                    }, 
+                    {
+                        extend: 'excelHtml5',
+                        className: 'btn btn-success',
+                        titleAttr: 'Excel export.',
+                        text: 'Export as XLS',
+                        extension: '.xlsx',
+                        exportOptions: {
+                            columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
+                            modifier: { order: 'current' }
+                        },
+                        filename: function() {
+                            return "Class Observation Report"
+                        },
+                        title: function() {
+                            return "Class Observation Report"
+                        },
+                    }]
                 },
                 // "data": class_sched_data,
                 // "paging": true,
@@ -37,26 +87,6 @@
                         let class_schedule_id = row.class_schedule_id
                         let row_data = class_sched_data.filter( row => row.id == class_schedule_id)
                         return `${moment(data).format('LL')}, ${row_data[0].time}`
-                    }},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].assignment_code
-                    }}, 
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].subject_offering.curriculum_subject.subject.title
-                    }},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].subject_offering.section.name
-                    }},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].room.room_building
-                    }},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].day_time
                     }},
                     { data: "status", render: function(data, type, row){
                         let status_html
@@ -77,6 +107,7 @@
                         }
                         return status_html
                     }},
+                    { data: "date_of_observation" },
                     { data: "deleted_at", render: function(data, type, row){
                         let class_schedule_id = row.class_schedule_id
                         let row_data = class_sched_data.filter( row => row.id == class_schedule_id)
@@ -90,19 +121,87 @@
                             }
                         }
                     ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 5] }],
                 "order": [[1, "desc"]]
                 })
-
+                
                 // Filter event handler
                 $(dataTable.table().container() ).on( 'keyup', 'tfoot input', function () {
+                    console.log(this.value)
+                    console.log(dataTable)
                     dataTable
                         .column( $(this).data('index') )
                         .search( this.value )
                         .draw();
                 });
+
+                // Extend dataTables search
+                $.fn.dataTable.ext.search.push(
+                    function( settings, data, dataIndex ) {
+                        var min  = $('#date_from').val();
+                        var max  = $('#date_to').val();
+                        var dateOfObs = data[5] // Our date column in the table
+                        
+                        if  ( 
+                                ( min == "" || max == "" )
+                                || 
+                                ( moment(dateOfObs).isSameOrAfter(moment(min).format('YYYY-MM-DD' + ' 00:00:00')) && moment(dateOfObs).isSameOrBefore(moment(max).format('YYYY-MM-DD' + ' 23:59:59')) ) 
+                            )
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+
+                // Re-draw the table when the a date range filter changes
+                $('.date-range-filter').change( function() {
+                    dataTable.draw();
+                });
+                
         }
         // END OF DATATABLE FUNCTION
+
+        $('.btnChangeStatus').on('change', function(){
+            let checked = $('input[name="status_options"]:checked').val();
+            console.log(checked)
+            if(checked == 'All'){
+                    dataTable
+                        .column(4)
+                        .search("")
+                        .draw();
+            }
+            else if(checked == 'Pending'){
+                dataTable
+                        .column(4)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'Ongoing'){
+                dataTable
+                        .column(4)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'Cancelled'){
+                dataTable
+                        .column(4)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'Done'){
+                dataTable
+                        .column(4)
+                        .search($(this).val())
+                        .draw();
+            }
+        })
+
+        $('#btnDateReset').on('click', function(){
+            $('.date-range-filter').val("")
+
+            dataTable.draw();
+        })
 
         // CALLING DATATABLE FUNCTION
         dataTable()

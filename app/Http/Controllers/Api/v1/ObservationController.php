@@ -38,7 +38,7 @@ class ObservationController extends Controller
     {
         //
         $request->validate([
-            'date_of_observation' => 'required',
+            'date_of_observation' => 'required|unique:observations,date_of_observation',
             'class_schedule_id' => 'required'
         ]);
 
@@ -108,7 +108,15 @@ class ObservationController extends Controller
 
     public function search($title)
     {
-
         return Observation::where('email', 'like', '%'.$title.'%')->get();
+    }
+
+    public function get_faculty_observation($faculty_id)
+    {
+        $requirement_bin = Observation::select("*")
+        ->where('faculty', $faculty_id)
+        ->get();
+
+        return $requirement_bin;
     }
 }

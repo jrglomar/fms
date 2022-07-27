@@ -523,9 +523,6 @@
                         notification('success', 'Observation Schedule')
                         $("#setObservationForm").trigger("reset")
                         $("#observationModal").modal("hide")
-                        setInterval(() => {
-                            window.location.href = APP_URL+'/acad_head/class_observation';
-                        }, 1500);
                     },
                     error: function(error){
                         $.each(error.responseJSON.errors, function(key,value) {

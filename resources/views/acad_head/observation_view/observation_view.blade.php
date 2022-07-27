@@ -37,6 +37,6 @@
 
 
 @section('script')
-    @include('acad_head/observation/class_schedule_response')
+    @include('layouts/class_schedule_response')
     @include('acad_head/observation_view/observation_view_scripts')
 @endsection

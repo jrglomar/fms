@@ -2,43 +2,43 @@
 
 {{-- NAVBAR --}}
 @section('navbar')
-    @include('layouts.acad_head_navbar')
+    @include('layouts.faculty_navbar')
 @endsection
 
 {{-- SIDEBAR --}}
 @section('sidebar')
-    @include('layouts.acad_head_sidebar')
+    @include('layouts.faculty_sidebar')
 @endsection
 
 @section('section_header')
 <div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
-    @include('acad_head/class_observation/class_observation_breadcrumbs')
+    @include('faculty/class_observation/class_observation_breadcrumbs')
 </div>
 @endsection
 
     {{-- MODAL --}}
-    @include('acad_head/class_observation/class_observation_modal')
+    @include('faculty/class_observation/class_observation_modal')
 
     {{-- CONTENT --}}
     @section('content')
 
             {{-- FORM --}}
-            @include('acad_head/class_observation/class_observation_form')
+            @include('faculty/class_observation/class_observation_form')
 
             {{-- DATATABLE --}}
-            @include('acad_head/class_observation/class_observation_datatable')
+            @include('faculty/class_observation/class_observation_datatable')
     @endsection
 
 
 
 {{-- FOOTER --}}
 @section('footer')
-    @include('layouts.acad_head_footer')
+    @include('layouts.faculty_footer')
 @endsection
 
 
 @section('script')
     @include('layouts/class_schedule_response')
-    @include('acad_head/class_observation/class_observation_scripts')
+    @include('faculty/class_observation/class_observation_scripts')
 @endsection

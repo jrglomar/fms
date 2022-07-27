@@ -20,12 +20,21 @@
             }
         })
 
-
         function getSchedule(){
 
             let data = CLASS_SCHEDULE_DATA
+            let user_role = ""
             console.log(data)
 
+            $.each(data.faculty.user.user_role, function(i){
+                if(i < (data.faculty.user.user_role.length) - 1){
+                    user_role += data.faculty.user.user_role[i].role.title + ', '
+                }
+                else{
+                    user_role += data.faculty.user.user_role[i].role.title
+                }
+            })
+            
             $('#class_schedule_id').val(data.id)
 
             // ROOM DETAILS
@@ -47,10 +56,11 @@
             $('#faculty_image').html(APP_URL + "/" + data.faculty.image)
             $('#faculty_name').html(data.faculty.full_name)
             $('#faculty_type').html(data.faculty.faculty_type.title)
-            $('#faculty_role').html()
-            $('#faculty_designation').html()
-            $('#faculty_specialization').html()
-            $('#faculty_program').html()
+            $('#faculty_role').html(user_role)
+            $('#faculty_academic_rank').html(data.faculty.academic_rank.title)
+            $('#faculty_designation').html(data.faculty.designation.title)
+            $('#faculty_specialization').html(data.faculty.specialization.title)
+            $('#faculty_program').html(data.faculty.program.title)
 
             $('#start_time_input').val(data.start_time)
             $('#end_time_input').val(data.end_time)
@@ -486,6 +496,10 @@
                         notification('success', 'Observation Schedule')
                         $("#setObservationForm").trigger("reset")
                         $("#observationModal").modal("hide")
+                        
+                        setInterval(() => {
+                            window.location.href = APP_URL+'/acad_head/class_observation';
+                        }, 1500);
                     },
                     error: function(error){
                         $.each(error.responseJSON.errors, function(key,value) {

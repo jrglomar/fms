@@ -17,7 +17,7 @@
         <div class="col-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4 class="text-dark">List of Observation</h4>
+                    <h4 class="text-dark">List of Class Schedules</h4>
                     {{-- <div class="card-header-action">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
                         aria-expanded="false" aria-controls="create_card">New activity <i
@@ -35,15 +35,15 @@
                             <tr class="bg-primary text-light">
                                 <th>ID</th>
                                 <th>Created at</th>
+                                <th width="10%">Assignment Code</th>
                                 <th>Faculty</th>
-                                <th>Date of Observation</th>
-                                <th>Asgmt Code</th>
+                                <th>Subject Code</th>
                                 <th>Subject Title</th>
+                                <th width="5%">Units</th>
                                 <th>Year & Section</th>
                                 <th>Room</th>
-                                <th>Subject Schedule</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>Schedule</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,17 +51,16 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>ID</th>
-                                <th>Created at</th>
+                                <th hidden>ID</th>
+                                <th hidden>Created at</th>
+                                <th width="10%">Assignment Code</th>
                                 <th>Faculty</th>
-                                <th>Date of Observation</th>
-                                <th>Asgmt Code</th>
+                                <th>Subject Code</th>
                                 <th>Subject Title</th>
+                                <th width="5%">Units</th>
                                 <th>Year & Section</th>
                                 <th>Room</th>
-                                <th>Subject Schedule</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                <th>Schedule</th>
                             </tr>
                         </tfoot>
                     </table>

@@ -6,11 +6,13 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
-        var BASE_API = APP_URL + '/api/v1/observation/'
+        var BASE_API = APP_URL + '/api/v1/activity/'
         // END OF GLOBAL VARIABLE
 
         let class_sched_data = class_schedule_response.data
-        
+        console.log(class_sched_data)
+
+
         // DATA TABLES FUNCTION
         function dataTable(){
                 $('#dataTable tfoot th').each( function (i) {
@@ -20,69 +22,32 @@
                 } );
 
                 dataTable = $('#dataTable').DataTable({
-                "ajax": {
-                    url: BASE_API, 
-                    dataSrc: ""
-                },
-                // "data": class_sched_data,
+                // "ajax": {
+                //     url: BASE_API, 
+                //     dataSrc: ""
+                // },
+                "data": class_sched_data,
                 // "paging": true,
+                // "searching": false,
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].faculty.full_name
+                    { data: "assignment_code"},
+                    { data: "faculty", render: function(data, row){
+                        return data.first_name + ' ' + data.last_name;
                     }},
-                    { data: "date_of_observation", render: function(data, type, row){
-                        let class_schedule_id = row.class_schedule_id
-                        let row_data = class_sched_data.filter( row => row.id == class_schedule_id)
-                        return `${moment(data).format('LL')}, ${row_data[0].time}`
-                    }},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].assignment_code
-                    }}, 
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].subject_offering.curriculum_subject.subject.title
-                    }},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].subject_offering.section.name
-                    }},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].room.room_building
-                    }},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].day_time
-                    }},
-                    { data: "status", render: function(data, type, row){
-                        let status_html
-                        if(data == 'Done'){
-                            status_html = `<span class="badge badge-success">${data}</span>`
-                        }
-                        else if(data == 'Ongoing'){
-                            status_html = `<span class="badge badge-info">${data}</span>`
-                        }
-                        else if(data == 'Cancelled'){
-                            status_html = `<span class="badge badge-danger">${data}</span>`
-                        }
-                        else if(data == 'Pending'){
-                            status_html = `<span class="badge badge-secondary">${data}</span>`
-                        }
-                        else{
-                            status_html = data
-                        }
-                        return status_html
+                    { data: "subject_code"},
+                    { data: "subject_offering.curriculum_subject.subject.title"},
+                    { data: "subject_offering.curriculum_subject.subject.units"},
+                    { data: "subject_offering.section.name"},
+                    { data: "room.room_building"},
+                    { data: "start_time", render: function(data, type, row){
+                        return `${row.day} - ${moment('2022-08-05' + ' ' + row.start_time).format('LT')} - ${moment('2022-08-05' + ' ' + row.end_time).format('LT')}` 
                     }},
                     { data: "deleted_at", render: function(data, type, row){
-                        let class_schedule_id = row.class_schedule_id
-                        let row_data = class_sched_data.filter( row => row.id == class_schedule_id)
                                 if (data == null){
                                     return `
-                                            <button class="btn btn-info btnView" id="${row.id}" data-value="${row_data[0].id}"><i class="fas fa-eye"></i></button>`;
+                                            <button class="btn btn-info btnView" id="${row.id}"><i class="fas fa-eye"></i></button>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -107,9 +72,10 @@
         // CALLING DATATABLE FUNCTION
         dataTable()
 
+        // ACTIVITY TYPE FUNCTION
         function activity_type(){
 
-            activity_type_url = BASE_API
+            activity_type_url = APP_URL+'/api/v1/activity_type/'
     
             $.ajax({
             url: activity_type_url,
@@ -118,12 +84,20 @@
 
             success: function(data){
 
-                console.log(data)
+                var html = ""
+
+                for(var i=0; i < data.length; i++){
+                html += `<option value="${data[i].id}">${data[i].title}</option>`
+                }
                 
+                $('#activity_type_id').html(html);
+                $('#activity_type_id_edit').html(html);
+                //$('#busTypeEdit').html(html);
 
             }
             })
         }
+        // END OF ACTIVITY TYPE FUNCTION
 
         // CALLING ACTIVITY TYPE FUNCTION
         activity_type()
@@ -321,9 +295,8 @@
         // VIEW FUNCTION
         $(document).on("click", ".btnView", function(){
             var id = this.id;
-            var class_schedule_id = $(this).attr('data-value')
 
-            window.location.replace(APP_URL+"/acad_head/class_observation/"+class_schedule_id +"/"+id);
+            window.location.replace(APP_URL+"/acad_head/schedule/"+id);
 
         });
         // END OF VIEW FUNCTION

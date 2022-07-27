@@ -27,7 +27,7 @@ class Observation extends Model
 
     protected $dates = ['deleted_at'];
 
-    // protected $with = ['users','created_by_user','updated_by_user'];
+    protected $with = ['created_by_user'];
 
     // [Declare relationships here]
 
