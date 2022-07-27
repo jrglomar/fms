@@ -12,9 +12,9 @@
             Observation
         </li>
         <li class="breadcrumb-item" id="acad_head_observation">
-        <a href="/acad_head/observation">Schedules</a>
+        <a href="/acad_head/class_observation_reports">Class Observation Reports</a>
             <script>
-                if(window.location.pathname == '/acad_head/observation')
+                if(window.location.pathname == '/acad_head/ob')
                 {
                     document.getElementById("acad_head_observation").classList.add('active');
                     document.getElementById("acad_head_observation").setAttribute("aria-current", "page")

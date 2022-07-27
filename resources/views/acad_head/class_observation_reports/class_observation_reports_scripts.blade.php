@@ -13,6 +13,7 @@
         
         // DATA TABLES FUNCTION
         function dataTable(){
+                // FOR FOOTER GENERATE OF INPUT
                 $('#dataTable tfoot th').each( function (i) {
                     var title = $('#dataTable thead th').eq( $(this).index() ).text();
                     $(this).html( '<input size="15" class="form-control" type="text" placeholder="'+title+'" data-index="'+i+'" />');

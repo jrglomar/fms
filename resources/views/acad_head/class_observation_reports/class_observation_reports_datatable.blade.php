@@ -40,6 +40,8 @@
             placeholder="date" tabindex="1" required>&nbsp;</label> 
         
     </div>
+
+    {{-- FILTER BUTTONS --}}
     <div class="btn-group btn-group-toggle mb-5 pr-3" data-toggle="buttons">
         <label class="text-dark pt-2 pr-2">Status Filter: </label>
         <label class="btn btn-outline-dark active">
@@ -97,7 +99,7 @@
                         <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Date of Observation</th>
+                                <th>Created at</th>
                                 <th>Faculty</th>
                                 <th>Date of Observation</th>
                                 <th>Status</th>

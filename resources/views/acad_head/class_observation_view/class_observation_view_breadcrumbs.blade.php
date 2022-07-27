@@ -12,9 +12,9 @@
             Observation
         </li>
         <li class="breadcrumb-item" id="acad_head_observation">
-        <a href="/acad_head/observation">Class Schedule</a>
+        <a href="/acad_head/class_observation">Class Observation</a>
             <script>
-                if(window.location.pathname == '/acad_head/observation')
+                if(window.location.pathname == '/acad_head/class_observation')
                 {
                     document.getElementById("acad_head_observation").classList.add('active');
                     document.getElementById("acad_head_observation").setAttribute("aria-current", "page")
@@ -22,9 +22,9 @@
             </script>
         </li>
         <li class="breadcrumb-item" id="acad_head_view_observation">
-        <a href="javascript:window.location.reload();">Observation</a>
+        <a href="javascript:window.location.reload();">Class Observation View</a>
             <script>
-                if(window.location.pathname == '/acad_head/observation')
+                if(window.location.pathname == '/acad_head/class_observation')
                 {
                     document.getElementById("acad_head_view_observation").classList.add('active');
                     document.getElementById("acad_head_view_observation").setAttribute("aria-current", "page")
