@@ -1,14 +1,5 @@
 <div class="row">
     <div class="col-12">
-        <div class="float-right">
-            
-            <button class="btn btn-success btnUpdateStatus"><i class="fas fa-eye"></i> Update Status</button>
-        </div>
-    </div>
-</div>
-&nbsp;
-<div class="row">
-    <div class="col-12">
         <div class="hero bg-white text-dark">
             <div class="hero-inner">
                 <div class="d-flex justify-content-between">
