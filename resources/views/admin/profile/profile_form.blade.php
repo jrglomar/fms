@@ -217,7 +217,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="required-input" >Specialization</label>
-                            <select id="specialization_id" name="specialization_id" class="form-control select2">
+                            <select id="specialization_id" name="specialization_id" class="form-control">
                                 <option disabled selected>List of specialization/s</option>
                             </select>
                         </div>
