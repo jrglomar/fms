@@ -297,8 +297,8 @@
                             var mins = current_time.getMinutes();
             
                             var moment_current_date = moment(current_time).format('YYYY-MM-DD')
-                            var moment_start_date = moment(data.start_datetime).format('L');
-                            var moment_end_date = moment(data.end_datetime).format('L');
+                            var moment_start_date = moment(data.start_datetime).format('YYYY-MM-DD');
+                            var moment_end_date = moment(data.end_datetime).format('YYYY-MM-DD');
 
                             var start_time = start_date_hours + ":" + start_date_mins + ":00"
                             var end_time = end_date_hours + ":" + end_date_mins + ":00"
@@ -490,8 +490,8 @@
                             var mins = current_time.getMinutes();
             
                             var moment_current_date = moment(current_time).format('YYYY-MM-DD')
-                            var moment_start_date = moment(data.start_datetime).format('L');
-                            var moment_end_date = moment(data.end_datetime).format('L');
+                            var moment_start_date = moment(data.start_datetime).format('YYYY-MM-DD');
+                            var moment_end_date = moment(data.end_datetime).format('YYYY-MM-DD');
 
                             var start_time = start_date_hours + ":" + start_date_mins + ":00"
                             var end_time = end_date_hours + ":" + end_date_mins + ":00"
@@ -614,9 +614,9 @@
                                 mins = "0"+mins
                             }
             
-                            var moment_current_date = moment(current_time).format('L')
-                            var moment_start_date = moment(data.start_datetime).format('L');
-                            var moment_end_date = moment(data.end_datetime).format('L');
+                            var moment_current_date = moment(current_time).format('YYYY-MM-DD')
+                            var moment_start_date = moment(data.start_datetime).format('YYYY-MM-DD');
+                            var moment_end_date = moment(data.end_datetime).format('YYYY-MM-DD');
 
 
                             var now = hours+":"+mins+":00";
@@ -888,7 +888,7 @@
                             if(marfData[0].time_in == null)
                             {
                                 //20:07        //19:38               //19:51           //20:38             
-                                if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date) && (now >= start_time &&  now <= end_time)) 
+                                if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date)) 
                                 {
                                     if(marfData[0].attendance_status == null)
                                     {
@@ -1046,7 +1046,7 @@
                             {
                                 if(marfData[0].time_out == null)
                                 {
-                                    if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date) && (now >= start_time &&  now <= end_time))
+                                    if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date))
                                     {
                                         right_side +=    '<div class="alert alert-info alert-has-icon">' +
                                                                 '<div class="alert-icon"><i class="fas fa-check"></i></div>' +
@@ -1247,7 +1247,7 @@
                     }
                 }
             },
-            error: function(error){
+            error: function(error){ 
                 console.log(error)
                 console.log(`message: ${error.responseJSON.message}`)
                 console.log(`status: ${error.status}`)

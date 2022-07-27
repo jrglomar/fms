@@ -56,9 +56,9 @@
                             mins = "0"+mins
                         }
             
-                        var moment_current_date = moment(current_time).format('L')
-                        var moment_start_date = moment(responseData[i].start_datetime).format('L');
-                        var moment_end_date = moment(responseData[i].end_datetime).format('L');
+                        var moment_current_date = moment(current_time).format('YYYY-MM-DD')
+                        var moment_start_date = moment(responseData[i].start_datetime).format('LYYYY-MM-DD');
+                        var moment_end_date = moment(responseData[i].end_datetime).format('YYYY-MM-DD');
 
 
                         var now = hours+":"+mins+":00";
@@ -67,7 +67,7 @@
 
                         if(status == "Pending")
                         {
-                            if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date) && (now >= start_time &&  now <= end_time)) 
+                            if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date)) 
                             {
                                 let data = {
                                     "title": responseData[i].title,
@@ -398,7 +398,7 @@
         
         // REFRESH DATATABLE FUNCTION
         function refresh(){
-            let url = BASE_API
+            let url = APP_URL + '/api/v1/activity/get_required_activity/' + FACULTY_ID
 
             dataTable.ajax.url(url).load()
         }
@@ -451,9 +451,9 @@
                         mins = "0"+mins
                     }
       
-                    var moment_current_date = moment(current_time).format('L')
-                    var moment_start_date = moment(responseData.start_datetime).format('L');
-                    var moment_end_date = moment(responseData.end_datetime).format('L');
+                    var moment_current_date = moment(current_time).format('YYYY-MM-DD')
+                    var moment_start_date = moment(responseData.start_datetime).format('YYYY-MM-DD');
+                    var moment_end_date = moment(responseData.end_datetime).format('YYYY-MM-DD');
 
 
                     var now = hours+":"+mins+":00";
@@ -469,7 +469,7 @@
 
                     if(status == "Pending")
                     {
-                        if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date) && (now >= start_time &&  now <= end_time)) 
+                        if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date)) 
                         {
                             let data = {
                                 "title": responseData.title,
