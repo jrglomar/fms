@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Auth;
 
-class RoleAdmin
+class RoleDirector
 {
     /**
      * Handle an incoming request.

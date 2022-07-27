@@ -337,14 +337,7 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item d-flex btnView" id="${row.id}" role="button">
                                         <div style="width: 2rem"><i class="fas fa-eye"></i></div>
-                                        <div>View</div></div>
-                                        <div class="dropdown-item d-flex btnEdit" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-edit"></i></div>
-                                            <div>Edit</div></div>
-                                            <div class="dropdown-divider"</div></div>
-                                            <div class="dropdown-item d-flex btnDeactivate" id="${row.id}" role="button">
-                                            <div style="width: 2rem"><i class="fas fa-trash-alt"></i></div>
-                                            <div style="color: red">Delete</div></div></div></div>`;
+                                        <div>View</div></div></div></div>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -638,7 +631,7 @@
                                 },
                                 success: function(data)
                                 {
-                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                    setInterval(window.location.replace(APP_URL+"/director/activity/"+activity_id), 1500)
                                 },
                                 error: function(error){
                                     $.each(error.responseJSON.errors, function(key,value) {
@@ -677,7 +670,7 @@
                                 },
                                 success: function(data)
                                 {
-                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                    setInterval(window.location.replace(APP_URL+"/director/activity/"+activity_id), 1500)
                                 },
                                 error: function(error){
                                     $.each(error.responseJSON.errors, function(key,value) {
@@ -692,7 +685,7 @@
                         }
                         else if(moment_current_date < moment_start_date)
                         {
-                            setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                            setInterval(window.location.replace(APP_URL+"/director/activity/"+activity_id), 1500)
                         }
                         else if((moment_current_date == moment_end_date) && (now > end_time))
                         {
@@ -720,7 +713,7 @@
                                 },
                                 success: function(data)
                                 {
-                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                    setInterval(window.location.replace(APP_URL+"/director/activity/"+activity_id), 1500)
                                 },
                                 error: function(error){
                                     $.each(error.responseJSON.errors, function(key,value) {
@@ -735,7 +728,7 @@
                         }
                         else if(moment_current_date == moment_start_date && now < start_time && now < end_time)
                         {
-                            setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                            setInterval(window.location.replace(APP_URL+"/director/activity/"+activity_id), 1500)
                         }
                     }
                     else if(status == "On Going")
@@ -766,7 +759,7 @@
                                 },
                                 success: function(data)
                                 {
-                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                    setInterval(window.location.replace(APP_URL+"/director/activity/"+activity_id), 1500)
                                 },
                                 error: function(error){
                                     $.each(error.responseJSON.errors, function(key,value) {
@@ -805,7 +798,7 @@
                                 },
                                 success: function(data)
                                 {
-                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                    setInterval(window.location.replace(APP_URL+"/director/activity/"+activity_id), 1500)
                                 },
                                 error: function(error){
                                     $.each(error.responseJSON.errors, function(key,value) {
@@ -820,7 +813,7 @@
                         }
                         else
                         {
-                            setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                            setInterval(window.location.replace(APP_URL+"/director/activity/"+activity_id), 1500)
                         }
                     }
                     else if(status == "Done" || status == "done")
@@ -866,7 +859,7 @@
                                             cache: false,
                                             success: function (responseJSON) 
                                             {     
-                                                setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)                     
+                                                setInterval(window.location.replace(APP_URL+"/director/activity/"+activity_id), 1500)                     
                                             },
                                             error: function(error){
                                                 $.each(error.responseJSON.errors, function(key,value) {
@@ -881,13 +874,13 @@
                                 }
                                 else
                                 {
-                                    setInterval(window.location.replace(APP_URL+"/acad_head/activity/"+activity_id), 1500)
+                                    setInterval(window.location.replace(APP_URL+"/director/activity/"+activity_id), 1500)
                                 }
                             }
                         });
                     }
                 },
-            // window.location.replace(APP_URL+"/acad_head/activity/"+id);
+            // window.location.replace(APP_URL+"/director/activity/"+id);
             });
         });
         // END OF VIEW FUNCTION
@@ -1120,8 +1113,8 @@
         // DELETE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = APP_URL + '/api/v1/activity/'  + id
-            console.log(form_url)
+            let form_url = APP_URL + '/v1/activity_type/'  + id
+            console.log(id)
             $.ajax({
                 url: form_url,
                 method: "GET",

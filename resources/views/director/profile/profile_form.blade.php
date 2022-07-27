@@ -139,36 +139,23 @@
                   </div>
 
                 <form id="updateUserForm" data-parsley-validate>
+                <br>
                     {{-- EMAIL --}}
-                    <div class="form-row">
-                        <div class="form-group col-md-6">
-                            <label class="required-input" for="email">Email</label>
-                            <input disabled type="email" class="form-control" id="email">
+                    <div class="form-row text-center">
+                        <div class="col-md-12">
+                            <h6 class="text-sm" for="email">Email: 
+                            <label class="text-dark" id="email"></label></h6>
+                            
+                            {{-- <label disabled type="email" class="form-control" id="email"> --}}
+                        </div>
+                        <div class="col-md-12">
+                            <h6 class="text-sm" for="user_role">Role: 
+                            <label class="text-dark" id="user_role"></label></h6>
+                            {{-- <label disabled type="email" class="form-control" id="email"> --}}
                         </div>
                         <div class="form-group col-md-2"></div>
-                        <div class="form-group  col-md-4">
-                            <label class="required-input" for="email">Status</label><br>
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" id="status">
-                                <label id="status_label" class="custom-control-label" for="status">Inactive</label>
-                            </div>
-                        </div>
                     </div>
-
-                    
-                    {{-- USER ROLE --}}
-                    <div class="form-row">
-                        <div class="form-group col-md-2">
-                            <label class="required-input">User Role</label>
-                        </div>
-                        <div class="form-group col-md-10" id="role_id">
-                            
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-success float-right" >Save Changes</button>
                 </form>
-
             </div>
         </div>
     </div>
@@ -177,13 +164,10 @@
             <div class="card-header">
                 <h4 class="text-dark"> <span id="create_card_title">Faculty </span>Details</h4>
                 <div class="card-header-action">
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_educational_profile_card"
+                    <!-- <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_educational_profile_card"
                     aria-expanded="false" aria-controls="create_educational_profile_card">Add Faculty Educational Profile 
                         <i class="fas fa-plus"></i>
-                    </button>
-                    <!-- <button type="button" id="btnAddFacultyEducationalProfile" class="btn btn-primary btn-sm">Faculty Educational Profile  -->
-                        <!-- <i class="fa fa-edit" aria-hidden="true"></i> -->
-                    <!-- </button> -->
+                    </button> -->
                 </div>
             </div>
             <div class="card-body">
@@ -197,19 +181,19 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label class="required-input" >Faculty Type</label>
-                            <select id="faculty_type_id" name="faculty_type_id" class="form-control">
+                            <select id="faculty_type_id" name="faculty_type_id" class="form-control" disabled>
                                 <option disabled selected>List of user/s</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label class="required-input">Academic Rank</label>
-                            <select id="academic_rank_id" name="academic_rank_id" class="form-control">
+                            <select id="academic_rank_id" name="academic_rank_id" class="form-control" disabled>
                                 <option disabled selected>List of role/s</option>
                             </select>
                         </div>
                         <div class="form-group col-md-4">
                             <label class="required-input">Designation</label>
-                            <select id="designation_id" name="designation_id" class="form-control">
+                            <select id="designation_id" name="designation_id" class="form-control" disabled>
                                 <option disabled selected>List of role/s</option>
                             </select>
                         </div>
@@ -217,13 +201,13 @@
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label class="required-input" >Specialization</label>
-                            <select id="specialization_id" name="specialization_id" class="form-control">
+                            <select id="specialization_id" name="specialization_id" class="form-control select2" disabled>
                                 <option disabled selected>List of specialization/s</option>
                             </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label class="required-input">Program</label>
-                            <select id="program_id" name="program_id" class="form-control">
+                            <select id="program_id" name="program_id" class="form-control select2" disabled>
                                 <option disabled selected>List of program/s</option>
                             </select>
                         </div>
@@ -250,17 +234,17 @@
                         <div class="form-group col-md-4">
                             <label class="required-input" for="gender">Gender</label>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="gender1" value="Female">
+                                <input class="form-check-input" type="radio" name="gender" id="gender1" value="Female" disabled>
                                 <label class="form-check-label" for="gender1">Female</label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gender" id="gender2" value="Male">
+                                <input class="form-check-input" type="radio" name="gender" id="gender2" value="Male" disabled>
                                 <label class="form-check-label" for="gender2">Male</label>
                             </div>
                         </div>
                         <div class="form-group col-md-4">
                             <label for="salutation">Salutation</label>
-                            <input type="text" class="form-control" id="salutation" name="salutation">
+                            <input type="text" class="form-control" id="salutation" name="salutation" disabled>
                         </div>
                         <div class="form-group col-md-4">
                             <label class="required-input" for="phone_number">Phone Number</label>
@@ -270,7 +254,7 @@
                     <div class="form-row">
                         <div class="form-group col-md-4">
                             <label class="required-input" for="hire_date">Hire Date</label>
-                            <input type="date" class="form-control" id="hire_date" name="hire_date" required>
+                            <input type="date" class="form-control" id="hire_date" name="hire_date" required disabled>
                         </div>
                         <div class="form-group col-md-4">
                             <label class="required-input" for="birthdate">Birthdate</label>
