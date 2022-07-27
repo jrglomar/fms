@@ -26,6 +26,30 @@
                 ['view', ['fullscreen']],
             ]
         });
+        // Initialize the Summernote WYSIWYG TEXT AREA
+        $('#description_edit').summernote({
+            placeholder: 'Description...',
+            tabsize: 2,
+            height: 100,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['font', ['bold', 'underline', 'clear']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen']],
+            ]
+        });
+        // Initialize the Summernote WYSIWYG TEXT AREA
+        $('#agenda_edit').summernote({
+            placeholder: 'Agenda...',
+            tabsize: 2,
+            height: 100,
+            toolbar: [
+                // [groupName, [list of button]]
+                ['font', ['bold', 'underline', 'clear']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['view', ['fullscreen']],
+            ]
+        });
         // END Initialize the Summernote WYSIWYG TEXT AREA
 
         // GLOBAL VARIABLE
@@ -540,6 +564,10 @@
                                     updateActivityStatus();
                                     $("#createForm").trigger("reset")
                                     $("#create_card").collapse("hide")
+                                    $('#agenda').summernote('reset');
+                                    $('#description').summernote('reset');
+                                    $('#activity_type_id').val('').trigger("change")
+                                    Dropzone.forElement('#memo_upload').removeAllFiles(true)
                                     notification("success", "Activity")
 
                                     refresh();
@@ -604,6 +632,8 @@
                             $("#create_card").collapse("hide")
                             $('#agenda').summernote('reset');
                             $('#description').summernote('reset');
+                            $('#activity_type_id').val('').trigger("change")
+                            Dropzone.forElement('#memo_upload').removeAllFiles(true)
                             refresh();
 
                             notification("success", "Activity")
@@ -990,6 +1020,17 @@
 
                 success: function(data){
                     console.log(data)
+                    if (data.activity_type.category == "Meeting")
+                    {
+                        console.log("This is Meeting")
+                        document.getElementById("agenda_edit_div").hidden = false;     // Show
+
+                    }    
+                    else if (data.activity_type.category == "Activity")
+                    {
+                        console.log("This is Activity")
+                        document.getElementById("agenda_edit_div").hidden = true;   // Hide
+                    } 
 
                     var memo_html = "";
 
@@ -1009,7 +1050,10 @@
                     
                     $('#id_edit').val(data.id);
                     $('#title_edit').val(data.title);
-                    $('#description_edit').val(data.description);
+                    $('#description_edit').summernote('code', data.description)
+                    $('#agenda_edit').summernote('code', data.agenda)
+                    // $('#description_edit').val(data.description);
+                    // $('#agenda_edit').val(data.agenda);
                     $('#activity_type_id_edit').val(data.activity_type.id);
                     $('#location_edit').val(data.location);
                     $('#start_datetime_edit').val(data.start_datetime);
@@ -1052,6 +1096,7 @@
                 let data_form = {
                     "title": $('#title_edit').val(),
                     "description": $('#description_edit').val(),
+                    "agenda": $('#agenda_edit').val(),
                     "location": $('#location_edit').val(),
                     "activity_type_id": $('#activity_type_id_edit').val(),
                     "start_datetime": $('#start_datetime_edit').val(),
@@ -1178,7 +1223,7 @@
         });
         // END OF UPDATE FUNCTION
 
-        // FOR ACTIVITY TYPE DROPDOWN ON CHANGE
+        // FOR ACTIVITY TYPE CREATE FORM DROPDOWN ON CHANGE
         $(document).on("change", "#activity_type_id", function()
         {
             var activity_type_id = $("#activity_type_id").val()
@@ -1209,7 +1254,40 @@
                 }
             });
         });
-        // END FOR ACTIVITY TYPE DROPDOWN ON CHANGE
+        // END FOR ACTIVITY TYPE CREATE FORM DROPDOWN ON CHANGE
+
+        // FOR ACTIVITY TYPE EDIT FORM DROPDOWN ON CHANGE
+        $(document).on("change", "#activity_type_id_edit", function()
+        {
+            var activity_type_id = $("#activity_type_id_edit").val()
+
+            console.log(activity_type_id)
+            $.ajax({
+                url: APP_URL + '/api/v1/activity_type/' + activity_type_id,
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    "Content-Type": "application/json"
+                },
+                success: function(data)
+                {
+                    console.log(data.category)
+                    if (data.category == "Meeting")
+                    {
+                        console.log("This is Meeting")
+                        document.getElementById("agenda_edit_div").hidden = false; 
+
+                    }    
+                    else if (data.category == "Activity")
+                    {
+                        console.log("This is Activity")
+                        document.getElementById("agenda_edit_div").hidden = true;   // Hide
+                    } 
+                }
+            });
+        });
+        // END FOR ACTIVITY TYPE EDIT FORM DROPDOWN ON CHANGE
 
         // DELETE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){

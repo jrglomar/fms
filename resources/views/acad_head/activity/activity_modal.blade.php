@@ -1,4 +1,10 @@
 
+<style>
+    #agenda_edit_div{
+        visibility: "hidden";
+    }
+</style>
+
 {{-- VIEW MODAL --}}
 <div id="viewModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -108,10 +114,15 @@
                             </div>
                         </div>
                         <div class="row">
+                            <div class="form-group col-md-12" id="agenda_edit_div">
+                                <label class="required-input">Agenda</label>
+                                <textarea class="form-control" rows="4" cols="50" id="agenda_edit" name="agenda_edit" form="updateForm" placeholder="Agenda" tabindex="1"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group col-md-12">
                                 <label class="required-input">Description</label>
-                                <input type="text" class="form-control" id="description_edit" name="description_edit"
-                                placeholder="Description" tabindex="1" required>
+                                <textarea class="form-control" rows="4" cols="50" id="description_edit" name="description_edit" form="updateForm" placeholder="Description" tabindex="1"></textarea>
                             </div>
                         </div>
                         <div class="row">
