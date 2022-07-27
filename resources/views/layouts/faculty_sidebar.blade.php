@@ -39,7 +39,39 @@
                         <i class="fas fa-user"></i><span>Profile</span></a></li>
 
                         
-
+                            {{-- SCHEDULE MANAGEMENT --}}
+                            <li class="menu-header">Class Schedule Management</li>
+                            <li class="dropdown {{ Request::segment(2) == 'schedule' || 
+                                                    Request::segment(2) == 'schedule_view' ||
+                                                    Request::segment(2) == 'class_observation' ||
+                                                    Request::segment(2) == 'class_observation_view' ||
+                                                    Request::segment(2) == 'class_observation_reports'
+                                                    ? 'active' : ''}}">
+                            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
+                                    class="fas fa-book-reader"></i>
+                            <span>Class Section</span></a>
+                            <ul class="dropdown-menu">
+                                <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                                <li class="{{ Request::segment(2) == 'schedule' || 
+                                                Request::segment(2) == 'schedule_view' 
+                                                
+                                                ? 'active' : ''}}">
+                                    <a class="nav-link" href="/faculty/schedule">
+                                        <span>Class Schedules</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'class_observation' || 
+                                                Request::segment(2) == 'class_observation_view' 
+                                                
+                                                ? 'active' : ''}}">
+                                    <a class="nav-link" href="/faculty/class_observation">
+                                        <span>Observation</span></a>
+                                </li>
+                                <li class="{{ Request::segment(2) == 'class_observation_reports'
+                                                ? 'active' : ''}}">
+                                    <a class="nav-link" href="/faculty/class_observation_reports">
+                                        <span>Class Observation Reports</span></a>
+                                </li>
+                            </ul>    
                             {{-- SRD MANAGEMENT --}}
                             <li class="menu-header">Submission of Documents Management</li>
                             <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 

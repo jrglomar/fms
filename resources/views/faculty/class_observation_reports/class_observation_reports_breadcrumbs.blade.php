@@ -6,13 +6,20 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="background-color: #FFFFFF; padding-left: 0px; margin-bottom: 0px">
         <li class="breadcrumb-item">
-            PUPQC FMS
+            Schedule Management
         </li>
         <li class="breadcrumb-item">
-            Academic Head Reports
+            Observation
         </li>
-        <li class="breadcrumb-item" id="acad_head_requirement_bin">
-        <a href="#">SRD Reports</a>
+        <li class="breadcrumb-item" id="acad_head_observation">
+        <a href="/acad_head/class_observation_reports">Class Observation Reports</a>
+            <script>
+                if(window.location.pathname == '/acad_head/ob')
+                {
+                    document.getElementById("acad_head_observation").classList.add('active');
+                    document.getElementById("acad_head_observation").setAttribute("aria-current", "page")
+                }
+            </script>
         </li>
     </ol>
 </nav>

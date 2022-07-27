@@ -81,10 +81,10 @@
 
                         {{-- SRD MANAGEMENT --}}
                         <li class="menu-header" style="padding-bottom: 12px">Documents Management</li>
-                        <li class="dropdown" style="padding-bottom: 12px" {{ Request::segment(2) == 'requirement_type' || 
+                        <li class="dropdown {{ Request::segment(2) == 'requirement_type' || 
                                                 Request::segment(2) == 'requirement_bin' ||
                                                 Request::segment(2) == 'requirement_list_type' 
-                                                ? 'active' : ''}}">
+                                                ? 'active' : ''}}" style="padding-bottom: 12px">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
                         <span>Submission of Documents</span></a>

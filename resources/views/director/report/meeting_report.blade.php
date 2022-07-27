@@ -2,18 +2,18 @@
 
 {{-- NAVBAR --}}
 @section('navbar')
-    @include('layouts.acad_head_navbar')
+    @include('layouts.director_navbar')
 @endsection
 
 {{-- SIDEBAR --}}
 @section('sidebar')
-    @include('layouts.acad_head_sidebar')
+    @include('layouts.director_sidebar')
 @endsection
 
 @section('section_header')
 <div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
-    @include('acad_head/report/meeting_report_breadcrumbs')
+    @include('director/report/meeting_report_breadcrumbs')
 </div>
 @endsection
 
@@ -25,16 +25,16 @@
             {{-- FORM --}}
           
             {{-- DATATABLE --}}
-            @include('acad_head/report/meeting_datatable')
+            @include('director/report/meeting_datatable')
     @endsection
 
 
 
 {{-- FOOTER --}}
 @section('footer')
-    @include('layouts.acad_head_footer')
+    @include('layouts.director_footer')
 @endsection
 
 @section('script')
-    @include('acad_head/report/meeting_report_scripts')
+    @include('director/report/meeting_report_scripts')
 @endsection
