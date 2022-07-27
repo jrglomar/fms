@@ -51,7 +51,7 @@
           <input class="btnChangeStatus" type="radio" name="status_options" value="Pending" autocomplete="off"> Pending
         </label>&nbsp;
         <label class="btn btn-outline-info">
-          <input class="btnChangeStatus" type="radio" name="status_options" value="Ongoing" autocomplete="off"> Ongoing
+          <input class="btnChangeStatus" type="radio" name="status_options" value="On Going" autocomplete="off"> On Going
         </label>&nbsp;
         <!-- <label class="btn btn-outline-danger">
           <input class="btnChangeStatus" type="radio" name="status_options" value="Cancelled" autocomplete="off"> Cancelled

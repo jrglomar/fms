@@ -44,7 +44,7 @@
                             columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
                             modifier: { order: 'current' }
                         },
-                        className: 'btn-report info',
+                        className: 'btn btn-primary mr-2',
                         titleAttr: 'PDF export.',
                         extension: '.pdf',
                         // download: 'open', // FOR NOT DOWNLOADING THE FILE AND OPEN IN NEW TAB
@@ -92,7 +92,7 @@
                     }, 
                     {
                         extend: 'excelHtml5',
-                        className: 'btn-report info',
+                        className: 'btn btn-success',
                         titleAttr: 'Excel export.',
                         text: 'Export as XLS',
                         extension: '.xlsx',
@@ -193,7 +193,7 @@
                     { data: "start_datetime"},
                 ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 9] }],
-                "order": [[1, "desc"]]
+                "order": [[1, "asc"]]
                 })
 
 
