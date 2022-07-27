@@ -35,7 +35,6 @@
                         let requiredDocumentTitle = responseData.requirement_list_type[i].requirement_type.title 
                         requiredDocumentList += `<li class="list-group-item d-flex justify-content-between align-items-center">
                                                     <span class="text-primary">${requiredDocumentTitle}</span>
-                                                    <button type="button" class="btn btn-danger btnDeactivateRequiredDocument" id="${responseData.requirement_list_type[i].id}"><i class="fa fa-minus" aria-hidden="true"></i></button>
                                                 </li>`
                     })
 

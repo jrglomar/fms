@@ -48,8 +48,6 @@
                 <div class="d-flex justify-content-between">
                     <h5> Required Document List</h5>
                     <div class="card-header-action">
-                        <button id="createRequiredDocument" type="button" class="btn btn-warning btn-sm" style="font-size: 14px">
-                            Edit List <i class="fa fa-edit" aria-hidden="true"></i></button>
                     </div>
                 </div>
                 
