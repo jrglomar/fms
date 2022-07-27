@@ -565,6 +565,9 @@
                 dataType: "json",
                 success: function (marfData) 
                 {
+                    $('#proof_status').val(marfData[0].status)
+                    $('#proof_remarks').val(marfData[0].remarks)
+
                     $.ajax({
                         url: APP_URL+"/api/v1/activity/"+ACTIVITY_ID,
                         method: "GET",

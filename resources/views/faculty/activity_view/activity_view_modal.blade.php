@@ -144,8 +144,36 @@
                         </div>
                     </fieldset>
                 </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <div class="modal-body border-0">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-12">
+                                <form action="">
+                                    <div class=" col-md-12">
+                                        <label class="required-input">Status</label>
+                                        <select class="form-control js-example-basic-single" id="proof_status" name="proof_status" disabled>
+                                            <option selected disabled value="">Choose status</option>
+                                            <option value="Approved">Approved</option>
+                                            <option value="Declined">Declined</option>
+                                            <option value="For Revision">For Revision</option>
+                                        </select>
+                                    </div>
+                                    <div class=" col-md-12">
+                                        <label>Remarks</label>
+                                        <textarea class="form-control" id="proof_remarks" name="proof_remarks"
+                                        placeholder="Remarks" tabindex="1" disabled></textarea>
+                                    </div>
+                                    <div class=" col-md-12" hidden>
+                                        <label class="required-input">ID</label>
+                                        <input class="form-control" id="sr_id" name="sr_id">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row float-right">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
