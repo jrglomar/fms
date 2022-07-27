@@ -1,19 +1,18 @@
 <div class="containeer">
     <div class="row">
         <div class="col-md-8">
-            <div class="hero text-white hero-bg-image hero-bg-parallax"
-            style="background-image: url({{ URL::to('/images/designs/req_bin_card_yellow.png') }});
-            height: 450px">
+            <div class="hero text-dark hero-bg-parallax shadow-sm bg-white rounded"
+            style="height: 450px">
                 <div class="hero-inner">
                     <div class="col-12">
                             <h3 class="text-center"><span id="title"></span></h3>
                             <span class="badge badge-success">
-                                <span style="font-size: 16px">Posted by </span><span style="font-size: 16px" id="created_by"></span>
+                                <span style="font-size: 14px">Posted by </span><span style="font-size: 14px" id="created_by"></span>
                             </span>
                             <div class="text-dark float-right">
-                                <span class="badge badge-warning" id="date_badge">
-                                    <span style="font-size: 16px">Due</span>
-                                    <span style="font-size: 16px" id="created_at"></span>
+                                <span class="badge" id="date_badge">
+                                    <span style="font-size: 14px">Due</span>
+                                    <span style="font-size: 14px" id="created_at"></span>
                                 </span>
                             </div>
                     </div>
@@ -25,7 +24,7 @@
                         </div>
 
                         <div style="padding-top: 50px">
-                            <ul class="list-group" id="requiredDocumentList" style="font-size: 16px;"></ul>
+                            <ul class="list-group" id="requiredDocumentList" style="font-size: 14px;"></ul>
                         </div>
                     </div>
                 </div>
@@ -37,8 +36,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <div class="hero text-white hero-bg-image hero-bg-parallax"
-                    style="background-image: url({{ URL::to('/images/designs/req_bin_card_blue.png') }})">
+                    <div class="hero text-dark hero-bg-parallax shadow-sm bg-white rounded">
                         <div class="hero-inner">
                             <div class="align-items-center">
                                 <div class="row">
@@ -59,7 +57,7 @@
                             </div>
                             &nbsp;
                             <div id="btnDone" class="d-flex justify-content-center">
-                                <button id="btnMDone" type="button" class="btn btn-warning">Mark as Done</button>
+                                <button id="btnMDone" type="button" class="btn btn-info">Mark as Done</button>
                             </div>
                         </div>
                     </div>

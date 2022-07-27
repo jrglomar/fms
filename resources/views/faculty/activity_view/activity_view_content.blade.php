@@ -85,8 +85,7 @@
 
 <div class="row">
     <div class="col-8 col-sm-8 col-lg-8">
-        <div class="hero text-white hero-bg-image hero-bg-parallax"
-        style="background-image: url({{ URL::to('/images/designs/green_activity.png') }})">
+        <div class="hero text-dark hero-bg-parallax shadow-sm bg-white rounded">
             <div class="hero-inner" id="hero_header">
             </div>
             <br>

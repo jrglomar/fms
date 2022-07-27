@@ -834,7 +834,7 @@
                                                     '</div>' +
                                                     '<div class="col-md-2">' +
                                                         '<div>' +
-                                                            '<button type="button" class="btn btn-primary"' +
+                                                            '<button type="button" class="btn btn-info"' +
                                                             'data-toggle="modal" data-target="#memo_card" role="button" aria-expanded="false" aria-controls="memo_card"' +
                                                             '>View Memo</button>' +
                                                         '</div>' +
@@ -842,13 +842,13 @@
                                                 '</div>' +
                                                 '<br>' +
                                                 '<div class="col-12">' +
-                                                    '<span class="badge badge-info">' +
+                                                    '<span class="badge badge-warning text-dark" style="font-size: 14px">' +
                                                         '<span>Posted by </span><span id="created_by">' +
                                                             data.created_by_user.faculty.last_name + ", " + data.created_by_user.faculty.first_name +
                                                         '</span>' +
                                                     '</span>' +
                                                     '<div class="text-dark float-right">' +
-                                                        '<span class="badge badge-warning">' +
+                                                        '<span class="badge badge-warning text-dark" style="font-size: 14px">' +
                                                             '<span id="act_type">' +
                                                                 data.activity_type.title +
                                                             '</span>' +
@@ -871,15 +871,15 @@
 
                             if(activity_status == "Pending")
                             {
-                                activity_status = '<span class="badge badge-warning"><span>Pending</span></span>';
+                                activity_status = '<span class="badge badge-warning" style="font-size: 14px"><span>Pending</span></span>';
                             }
                             else if(activity_status == "On Going")
                             {
-                                activity_status = '<span class="badge badge-warning"><span>On Going</span></span>';
+                                activity_status = '<span class="badge badge-info" style="font-size: 14px"><span>On Going</span></span>';
                             }
                             else if(activity_status == "Done")
                             {
-                                activity_status = '<span class="badge badge-warning"><span>Done</span></span>';
+                                activity_status = '<span class="badge badge-success" style="font-size: 14px"><span>Done</span></span>';
                             }
 
 
@@ -1151,8 +1151,7 @@
                                 }
                             }
 
-                            right_side +=   '<div class="hero text-white hero-bg-image hero-bg-parallax"' +
-                                                `style="background-image: url({{ URL::to('/images/designs/green_activity.png') }})">` +
+                            right_side +=   '<div class="hero text-dark hero-bg-parallax shadow-sm bg-white rounded">' +
                                                 '<div class="hero-inner">' +
                                                     '<div class="row"> ' +
                                                         '<div class="d-flex justify-content-between col-md-9">' +
@@ -1164,7 +1163,7 @@
                                                     '<div class="row">' +
                                                         '<div class="col-md-6">' +
                                                             '<div class="form-group" style="margin-bottom: 0px">' +
-                                                                '<label class="font-weight-bold text-warning" for="">Start time:</label>' +
+                                                                '<h6 class="font-weight-bold text-dark" for="">Start time:</h6>' +
                                                                 '<p>' +
                                                                     data.start_datetime +
                                                                 '</p>' +
@@ -1172,7 +1171,7 @@
                                                         '</div>' +
                                                         '<div class="col-md-6">' +
                                                             '<div class="form-group" style="margin-bottom: 0px">' +
-                                                                '<label class="font-weight-bold text-warning" for="">End time:</label>' +
+                                                                '<h6 class="font-weight-bold text-dark" for="">End time:</h6>' +
                                                                 '<p>' +
                                                                     data.end_datetime +
                                                                 '</p>' +
@@ -1182,7 +1181,7 @@
                                                     '<div class="row">' +
                                                         '<div class="col-6">' +
                                                             '<div class="form-group" style="margin-bottom: 0px">' +
-                                                                '<label class="font-weight-bold text-warning" for="">Location:</label>' +
+                                                                '<h6 class="font-weight-bold text-dark" for="">Location:</h6>' +
                                                                 '<p>' +
                                                                     data.location +
                                                                 '</p>' +
@@ -1190,7 +1189,7 @@
                                                         '</div>' +
                                                         '<div class="col-6">' +
                                                             '<div class="form-group" style="margin-bottom: 0px">' +
-                                                                '<label class="font-weight-bold text-warning" for="">Status:</label>' +
+                                                                '<h6 class="font-weight-bold text-dark" for="">Status:</h6>' +
                                                                 '<p>' +
                                                                     activity_status +
                                                                 '</p>' +

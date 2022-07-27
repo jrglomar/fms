@@ -284,7 +284,7 @@
                                             '</div>' +
                                             '<div class="col-md-2">' +
                                                 '<div>' +
-                                                    '<button type="button" class="btn btn-primary"' +
+                                                    '<button type="button" class="btn btn-info"' +
                                                     'data-toggle="modal" data-target="#memo_card" role="button" aria-expanded="false" aria-controls="memo_card"' +
                                                     '>View Memo</button>' +
                                                 '</div>' +
@@ -292,13 +292,13 @@
                                         '</div>' +
                                         '<br>' +
                                         '<div class="col-12">' +
-                                            '<span class="badge badge-info">' +
+                                            '<span class="badge badge-info text-dark" style="font-size: 14px">' +
                                                 '<span>Posted by </span><span id="created_by">' +
                                                     data.created_by_user.faculty.last_name + ", " + data.created_by_user.faculty.first_name +
                                                 '</span>' +
                                             '</span>' +
                                             '<div class="text-dark float-right">' +
-                                                '<span class="badge badge-warning">' +
+                                                '<span class="badge text-dark badge-warning" style="font-size: 14px">' +
                                                     '<span id="act_type">' +
                                                         data.activity_type.title +
                                                     '</span>' +
@@ -321,20 +321,20 @@
 
                     if(activity_status == "Pending")
                     {
-                        $('#status').html(`<span class="badge badge-warning">
+                        $('#status').html(`<span class="badge badge-warning" style="font-size: 14px">
                                 <span>Pending</span>
                                 </span>`);
                     }
                     else if(activity_status == "On Going")
                     {
-                        $('#status').html(`<span class="badge badge-warning">
+                        $('#status').html(`<span class="badge badge-info" style="font-size: 14px">
                                 <span>On Going</span>
                                 </span>`);
                         //$('#status').addClass('text-success');
                     }
                     else if(activity_status == "Done")
                     {
-                        $('#status').html(`<span class="badge badge-warning">
+                        $('#status').html(`<span class="badge badge-success" style="font-size: 14px">
                                 <span>Done</span>
                                 </span>`);
                         //$('#status').addClass('text-warning');
