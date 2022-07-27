@@ -296,9 +296,9 @@
                             var hours = current_time.getHours();
                             var mins = current_time.getMinutes();
             
-                            var moment_current_date = moment(current_time).format('YYYY-MM-DD')
-                            var moment_start_date = moment(data.start_datetime).format('YYYY-MM-DD');
-                            var moment_end_date = moment(data.end_datetime).format('YYYY-MM-DD');
+                            var moment_current_date = moment(current_time).format('L')
+                            var moment_start_date = moment(data.start_datetime).format('L');
+                            var moment_end_date = moment(data.end_datetime).format('L');
 
                             var start_time = start_date_hours + ":" + start_date_mins + ":00"
                             var end_time = end_date_hours + ":" + end_date_mins + ":00"
@@ -489,9 +489,9 @@
                             var hours = current_time.getHours();
                             var mins = current_time.getMinutes();
             
-                            var moment_current_date = moment(current_time).format('YYYY-MM-DD')
-                            var moment_start_date = moment(data.start_datetime).format('YYYY-MM-DD');
-                            var moment_end_date = moment(data.end_datetime).format('YYYY-MM-DD');
+                            var moment_current_date = moment(current_time).format('L')
+                            var moment_start_date = moment(data.start_datetime).format('L');
+                            var moment_end_date = moment(data.end_datetime).format('L');
 
                             var start_time = start_date_hours + ":" + start_date_mins + ":00"
                             var end_time = end_date_hours + ":" + end_date_mins + ":00"
@@ -614,9 +614,9 @@
                                 mins = "0"+mins
                             }
             
-                            var moment_current_date = moment(current_time).format('YYYY-MM-DD')
-                            var moment_start_date = moment(data.start_datetime).format('YYYY-MM-DD');
-                            var moment_end_date = moment(data.end_datetime).format('YYYY-MM-DD');
+                            var moment_current_date = moment(current_time).format('L')
+                            var moment_start_date = moment(data.start_datetime).format('L');
+                            var moment_end_date = moment(data.end_datetime).format('L');
 
 
                             var now = hours+":"+mins+":00";

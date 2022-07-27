@@ -56,9 +56,9 @@
                             mins = "0"+mins
                         }
             
-                        var moment_current_date = moment(current_time).format('YYYY-MM-DD')
-                        var moment_start_date = moment(responseData[i].start_datetime).format('LYYYY-MM-DD');
-                        var moment_end_date = moment(responseData[i].end_datetime).format('YYYY-MM-DD');
+                        var moment_current_date = moment(current_time).format('L')
+                        var moment_start_date = moment(responseData[i].start_datetime).format('L');
+                        var moment_end_date = moment(responseData[i].end_datetime).format('L');
 
 
                         var now = hours+":"+mins+":00";
@@ -451,9 +451,9 @@
                         mins = "0"+mins
                     }
       
-                    var moment_current_date = moment(current_time).format('YYYY-MM-DD')
-                    var moment_start_date = moment(responseData.start_datetime).format('YYYY-MM-DD');
-                    var moment_end_date = moment(responseData.end_datetime).format('YYYY-MM-DD');
+                    var moment_current_date = moment(current_time).format('L')
+                    var moment_start_date = moment(responseData.start_datetime).format('L');
+                    var moment_end_date = moment(responseData.end_datetime).format('L');
 
 
                     var now = hours+":"+mins+":00";
