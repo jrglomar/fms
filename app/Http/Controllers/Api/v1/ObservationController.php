@@ -113,10 +113,10 @@ class ObservationController extends Controller
 
     public function get_faculty_observation($faculty_id)
     {
-        $requirement_bin = Observation::select("*")
-        ->where('faculty', $faculty_id)
+        $observation = Observation::select("*")
+        ->where('faculty_id', $faculty_id)
         ->get();
 
-        return $requirement_bin;
+        return $observation;
     }
 }

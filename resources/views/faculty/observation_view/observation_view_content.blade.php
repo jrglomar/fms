@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="float-right">
             
-            <button class="btn btn-primary btnSetObservation"><i class="fas fa-eye"></i> Set Observation</button>
+            {{-- <button class="btn btn-primary btnSetObservation"><i class="fas fa-eye"></i> Set Observation</button> --}}
         </div>
     </div>
 </div>

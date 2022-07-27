@@ -75,7 +75,7 @@
                     }]
                 },
                 // "data": class_sched_data,
-                "paging": false,
+                "paging": true,
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
@@ -159,7 +159,7 @@
                     function( settings, data, dataIndex ) {
                         var min  = $('#date_from').val();
                         var max  = $('#date_to').val();
-                        var dateOfObs = data[14] // Our date column in the table
+                        var dateOfObs = data[13] // Our date column in the table
                         
                         if  ( 
                                 ( min == "" || max == "" )
@@ -186,31 +186,31 @@
             console.log(checked)
             if(checked == 'All'){
                     dataTable
-                        .column(4)
+                        .column(12)
                         .search("")
                         .draw();
             }
             else if(checked == 'Pending'){
                 dataTable
-                        .column(4)
+                        .column(12)
                         .search($(this).val())
                         .draw();
             }
             else if(checked == 'Ongoing'){
                 dataTable
-                        .column(4)
+                        .column(12)
                         .search($(this).val())
                         .draw();
             }
             else if(checked == 'Cancelled'){
                 dataTable
-                        .column(4)
+                        .column(12)
                         .search($(this).val())
                         .draw();
             }
             else if(checked == 'Done'){
                 dataTable
-                        .column(4)
+                        .column(12)
                         .search($(this).val())
                         .draw();
             }

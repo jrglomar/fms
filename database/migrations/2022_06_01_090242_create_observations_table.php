@@ -27,6 +27,7 @@ class CreateObservationsTable extends Migration
             $table->string('proof_of_observation_file_link')->nullable();
 
             $table->foreignUuid('class_schedule_id')->nullable();
+            $table->foreign('faculty_id')->references('id')->on('faculties');
             // $table->foreign('class_schedule_id')->references('id')->on('class_schedule');
         });
     }

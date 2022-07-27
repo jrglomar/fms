@@ -189,6 +189,7 @@ use App\Http\Controllers\Api\v1\FacultyEducationProfileController;
         Route::get('/observation/{id}', [ObservationController::class, 'show']);
         Route::get('/observation/search/{name}', [ObservationController::class, 'search']);
         Route::get('/observation/show_soft_deleted/{all}', [ObservationController::class, 'show_soft_deleted']);
+        Route::get('/observation/get_faculty_observation/{id}', [ObservationController::class, 'get_faculty_observation']); // FOR FACULTY CONTROLLER
 
         // Activity Type
         Route::get('/activity_type', [ActivityTypeController::class, 'index']);

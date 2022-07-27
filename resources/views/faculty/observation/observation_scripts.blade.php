@@ -7,17 +7,27 @@
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/activity/'
+        var NEW_USER_DATA = JSON.parse(USER_DATA)
+        var FACULTY_ID = NEW_USER_DATA.faculty.id
         // END OF GLOBAL VARIABLE
 
         let class_sched_data = class_schedule_response.data
-        console.log(class_sched_data)
+        let row_data = class_sched_data.filter( row => row.faculty.id == FACULTY_ID)
+
+        // FACULTY SCHEDULE
+        let faculty_class_schedule = []
+        $.each(class_sched_data, function(i, value){
+            if(class_sched_data[i].faculty_id == FACULTY_ID){
+                faculty_class_schedule.push(class_sched_data[i])
+            }
+        })
+        console.log(faculty_class_schedule)
 
 
         // DATA TABLES FUNCTION
         function dataTable(){
                 $('#dataTable tfoot th').each( function (i) {
                     var title = $('#dataTable thead th').eq( $(this).index() ).text();
-                    console.log(title)
                     $(this).html( '<input size="15" class="form-control" type="text" placeholder="'+title+'" data-index="'+i+'" />');
                 } );
 
@@ -26,7 +36,7 @@
                 //     url: BASE_API, 
                 //     dataSrc: ""
                 // },
-                "data": class_sched_data,
+                "data": faculty_class_schedule,
                 // "paging": true,
                 // "searching": false,
                 "columns": [
@@ -296,7 +306,7 @@
         $(document).on("click", ".btnView", function(){
             var id = this.id;
 
-            window.location.replace(APP_URL+"/acad_head/schedule/"+id);
+            window.location.replace(APP_URL+"/faculty/schedule/"+id);
 
         });
         // END OF VIEW FUNCTION

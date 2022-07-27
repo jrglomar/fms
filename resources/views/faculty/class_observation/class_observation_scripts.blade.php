@@ -7,6 +7,8 @@
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/observation/'
+        var NEW_USER_DATA = JSON.parse(USER_DATA)
+        var FACULTY_ID = NEW_USER_DATA.faculty.id
         // END OF GLOBAL VARIABLE
 
         let class_sched_data = class_schedule_response.data
@@ -15,17 +17,16 @@
         function dataTable(){
                 $('#dataTable tfoot th').each( function (i) {
                     var title = $('#dataTable thead th').eq( $(this).index() ).text();
-                    console.log(title)
                     $(this).html( '<input size="15" class="form-control" type="text" placeholder="'+title+'" data-index="'+i+'" />');
                 } );
 
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
-                    url: BASE_API, 
+                    url: BASE_API +"get_faculty_observation/"+FACULTY_ID, 
                     dataSrc: ""
                 },
                 // "data": class_sched_data,
-                // "paging": true,
+                "paging": true,
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
@@ -87,26 +88,7 @@
         // CALLING DATATABLE FUNCTION
         dataTable()
 
-        function activity_type(){
 
-            activity_type_url = BASE_API
-    
-            $.ajax({
-            url: activity_type_url,
-            type: "GET",
-            dataType: "JSON",
-
-            success: function(data){
-
-                console.log(data)
-                
-
-            }
-            })
-        }
-
-        // CALLING ACTIVITY TYPE FUNCTION
-        activity_type()
 
         $('#status').change(function(){
             if(this.value == "Pending" || "Ongoing" || "Ended") {
@@ -303,7 +285,7 @@
             var id = this.id;
             var class_schedule_id = $(this).attr('data-value')
 
-            window.location.replace(APP_URL+"/acad_head/class_observation/"+class_schedule_id +"/"+id);
+            window.location.replace(APP_URL+"/faculty/class_observation/"+class_schedule_id +"/"+id);
 
         });
         // END OF VIEW FUNCTION
