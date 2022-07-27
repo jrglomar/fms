@@ -97,9 +97,9 @@
                             </li>
 
                             <li class="menu-header">Reports</li>
-                            <li class="dropdown {{ Request::segment(2) == 'srd_report' || 
-                                                Request::segment(2) == 'meeting_report' ||
-                                                Request::segment(2) == 'activity_report' 
+                            <li class="dropdown {{ Request::segment(2) == 'srd_reports' || 
+                                                Request::segment(2) == 'meeting_reports' ||
+                                                Request::segment(2) == 'activity_reports' 
                                                 ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
@@ -110,7 +110,7 @@
                                     <a class="nav-link" href="/faculty/srd_reports" >
                                         <span >Submission of Documents Report</span></a>
                                 </li>
-                                <!-- <li class="{{ Request::segment(2) == 'meeting_report' ? 'active' : ''}}">
+                                <!-- <li class="{{ Request::segment(2) == 'meeting_reports' ? 'active' : ''}}">
                                     <a class="nav-link" href="/faculty/meeting_report">
                                         <span>Meeting Report</span></a>
                                 </li> -->
