@@ -351,14 +351,7 @@
                     //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
 
                     if(data.memorandum_file_directory == "NA"){
-                        var if_memo =   '<span>No Memorandum uploaded</span>' +
-                                        '<br>' +
-                                        '<br>' +
-                                        '<form class="dropzone"' +
-                                                'id="memo_upload">' +
-                                        '</form>';
-
-
+                        var if_memo =   '<span>No Memorandum uploaded</span>' ;
                         $('#if_memo').html(if_memo)
                     }
                     else{
@@ -372,7 +365,6 @@
             })
         }
         getActivity()
-        
 
         function requiredFacultyDatatable(){
             requiredFacultyDatatable = $('#requiredFacultyDatatable').DataTable({
