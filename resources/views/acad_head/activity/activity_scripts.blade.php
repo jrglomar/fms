@@ -1120,8 +1120,8 @@
         // DELETE FUNCTION
         $(document).on("click", ".btnDeactivate", function(){
             var id = this.id;
-            let form_url = APP_URL + '/v1/activity_type/'  + id
-            console.log(id)
+            let form_url = APP_URL + '/api/v1/activity/'  + id
+            console.log(form_url)
             $.ajax({
                 url: form_url,
                 method: "GET",
