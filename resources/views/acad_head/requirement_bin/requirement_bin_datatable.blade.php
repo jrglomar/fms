@@ -6,7 +6,7 @@
                     <h4 class="text-dark">List of Requirement Bin</h4>
                     <div class="card-header-action">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
-                        aria-expanded="false" aria-controls="create_card" style="font-size: 18px">New Requirement Bin <i
+                        aria-expanded="false" aria-controls="create_card" style="font-size: 14px">New Requirement Bin <i
                         class="fas fa-plus"></i></button>
                     </div>
                 </div>

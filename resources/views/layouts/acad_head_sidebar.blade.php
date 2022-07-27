@@ -81,7 +81,7 @@
 
                         {{-- SRD MANAGEMENT --}}
                         <li class="menu-header" style="padding-bottom: 12px">Documents Management</li>
-                        <li class="dropdown" style="padding-bottom: 12px" {{ Request::segment(2) == 'requirement_type' || 
+                        <li class="dropdown" style="padding-bottom: 12px {{ Request::segment(2) == 'requirement_type' || 
                                                 Request::segment(2) == 'requirement_bin' ||
                                                 Request::segment(2) == 'requirement_list_type' 
                                                 ? 'active' : ''}}">
@@ -92,7 +92,6 @@
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
                             <li class="{{ Request::segment(2) == 'requirement_bin' || 
                                             Request::segment(2) == 'requirement_list_type' 
-                                            
                                             ? 'active' : ''}}">
                                 <a class="nav-link" href="/acad_head/requirement_bin">
                                     <span>Requirement Bins</span></a>
