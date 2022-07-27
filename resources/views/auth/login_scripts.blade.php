@@ -34,6 +34,9 @@
                 else if(role.includes('Checker')){
                     window.location.href = "/acad_head/dashboard"
                 }
+                else if(role.includes('Director')){
+                    window.location.href = "/director/dashboard"
+                }
                 else{
                     window.location.href = "/"
                 }
