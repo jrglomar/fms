@@ -19,7 +19,6 @@
                     var title = $('#dataTable thead th').eq( $(this).index() ).text();
                     $(this).html( '<input size="15" class="form-control" type="text" placeholder="'+title+'" data-index="'+i+'" />');
                 } );
-
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
                     url: BASE_API, 
@@ -76,7 +75,7 @@
                     }]
                 },
                 // "data": class_sched_data,
-                // "paging": true,
+                "paging": false,
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},

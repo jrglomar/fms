@@ -320,7 +320,6 @@ Route::group(['middleware' => ['role.checker'],
 
 
 //-------------DIRECTOR----------------//
-
 Route::group(['middleware' => ['role.director'],
     'prefix' => '/director',], function(){
         

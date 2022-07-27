@@ -8,6 +8,7 @@
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/faculty/'
         var USER_ID = "{{ $user_id }}"
+        var FACULTY_ID
 
         // END OF GLOBAL VARIABLE
 

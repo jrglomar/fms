@@ -48,7 +48,7 @@ class RequirementTypeController extends Controller
     {
          //
          $request->validate([
-            'title' => 'required|unique:requirement_types,deleted_at',
+            'title' => 'required|unique:requirement_types,title,NULL,id,deleted_at,NULL'
         ]);
 
         return RequirementType::create($request->all());
