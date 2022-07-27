@@ -561,7 +561,7 @@ class PresentationsSeeder extends Seeder
             'start_datetime' => '2022-09-05 08:00:00',
             'end_datetime' => '2022-09-05 09:00:00',
             'description' => 'September Flag Raising Ceremony',
-            'status' => 'Ongoing',
+            'status' => 'Pending',
             'activity_type_id' => '9c7ea8df-50ff-4b0a-8efd-118a3d8baee5',
         ]);
     }

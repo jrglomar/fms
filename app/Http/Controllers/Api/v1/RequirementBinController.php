@@ -51,7 +51,6 @@ class RequirementBinController extends Controller
             'title' => 'required',
             'description' => 'required',
             'deadline' => 'required',
-            'status' => 'required'
         ]);
 
         return RequirementBin::create($request->all());

@@ -8,13 +8,13 @@
         <li class="breadcrumb-item">
             Dashboard
         </li>
-        <li class="breadcrumb-item" id="acad_head_profile">
+        <li class="breadcrumb-item" id="director_profile">
         <a href="javascript:window.location.reload();">Profile</a>
             <script>
-                if(window.location.pathname == '/acad_head/profile')
+                if(window.location.pathname == '/director/profile')
                 {
-                    document.getElementById("acad_head_profile").classList.add('active');
-                    document.getElementById("acad_head_profile").setAttribute("aria-current", "page")
+                    document.getElementById("director_profile").classList.add('active');
+                    document.getElementById("director_profile").setAttribute("aria-current", "page")
                 }
             </script>
         </li>

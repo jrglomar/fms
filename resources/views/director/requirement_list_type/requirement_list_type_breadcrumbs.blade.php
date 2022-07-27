@@ -11,23 +11,23 @@
         <li class="breadcrumb-item">
             SRD
         </li>
-        <li class="breadcrumb-item" id="acad_head_requirement_bin">
-        <a href="/acad_head/requirement_bin">Requirement Bins</a>
+        <li class="breadcrumb-item" id="director_requirement_bin">
+        <a href="/director/requirement_bin">Requirement Bins</a>
             <script>
-                if(window.location.pathname == '/acad_head/requirement_bin')
+                if(window.location.pathname == '/director/requirement_bin')
                 {
-                    document.getElementById("acad_head_requirement_bin").classList.add('active');
-                    document.getElementById("acad_head_requirement_bin").setAttribute("aria-current", "page")
+                    document.getElementById("director_requirement_bin").classList.add('active');
+                    document.getElementById("director_requirement_bin").setAttribute("aria-current", "page")
                 }
             </script>
         </li>
-        <li class="breadcrumb-item" id="acad_head_requirement_list_type">
+        <li class="breadcrumb-item" id="director_requirement_list_type">
         <a href="javascript:window.location.reload();">Bin Details</a>
             <script>
-                if(window.location.pathname == '/acad_head/activity')
+                if(window.location.pathname == '/director/activity')
                 {
-                    document.getElementById("acad_head_requirement_list_type").classList.add('active');
-                    document.getElementById("acad_head_requirement_list_type").setAttribute("aria-current", "page")
+                    document.getElementById("director_requirement_list_type").classList.add('active');
+                    document.getElementById("director_requirement_list_type").setAttribute("aria-current", "page")
                 }
             </script>
         </li>
