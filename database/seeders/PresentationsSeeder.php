@@ -359,7 +359,6 @@ class PresentationsSeeder extends Seeder
             'academic_rank_id' => 'c77357e3-66a5-4f67-8b41-4cc6bc19ef7a',
             'designation_id' => 'fdd1cd40-1da3-4773-81c7-6be2131a73f2',
             'specialization_id' => 'dc7c6fa9-da61-4c2d-adbc-43o8f13b7af8',
-            'program_id' => 'adf1ac40-1df3-4773-81d7-6bb2131c73f2'
         ]);
 
         // ACAD HEAD ACCOUNT
@@ -386,7 +385,6 @@ class PresentationsSeeder extends Seeder
             'academic_rank_id' => '260bbc2f-3310-49a3-b8d7-6d9a51f404e0',
             'designation_id' => 'dc7c6ba9-da51-4c2d-aacc-43c8f13b6af8',
             'specialization_id' => 'ddf1cd40-1da3-4773-81d7-6be2131a73e2',
-            'program_id' => 'dd7a6fa9-dd61-4c2d-acbd-43o8c13d7af8'
         ]);
 
         // FACULTY ONE ACCOUNT
@@ -413,7 +411,6 @@ class PresentationsSeeder extends Seeder
             'academic_rank_id' => '260bbc2f-3310-49a3-b8d7-6d9a51f404e0',
             'designation_id' => 'dc7c6ba9-da51-4c2d-aacc-43c8f13b6af8',
             'specialization_id' => 'dc7c6fa9-da61-4c2d-adbc-43o8f13b7af8',
-            'program_id' => 'adf1ac40-1df3-4773-81d7-6bb2131c73f2'
         ]);
 
         // FACULTY TWO ACCOUNT
@@ -440,7 +437,6 @@ class PresentationsSeeder extends Seeder
             'academic_rank_id' => '2e7e0dc1-c10d-4eb8-97a5-7c016281808e',
             'designation_id' => 'dc7c6ba9-da51-4c2d-aacc-43c8f13b6af8',
             'specialization_id' => 'ddf1cd40-1da3-4773-81d7-6be2131a73e2',
-            'program_id' => 'dd7a6fa9-dd61-4c2d-acbd-43o8c13d7af8'
         ]);
 
         // REQUIREMENT BINS

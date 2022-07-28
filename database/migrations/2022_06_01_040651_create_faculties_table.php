@@ -44,7 +44,6 @@ class CreateFacultiesTable extends Migration
             $table->foreignUuid('academic_rank_id')->constrained('academic_ranks')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->foreignUuid('designation_id')->constrained('designations')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->foreignUuid('specialization_id')->constrained('specializations')->onDelete('cascade')->onUpdate('cascade')->nullable();
-            $table->foreignUuid('program_id')->constrained('programs')->onDelete('cascade')->onUpdate('cascade')->nullable();
         });
     }
 

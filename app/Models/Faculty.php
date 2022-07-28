@@ -42,7 +42,6 @@ class Faculty extends Model
                 'faculty_type_id',
                 'designation_id',
                 'specialization_id',
-                'program_id'
             ];
 
             protected $dates = ['deleted_at'];
@@ -75,11 +74,6 @@ class Faculty extends Model
             {
                 return $this->belongsTo(Specialization::class);
             }
-
-            public function program()
-            {
-                return $this->belongsTo(Program::class);
-            }
             
             public function requirement_required_faculty_list()
             {
@@ -101,6 +95,11 @@ class Faculty extends Model
                 return $this->hasMany(FacultyEducationProfile::class)->without('faculty');
             }
 
+            public function faculty_program()
+            {
+                return $this->hasMany(FacultyProgram::class)->without('program_faculty', 'created_by_user', 'updated_by_user');
+            }
+
         // End of [Declare relationships here]
 
         // [Default relationship]       - Default
@@ -114,7 +113,7 @@ class Faculty extends Model
             return $this->belongsTo(User::class,'updated_by');
         }
 
-        protected $with = ['academic_rank', 'designation', 'program', 'specialization', 'faculty_type', 'user', 
+        protected $with = ['academic_rank', 'faculty_program', 'designation', 'specialization', 'faculty_type', 'user', 
         'created_by_user','updated_by_user', 'requirement_required_faculty_list',
         'activity_attendance_required_faculty_list', 'meeting_attendance_required_faculty_list', 'faculty_education_profile'];
 

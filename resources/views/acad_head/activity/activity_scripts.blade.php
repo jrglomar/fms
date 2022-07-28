@@ -1034,7 +1034,7 @@
 
                     var memo_html = "";
 
-                    if(data.memorandum_file_directory == null)
+                    if(data.memorandum_file_directory == null || data.memorandum_file_directory == "NA")
                     {
                         memo_html = `<input type="file" accept=".jpg, .png, .jpeg, .pdf" class="form-control" id="memorandum_file_directory_edit" name="memorandum_file_directory_edit"
                                 tabindex="1">`;
@@ -1043,9 +1043,12 @@
                     {
                         let memorandum_file_directory = APP_URL + "/" + data.memorandum_file_directory
 
-                        memo_html += `<button class="btn btn-info" onclick="window.open('${memorandum_file_directory}')" target="_blank">Check Memo</button>
-                        <input type="file" accept=".jpg, .png, .jpeg, .pdf" class="form-control" id="memorandum_file_directory_edit" name="memorandum_file_directory_edit"
-                        tabindex="1">`;
+                        memo_html +=    `<button type="button" class="btn btn-info"  
+                                        onclick="window.open('${memorandum_file_directory}')" target="_blank">Check Memo</button> 
+                                        &nbsp;<a href="javascript:removeMemo()" id="${data.id}">Remove Memo</a>
+                                        <br><br><label> Update Memo / Upload New Memo: </label>
+                                        <input type="file" accept=".jpg, .png, .jpeg, .pdf" class="form-control" id="memorandum_file_directory_edit" name="memorandum_file_directory_edit"
+                                        tabindex="1">`;
                     }
 
                     $('#memo_edit_modal').html(memo_html);
@@ -1126,8 +1129,7 @@
                         success: function(data){
                             refresh()
                             $('#editModal').modal('hide');
-
-                            notification("info", "Activity")
+                            notification("info", "Activity")    
                         },
                         error: function(error){
                             $.each(error.responseJSON.errors, function(key,value) {
@@ -1220,10 +1222,98 @@
                     }
                 })
             }
-
-            
         });
         // END OF UPDATE FUNCTION
+
+        // FUNCTION TO REMOVE MEMO ON EDIT MODAL
+        removeMemo = () =>
+        {
+            var id = $('#id_edit').val();
+            let form_url = APP_URL + '/api/v1/activity/'  + id
+            console.log(id)
+            $.ajax({
+                url: form_url,
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    "Content-Type": "application/json"
+                },
+
+                success: function(data){
+                    Swal.fire(
+                    {
+                        title: "Are you sure you?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: !0,
+                        confirmButtonColor: "#34c38f",
+                        cancelButtonColor: "#f46a6a",
+                        confirmButtonText: "Yes!",
+                    })
+                    .then(function (t) 
+                    {
+                        // if user clickes yes.
+                        if (t.value) 
+                        {
+                            let data_form = {
+                                "title": data.title,
+                                "description": data.description,
+                                "agenda": data.agenda,
+                                "location": data.location,
+                                "activity_type_id": data.activity_type_id,
+                                "start_datetime": data.start_datetime,
+                                "end_datetime": data.end_datetime,
+                                "status": data.status,
+                                "is_required": data.is_required,
+                                "memorandum_file_directory": null
+                            }
+                            $.ajax({
+                                url: form_url,
+                                method: "PUT",
+                                data: JSON.stringify(data_form),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+
+                                success: function(data){
+                                    $('#editModal').modal('hide');
+                                    notification("info", "Activity")
+                                    refresh()
+                                    location.reload()
+                                    
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+
+                            })
+                        }
+                        else{
+                            swalAlert('warning', 'Invalid datetime')
+                        }
+                    })
+                },
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
+            // ajax closing tag
+            })
+        }
+        // END FUNCTION TO REMOVE MEMO ON EDIT MODAL
 
         // FOR ACTIVITY TYPE CREATE FORM DROPDOWN ON CHANGE
         $(document).on("change", "#activity_type_id", function()
