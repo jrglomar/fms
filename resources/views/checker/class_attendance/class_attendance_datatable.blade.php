@@ -28,6 +28,7 @@
         font-size: 16px;
     }
 </style>
+{{-- FILTER BUTTONS --}}
 
 <div class="row justify-content-between">
     <div class="btn-group">
@@ -42,27 +43,25 @@
         <button id="btnDateReset" class="btn btn-info ml-2 mb-5 pr-3 mt-1">Reset</button>
     </div>
 
-    {{-- FILTER BUTTONS --}}
     <div class="btn-group btn-group-toggle mb-5 pr-3" data-toggle="buttons">
         <label class="text-dark pt-2 pr-2">Status Filter: </label>
         <label class="btn btn-outline-dark active">
           <input class="btnChangeStatus" type="radio" id="status_all" name="status_options" value="All" autocomplete="off" checked> All
         </label>&nbsp;
         <label class="btn btn-outline-secondary">
-          <input class="btnChangeStatus" type="radio" name="status_options" value="Pending" autocomplete="off"> Pending
+          <input class="btnChangeStatus" type="radio" name="status_options" value="Submitted" autocomplete="off"> Submitted
         </label>&nbsp;
         <label class="btn btn-outline-info">
-          <input class="btnChangeStatus" type="radio" name="status_options" value="Ongoing" autocomplete="off"> Ongoing
+          <input class="btnChangeStatus" type="radio" name="status_options" value="For Revision" autocomplete="off"> For Revision
         </label>&nbsp;
         <label class="btn btn-outline-danger">
-          <input class="btnChangeStatus" type="radio" name="status_options" value="Cancelled" autocomplete="off"> Cancelled
+          <input class="btnChangeStatus" type="radio" name="status_options" value="Declined" autocomplete="off"> Declined
         </label>&nbsp;
         <label class="btn btn-outline-success">
-          <input class="btnChangeStatus" type="radio" name="status_options" value="Done"  autocomplete="off"> Done
+          <input class="btnChangeStatus" type="radio" name="status_options" value="Approved"  autocomplete="off"> Approved
         </label>
     </div>
 </div>
-
 {{-- DATATABLES --}}
 <div>
     <div class="row">
@@ -87,18 +86,19 @@
                             <tr class="bg-primary text-light">
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Created by</th>
-                                <th>Date of Observation</th>
+                                <th>Checked by</th>
                                 <th>Faculty</th>
+                                <th>Date of Class</th>
                                 <th>Asgmt Code</th>
                                 <th>Subject Code</th>
                                 <th>Subject Title</th>
                                 <th>Units</th>
                                 <th>Year & Section</th>
                                 <th>Room</th>
-                                <th>Subject Schedule</th>
+                                <th>Proof of Attendance</th>
                                 <th>Status</th>
-                                <th>Date of Observation</th>
+                                <th>Date of Class</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,18 +108,19 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Created by</th>
-                                <th>Date of Observation</th>
+                                <th>Checked by</th>
                                 <th>Faculty</th>
+                                <th>Date of Class</th>
                                 <th>Asgmt Code</th>
                                 <th>Subject Code</th>
                                 <th>Subject Title</th>
                                 <th>Units</th>
                                 <th>Year & Section</th>
                                 <th>Room</th>
-                                <th>Subject Schedule</th>
+                                <th>Proof of Attendance</th>
                                 <th>Status</th>
-                                <th>Date of Observation</th>
+                                <th>Date of Class</th>
+                                <th>Action</th>
                             </tr>
                         </tfoot>
                     </table>

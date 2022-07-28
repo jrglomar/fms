@@ -6,11 +6,12 @@
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
-        var BASE_API = APP_URL + '/api/v1/observation/'
+        var BASE_API = APP_URL + '/api/v1/class_attendance'
         // END OF GLOBAL VARIABLE
 
         let class_sched_data = class_schedule_response.data
         console.log(class_sched_data)
+        console.log(BASE_API)
         
         // DATA TABLES FUNCTION
         function dataTable(){
@@ -23,73 +24,30 @@
                 "ajax": {
                     url: BASE_API, 
                     dataSrc: ""
-                },'dom': 'Bfrtip',
-                'buttons': {
-                    dom: {
-                    button: {
-                        tag: 'button',
-                        className: ''
-                    }
-                    },
-                    buttons: [{
-                        extend: 'pdfHtml5',  
-                        text: 'Export as PDF',
-                        orientation: 'landscape',
-                        pageSize: 'LEGAL',
-                        exportOptions: {
-                            columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
-                            modifier: { order: 'current' }
-                        },
-                        className: 'btn btn-primary mr-2',
-                        titleAttr: 'PDF export.',
-                        extension: '.pdf',
-                        // download: 'open', // FOR NOT DOWNLOADING THE FILE AND OPEN IN NEW TAB
-                        title: function() {
-                            return "Class Observation Report"
-                        },
-                        filename: function() {
-                            return "Class Observation Report"
-                        },
-                        customize: function(doc) {
-                            doc.content[1].table.widths =Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                            doc.defaultStyle.alignment = 'center';
-                            doc.styles.tableHeader.alignment = 'center';
-                        },
-                    }, 
-                    {
-                        extend: 'excelHtml5',
-                        className: 'btn btn-success',
-                        titleAttr: 'Excel export.',
-                        text: 'Export as XLS',
-                        extension: '.xlsx',
-                        exportOptions: {
-                            columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
-                            modifier: { order: 'current' }
-                        },
-                        filename: function() {
-                            return "Class Observation Report"
-                        },
-                        title: function() {
-                            return "Class Observation Report"
-                        },
-                    }]
                 },
                 // "data": class_sched_data,
                 "paging": true,
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
-                    { data: "created_by", render: function(data, type, row){
-                        return row.created_by_user.faculty.first_name + ' ' + row.created_by_user.faculty.last_name
+                    { data: "checked_by", render: function(data, type,row){
+                        if(data == null || data.length == 0){
+                            return ''
+                        }
+                        else{
+                            return data.first_name + ' ' + data.last_name 
+                        }
                     }},
-                    { data: "date_of_observation", render: function(data, type, row){
-                        let class_schedule_id = row.class_schedule_id
-                        let row_data = class_sched_data.filter( row => row.id == class_schedule_id)
-                        return `${moment(data).format('LL')}, ${row_data[0].time}`
+                    { data: "faculty", render: function(data, type, row){
+                        let img = `<img class="mr-2 rounded-circle" width="20" height="20" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png">`
+                        if(data.image !=null){
+                            img = `<img class="mr-2 rounded-circle" width="20" height="20"  src="${APP_URL + '/' + data.image}">`
+                        }
+                        return `${img}` + data.first_name + ' ' + data.last_name;
                     }},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].faculty.full_name
+                    { data: "date_of_class", render: function(data, type, row){
+                        return `${moment(data).format('LL')}, 
+                        ${moment(data + ' ' +row.start_time).format('LT') + '-' + moment(data + ' ' +row.end_time).format('LT')}`
                     }},
                     { data: "class_schedule_id", render: function(data, row){
                         let row_data = class_sched_data.filter( row => row.id == data)
@@ -115,22 +73,24 @@
                         let row_data = class_sched_data.filter( row => row.id == data)
                         return row_data[0].room.room_building
                     }},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].day_time
+                    { data: "proof_of_attendance_file", render:function(data, type, row){
+                        return `<button class="btn btn-info btn-sm" 
+                                    onclick="window.open('${APP_URL+ '/' + row.proof_of_attendance_file}')" 
+                                    target="_blank">${row.proof_of_attendance_file_name}
+                                </button>`
                     }},
                     { data: "status", render: function(data, type, row){
                         let status_html
-                        if(data == 'Done'){
+                        if(data == 'Approved'){
                             status_html = `<span class="badge badge-success">${data}</span>`
                         }
-                        else if(data == 'Ongoing'){
+                        else if(data == 'For Revision'){
                             status_html = `<span class="badge badge-info">${data}</span>`
                         }
-                        else if(data == 'Cancelled'){
+                        else if(data == 'Declined'){
                             status_html = `<span class="badge badge-danger">${data}</span>`
                         }
-                        else if(data == 'Pending'){
+                        else if(data == 'Submitted'){
                             status_html = `<span class="badge badge-secondary">${data}</span>`
                         }
                         else{
@@ -138,7 +98,19 @@
                         }
                         return status_html
                     }},
-                    { data: "date_of_observation" },
+                    { data: "date_of_class" },
+                    { data: "deleted_at", render: function(data, type, row){
+                                if (data == null){
+                                    return `</div>
+                                                <button type="button" class="btn btn-sm btn-success btnEditProofOfAttendance" id="${row.id}">
+                                                <div><i class="fas fa-edit"></i> Check Attendance</div>
+                                            </button>`;
+                                }
+                                else{
+                                    return '<button class="btn btn-danger btn-sm">Activate</button>';
+                                }
+                            }
+                    }
                     ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 13] }],
                 "order": [[1, "desc"]]
@@ -190,25 +162,25 @@
                         .search("")
                         .draw();
             }
-            else if(checked == 'Pending'){
+            else if(checked == 'Submitted'){
                 dataTable
                         .column(12)
                         .search($(this).val())
                         .draw();
             }
-            else if(checked == 'Ongoing'){
+            else if(checked == 'For Revision'){
                 dataTable
                         .column(12)
                         .search($(this).val())
                         .draw();
             }
-            else if(checked == 'Cancelled'){
+            else if(checked == 'Declined'){
                 dataTable
                         .column(12)
                         .search($(this).val())
                         .draw();
             }
-            else if(checked == 'Done'){
+            else if(checked == 'Approved'){
                 dataTable
                         .column(12)
                         .search($(this).val())

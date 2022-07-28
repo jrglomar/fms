@@ -13,21 +13,21 @@
 @section('section_header')
 <div class='container-fluid'>
     <h1>{{ $page_title }}</h1>
-    @include('checker/class_observation_reports/class_observation_reports_breadcrumbs')
+    @include('checker/class_attendance_reports/class_attendance_reports_breadcrumbs')
 </div>
 @endsection
 
     {{-- MODAL --}}
-    @include('checker/class_observation_reports/class_observation_reports_modal')
+    @include('checker/class_attendance_reports/class_attendance_reports_modal')
 
     {{-- CONTENT --}}
     @section('content')
 
             {{-- FORM --}}
-            @include('checker/class_observation_reports/class_observation_reports_form')
+            @include('checker/class_attendance_reports/class_attendance_reports_form')
 
             {{-- DATATABLE --}}
-            @include('checker/class_observation_reports/class_observation_reports_datatable')
+            @include('checker/class_attendance_reports/class_attendance_reports_datatable')
     @endsection
 
 
@@ -40,5 +40,5 @@
 
 @section('script')
     @include('layouts/class_schedule_response')
-    @include('checker/class_observation_reports/class_observation_reports_scripts')
+    @include('checker/class_attendance_reports/class_attendance_reports_scripts')
 @endsection

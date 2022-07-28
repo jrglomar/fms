@@ -340,6 +340,11 @@ Route::group(['middleware' => ['role.checker'],
         return view('checker/class_attendance/class_attendance', ['page_title' => 'Class Attendance']);
     })->name('checker_class_attendance');
 
+    // ------------CLASS ATTENDANCE VIEW--------------- //
+    Route::get('/class_attendance_reports', function () {
+        return view('checker/class_attendance_reports/class_attendance_reports', ['page_title' => 'Class Attendance Reports']);
+    })->name('checker_class_attendance');
+
 });
 
 

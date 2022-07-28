@@ -5,7 +5,6 @@
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/class_attendance/'
-        var SCHEDULE_ID = "{{ $schedule_id }}"
         var CLASS_SCHEDULE_ID
         var CLASS_SCHEDULE_DATA
         var NEW_USER_DATA = JSON.parse(USER_DATA)
@@ -66,7 +65,17 @@
 
                         
                         success: function(data){
-                            console.log(data)
+                            let class_schedule = class_schedule_response.data
+                            let new_class_sched_data
+
+                            $.each(class_schedule, function(i, value){
+                                if(class_schedule[i].id == data.class_schedule_id){
+                                    new_class_sched_data = class_schedule[i]
+                                }
+                            })
+
+                            console.log(new_class_sched_data)
+
                             myDropzone.removeAllFiles(true);
                             $('#class_attendance_id_e').val(data.id)
                             $('#class_schedule_id_e').val(data.class_schedule_id)
@@ -76,6 +85,21 @@
                             $('#end_time_input_e').val(data.end_time)
                             $('#status_e').val(data.status)
                             $('#remarks_e').val(data.remarks)
+
+                            // ROOM DETAILS MODAL
+                            $('#room_building_modal').html(new_class_sched_data.room.building)
+                            $('#room_floor_modal').html(new_class_sched_data.room.floor)
+                            $('#room_status_modal').html(new_class_sched_data.room.status)
+                            $('#room_number_modal').html(new_class_sched_data.room.room_number)
+                            $('#room_type_modal').html(new_class_sched_data.room.room_type)
+
+                            // SUBJECT DETAILS MODAL
+                            $('#assignment_code_modal').html(new_class_sched_data.assignment_code)
+                            $('#subject_code_modal').html(new_class_sched_data.subject_code)
+                            $('#subject_schedule_modal').html(new_class_sched_data.day_time)
+                            $('#subject_status_modal').html(new_class_sched_data.subject_offering.status)
+                            $('#teaching_hours_modal').html(new_class_sched_data.subject_offering.teaching_hours)
+                            $('#subject_description_modal').html(new_class_sched_data.subject_offering.curriculum_subject.subject.title)
 
                             let mockFile = { 
                                 name: data.proof_of_attendance_file_name,
@@ -143,7 +167,53 @@
             }
         });
 
+        $('#btnUpdateAttendanceStatus').on('click', function(e){
+            e.preventDefault()
 
+            let class_attendance_id = $('#class_attendance_id_e').val()
+                var form_url = BASE_API + class_attendance_id
+                let submission_data = {
+                    "status": $('#status_e').val(),
+                    "remarks": $('#remarks_e').val(),
+                    "checked_by": FACULTY_ID
+                }
+
+                if(submission_data.status == ""){
+                    swalAlert('warning', 'Status is required')
+                }
+                else{
+                    $.ajax({
+                        url: form_url,
+                        method: "PUT",
+                        data: JSON.stringify(submission_data),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+                        success: function(data){
+                            notification('info', 'Class Attendance')
+                            $("#editProofOfAttendanceForm").trigger("reset")
+                            $("#editProofOfAttendanceModal").modal("hide")
+                            setInterval(() => {
+                                location.reload()
+                            }, 1500);
+                        },
+                        error: function(error){
+                            $.each(error.responseJSON.errors, function(key,value) {
+                                swalAlert('warning', value)
+                            });
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        }
+                    })
+                }
+
+                console.log(submission_data)
+                
+        })
         
     })
 </script>

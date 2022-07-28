@@ -62,7 +62,6 @@
         </label>
     </div>
 </div>
-
 {{-- DATATABLES --}}
 <div>
     <div class="row">
@@ -87,18 +86,18 @@
                             <tr class="bg-primary text-light">
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Created by</th>
-                                <th>Date of Observation</th>
+                                <th>Checked by</th>
                                 <th>Faculty</th>
+                                <th>Date of Class</th>
                                 <th>Asgmt Code</th>
                                 <th>Subject Code</th>
                                 <th>Subject Title</th>
                                 <th>Units</th>
                                 <th>Year & Section</th>
                                 <th>Room</th>
-                                <th>Subject Schedule</th>
+                                <th>Proof of Attendance</th>
                                 <th>Status</th>
-                                <th>Date of Observation</th>
+                                <th>Date of Class</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -108,18 +107,18 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Created by</th>
-                                <th>Date of Observation</th>
+                                <th>Checked by</th>
                                 <th>Faculty</th>
+                                <th>Date of Class</th>
                                 <th>Asgmt Code</th>
                                 <th>Subject Code</th>
                                 <th>Subject Title</th>
                                 <th>Units</th>
                                 <th>Year & Section</th>
                                 <th>Room</th>
-                                <th>Subject Schedule</th>
+                                <th>Proof of Attendance</th>
                                 <th>Status</th>
-                                <th>Date of Observation</th>
+                                <th>Date of Class</th>
                             </tr>
                         </tfoot>
                     </table>
