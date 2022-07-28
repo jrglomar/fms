@@ -137,4 +137,13 @@ class ClassAttendanceController extends Controller
         return $data;
     }
 
+    public function get_faculty_class_attendance($faculty_id)
+    {
+        $ClassAttendance = ClassAttendance::select("*")
+        ->where('faculty_id', $faculty_id)
+        ->get();
+
+        return $ClassAttendance;
+    }
+
 }

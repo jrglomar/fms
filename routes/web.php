@@ -200,9 +200,16 @@ Route::group(['middleware' => ['role.faculty'],
         })->name('faculty_schedule_view');
 
         // ACTIVITY REPORTS
-            Route::get('/activity_reports', function () {
-                return view('faculty/report/activity_reports', ['page_title' => 'Activity Reports']);
-            })->name('activity_reports');
+        Route::get('/activity_reports', function () {
+            return view('faculty/report/activity_reports', ['page_title' => 'Activity Reports']);
+        })->name('activity_reports');
+        
+        // CLASS ATTENDANCE REPORTS
+        Route::get('/class_attendance_reports', function () {
+            return view('faculty/class_attendance_reports/class_attendance_reports', ['page_title' => 'Class Attendance Reports']);
+        })->name('faculty_class_attendance_reports');
+        
+        
 });
 
 
@@ -307,6 +314,11 @@ Route::group(['middleware' => ['role.acadhead'],
         Route::get('/activity_reports', function () {
             return view('acad_head/report/activity_reports', ['page_title' => 'Activity Reports']);
         })->name('activity_reports');
+
+        // CLASS ATTENDANCE REPORTS
+        Route::get('/class_attendance_reports', function () {
+            return view('acad_head/class_attendance_reports/class_attendance_reports', ['page_title' => 'Class Attendance Reports']);
+        })->name('acad_head_class_attendance_reports');
 });
 
 
