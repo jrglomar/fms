@@ -16,7 +16,7 @@
                 let new_user_data = (JSON.parse(USER_DATA))
 
                 console.log(new_user_data)
-                if(new_user_data.user.faculty == null){
+                if(new_user_data.faculty == null){
                         Swal.fire({
                             text: 'This account details is need to set first. Please contact admin',
                             icon: 'warning',
