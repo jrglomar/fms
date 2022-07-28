@@ -96,7 +96,19 @@
                 altInput: true,
                 altFormat: "F j, Y",
                 dateFormat: "Y-m-d",
-                minDate: moment(today + ' ' + data.end_time).format('YYYY-MM-DD HH:MM'),
+                // minDate: moment(today + ' ' + data.end_time).format('YYYY-MM-DD HH:MM'),
+                "disable": [
+                    function(date) {
+                        return (date.getDay() != dayEnabled);  // disable weekends
+                    }
+                ]
+            });
+
+            $("#date_of_class_e").flatpickr({
+                altInput: true,
+                altFormat: "F j, Y",
+                dateFormat: "Y-m-d",
+                // minDate: moment(today + ' ' + data.end_time).format('YYYY-MM-DD HH:MM'),
                 "disable": [
                     function(date) {
                         return (date.getDay() != dayEnabled);  // disable weekends
@@ -111,86 +123,9 @@
             removeLoader()
         }
 
-
-
         getSchedule()
         
-        function getActivity(){
-            $.ajax({
-                url: APP_URL+"/api/v1/activity/"+ACTIVITY_ID,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
-
-                success: function(data){
-
-                    console.log(data)
-
-                    date = moment(new Date).format()
-
-                    let created_at = moment(data.created_at).format('LLL');
-                    let status = (data.deleted_at === null) ? 'Active' : 'Inactive';
-                    let is_required_view = ""
-
-                    $('#id_view').html(data.id);
-                    $('#title').html(data.title);
-                    $('#description').html(data.description);
-                    $('#start_time').html(moment(data.start_datetime).format('LLL'));
-                    $('#end_time').html(moment(data.end_datetime).format('LLL'));
-                    $('#act_type').html(data.activity_type.title); 
-                    $('#created_by').html(data.created_by_user.faculty.first_name); 
-                    console.log(data.activity_type)  
-
-                    if(data.is_required == 0){
-                        is_required_view = "Not required to attend"
-                    } else{
-                        is_required_view = "Required to attend"
-                    }
-
-                    if(moment(data.start_datetime).format() < date && moment(data.end_datetime).format() > date){
-                        $('#status').html(`<span class="badge badge-warning">
-                                <span>Ongoing</span>
-                                </span>`);
-                    }
-                    else if(date > moment(data.end_datetime).format()){
-                        $('#status').html(`<span class="badge badge-warning">
-                                <span>Ended</span>
-                                </span>`);
-                        //$('#status').addClass('text-success');
-                    }
-                    else{
-                        $('#status').html(`<span class="badge badge-warning">
-                                <span>Pending</span>
-                                </span>`);
-                        //$('#status').addClass('text-warning');
-                    }
-                    
-                    
-                    $('#is_required').html(is_required_view);
-                    $('#location').html(data.location);
-
-                    //$('#created_at_view').html(created_at);
-
-                    // console.log(data.memorandum_file_directory)
-                    //document.getElementById("memorandum_view").src=APP_URL + data.memorandum_file_directory;
-                    //$('#memorandum_view').src("{{ asset('" + data.memorandum_file_directory + "') }}")
-
-                    if(data.memorandum_file_directory == "NA"){
-                        $('#if_memo').html("<span>No Memorandum uploaded</span>")
-                    }
-                    else{
-                        $('#if_memo').html('<div class="embed-responsive embed-responsive-16by9">'
-                        +'<iframe id="memo" class="embed-responsive-item" src="..."></iframe></div>')
-                        
-                        document.getElementById("memo").src=APP_URL + "/" +data.memorandum_file_directory;
-                    }
-                }
-            // ajax closing tag
-            })
-        }
+        
 
         // getActivity()
 
@@ -241,6 +176,8 @@
                                     <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.id}">
                                     <div>Check Uploaded Files</div>
                                 </button>`
+
+                                            
                     }}
                 ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 2] }],
@@ -250,13 +187,7 @@
 
         // requiredFacultyDatatable()
 
-        // REFRESH DATATABLE FUNCTION
-        function refresh(){
-            let url = ATTENDANCE_API+'search/' + ACTIVITY_ID;
-
-            requiredFacultyDatatable.ajax.url(url).load()
-        }
-        // REFRESH DATATABLE FUNCTION
+        
         
 
         $('#btnEditRequiredFaculty').on('click', function(){

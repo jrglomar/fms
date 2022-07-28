@@ -14,8 +14,26 @@ class CreateClassAttendancesTable extends Migration
     public function up()
     {
         Schema::create('class_attendances', function (Blueprint $table) {
-            $table->id();
+            // Default Properties
+            $table->uuid('id')->primary();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreignUuid('created_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade');   
+            $table->foreignUuid('updated_by')->nullable()->constrained('users')->onDelete('cascade')->onUpdate('cascade'); 
+
+            $table->date('date_of_class');
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->string('status')->default('Submitted');
+            $table->string('proof_of_attendance_link')->nullable();
+            $table->string('proof_of_attendance_file')->nullable();
+            $table->string('proof_of_attendance_file_name')->nullable();
+
+            // Relationship sample
+            $table->foreignUuid('checked_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade')->nullable();
+            $table->foreignUuid('faculty_id')->constrained('faculties')->onDelete('cascade')->onUpdate('cascade')->nullable();
+            $table->foreignUuid('class_schedule_id')->nullable();
+        
         });
     }
 

@@ -23,9 +23,9 @@
                                 <th>ID</th>
                                 <th>Created at</th>
                                 <th>Date of Class</th>
-                                <th>Proof of Attendance</th>
+                                <th>Checked by</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -35,9 +35,8 @@
                                 <th>ID</th>
                                 <th>Created at</th>
                                 <th>Date of Class</th>
-                                <th>Proof of Attendance</th>
+                                <th>Checked by</th>
                                 <th>Status</th>
-                                <th>Action</th>
                             </tr>
                         </tfoot>
                     </table>
