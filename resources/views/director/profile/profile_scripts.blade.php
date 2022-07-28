@@ -185,7 +185,7 @@
                                 notification('success', 'Faculty Program')
                                 $("#createFacultyProgramForm").trigger("reset")
                                 $('#createFacultyProgramModal').modal('hide')
-                                getAssignedProgramOfFaculty()
+                                getAssignedProgramOfFaculty();
                             },
                             error: function(error){
                                 $.each(error.responseJSON.errors, function(key,value) {
@@ -501,7 +501,7 @@
                                                                         '<span><b>Degree: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                        '<br><span>&nbsp;&nbsp;- ' + 
                                                                             responseData[i].degree +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -511,7 +511,7 @@
                                                                         '<span><b>Program: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                        '<br><span>&nbsp;&nbsp;- ' + 
                                                                             responseData[i].program +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -521,7 +521,7 @@
                                                                         '<span><b>School: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                        '<br><span>&nbsp;&nbsp;- ' + 
                                                                             school +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -530,8 +530,8 @@
                                                                     '<div class="col-md-12 text-center">' +
                                                                         '<span><b>Year of Attendance: </b>' +
                                                                     '</div>' +
-                                                                    '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                    '<div class="col-md-12 text-cente">' +
+                                                                        '<span> ' + 
                                                                             year_of_attendance +
                                                                         '</span>' +
                                                                     '</div>' +

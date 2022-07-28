@@ -9,8 +9,50 @@
         var BASE_API = APP_URL + '/api/v1/faculty/'
         var USER_ID = "{{ $user_id }}"
         var FACULTY_ID
-
         // END OF GLOBAL VARIABLE
+
+        // GET PROGRAM(S) OF FACULTY
+        function getAssignedProgramOfFaculty()
+        {
+            var form_url = APP_URL+'/api/v1/user/'+USER_ID;
+
+            $.ajax({
+                url: form_url,
+                method: "GET",
+                async: true,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    "Content-Type": "application/json"
+                },
+                success: function(data){
+                    if(data.faculty.faculty_program.length != 0)
+                    {
+                        let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
+                                                    <span class="text-primary"><strong>Program</strong></span>
+                                                </li>`;
+                        $.each(data.faculty.faculty_program, function(i){
+                            let requiredDocumentTitle = data.faculty.faculty_program[i].program.title 
+                            FacultyProgramList += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span class="text-primary">${requiredDocumentTitle}</span>
+                                                        <button type="button" class="btn btn-danger btnDeactivateFacultyProgram" id="${data.faculty.faculty_program[i].id}"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                                    </li>`;
+                        })
+                        $('#FacultyProgramList').html(FacultyProgramList)
+                    }
+                    else
+                    {
+                        let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
+                                                    <span class="text-primary"><strong>No Program added yet</strong></span>
+                                                </li>`; 
+                        
+                        $('#FacultyProgramList').html(FacultyProgramList)
+                    }
+                }  
+            })    
+        }
+        getAssignedProgramOfFaculty()
+        // END GET PROGRAM(S) OF FACULTY
 
         // SUBMIT EDUCATIONAL PROFILE FUNCTION
         $('#createForm').on('submit', function(e){
@@ -89,6 +131,134 @@
             })
         }
         // GET LIST OF F_TYPES DATATABLE FUNCTION
+
+        // FOR FACULTY PROGRAM ADD BUTTON
+        $('#createFacultyProgram').on('click', function(){
+            $('#createFacultyProgramModal').modal('show')
+        })
+        // END FOR FACULTY PROGRAM ADD BUTTON
+
+        // ADD FACULTY PROGRAM FUNCTION
+        $('#createFacultyProgramForm').on('submit', function(e){
+            e.preventDefault();
+
+
+            var faculty_id = $('#faculty_id').val()
+
+            var form_url = APP_URL + '/api/v1/faculty_program'
+            var form = $("#createFacultyProgramForm").serializeArray();
+            let data = {}
+
+            $.each(form, function(){
+                data[[this.name]] = this.value;
+            })
+
+            var program_id = data.program_id
+
+            console.log("116")
+            console.log(faculty_id)
+            console.log(program_id)
+            console.log(data)
+
+
+            $.ajax({
+                url: APP_URL + '/api/v1/faculty_program/search_existing/' + faculty_id + '/' + program_id,
+                type: "GET",
+                dataType: "JSON",
+                success: function (responseData) 
+                {   
+                    if(responseData.length == 0)
+                    {
+                        console.log(responseData)
+                        //  ajax opening tag
+                        $.ajax({
+                            url: form_url,
+                            method: "POST",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data){
+                                notification('success', 'Faculty Program')
+                                $("#createFacultyProgramForm").trigger("reset")
+                                $('#createFacultyProgramModal').modal('hide')
+                                getAssignedProgramOfFaculty();
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                    else if (responseData.length > 0)
+                    {
+                        swalAlert('warning', 'The program is already added.')
+                    }        
+                },
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
+            });
+        });
+        // END ADD FACULTY PROGRAM FUNCTION
+
+        // FOR REMOVING THE PROGRAM OF FACULTY FUNCTION
+        $(document).on("click", ".btnDeactivateFacultyProgram", function(){
+            var id = this.id;
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't able to remove this.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "red",
+                confirmButtonText: "Yes, remove it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: APP_URL + '/api/v1/faculty_program/destroy/' + id,
+                        method: "DELETE",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+
+                        success: function(data){
+                            notification('error', 'Faculty Program')
+                            setInterval(() => {
+                                location.reload()
+                            }, 1000);
+                        },
+                        error: function(error){
+                            $.each(error.responseJSON.errors, function(key,value) {
+                                swalAlert('warning', value)
+                            });
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        }
+                    // ajax closing tag
+                    })
+                }
+            });
+        });
+        
+        // END FOR REMOVING THE PROGRAM OF FACULTY FUNCTION
+
 
         // GET LIST OF ROLE DATATABLE FUNCTION
         function getRoleList(){
@@ -224,38 +394,30 @@
         }
         // GET LIST OF SPECIALIZATION DATATABLE FUNCTION
 
-        // GET LIST OF PROGRAM DATATABLE FUNCTION
-        function getProgramList(){
-            var form_url = APP_URL+'/api/v1/program';
+       // PROGRAM FUNCTION
+       function getProgramList(){
+
+            var program_url = APP_URL+'/api/v1/program'
 
             $.ajax({
-                url: form_url,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
+                url: program_url,
+                type: "GET",
+                dataType: "JSON",
 
                 success: function(data){
 
-                    let id_select = '<option disabled selected>List of program/s</option>'
-                    $.each(data, function (i){
-                        id_select += `<option value="${data[i].id}">${data[i].title}</option>`
-                    })
+                    var html = '<option value="" disabled selected>List of Program/s</option>'
 
-                    $('#program_id').html(id_select)
-                    // $('#faculty_type_id_edit').html(id_select)
-                },
-                error: function(error){
-                    $.each(error.responseJSON.errors, function(key,value) {
-                        swalAlert('warning', value)
-                    });
+                    for(var i=0; i < data.length; i++){
+                    html += `<option value="${data[i].id}">${data[i].title}</option>`
+                    }
+                    
+                    $('#program_id').html(html);
+                    console.log(html)
                 }
-            // ajax closing tag
             })
         }
-        // GET LIST OF PROGRAM DATATABLE FUNCTION
+        // END OF PROGRAM FUNCTION
 
         // GET EDUCAITONAL PROFILE FUNCTION
         function getFacultyEducationalProfile(){
@@ -339,7 +501,7 @@
                                                                         '<span><b>Degree: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                        '<br><span>&nbsp;&nbsp;- ' + 
                                                                             responseData[i].degree +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -349,7 +511,7 @@
                                                                         '<span><b>Program: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                        '<br><span>&nbsp;&nbsp;- ' + 
                                                                             responseData[i].program +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -359,7 +521,7 @@
                                                                         '<span><b>School: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                        '<br><span>&nbsp;&nbsp;- ' + 
                                                                             school +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -368,8 +530,8 @@
                                                                     '<div class="col-md-12 text-center">' +
                                                                         '<span><b>Year of Attendance: </b>' +
                                                                     '</div>' +
-                                                                    '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                    '<div class="col-md-12 text-cente">' +
+                                                                        '<span> ' + 
                                                                             year_of_attendance +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -431,28 +593,14 @@
                         console.log(APP_URL + "/" + data.faculty.image)
                     }
 
-                    let user_role = ''
-                    $.each(data.user_role, function(i){
-                        if(i < (data.user_role.length) - 1){
-                            user_role += data.user_role[i].role.title + ', '
-                        }
-                        else{
-                            user_role += data.user_role[i].role.title
-                        }
-                    })
-
-                    $('#email').html(data.email);
-                    $('#user_role').html(user_role)
-                    
-
                     // FOR EDUCATIONAL BACKGROUND
                     $('#faculty_id').val(data.faculty.id);
                     // END FOR EDUCATIONAL BACKGROUND
                     $('#faculty_type_id').val(data.faculty.faculty_type_id);
                     $('#academic_rank_id').val(data.faculty.academic_rank_id);
                     $('#designation_id').val(data.faculty.designation_id);
-                    $('#specialization_id').val(data.faculty.specialization_id).trigger('change');
-                    $('#program_id').val(data.faculty.program_id).trigger('change');
+                    $('#specialization_id').val(data.faculty.specialization_id);
+                    $('#program_id').val(data.faculty.program_id);
                     $('#barangay').val(data.faculty.barangay);
                     $('#birthdate').val(data.faculty.birthdate);
                     $('#birthplace').val(data.faculty.birthplace);

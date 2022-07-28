@@ -71,10 +71,6 @@
                 "faculty_id": faculty_id
             }
 
-            // $.each(form, function(){
-            //     data[[this.name]] = this.value;
-            // })
-
             console.log(data)
             // ajax opening tag
             $.ajax({
@@ -507,7 +503,7 @@
                                                                         '<span><b>Degree: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                        '<br><span>&nbsp;&nbsp;- ' + 
                                                                             responseData[i].degree +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -517,7 +513,7 @@
                                                                         '<span><b>Program: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                        '<br><span>&nbsp;&nbsp;- ' + 
                                                                             responseData[i].program +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -527,7 +523,7 @@
                                                                         '<span><b>School: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                        '<br><span>&nbsp;&nbsp;- ' + 
                                                                             school +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -536,8 +532,8 @@
                                                                     '<div class="col-md-12 text-center">' +
                                                                         '<span><b>Year of Attendance: </b>' +
                                                                     '</div>' +
-                                                                    '<div class="col-md-12">' +
-                                                                        '<span>&nbsp;&nbsp;- ' + 
+                                                                    '<div class="col-md-12 text-center">' +
+                                                                        '<span>' + 
                                                                             year_of_attendance +
                                                                         '</span>' +
                                                                     '</div>' +
