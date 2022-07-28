@@ -34,11 +34,8 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
 use App\Http\Controllers\Api\v1\SpecializationController;
 use App\Http\Controllers\Api\v1\ProgramController;
 use App\Http\Controllers\Api\v1\FacultyEducationProfileController;
-<<<<<<< HEAD
 use App\Http\Controllers\Api\v1\FacultyProgramController;
-=======
 use App\Http\Controllers\Api\v1\ClassAttendanceController;
->>>>>>> 74849dc29cf757b62f660a270dfa9593212476b4
 
 /*
 |--------------------------------------------------------------------------
