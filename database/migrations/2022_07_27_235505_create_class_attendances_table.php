@@ -28,9 +28,11 @@ class CreateClassAttendancesTable extends Migration
             $table->string('proof_of_attendance_link')->nullable();
             $table->string('proof_of_attendance_file')->nullable();
             $table->string('proof_of_attendance_file_name')->nullable();
+            $table->longText('remarks')->nullable();
 
             // Relationship sample
-            $table->foreignUuid('checked_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade')->nullable();
+            $table->foreignUuid('checked_by')->nullable();
+            $table->foreign('checked_by')->references('id')->on('faculties');
             $table->foreignUuid('faculty_id')->constrained('faculties')->onDelete('cascade')->onUpdate('cascade')->nullable();
             $table->foreignUuid('class_schedule_id')->nullable();
         

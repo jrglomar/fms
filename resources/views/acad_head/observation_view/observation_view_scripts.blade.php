@@ -10,6 +10,7 @@
         var SCHEDULE_ID = "{{ $schedule_id }}"
         var CLASS_SCHEDULE_ID
         var CLASS_SCHEDULE_DATA
+        var FACULTY_ID
         // END OF GLOBAL VARIABLE
 
         let class_schedule = class_schedule_response.data
@@ -36,6 +37,7 @@
             })
             
             $('#class_schedule_id').val(data.id)
+            FACULTY_ID = data.faculty.id
 
             // ROOM DETAILS
             $('#room_building').html(data.room.building)
@@ -475,11 +477,15 @@
 
             var form_url = BASE_API
             var form = $("#setObservationForm").serializeArray();
-            let data = {}
+            let data = {
+                "class_schedule_id": $('#class_schedule_id').val(),
+                "date_of_observation": $('#date_of_observation').val(),
+                "faculty_id": FACULTY_ID,
+            }
 
-            $.each(form, function(){
-                data[[this.name]] = this.value;
-            })
+            // $.each(form, function(){
+            //     data[[this.name]] = this.value;
+            // })
 
             console.log(data)
             $.ajax({

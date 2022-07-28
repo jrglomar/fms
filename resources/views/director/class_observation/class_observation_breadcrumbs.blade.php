@@ -12,7 +12,7 @@
             Observation
         </li>
         <li class="breadcrumb-item" id="director_observation">
-        <a href="/director/class_observation">Class Observation</a>
+        <a href="/director/observation">Class Observation</a>
             <script>
                 if(window.location.pathname == '/director/class_observation')
                 {

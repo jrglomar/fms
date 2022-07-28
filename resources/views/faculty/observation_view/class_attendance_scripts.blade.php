@@ -20,7 +20,7 @@
                 });
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
-                    url: BASE_API, 
+                    url: BASE_API + 'show_specific_class/' + SCHEDULE_ID, 
                     dataSrc: ""
                 },
                 "paging": true,
@@ -30,15 +30,36 @@
                     { data: "date_of_class", render: function(data, type, row){
                         return `${moment(data).format('ll')}, ${moment(data + ' ' + row.start_time).format('LT')}-${moment(data + ' ' + row.end_time).format('LT')}`
                     }},
-                    { data: "updated_by", render: function(data, type,row){
-                        if(data == null){
+                    { data: "proof_of_attendance_file", render:function(data, type, row){
+                        return `<button class="btn btn-info btn-sm" 
+                                    onclick="window.open('${APP_URL+ '/' + row.proof_of_attendance_file}')" 
+                                    target="_blank">${row.proof_of_attendance_file_name}
+                                </button>`
+                    }},
+                    { data: "checked_by", render: function(data, type,row){
+                        if(data == null || data.length == 0){
                             return ''
                         }
                         else{
-                            return data
+                            return data.first_name + ' ' + data.last_name 
                         }
                     }},
-                    { data: "status"},
+                    { data: "status", render:function(data, type, row){
+                        let status_html
+                        if(data == 'Approved'){
+                            status_html = `<span class="badge badge-success">${data}</span>`
+                        }
+                        else if(data == 'For Revision'){
+                            status_html = `<span class="badge badge-warning">${data}</span>`
+                        }
+                        else if(data == 'Declined'){
+                            status_html = `<span class="badge badge-danger">${data}</span>`
+                        }
+                        else{
+                            status_html = data
+                        }
+                        return status_html
+                    }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
                                     return `<div class="text-center dropdown">

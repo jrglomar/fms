@@ -23,6 +23,7 @@
                                 <th>ID</th>
                                 <th>Created at</th>
                                 <th>Date of Class</th>
+                                <th>Proof of Attendance</th>
                                 <th>Checked by</th>
                                 <th>Status</th>
                                 <th class="text-center">Action</th>
@@ -35,6 +36,7 @@
                                 <th>ID</th>
                                 <th>Created at</th>
                                 <th>Date of Class</th>
+                                <th>Proof of Attendance</th>
                                 <th>Checked by</th>
                                 <th>Status</th>
                             </tr>

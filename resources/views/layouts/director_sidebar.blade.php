@@ -48,8 +48,7 @@
                         <li class="dropdown {{ Request::segment(2) == 'schedule' || 
                                                 Request::segment(2) == 'schedule_view' ||
                                                 Request::segment(2) == 'class_observation' ||
-                                                Request::segment(2) == 'class_observation_view' ||
-                                                Request::segment(2) == 'class_observation_reports'
+                                                Request::segment(2) == 'class_observation_view'
                                                 ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
@@ -70,11 +69,7 @@
                                 <a class="nav-link" href="/director/class_observation">
                                     <span>Observation</span></a>
                             </li>
-                            <li class="{{ Request::segment(2) == 'class_observation_reports'
-                                            ? 'active' : ''}}">
-                                <a class="nav-link" href="/director/class_observation_reports">
-                                    <span>Class Observation Reports</span></a>
-                            </li>
+                            
                         </ul>
                     </li>
                     
@@ -152,21 +147,27 @@
                     <li class="menu-header">Reports</li>
                         <li class="dropdown {{ Request::segment(2) == 'srd_reports' || 
                                                 Request::segment(2) == 'meeting_reports' ||
-                                                Request::segment(2) == 'activity_reports' 
+                                                Request::segment(2) == 'activity_reports' ||
+                                                Request::segment(2) == 'class_observation_reports' 
                                                 ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
                         <span>Reports</span></a>
                         <ul class="dropdown-menu">
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                            <li class="{{ Request::segment(2) == 'class_observation_reports'
+                            ? 'active' : ''}}">
+                                <a class="nav-link" href="/director/class_observation_reports">
+                                    <span>Class Observation Reports</span></a>
+                            </li>
                             <li class="{{ Request::segment(2) == 'srd_reports' ? 'active' : ''}}">
                                     <a class="nav-link" href="/director/srd_reports">
                                         <span>SRD Report</span></a>
-                                </li>
-                                <li class="{{ Request::segment(2) == 'activity_reports' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/director/activity_reports">
-                                        <span>Activity Report</span></a>
-                                </li>
+                            </li>
+                            <li class="{{ Request::segment(2) == 'activity_reports' ? 'active' : ''}}">
+                                <a class="nav-link" href="/director/activity_reports">
+                                    <span>Activity Report</span></a>
+                            </li>
                         </ul>
                     </ul>
                     

@@ -10,6 +10,7 @@
         var SCHEDULE_ID = "{{ $schedule_id }}"
         var CLASS_SCHEDULE_ID
         var CLASS_SCHEDULE_DATA
+        var FACULTY_ID
         // END OF GLOBAL VARIABLE
 
         let class_schedule = class_schedule_response.data
@@ -20,13 +21,23 @@
             }
         })
 
-
         function getSchedule(){
 
             let data = CLASS_SCHEDULE_DATA
+            let user_role = ""
             console.log(data)
 
+            $.each(data.faculty.user.user_role, function(i){
+                if(i < (data.faculty.user.user_role.length) - 1){
+                    user_role += data.faculty.user.user_role[i].role.title + ', '
+                }
+                else{
+                    user_role += data.faculty.user.user_role[i].role.title
+                }
+            })
+            
             $('#class_schedule_id').val(data.id)
+            FACULTY_ID = data.faculty.id
 
             // ROOM DETAILS
             $('#room_building').html(data.room.building)
@@ -47,10 +58,11 @@
             $('#faculty_image').html(APP_URL + "/" + data.faculty.image)
             $('#faculty_name').html(data.faculty.full_name)
             $('#faculty_type').html(data.faculty.faculty_type.title)
-            $('#faculty_role').html()
-            $('#faculty_designation').html()
-            $('#faculty_specialization').html()
-            $('#faculty_program').html()
+            $('#faculty_role').html(user_role)
+            $('#faculty_academic_rank').html(data.faculty.academic_rank.title)
+            $('#faculty_designation').html(data.faculty.designation.title)
+            $('#faculty_specialization').html(data.faculty.specialization.title)
+            $('#faculty_program').html(data.faculty.program.title)
 
             $('#start_time_input').val(data.start_time)
             $('#end_time_input').val(data.end_time)
@@ -465,11 +477,15 @@
 
             var form_url = BASE_API
             var form = $("#setObservationForm").serializeArray();
-            let data = {}
+            let data = {
+                "class_schedule_id": $('#class_schedule_id').val(),
+                "date_of_observation": $('#date_of_observation').val(),
+                "faculty_id": FACULTY_ID,
+            }
 
-            $.each(form, function(){
-                data[[this.name]] = this.value;
-            })
+            // $.each(form, function(){
+            //     data[[this.name]] = this.value;
+            // })
 
             console.log(data)
             $.ajax({
@@ -486,6 +502,10 @@
                         notification('success', 'Observation Schedule')
                         $("#setObservationForm").trigger("reset")
                         $("#observationModal").modal("hide")
+                        
+                        setInterval(() => {
+                            window.location.href = APP_URL+'/director/class_observation';
+                        }, 1500);
                     },
                     error: function(error){
                         $.each(error.responseJSON.errors, function(key,value) {

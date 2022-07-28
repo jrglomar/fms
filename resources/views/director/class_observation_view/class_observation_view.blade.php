@@ -37,6 +37,6 @@
 
 
 @section('script')
-    @include('director/class_observation_view/class_schedule_response')
+    @include('layouts/class_schedule_response')
     @include('director/class_observation_view/class_observation_view_scripts')
 @endsection

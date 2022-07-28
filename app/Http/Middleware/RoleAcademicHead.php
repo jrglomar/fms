@@ -23,7 +23,7 @@ class RoleAcademicHead
         $users = Auth::user();
 
         foreach($users->user_role as $row) {
-            if($row->role->title == 'Academic Head' || $row->role->title == 'Checker')
+            if($row->role->title == 'Academic Head')
                 return $next($request);
         }
 
