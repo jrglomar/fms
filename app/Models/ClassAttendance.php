@@ -26,15 +26,19 @@ class ClassAttendance extends Model
         "proof_of_attendance_link",
         "proof_of_attendance_file",
         "proof_of_attendance_file_name",
-        "checked_by"
+        "checked_by",
+        "remarks"
     ];
 
     protected $dates = ['deleted_at'];
 
     public function faculty(){
-        return $this->belongsTo(Faculty::class)->withDefault();
+        return $this->belongsTo(Faculty::class, 'faculty_id')->withDefault();
     }
 
+    public function checked_by(){
+        return $this->belongsTo(Faculty::class, 'checked_by')->withDefault();
+    }
 
     // [Default relationship]       - Default
     public function created_by_user()

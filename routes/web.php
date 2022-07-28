@@ -320,6 +320,21 @@ Route::group(['middleware' => ['role.checker'],
         return view('checker/dashboard/dashboard', ['page_title' => 'Dashboard']);
     })->name('checker_dashboard');
 
+    // ------------PROFILE--------------- //
+    Route::get('/profile/{id}', function ($id) {
+        return view('checker/profile/profile', ['page_title' => 'Profile', 'user_id' => $id]);
+    })->name('checker_profile');
+
+    // ------------SCHEDULE--------------- //
+    Route::get('/schedule', function () {
+        return view('checker/schedule/schedule', ['page_title' => 'Class Schedule']);
+    })->name('checker_schedule');
+
+    // ------------SCHEDULE VIEW--------------- //
+    Route::get('/schedule/{id}', function ($id) {
+        return view('checker/schedule_view/schedule_view', ['page_title' => 'Class Schedule', 'schedule_id' => $id]);
+    })->name('checker_schedule_view');
+
 });
 
 
@@ -342,6 +357,11 @@ Route::group(['middleware' => ['role.director'],
         return view('director/observation/observation', ['page_title' => 'Observation']);
     })->name('director_observation');
 
+    // ------------SCHEDULE VIEW--------------- //
+    Route::get('/schedule/{id}', function ($id) {
+        return view('director/observation_view/observation_view', ['page_title' => 'Observation', 'schedule_id' => $id]);
+    })->name('director_schedule_view');
+
     // ------------OBSERVATION--------------- //
     Route::get('/class_observation', function () {
         return view('director/class_observation/class_observation', ['page_title' => 'Observation']);
@@ -356,10 +376,7 @@ Route::group(['middleware' => ['role.director'],
         return view('director/class_observation_reports/class_observation_reports', ['page_title' => 'Observation']);
     })->name('director_class_observation_reports');
 
-    // ------------SCHEDULE VIEW--------------- //
-    Route::get('/schedule/{id}', function ($id) {
-        return view('director/observation_view/observation_view', ['page_title' => 'Observation', 'schedule_id' => $id]);
-    })->name('director_schedule_view');
+    
 
     // ------------MEETING - VIEW --------------- //
     Route::get('/meeting/{id}', function ($id) {

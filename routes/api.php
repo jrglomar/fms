@@ -225,6 +225,7 @@ use App\Http\Controllers\Api\v1\ClassAttendanceController;
          // Class Attendance
         Route::get('/class_attendance', [ClassAttendanceController::class, 'index']);
         Route::get('/class_attendance/{id}', [ClassAttendanceController::class, 'show']);
+        Route::get('/class_attendance/show_specific_class/{id}', [ClassAttendanceController::class, 'show_specific_class']);
         Route::get('/class_attendance/show_soft_deleted/{all}', [ClassAttendanceController::class, 'show_soft_deleted']);
 
     });

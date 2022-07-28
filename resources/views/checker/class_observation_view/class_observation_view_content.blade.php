@@ -1,54 +1,33 @@
-{{-- DATATABLES --}}
-<div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h4 class="text-dark">List of Class Attendance</h4>
-                    <div class="card-header-action">
-                        <button class="btn btn-primary" type="button" id="btnProofOfAttendance"
-                        aria-expanded="false" aria-controls="create_card">Add Proof of Attendance <i
-                        class="fas fa-plus"></i></button>
-                    </div>
-                </div>
-                <div class="card-body">
-                    <div class="d-flex mb-3 justify-content-start">
-                        <div id="dt_btn_div">
-                        </div>
-                    </div>
-
-                    <table class="table table-hover table-sm" id="dataTable" style="width:100%">
-                        <thead>
-                            <tr class="bg-primary text-light">
-                                <th>ID</th>
-                                <th>Created at</th>
-                                <th>Date of Class</th>
-                                <th>Proof of Attendance</th>
-                                <th>Checked by</th>
-                                <th>Status</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>ID</th>
-                                <th>Created at</th>
-                                <th>Date of Class</th>
-                                <th>Proof of Attendance</th>
-                                <th>Checked by</th>
-                                <th>Status</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
+<div class="row">
+    <div class="col-12">
+        <div class="float-right">
+            
+            <button class="btn btn-success btnUpdateStatus"><i class="fas fa-eye"></i> Update Status</button>
         </div>
     </div>
 </div>
 &nbsp;
-
+<div class="row">
+    <div class="col-12">
+        <div class="hero bg-white text-dark">
+            <div class="hero-inner">
+                <div class="d-flex justify-content-between">
+                    <h5> Observation Details </h5>
+                </div>          
+            </div>
+            <div class="card-body">
+                <div class="row px-4">
+                    <div class="col-12">
+                        <div class="font-weight-bold mb-2">Status: <span id="observation_status" class="font-weight-light">-</span></div>
+                        <div class="font-weight-bold mb-2">Date of Observation: <span id="observation_date_of_observation" class="font-weight-light">-</span></div>
+                        <div style="white-space:pre-line" class="font-weight-bold mb-2">Remarks: <span id="observation_remarks" class="font-weight-light">-</span></div>
+                    </div>
+                  </div>
+                
+            </div>
+        </div>
+    </div>
+</div>&nbsp;
 <div class="row">
     <div class="col-6">
         <div class="hero bg-white text-dark">

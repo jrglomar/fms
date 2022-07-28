@@ -58,6 +58,15 @@ class ClassAttendanceController extends Controller
         return ClassAttendance::find($id);
     }
 
+    public function show_specific_class($id)
+    {
+        //
+
+        return ClassAttendance::select("*")
+                ->where('class_schedule_id', $id)
+                ->get();
+    }
+
     /**
      * Update the specified resource in storage.
      *

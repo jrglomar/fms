@@ -5,11 +5,7 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <h4 class="text-dark">List of Class Attendance</h4>
-                    <div class="card-header-action">
-                        <button class="btn btn-primary" type="button" id="btnProofOfAttendance"
-                        aria-expanded="false" aria-controls="create_card">Add Proof of Attendance <i
-                        class="fas fa-plus"></i></button>
-                    </div>
+                    
                 </div>
                 <div class="card-body">
                     <div class="d-flex mb-3 justify-content-start">
@@ -35,8 +31,8 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th>Date of Class</th>
                                 <th>Proof of Attendance</th>
+                                <th>Date of Class</th>
                                 <th>Checked by</th>
                                 <th>Status</th>
                             </tr>

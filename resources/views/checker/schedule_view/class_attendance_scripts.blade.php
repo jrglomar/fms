@@ -9,6 +9,7 @@
         var CLASS_SCHEDULE_ID
         var CLASS_SCHEDULE_DATA
         var NEW_USER_DATA = JSON.parse(USER_DATA)
+        var USER_ID = NEW_USER_DATA.id
         var FACULTY_ID = NEW_USER_DATA.faculty.id
         // END OF GLOBAL VARIABLE
 
@@ -47,33 +48,10 @@
                     { data: "status"},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
-                                    return `<div class="text-center dropdown">
-                                            <div class="btn btn-sm btn-default" data-toggle="dropdown" role="button">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </div>
-                                            <div class="dropdown-menu dropdown-menu-right">
-                                                <div class="dropdown-item d-flex btnViewProofOfAttendance" id="${row.id}" role="button">
-                                                    <div style="width: 2rem">
-                                                        <i class="fas fa-eye"></i>
-                                                    </div>
-                                                    <div> View</div>
-                                                </div>
-                                                <div class="dropdown-item d-flex btnEditProofOfAttendance" id="${row.id}" role="button">
-                                                    <div style="width: 2rem">
-                                                        <i class="fas fa-edit"></i>
-                                                    </div>
-                                                    <div> Edit</div>
-                                                </div>
-                                                <div class="dropdown-divider"</div>
-                                            </div>
-                                            <div class="dropdown-item d-flex btnDeactivateProofOfAttendance" id="${row.id}" role="button">
-                                                <div style="width: 2rem">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </div>
-                                                <div style="color: red"> Delete</div>
-                                            </div>
-                                        </div>
-                                    </div>`;
+                                    return `</div>
+                                                <button type="button" class="btn btn-sm btn-success btnEditProofOfAttendance" id="${row.id}">
+                                                <div><i class="fas fa-edit"></i> Check Attendance</div>
+                                            </button>`;
                                 }
                                 else{
                                     return '<button class="btn btn-danger btn-sm">Activate</button>';
@@ -200,5 +178,46 @@
         });
         // END DELETE FUNCTION
         
+
+        $('#btnUpdateAttendanceStatus').on('click', function(e){
+            e.preventDefault()
+
+            let class_attendance_id = $('#class_attendance_id_e').val()
+                var form_url = BASE_API + class_attendance_id
+                let submission_data = {
+                    "status": $('#status_e').val(),
+                    "remarks": $('#remarks_e').val(),
+                    "checked_by": USER_ID
+                }
+
+                console.log(submission_data)
+                $.ajax({
+                    url: form_url,
+                    method: "PUT",
+                    data: JSON.stringify(submission_data),
+                    dataType: "JSON",
+                    headers: {
+                        "Accept": "application/json",
+                        "Authorization": API_TOKEN,
+                        "Content-Type": "application/json"
+                    },
+                    success: function(data){
+                        notification('info', 'Class Attendance')
+                        $("#editProofOfAttendanceForm").trigger("reset")
+                        $("#editProofOfAttendanceModal").modal("hide")
+                        setInterval(() => {
+                            location.reload()
+                        }, 1500);
+                    },
+                    error: function(error){
+                        $.each(error.responseJSON.errors, function(key,value) {
+                            swalAlert('warning', value)
+                        });
+                        console.log(error)
+                        console.log(`message: ${error.responseJSON.message}`)
+                        console.log(`status: ${error.status}`)
+                    }
+                })
+        })
     })
 </script>
