@@ -44,6 +44,7 @@
 @endsection
 
 @section('script')
+    @include('layouts/class_schedule_response')
     @include('checker.dashboard.dashboard_scripts')
 @endsection
 

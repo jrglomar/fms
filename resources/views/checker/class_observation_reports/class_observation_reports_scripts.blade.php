@@ -186,31 +186,31 @@
             console.log(checked)
             if(checked == 'All'){
                     dataTable
-                        .column(12)
+                        .column(13)
                         .search("")
                         .draw();
             }
-            else if(checked == 'Pending'){
+            else if(checked == 'Submitted'){
                 dataTable
-                        .column(12)
+                        .column(13)
                         .search($(this).val())
                         .draw();
             }
-            else if(checked == 'Ongoing'){
+            else if(checked == 'For Revision'){
                 dataTable
-                        .column(12)
+                        .column(13)
                         .search($(this).val())
                         .draw();
             }
-            else if(checked == 'Cancelled'){
+            else if(checked == 'Declined'){
                 dataTable
-                        .column(12)
+                        .column(13)
                         .search($(this).val())
                         .draw();
             }
-            else if(checked == 'Done'){
+            else if(checked == 'Approved'){
                 dataTable
-                        .column(12)
+                        .column(13)
                         .search($(this).val())
                         .draw();
             }

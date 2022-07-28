@@ -68,12 +68,7 @@
         <div class="col-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4 class="text-dark">Observation Reports</h4>
-                    {{-- <div class="card-header-action">
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
-                        aria-expanded="false" aria-controls="create_card">New activity <i
-                        class="fas fa-plus"></i></button>
-                    </div> --}}
+                    <h4 class="text-dark">Class Attendance</h4>
                 </div>
                 <div class="card-body">
                     <div class="d-flex mb-3 justify-content-start">
@@ -88,7 +83,7 @@
                                 <th>Created at</th>
                                 <th>Checked by</th>
                                 <th>Faculty</th>
-                                <th>Date of Class</th>
+                                <th width="8%">Date of Class</th>
                                 <th>Asgmt Code</th>
                                 <th>Subject Code</th>
                                 <th>Subject Title</th>
