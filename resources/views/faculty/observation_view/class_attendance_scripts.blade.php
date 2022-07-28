@@ -44,16 +44,19 @@
                             return data.first_name + ' ' + data.last_name 
                         }
                     }},
-                    { data: "status", render:function(data, type, row){
+                    { data: "status", render: function(data, type, row){
                         let status_html
                         if(data == 'Approved'){
                             status_html = `<span class="badge badge-success">${data}</span>`
                         }
                         else if(data == 'For Revision'){
-                            status_html = `<span class="badge badge-warning">${data}</span>`
+                            status_html = `<span class="badge badge-info">${data}</span>`
                         }
                         else if(data == 'Declined'){
                             status_html = `<span class="badge badge-danger">${data}</span>`
+                        }
+                        else if(data == 'Submitted'){
+                            status_html = `<span class="badge badge-secondary">${data}</span>`
                         }
                         else{
                             status_html = data

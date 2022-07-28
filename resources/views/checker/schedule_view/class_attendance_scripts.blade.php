@@ -45,7 +45,25 @@
                             return data.first_name + ' ' + data.last_name 
                         }
                     }},
-                    { data: "status"},
+                    { data: "status", render: function(data, type, row){
+                        let status_html
+                        if(data == 'Approved'){
+                            status_html = `<span class="badge badge-success">${data}</span>`
+                        }
+                        else if(data == 'For Revision'){
+                            status_html = `<span class="badge badge-info">${data}</span>`
+                        }
+                        else if(data == 'Declined'){
+                            status_html = `<span class="badge badge-danger">${data}</span>`
+                        }
+                        else if(data == 'Submitted'){
+                            status_html = `<span class="badge badge-secondary">${data}</span>`
+                        }
+                        else{
+                            status_html = data
+                        }
+                        return status_html
+                    }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
                                     return `</div>
@@ -190,34 +208,41 @@
                     "checked_by": FACULTY_ID
                 }
 
+                if(submission_data.status == ""){
+                    swalAlert('warning', 'Status is required')
+                }
+                else{
+                    $.ajax({
+                        url: form_url,
+                        method: "PUT",
+                        data: JSON.stringify(submission_data),
+                        dataType: "JSON",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+                        success: function(data){
+                            notification('info', 'Class Attendance')
+                            $("#editProofOfAttendanceForm").trigger("reset")
+                            $("#editProofOfAttendanceModal").modal("hide")
+                            setInterval(() => {
+                                location.reload()
+                            }, 1500);
+                        },
+                        error: function(error){
+                            $.each(error.responseJSON.errors, function(key,value) {
+                                swalAlert('warning', value)
+                            });
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        }
+                    })
+                }
+
                 console.log(submission_data)
-                $.ajax({
-                    url: form_url,
-                    method: "PUT",
-                    data: JSON.stringify(submission_data),
-                    dataType: "JSON",
-                    headers: {
-                        "Accept": "application/json",
-                        "Authorization": API_TOKEN,
-                        "Content-Type": "application/json"
-                    },
-                    success: function(data){
-                        notification('info', 'Class Attendance')
-                        $("#editProofOfAttendanceForm").trigger("reset")
-                        $("#editProofOfAttendanceModal").modal("hide")
-                        setInterval(() => {
-                            location.reload()
-                        }, 1500);
-                    },
-                    error: function(error){
-                        $.each(error.responseJSON.errors, function(key,value) {
-                            swalAlert('warning', value)
-                        });
-                        console.log(error)
-                        console.log(`message: ${error.responseJSON.message}`)
-                        console.log(`status: ${error.status}`)
-                    }
-                })
+                
         })
     })
 </script>

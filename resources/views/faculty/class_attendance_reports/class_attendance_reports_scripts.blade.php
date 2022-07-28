@@ -7,6 +7,8 @@
         var API_TOKEN = localStorage.getItem("API_TOKEN")
         var USER_DATA = localStorage.getItem("USER_DATA")
         var BASE_API = APP_URL + '/api/v1/class_attendance'
+        var NEW_USER_DATA = JSON.parse(USER_DATA)
+        var FACULTY_ID = NEW_USER_DATA.faculty.id
         // END OF GLOBAL VARIABLE
 
         let class_sched_data = class_schedule_response.data
@@ -22,8 +24,58 @@
                 } );
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
-                    url: BASE_API, 
+                    url: BASE_API + '/get_faculty_class_attendance/' + FACULTY_ID, 
                     dataSrc: ""
+                },'dom': 'Bfrtip',
+                'buttons': {
+                    dom: {
+                    button: {
+                        tag: 'button',
+                        className: ''
+                    }
+                    },
+                    buttons: [{
+                        extend: 'pdfHtml5',  
+                        text: 'Export as PDF',
+                        orientation: 'landscape',
+                        pageSize: 'LEGAL',
+                        exportOptions: {
+                            columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
+                            modifier: { order: 'current' }
+                        },
+                        className: 'btn btn-primary mr-2',
+                        titleAttr: 'PDF export.',
+                        extension: '.pdf',
+                        // download: 'open', // FOR NOT DOWNLOADING THE FILE AND OPEN IN NEW TAB
+                        title: function() {
+                            return "Class Attendance Report"
+                        },
+                        filename: function() {
+                            return "Class Attendance Report"
+                        },
+                        // customize: function(doc) {
+                        //     doc.content[1].table.widths =Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                        //     doc.defaultStyle.alignment = 'center';
+                        //     doc.styles.tableHeader.alignment = 'center';
+                        // },
+                    }, 
+                    {
+                        extend: 'excelHtml5',
+                        className: 'btn btn-success',
+                        titleAttr: 'Excel export.',
+                        text: 'Export as XLS',
+                        extension: '.xlsx',
+                        exportOptions: {
+                            columns: ':visible', // CAN USE ALSO AN ARRAY OF COLUMN LIKE [ 1, 2, 3, 4, 5, 6, 8, 9 ]
+                            modifier: { order: 'current' }
+                        },
+                        filename: function() {
+                            return "Class Attendance Report"
+                        },
+                        title: function() {
+                            return "Class Attendance Report"
+                        },
+                    }]
                 },
                 // "data": class_sched_data,
                 "paging": true,
@@ -99,18 +151,6 @@
                         return status_html
                     }},
                     { data: "date_of_class" },
-                    { data: "deleted_at", render: function(data, type, row){
-                                if (data == null){
-                                    return `</div>
-                                                <button type="button" class="btn btn-sm btn-success btnEditProofOfAttendance" id="${row.id}">
-                                                <div><i class="fas fa-edit"></i> Check Attendance</div>
-                                            </button>`;
-                                }
-                                else{
-                                    return '<button class="btn btn-danger btn-sm">Activate</button>';
-                                }
-                            }
-                    }
                     ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 13] }],
                 "order": [[1, "desc"]]

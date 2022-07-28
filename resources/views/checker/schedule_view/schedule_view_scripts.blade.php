@@ -44,13 +44,6 @@
             $('#room_number').html(data.room.room_number)
             $('#room_type').html(data.room.room_type)
 
-            // ROOM DETAILS MODAL
-            $('#room_building_modal').html(data.room.building)
-            $('#room_floor_modal').html(data.room.floor)
-            $('#room_status_modal').html(data.room.status)
-            $('#room_number_modal').html(data.room.room_number)
-            $('#room_type_modal').html(data.room.room_type)
-
             // SUBJECT DETAILS
             $('#assignment_code').html(data.assignment_code)
             $('#subject_code').html(data.subject_code)
@@ -59,7 +52,16 @@
             $('#teaching_hours').html(data.subject_offering.teaching_hours)
             $('#subject_description').html(data.subject_offering.curriculum_subject.subject.title)
 
-            // SUBJECT DETAILS
+            
+            // ROOM DETAILS MODAL
+            $('#room_building_modal').html(data.room.building)
+            $('#room_floor_modal').html(data.room.floor)
+            $('#room_status_modal').html(data.room.status)
+            $('#room_number_modal').html(data.room.room_number)
+            $('#room_type_modal').html(data.room.room_type)
+
+
+            // SUBJECT DETAILS MODAL
             $('#assignment_code_modal').html(data.assignment_code)
             $('#subject_code_modal').html(data.subject_code)
             $('#subject_schedule_modal').html(data.day_time)
@@ -190,9 +192,7 @@
                         return `</div>
                                     <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.id}">
                                     <div>Check Uploaded Files</div>
-                                </button>`
-
-                                            
+                                </button>`         
                     }}
                 ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 2] }],

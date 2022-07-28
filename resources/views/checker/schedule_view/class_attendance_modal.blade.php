@@ -217,7 +217,7 @@
                             <div class="form-group col-md-12">
                                 <label class="required-input">Date of Class</label>
                                 <input type="date" class="form-control date_of_class_e" id="date_of_class_e" name="date_of_class_e"
-                                placeholder="Select Date Schedule" tabindex="1" required>
+                                placeholder="Select Date Schedule" tabindex="1" required disabled>
                             </div>
                             <div class="form-group col-md-6">
                                 <label class="required-input">Start Time</label>
