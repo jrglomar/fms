@@ -44,12 +44,7 @@
                     }},
                     { data: "id", render: function(data, type, row){
                         return `
-                                    <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.id}">
-                                        <div>Check Uploaded Files</div>
-                                    </button>&nbsp;
-                                    <button type="button" class="btn btn-sm btn-danger btnRemoveRequired" id="${row.id}">
-                                        Unrequire
-                                    </button>
+                                <button class="btn btn-info btnViewDetails" id="${row.id}" data-value="${row.id}"><i class="fas fa-eye"></i></button>
                                 `
                     }}
                 ],
