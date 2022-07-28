@@ -413,6 +413,9 @@
                         return `</div>
                                     <button type="button" class="btn btn-sm btn-success btnViewDetails" id="${row.id}">
                                     <div>Check Uploaded Files</div>
+                                </button>&nbsp;
+                                <button type="button" class="btn btn-sm btn-danger btnRemoveRequired" id="${row.id}">
+                                    Unrequire
                                 </button>`
                     }}
                 ],
@@ -700,7 +703,6 @@
                 }
             })
         }
-
         get_roles()
 
         $('#role_filter').on('change', function(){
@@ -709,6 +711,69 @@
 
             table.column(4).search(this.value).draw();
         })
+
+        // Remove Required
+        $(document).on("click", ".btnRemoveRequired", function(){
+            var id = this.id;
+            let form_url = ATTENDANCE_API + id
+
+            $.ajax({
+                url: form_url,
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    "Content-Type": "application/json"
+                },
+
+                success: function(data){
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't able to remove this.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "red",
+                        confirmButtonText: "Yes, remove it!",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: ATTENDANCE_API + 'destroy/' + data.id,
+                                method: "DELETE",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data){
+                                    notification('error', 'Required User')
+                                    setInterval(() => {
+                                        location.reload()
+                                    }, 1000);
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            // ajax closing tag
+                            })
+                        }
+                    });
+                },
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
+            // ajax closing tag
+            })
+        });
 
         // ------------------------------------------------------------------------------------------------- //
             // UNSELECT ALL BUTTON ON REQUIRED FACULTY LIST MODAL

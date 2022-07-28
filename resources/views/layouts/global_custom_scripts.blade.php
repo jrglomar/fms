@@ -35,6 +35,8 @@
             $('#agenda').summernote('reset');
             $('#description').summernote('reset');
             $('#degree').val('').trigger("change");
+            $('#activity_type_id').val('').trigger("change");
+            Dropzone.forElement('#memo_upload').removeAllFiles(true)
         });
 
         $('#editModal').on('show.bs.modal', function() {

@@ -26,7 +26,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group col-md-12">
-                                <label>Descrition</label>
+                                <label>Description</label>
                                 <p id="description_view" class="card-text"></p>
                             </div>
                         </div>
