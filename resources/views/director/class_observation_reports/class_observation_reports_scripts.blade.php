@@ -108,18 +108,6 @@
                         return status_html
                     }},
                     { data: "date_of_observation" },
-                    { data: "deleted_at", render: function(data, type, row){
-                        let class_schedule_id = row.class_schedule_id
-                        let row_data = class_sched_data.filter( row => row.id == class_schedule_id)
-                                if (data == null){
-                                    return `
-                                            <button class="btn btn-info btnView" id="${row.id}" data-value="${row_data[0].id}"><i class="fas fa-eye"></i></button>`;
-                                }
-                                else{
-                                    return '<button class="btn btn-danger btn-sm">Activate</button>';
-                                }
-                            }
-                        }
                     ],
                 "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 5] }],
                 "order": [[1, "desc"]]
