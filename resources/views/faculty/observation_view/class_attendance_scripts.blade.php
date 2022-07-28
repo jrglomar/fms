@@ -36,15 +36,30 @@
                                     target="_blank">${row.proof_of_attendance_file_name}
                                 </button>`
                     }},
-                    { data: "updated_by", render: function(data, type,row){
-                        if(data == null){
+                    { data: "checked_by", render: function(data, type,row){
+                        if(data == null || data.length == 0){
                             return ''
                         }
                         else{
-                            return data
+                            return data.first_name + ' ' + data.last_name 
                         }
                     }},
-                    { data: "status"},
+                    { data: "status", render:function(data, type, row){
+                        let status_html
+                        if(data == 'Approved'){
+                            status_html = `<span class="badge badge-success">${data}</span>`
+                        }
+                        else if(data == 'For Revision'){
+                            status_html = `<span class="badge badge-warning">${data}</span>`
+                        }
+                        else if(data == 'Declined'){
+                            status_html = `<span class="badge badge-danger">${data}</span>`
+                        }
+                        else{
+                            status_html = data
+                        }
+                        return status_html
+                    }},
                     { data: "deleted_at", render: function(data, type, row){
                                 if (data == null){
                                     return `<div class="text-center dropdown">

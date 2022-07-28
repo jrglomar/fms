@@ -37,7 +37,10 @@
                         "class_schedule_id": $('#class_schedule_id_a').val(),
                         "faculty_id": FACULTY_ID,
                     }
-                    if(check_data.date_of_class == ""){
+                    if(myDropzone.files.length == 0){
+                        swalAlert('warning', 'Proof of attendance is required')
+                    }
+                    else if(check_data.date_of_class == ""){
                         swalAlert('warning', 'Date of class is required')
                     }
                     else if(check_data.start_time == "start_time" || check_data.end_time == "end_time"){

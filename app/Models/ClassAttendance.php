@@ -51,7 +51,7 @@ class ClassAttendance extends Model
         return $this->belongsTo(User::class,'updated_by');
     }
 
-    protected $with = ['faculty', 'updated_by_user'];
+    protected $with = ['faculty', 'checked_by', 'updated_by_user'];
 
     // ADDED FOR UUID INCREMENT ERROR
     public $incrementing = false;

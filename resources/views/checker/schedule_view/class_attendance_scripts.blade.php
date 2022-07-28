@@ -37,12 +37,12 @@
                                     target="_blank">${row.proof_of_attendance_file_name}
                                 </button>`
                     }},
-                    { data: "updated_by", render: function(data, type,row){
-                        if(data == null){
+                    { data: "checked_by", render: function(data, type,row){
+                        if(data == null || data.length == 0){
                             return ''
                         }
                         else{
-                            return data
+                            return data.first_name + ' ' + data.last_name 
                         }
                     }},
                     { data: "status"},
@@ -187,7 +187,7 @@
                 let submission_data = {
                     "status": $('#status_e').val(),
                     "remarks": $('#remarks_e').val(),
-                    "checked_by": USER_ID
+                    "checked_by": FACULTY_ID
                 }
 
                 console.log(submission_data)
