@@ -35,11 +35,11 @@
                             <tr class="bg-primary text-light">
                                 <th>ID</th>
                                 <th>Created at</th>
-                                <th width="10%">Assignment Code</th>
-                                <th>Faculty</th>
+                                <th width="15%">Faculty</th>
+                                <th width="8%">Asgmt Code</th>
                                 <th>Subject Code</th>
                                 <th>Subject Title</th>
-                                <th width="5%">Units</th>
+                                <th width="3%">Units</th>
                                 <th>Year & Section</th>
                                 <th>Room</th>
                                 <th>Schedule</th>
@@ -53,11 +53,11 @@
                             <tr>
                                 <th hidden>ID</th>
                                 <th hidden>Created at</th>
-                                <th width="10%">Assignment Code</th>
-                                <th>Faculty</th>
+                                <th width="15%">Faculty</th>
+                                <th width="8%">Asgmt Code</th>
                                 <th>Subject Code</th>
                                 <th>Subject Title</th>
-                                <th width="5%">Units</th>
+                                <th width="3%">Units</th>
                                 <th>Year & Section</th>
                                 <th>Room</th>
                                 <th>Schedule</th>

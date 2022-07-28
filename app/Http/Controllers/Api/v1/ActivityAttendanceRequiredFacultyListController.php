@@ -168,4 +168,37 @@ class ActivityAttendanceRequiredFacultyListController extends Controller
         ->whereNull('attendance_status')
         ->get();
     }
+
+    public function get_all_activities_of_specific_categoryANDfaculty($faculty_id, $category)
+    {
+        $activities = ActivityAttendanceRequiredFacultyList::select(
+            'activities.id', 
+            'activities.created_at',
+            'activities.created_by',
+            'activities.updated_at',
+            'activities.updated_by',
+            'activities.deleted_at',
+            'activities.title',
+            'activities.location',
+            'activities.start_datetime',
+            'activities.end_datetime',
+            'activities.agenda',
+            'activities.description',
+            'activities.is_required',
+            'activities.status',
+            'activities.memorandum_file_directory',
+            'activity_attendance_required_faculty_lists.faculty_id',
+            'activity_types.category',
+            'activity_types.title'
+        )
+        ->join("activities", "activities.id", "=", "activity_attendance_required_faculty_lists.activity_id")
+        ->join("activity_types", "activities.activity_type_id", "=", "activity_types.id")
+        ->join("faculties", "activity_attendance_required_faculty_lists.faculty_id", "=", "faculties.id")
+        ->where([
+            ['activity_attendance_required_faculty_lists.faculty_id','=', $faculty_id],
+            ['activity_types.category','=', $category]])
+        ->get();
+
+        return $activities;
+    }
 }

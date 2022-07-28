@@ -18,7 +18,7 @@
                             </div>
                         <div class="form-group col-md-12">
                             <label class="required-input" >Degree</label>
-                            <select id="degree_edit" name="degree_edit" class="form-control select2">
+                            <select id="degree_edit" name="degree_edit" class="form-control">
                                 <option disabled selected>List of degree/s</option>
                                 <option value="Bachelor’s Degree">Bachelor’s Degree</option>
                                 <option value="Master’s Degree">Master’s Degree</option>

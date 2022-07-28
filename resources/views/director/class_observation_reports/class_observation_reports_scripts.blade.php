@@ -10,6 +10,7 @@
         // END OF GLOBAL VARIABLE
 
         let class_sched_data = class_schedule_response.data
+        console.log(class_sched_data)
         
         // DATA TABLES FUNCTION
         function dataTable(){
@@ -18,7 +19,6 @@
                     var title = $('#dataTable thead th').eq( $(this).index() ).text();
                     $(this).html( '<input size="15" class="form-control" type="text" placeholder="'+title+'" data-index="'+i+'" />');
                 } );
-
                 dataTable = $('#dataTable').DataTable({
                 "ajax": {
                     url: BASE_API, 
@@ -75,18 +75,49 @@
                     }]
                 },
                 // "data": class_sched_data,
-                // "paging": true,
+                "paging": true,
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
-                    { data: "class_schedule_id", render: function(data, row){
-                        let row_data = class_sched_data.filter( row => row.id == data)
-                        return row_data[0].faculty.full_name
+                    { data: "created_by", render: function(data, type, row){
+                        return row.created_by_user.faculty.first_name + ' ' + row.created_by_user.faculty.last_name
                     }},
                     { data: "date_of_observation", render: function(data, type, row){
                         let class_schedule_id = row.class_schedule_id
                         let row_data = class_sched_data.filter( row => row.id == class_schedule_id)
                         return `${moment(data).format('LL')}, ${row_data[0].time}`
+                    }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].faculty.full_name
+                    }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].assignment_code
+                    }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].subject_code
+                    }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].subject_offering.curriculum_subject.subject.title
+                    }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].subject_offering.curriculum_subject.subject.units
+                    }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].subject_offering.section.name
+                    }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].room.room_building
+                    }},
+                    { data: "class_schedule_id", render: function(data, row){
+                        let row_data = class_sched_data.filter( row => row.id == data)
+                        return row_data[0].day_time
                     }},
                     { data: "status", render: function(data, type, row){
                         let status_html
@@ -109,7 +140,7 @@
                     }},
                     { data: "date_of_observation" },
                     ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 5] }],
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 13] }],
                 "order": [[1, "desc"]]
                 })
                 
@@ -128,7 +159,7 @@
                     function( settings, data, dataIndex ) {
                         var min  = $('#date_from').val();
                         var max  = $('#date_to').val();
-                        var dateOfObs = data[5] // Our date column in the table
+                        var dateOfObs = data[13] // Our date column in the table
                         
                         if  ( 
                                 ( min == "" || max == "" )
@@ -146,6 +177,7 @@
                 $('.date-range-filter').change( function() {
                     dataTable.draw();
                 });
+                
         }
         // END OF DATATABLE FUNCTION
 
@@ -154,37 +186,41 @@
             console.log(checked)
             if(checked == 'All'){
                     dataTable
-                        .column(4)
+                        .column(12)
                         .search("")
                         .draw();
             }
             else if(checked == 'Pending'){
                 dataTable
-                        .column(4)
+                        .column(12)
                         .search($(this).val())
                         .draw();
             }
             else if(checked == 'Ongoing'){
                 dataTable
-                        .column(4)
+                        .column(12)
                         .search($(this).val())
                         .draw();
             }
             else if(checked == 'Cancelled'){
                 dataTable
-                        .column(4)
+                        .column(12)
                         .search($(this).val())
                         .draw();
             }
             else if(checked == 'Done'){
                 dataTable
-                        .column(4)
+                        .column(12)
                         .search($(this).val())
                         .draw();
             }
         })
 
-        
+        $('#btnDateReset').on('click', function(){
+            $('.date-range-filter').val("")
+
+            dataTable.draw();
+        })
 
         // CALLING DATATABLE FUNCTION
         dataTable()

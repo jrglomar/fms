@@ -32,9 +32,15 @@
                 "columns": [
                     { data: "id"},
                     { data: "created_at"},
-                    { data: "assignment_code"},
                     { data: "faculty", render: function(data, row){
-                        return data.first_name + ' ' + data.last_name;
+                        let img = `<img class="mr-2 rounded-circle" width="20" height="20" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png">`
+                        if(data.image !=null){
+                            img = `<img class="mr-2 rounded-circle" width="20" height="20"  src="${APP_URL + '/' + data.image}">`
+                        }
+                        return `${img}` + data.first_name + ' ' + data.last_name;
+                    }},
+                    { data: "assignment_code", render: function(data, row){
+                        return `<p class="ml-4">${data}</p>`
                     }},
                     { data: "subject_code"},
                     { data: "subject_offering.curriculum_subject.subject.title"},
