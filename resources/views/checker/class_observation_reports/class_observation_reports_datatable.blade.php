@@ -49,16 +49,16 @@
           <input class="btnChangeStatus" type="radio" id="status_all" name="status_options" value="All" autocomplete="off" checked> All
         </label>&nbsp;
         <label class="btn btn-outline-secondary">
-          <input class="btnChangeStatus" type="radio" name="status_options" value="Pending" autocomplete="off"> Pending
+          <input class="btnChangeStatus" type="radio" name="status_options" value="Submitted" autocomplete="off"> Submitted
         </label>&nbsp;
         <label class="btn btn-outline-info">
-          <input class="btnChangeStatus" type="radio" name="status_options" value="Ongoing" autocomplete="off"> Ongoing
+          <input class="btnChangeStatus" type="radio" name="status_options" value="For Revision" autocomplete="off"> For Revision
         </label>&nbsp;
         <label class="btn btn-outline-danger">
-          <input class="btnChangeStatus" type="radio" name="status_options" value="Cancelled" autocomplete="off"> Cancelled
+          <input class="btnChangeStatus" type="radio" name="status_options" value="Declined" autocomplete="off"> Declined
         </label>&nbsp;
         <label class="btn btn-outline-success">
-          <input class="btnChangeStatus" type="radio" name="status_options" value="Done"  autocomplete="off"> Done
+          <input class="btnChangeStatus" type="radio" name="status_options" value="Approved"  autocomplete="off"> Approved
         </label>
     </div>
 </div>
@@ -69,7 +69,7 @@
         <div class="col-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4 class="text-dark">Observation Reports</h4>
+                    <h4 class="text-dark">Class Attendance Reports</h4>
                     {{-- <div class="card-header-action">
                         <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#create_card"
                         aria-expanded="false" aria-controls="create_card">New activity <i
@@ -81,8 +81,7 @@
                         <div id="dt_btn_div">
                         </div>
                     </div>
-
-                    <table class="table table-hover table-sm" id="dataTable" style="width:100%">
+                    <table class="table table-responsive table-hover table-sm" id="dataTable" style="width:100%">
                         <thead>
                             <tr class="bg-primary text-light">
                                 <th>ID</th>

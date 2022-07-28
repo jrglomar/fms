@@ -23,7 +23,7 @@
             maxFiles: 1,
 
             init: function () {
-
+                
                 var myDropzone = this;
 
                 // Update selector to match your button
@@ -85,6 +85,8 @@
             },
 
             success: function(response, data, file){
+                let f_initials = NEW_USER_DATA.faculty.first_name.charAt(0) + '' + NEW_USER_DATA.faculty.last_name.charAt(0) + '-' + moment().format("YYMMDD-HHmmss")
+                var extension = response.upload.filename.substring(response.upload.filename.lastIndexOf('.')+1);
 
                 var form_url = BASE_API
                 let submission_data = {
@@ -94,10 +96,9 @@
                     "class_schedule_id": $('#class_schedule_id_a').val(),
                     "faculty_id": FACULTY_ID,
                     "proof_of_attendance_file": data,
-                    "proof_of_attendance_file_name": response.upload.filename
+                    "proof_of_attendance_file_name": f_initials + '.' + extension
                 }
 
-                console.log(submission_data)
                 $.ajax({
                     url: form_url,
                     method: "POST",
@@ -294,6 +295,10 @@
             },
 
             success: function(response, data, file){
+
+                let f_initials = NEW_USER_DATA.faculty.first_name.charAt(0) + '' + NEW_USER_DATA.faculty.last_name.charAt(0) + '-' + moment().format("YYMMDD-HHmmss")
+                var extension = response.upload.filename.substring(response.upload.filename.lastIndexOf('.')+1);
+
                 let class_attendance_id = $('#class_attendance_id_e').val()
                 var form_url = BASE_API + class_attendance_id
                 let submission_data = {
@@ -303,7 +308,7 @@
                     "class_schedule_id": $('#class_schedule_id_e').val(),
                     "faculty_id": FACULTY_ID,
                     "proof_of_attendance_file": data,
-                    "proof_of_attendance_file_name": response.upload.filename
+                    "proof_of_attendance_file_name": f_initials + '.' + extension
                 }
 
                 console.log(submission_data)

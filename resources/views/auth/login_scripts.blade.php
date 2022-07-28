@@ -14,32 +14,43 @@
             if(IS_LOGGED_IN == true){
                 let USER_DATA = localStorage.getItem("USER_DATA")
                 let new_user_data = (JSON.parse(USER_DATA))
+
                 console.log(new_user_data)
-
-                let role = []
-
-                $.each(new_user_data.user_role, function(i){
-                    role.push(new_user_data.user_role[i].role.title)
-                })
-            
-                if(role.includes('Admin')){
-                window.location.href = "/admin/dashboard"
-                }
-                else if(role.includes('Academic Head')){
-                    window.location.href = "/acad_head/dashboard"
-                }
-                else if(role.includes('Faculty')){
-                    window.location.href = "/faculty/dashboard"
-                }
-                else if(role.includes('Checker')){
-                    window.location.href = "/checker/dashboard"
-                }
-                else if(role.includes('Director')){
-                    window.location.href = "/director/dashboard"
-                }
+                if(new_user_data.faculty == null){
+                        Swal.fire({
+                            text: 'This account details is need to set first. Please contact admin',
+                            icon: 'warning',
+                        }).then((result) => {
+                            window.location.href = "/logout"
+                        })
+                    }
                 else{
-                    window.location.href = "/"
+                    let role = []
+
+                    $.each(new_user_data.user_role, function(i){
+                        role.push(new_user_data.user_role[i].role.title)
+                    })
+                
+                    if(role.includes('Admin')){
+                    window.location.href = "/admin/dashboard"
+                    }
+                    else if(role.includes('Academic Head')){
+                        window.location.href = "/acad_head/dashboard"
+                    }
+                    else if(role.includes('Faculty')){
+                        window.location.href = "/faculty/dashboard"
+                    }
+                    else if(role.includes('Checker')){
+                        window.location.href = "/checker/dashboard"
+                    }
+                    else if(role.includes('Director')){
+                        window.location.href = "/director/dashboard"
+                    }
+                    else{
+                        window.location.href = "/"
+                    }
                 }
+                
             }
             else{
                 removeLoader()
@@ -71,38 +82,50 @@
                 },
                 success: function(data){
                     console.log(data)
-                    localStorage.setItem('API_TOKEN', data.token);
-                    localStorage.setItem('USER_DATA', JSON.stringify(data.user));
+                    console.log(data.user.faculty)
 
-                    let role = []
+                    if(data.user.faculty == null){
+                        Swal.fire({
+                            text: 'This account details is need to set first. Please contact admin',
+                            icon: 'warning',
+                        }).then((result) => {
+                            window.location.href = "/logout"
+                        })
+                    }
+                    else{
+                        localStorage.setItem('API_TOKEN', data.token);
+                        localStorage.setItem('USER_DATA', JSON.stringify(data.user));
 
-                    $.each(data.user.user_role, function(i){
-                        role.push(data.user.user_role[i].role.title)
-                    })
+                        let role = []
 
-                    notification('custom', 'Login Success')
+                        $.each(data.user.user_role, function(i){
+                            role.push(data.user.user_role[i].role.title)
+                        })
+
+                        notification('custom', 'Login Success')
+                        
+                        setInterval(function(){
+                            if(role.includes('Admin')){
+                                window.location.href = "/admin/dashboard"
+                            }
+                            else if(role.includes('Academic Head')){
+                                window.location.href = "/acad_head/dashboard"
+                            }
+                            else if(role.includes('Faculty')){
+                                window.location.href = "/faculty/dashboard"
+                            }
+                            else if(role.includes('Checker')){
+                                window.location.href = "/checker/dashboard"
+                            }
+                            else if(role.includes('Director')){
+                                window.location.href = "/director/dashboard"
+                            }
+                            else{
+                                window.location.href = "/"
+                            }
+                        }, 2000)
+                    }
                     
-                    // toastr.success('Login Success')
-                    setInterval(function(){
-                        if(role.includes('Admin')){
-                        window.location.href = "/admin/dashboard"
-                        }
-                        else if(role.includes('Academic Head')){
-                            window.location.href = "/acad_head/dashboard"
-                        }
-                        else if(role.includes('Faculty')){
-                            window.location.href = "/faculty/dashboard"
-                        }
-                        else if(role.includes('Checker')){
-                            window.location.href = "/checker/dashboard"
-                        }
-                        else if(role.includes('Director')){
-                            window.location.href = "/director/dashboard"
-                        }
-                        else{
-                            window.location.href = "/"
-                        }
-                    }, 2000)
                 },
                 error: function(error){
                     swalAlert('warning', error.responseJSON.message)
