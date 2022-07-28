@@ -28,7 +28,7 @@
     {{-- <link rel="stylesheet" href="https://demo.getstisla.com/assets/modules/dropzonejs/dropzone.css"> --}}
     <link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/airbnb.css">
 
 
     <!-- Template CSS -->

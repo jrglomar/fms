@@ -19,6 +19,7 @@
 
 {{-- MODAL --}}
 @include('faculty/observation_view/observation_view_modal')
+@include('faculty/observation_view/class_attendance_modal')
 
     {{-- CONTENT --}}
     @section('content')
@@ -35,6 +36,8 @@
 
 
 @section('script')
-@include('layouts/class_schedule_response')
+    @include('layouts/class_schedule_response')
+    @include('faculty/observation_view/class_attendance_scripts')
+    @include('faculty/observation_view/class_attendance_file_upload_scripts')
     @include('faculty/observation_view/observation_view_scripts')
 @endsection

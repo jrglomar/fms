@@ -1,8 +1,47 @@
-<div class="row">
-    <div class="col-12">
-        <div class="float-right">
-            
-            {{-- <button class="btn btn-primary btnSetObservation"><i class="fas fa-eye"></i> Set Observation</button> --}}
+{{-- DATATABLES --}}
+<div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h4 class="text-dark">List of Class Attendance</h4>
+                    <div class="card-header-action">
+                        <button class="btn btn-primary" type="button" id="btnProofOfAttendance"
+                        aria-expanded="false" aria-controls="create_card">Add Proof of Attendance <i
+                        class="fas fa-plus"></i></button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex mb-3 justify-content-start">
+                        <div id="dt_btn_div">
+                        </div>
+                    </div>
+
+                    <table class="table table-hover table-sm" id="dataTable" style="width:100%">
+                        <thead>
+                            <tr class="bg-primary text-light">
+                                <th>ID</th>
+                                <th>Created at</th>
+                                <th>Date of Class</th>
+                                <th>Checked by</th>
+                                <th>Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Created at</th>
+                                <th>Date of Class</th>
+                                <th>Checked by</th>
+                                <th>Status</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

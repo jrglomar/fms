@@ -70,11 +70,7 @@
                                 <a class="nav-link" href="/acad_head/class_observation">
                                     <span>Observation</span></a>
                             </li>
-                            <li class="{{ Request::segment(2) == 'class_observation_reports'
-                                            ? 'active' : ''}}">
-                                <a class="nav-link" href="/acad_head/class_observation_reports">
-                                    <span>Class Observation Reports</span></a>
-                            </li>
+                            
                         </ul>
                     </li>
                     
@@ -151,16 +147,22 @@
                     <li class="menu-header">Reports</li>
                         <li class="dropdown {{ Request::segment(2) == 'srd_reports' || 
                                                 Request::segment(2) == 'meeting_reports' ||
+                                                Request::segment(2) == 'class_observation_reports' ||
                                                 Request::segment(2) == 'activity_reports' 
                                                 ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
                         <span>Reports</span></a>
                         <ul class="dropdown-menu">
+                            <li style="padding-bottom: 1rem" class=" {{ Request::segment(2) == 'class_observation_reports'
+                                            ? 'active' : ''}}">
+                                <a class="nav-link" href="/acad_head/class_observation_reports">
+                                    <span>Class Observation Reports</span></a>
+                            </li>
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
-                            <li class="{{ Request::segment(2) == 'srd_reports' ? 'active' : ''}}">
+                            <li style="padding-bottom: 1rem" class="{{ Request::segment(2) == 'srd_reports' ? 'active' : ''}}">
                                     <a class="nav-link" href="/acad_head/srd_reports">
-                                        <span>SRD Report</span></a>
+                                        <span>Submission of Documents Report</span></a>
                                 </li>
                                 <!-- <li class="{{ Request::segment(2) == 'meeting_reports' ? 'active' : ''}}">
                                     <a class="nav-link" href="/acad_head/meeting_report">

@@ -90,7 +90,6 @@
                                 <th>Date of Observation</th>
                                 <th>Status</th>
                                 <th>Date of Observation</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>

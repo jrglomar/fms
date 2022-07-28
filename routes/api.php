@@ -34,7 +34,11 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
 use App\Http\Controllers\Api\v1\SpecializationController;
 use App\Http\Controllers\Api\v1\ProgramController;
 use App\Http\Controllers\Api\v1\FacultyEducationProfileController;
+<<<<<<< HEAD
 use App\Http\Controllers\Api\v1\FacultyProgramController;
+=======
+use App\Http\Controllers\Api\v1\ClassAttendanceController;
+>>>>>>> 74849dc29cf757b62f660a270dfa9593212476b4
 
 /*
 |--------------------------------------------------------------------------
@@ -229,6 +233,11 @@ use App\Http\Controllers\Api\v1\FacultyProgramController;
          Route::get('/activity_submitted_proof/search/{title}', [ActivityAttendanceSubmittedFileController::class, 'search']);
          Route::get('/activity_submitted_proof/show_soft_deleted/{all}', [ActivityAttendanceSubmittedFileController::class, 'show_soft_deleted']);
 
+         // Class Attendance
+        Route::get('/class_attendance', [ClassAttendanceController::class, 'index']);
+        Route::get('/class_attendance/{id}', [ClassAttendanceController::class, 'show']);
+        Route::get('/class_attendance/show_soft_deleted/{all}', [ClassAttendanceController::class, 'show_soft_deleted']);
+
     });
 
 
@@ -420,5 +429,12 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/submitted_requirement/restore/{id}', [SubmittedRequirementController::class, 'restore']);
         Route::post('/submitted_requirement/file_uploads', [SubmittedRequirementController::class, 'file_uploads']);
         Route::post('/submitted_requirement/multi_insert', [SubmittedRequirementController::class, 'multi_insert']);
+
+        // Class Attendance
+        Route::post('/class_attendance', [ClassAttendanceController::class, 'store']);
+        Route::put('/class_attendance/{id}', [ClassAttendanceController::class, 'update']);
+        Route::delete('/class_attendance/destroy/{id}', [ClassAttendanceController::class, 'destroy']);
+        Route::put('/class_attendance/restore/{id}', [ClassAttendanceController::class, 'restore']);
+        Route::post('/class_attendance/file_uploads', [ClassAttendanceController::class, 'file_uploads']);
     });
 });
