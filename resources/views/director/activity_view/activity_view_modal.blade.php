@@ -97,7 +97,7 @@
                 <div class="form-group">
                     <div class="form-group col-md-12">
                         <label class="required-input">Status</label>
-                        <select class="form-control js-example-basic-single" id="proof_status" name="proof_status">
+                        <select class="form-control js-example-basic-single" id="proof_status" name="proof_status" disabled>
                             <option selected disabled value="">Choose status</option>
                             <option value="Approved">Approved</option>
                             <option value="Declined">Declined</option>
@@ -107,7 +107,7 @@
                     <div class="form-group col-md-12">
                         <label>Remarks</label>
                         <textarea class="form-control" id="proof_remarks" name="proof_remarks"
-                        placeholder="Remarks" tabindex="1"></textarea>
+                        placeholder="Remarks" tabindex="1" disabled></textarea>
                     </div>
                     <div class="form-group col-md-12" hidden>
                         <label class="required-input">ID</label>
@@ -118,7 +118,7 @@
             
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success btnSubmittedUpdate">Update changes</button>
+                {{-- <button type="button" class="btn btn-success btnSubmittedUpdate">Update changes</button> --}}
             </div>
         </div>
     </div>
