@@ -1043,7 +1043,9 @@
                     {
                         let memorandum_file_directory = APP_URL + "/" + data.memorandum_file_directory
 
-                        memo_html += `<button class="btn btn-info" onclick="window.open('${memorandum_file_directory}')" target="_blank">Check Memo</button>`;
+                        memo_html += `<button class="btn btn-info" onclick="window.open('${memorandum_file_directory}')" target="_blank">Check Memo</button>
+                        <input type="file" accept=".jpg, .png, .jpeg, .pdf" class="form-control" id="memorandum_file_directory_edit" name="memorandum_file_directory_edit"
+                        tabindex="1">`;
                     }
 
                     $('#memo_edit_modal').html(memo_html);
