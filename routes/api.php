@@ -212,7 +212,8 @@ use App\Http\Controllers\Api\v1\ClassAttendanceController;
         Route::get('/activity/search/{name}', [ActivityController::class, 'search']);
         Route::get('/activity/show_soft_deleted/{all}', [ActivityController::class, 'show_soft_deleted']);
         Route::get('/activity/get_required_activity/{id}', [ActivityController::class, 'get_required_activity']); // FOR FACULTY CONTROLLER
-
+        Route::get('/activity/get_all_activities_of_specific_category/{category}', [ActivityController::class, 'get_all_activities_of_specific_category']); // FOR DASHBOARD
+        
         // Activity Attendance
         Route::get('/activity_attendance', [ActivityAttendanceRequiredFacultyListController::class, 'index']);
         Route::put('/activity_attendance/time-in-out/{id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'update']);
@@ -223,12 +224,15 @@ use App\Http\Controllers\Api\v1\ClassAttendanceController;
         Route::get('/activity_attendance/unrequired_faculty/{activity_id}', [ActivityAttendanceRequiredFacultyListController::class, 'get_unrequired_faculty']);
         Route::get('/activity_attendance/search_specific_activity_and_faculty/{activity_id}/{faculty_id}', [ActivityAttendanceRequiredFacultyListController::class, 'search_specific_activity_and_faculty']); //
         Route::get('/activity_attendance/faculty_list_time_out_null/{activity_id}', [ActivityAttendanceRequiredFacultyListController::class, 'faculty_list_time_out_null']); //
+        Route::get('/activity_attendance/get_all_activities_of_specific_categoryANDfaculty/{faculty_id}/{category}', [ActivityAttendanceRequiredFacultyListController::class, 'get_all_activities_of_specific_categoryANDfaculty']); // FOR FACULTY DASHBOARD
         
         // Activity Submitted Proof
         Route::get('/activity_submitted_proof', [ActivityAttendanceSubmittedFileController::class, 'index']);
          Route::get('/activity_submitted_proof/{id}', [ActivityAttendanceSubmittedFileController::class, 'show']);
          Route::get('/activity_submitted_proof/search/{title}', [ActivityAttendanceSubmittedFileController::class, 'search']);
          Route::get('/activity_submitted_proof/show_soft_deleted/{all}', [ActivityAttendanceSubmittedFileController::class, 'show_soft_deleted']);
+         
+
 
          // Class Attendance
         Route::get('/class_attendance', [ClassAttendanceController::class, 'index']);

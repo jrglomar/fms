@@ -9,8 +9,50 @@
         var BASE_API = APP_URL + '/api/v1/faculty/'
         var USER_ID = "{{ $user_id }}"
         var FACULTY_ID
-
         // END OF GLOBAL VARIABLE
+
+        // GET PROGRAM(S) OF FACULTY
+        function getAssignedProgramOfFaculty()
+        {
+            var form_url = APP_URL+'/api/v1/user/'+USER_ID;
+
+            $.ajax({
+                url: form_url,
+                method: "GET",
+                async: true,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    "Content-Type": "application/json"
+                },
+                success: function(data){
+                    if(data.faculty.faculty_program.length != 0)
+                    {
+                        let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
+                                                    <span class="text-primary"><strong>Program</strong></span>
+                                                </li>`;
+                        $.each(data.faculty.faculty_program, function(i){
+                            let requiredDocumentTitle = data.faculty.faculty_program[i].program.title 
+                            FacultyProgramList += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span class="text-primary">${requiredDocumentTitle}</span>
+                                                        <button type="button" class="btn btn-danger btnDeactivateFacultyProgram" id="${data.faculty.faculty_program[i].id}"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                                    </li>`;
+                        })
+                        $('#FacultyProgramList').html(FacultyProgramList)
+                    }
+                    else
+                    {
+                        let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
+                                                    <span class="text-primary"><strong>No Program added yet</strong></span>
+                                                </li>`; 
+                        
+                        $('#FacultyProgramList').html(FacultyProgramList)
+                    }
+                }  
+            })    
+        }
+        getAssignedProgramOfFaculty()
+        // END GET PROGRAM(S) OF FACULTY
 
         // SUBMIT EDUCATIONAL PROFILE FUNCTION
         $('#createForm').on('submit', function(e){
@@ -143,9 +185,7 @@
                                 notification('success', 'Faculty Program')
                                 $("#createFacultyProgramForm").trigger("reset")
                                 $('#createFacultyProgramModal').modal('hide')
-                                setInterval(() => {
-                                    location.reload()
-                                }, 1000);
+                                getAssignedProgramOfFaculty()
                             },
                             error: function(error){
                                 $.each(error.responseJSON.errors, function(key,value) {
@@ -354,43 +394,6 @@
         }
         // GET LIST OF SPECIALIZATION DATATABLE FUNCTION
 
-        // LOAD LOAD PROGRAMS IN MODAL
-        function loadPrograms(){
-            $.ajax({
-                url: APP_URL+'/api/v1/program/',
-                type: "GET",
-                dataType: "JSON",
-                success: function (responseData) 
-                {   
-
-                    let html = ""
-                    $.each(responseData, function (i, dataOptions) 
-                    {
-                        html +=
-                            "<option value='" +
-                            dataOptions.id +
-                            "'>" +
-                            dataOptions.title +
-                            "</option>";
-
-                    });
-
-                    $("#program_id").html(html);
-                },
-                error: function(error){
-                    $.each(error.responseJSON.errors, function(key,value) {
-                        swalAlert('warning', value)
-                    });
-                    console.log(error)
-                    console.log(`message: ${error.responseJSON.message}`)
-                    console.log(`status: ${error.status}`)
-                }
-            });
-        };
-
-        loadPrograms();
-        // END LOAD PROGRAMS IN MODAL
-
        // PROGRAM FUNCTION
        function getProgramList(){
 
@@ -588,29 +591,6 @@
                     if(data.faculty.image != null){
                         $('#faculty_image').attr("src", APP_URL + "/" + data.faculty.image)
                         console.log(APP_URL + "/" + data.faculty.image)
-                    }
-
-                    if(data.faculty.faculty_program.length != 0)
-                    {
-                        let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
-                                                    <span class="text-primary"><strong>Program</strong></span>
-                                                </li>`;
-                        $.each(data.faculty.faculty_program, function(i){
-                            let requiredDocumentTitle = data.faculty.faculty_program[i].program.title 
-                            FacultyProgramList += `<li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        <span class="text-primary">${requiredDocumentTitle}</span>
-                                                        <button type="button" class="btn btn-danger btnDeactivateFacultyProgram" id="${data.faculty.faculty_program[i].id}"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                                                    </li>`;
-                        })
-                        $('#FacultyProgramList').html(FacultyProgramList)
-                    }
-                    else
-                    {
-                        let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
-                                                    <span class="text-primary"><strong>No Program added yet</strong></span>
-                                                </li>`; 
-                        
-                        $('#FacultyProgramList').html(FacultyProgramList)
                     }
 
                     // FOR EDUCATIONAL BACKGROUND

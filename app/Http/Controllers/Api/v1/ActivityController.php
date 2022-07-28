@@ -171,6 +171,7 @@ class ActivityController extends Controller
 
         return Activity::where('email', 'like', '%'.$title.'%')->get();
     }
+
     public function get_required_activity($faculty_id)
     {
         $activities = Activity::select(
@@ -196,6 +197,15 @@ class ActivityController extends Controller
         ->where('faculty_id', $faculty_id)
         ->get();
 
+        return $activities;
+    }
+    
+    public function get_all_activities_of_specific_category($category)
+    {
+        $activities = Activity::select('*')
+        ->join("activity_types", "activity_types.id", "=", "activities.activity_type_id")
+        ->where('activity_types.category', $category)
+        ->get();
         return $activities;
     }
 }

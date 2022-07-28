@@ -10,7 +10,7 @@
         // END OF GLOBAL VARIABLE
 
         $.ajax({
-              url: APP_URL + '/api/v1/activity',
+              url: APP_URL + '/api/v1/activity/get_all_activities_of_specific_category/' + "Activity",
               type: "GET",
               dataType: "JSON",
     
@@ -70,7 +70,7 @@
         })
 
         $.ajax({
-              url: APP_URL + '/api/v1/meeting',
+              url: APP_URL + '/api/v1/activity/get_all_activities_of_specific_category/' + "Meeting",
               type: "GET",
               dataType: "JSON",
     
@@ -185,9 +185,6 @@
               }
         })
         
-
-
-
         removeLoader()
     // END OF JQUERY FUNCTIONS
     });
