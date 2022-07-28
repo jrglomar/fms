@@ -34,6 +34,7 @@ use App\Http\Controllers\Api\v1\ClassScheduleController;
 use App\Http\Controllers\Api\v1\SpecializationController;
 use App\Http\Controllers\Api\v1\ProgramController;
 use App\Http\Controllers\Api\v1\FacultyEducationProfileController;
+use App\Http\Controllers\Api\v1\FacultyProgramController;
 use App\Http\Controllers\Api\v1\ClassAttendanceController;
 
 /*
@@ -98,6 +99,13 @@ use App\Http\Controllers\Api\v1\ClassAttendanceController;
         Route::get('/faculty_education_profile/get_all_educational_background_of_faculty/{faculty_id}', [FacultyEducationProfileController::class, 'get_all_educational_background_of_faculty']);
         Route::get('/faculty_education_profile/search/{name}', [FacultyEducationProfileController::class, 'search']);
         Route::get('/faculty_education_profile/show_soft_deleted/{all}', [FacultyEducationProfileController::class, 'show_soft_deleted']);
+
+         // Faculty Program
+         Route::get('/faculty_program', [FacultyProgramController::class, 'index']);
+         Route::get('/faculty_program/{id}', [FacultyProgramController::class, 'show']);
+         Route::get('/faculty_program/search/{faculty_id}', [FacultyProgramController::class, 'search']);
+         Route::get('/faculty_program/search_existing/{faculty_id}/{program_id}', [FacultyProgramController::class, 'search_existing']);
+         Route::get('/faculty_program/show_soft_deleted/{all}', [FacultyProgramController::class, 'show_soft_deleted']);
 
         // Faculty
         Route::get('/faculty', [FacultyController::class, 'index']);
@@ -279,6 +287,12 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
         Route::put('/faculty_education_profile/{id}', [FacultyEducationProfileController::class, 'update']);
         Route::delete('/faculty_education_profile/destroy/{id}', [FacultyEducationProfileController::class, 'destroy']);
         Route::put('/faculty_education_profile/restore/{id}', [FacultyEducationProfileController::class, 'restore']);
+
+        // Faculty Program
+        Route::post('/faculty_program', [FacultyProgramController::class, 'store']);
+        Route::put('/faculty_program/{id}', [FacultyProgramController::class, 'update']);
+        Route::delete('/faculty_program/destroy/{id}', [FacultyProgramController::class, 'destroy']);
+        Route::put('/faculty_program/restore/{id}', [FacultyProgramController::class, 'restore']);
 
         // Faculty
         Route::post('/faculty', [FacultyController::class, 'store']);

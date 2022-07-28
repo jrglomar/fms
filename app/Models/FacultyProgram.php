@@ -28,7 +28,7 @@ class FacultyProgram extends Model
         // protected $with = ['users','created_by_user','updated_by_user'];
 
         // [Declare relationships here]
-            public function faculty(){
+            public function program_faculty(){
                 return $this->belongsTo(Faculty::class, 'faculty_id')->without('faculty_id');
                 // return $this->belongsTo(RequirementBin::class)->withDefault();
             }
@@ -49,7 +49,7 @@ class FacultyProgram extends Model
             return $this->belongsTo(User::class,'updated_by');
         }
 
-        protected $with = ['faculty', 'program','created_by_user','updated_by_user'];
+        protected $with = ['program_faculty', 'program','created_by_user','updated_by_user'];
 
         // [Added for UUID Incrementation]      - Default
         public $incrementing = false;

@@ -70,7 +70,6 @@ class FacultyController extends Controller
             'faculty_type_id' => 'required',
             'designation_id' => 'required',
             'specialization_id' => 'required',
-            'program_id' => 'required',
         ]);
 
         return Faculty::create($request->all());

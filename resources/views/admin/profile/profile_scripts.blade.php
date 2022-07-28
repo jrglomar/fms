@@ -90,6 +90,136 @@
         }
         // GET LIST OF F_TYPES DATATABLE FUNCTION
 
+        // FOR FACULTY PROGRAM ADD BUTTON
+        $('#createFacultyProgram').on('click', function(){
+            $('#createFacultyProgramModal').modal('show')
+        })
+        // END FOR FACULTY PROGRAM ADD BUTTON
+
+        // ADD FACULTY PROGRAM FUNCTION
+        $('#createFacultyProgramForm').on('submit', function(e){
+            e.preventDefault();
+
+
+            var faculty_id = $('#faculty_id').val()
+
+            var form_url = APP_URL + '/api/v1/faculty_program'
+            var form = $("#createFacultyProgramForm").serializeArray();
+            let data = {}
+
+            $.each(form, function(){
+                data[[this.name]] = this.value;
+            })
+
+            var program_id = data.program_id
+
+            console.log("116")
+            console.log(faculty_id)
+            console.log(program_id)
+            console.log(data)
+
+
+            $.ajax({
+                url: APP_URL + '/api/v1/faculty_program/search_existing/' + faculty_id + '/' + program_id,
+                type: "GET",
+                dataType: "JSON",
+                success: function (responseData) 
+                {   
+                    if(responseData.length == 0)
+                    {
+                        console.log(responseData)
+                        //  ajax opening tag
+                        $.ajax({
+                            url: form_url,
+                            method: "POST",
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(data){
+                                notification('success', 'Faculty Program')
+                                $("#createFacultyProgramForm").trigger("reset")
+                                $('#createFacultyProgramModal').modal('hide')
+                                setInterval(() => {
+                                    location.reload()
+                                }, 1000);
+                            },
+                            error: function(error){
+                                $.each(error.responseJSON.errors, function(key,value) {
+                                    swalAlert('warning', value)
+                                });
+                                console.log(error)
+                                console.log(`message: ${error.responseJSON.message}`)
+                                console.log(`status: ${error.status}`)
+                            }
+                        // ajax closing tag
+                        })
+                    }
+                    else if (responseData.length > 0)
+                    {
+                        swalAlert('warning', 'The program is already added.')
+                    }        
+                },
+                error: function(error){
+                    $.each(error.responseJSON.errors, function(key,value) {
+                        swalAlert('warning', value)
+                    });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
+                }
+            });
+        });
+        // END ADD FACULTY PROGRAM FUNCTION
+
+        // FOR REMOVING THE PROGRAM OF FACULTY FUNCTION
+        $(document).on("click", ".btnDeactivateFacultyProgram", function(){
+            var id = this.id;
+
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't able to remove this.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "red",
+                confirmButtonText: "Yes, remove it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: APP_URL + '/api/v1/faculty_program/destroy/' + id,
+                        method: "DELETE",
+                        headers: {
+                            "Accept": "application/json",
+                            "Authorization": API_TOKEN,
+                            "Content-Type": "application/json"
+                        },
+
+                        success: function(data){
+                            notification('error', 'Faculty Program')
+                            setInterval(() => {
+                                location.reload()
+                            }, 1000);
+                        },
+                        error: function(error){
+                            $.each(error.responseJSON.errors, function(key,value) {
+                                swalAlert('warning', value)
+                            });
+                            console.log(error)
+                            console.log(`message: ${error.responseJSON.message}`)
+                            console.log(`status: ${error.status}`)
+                        }
+                    // ajax closing tag
+                    })
+                }
+            });
+        });
+        
+        // END FOR REMOVING THE PROGRAM OF FACULTY FUNCTION
+
+
         // GET LIST OF ROLE DATATABLE FUNCTION
         function getRoleList(){
             var form_url = APP_URL+'/api/v1/role';
@@ -224,38 +354,67 @@
         }
         // GET LIST OF SPECIALIZATION DATATABLE FUNCTION
 
-        // GET LIST OF PROGRAM DATATABLE FUNCTION
-        function getProgramList(){
-            var form_url = APP_URL+'/api/v1/program';
-
+        // LOAD LOAD PROGRAMS IN MODAL
+        function loadPrograms(){
             $.ajax({
-                url: form_url,
-                method: "GET",
-                headers: {
-                    "Accept": "application/json",
-                    "Authorization": API_TOKEN,
-                    "Content-Type": "application/json"
-                },
+                url: APP_URL+'/api/v1/program/',
+                type: "GET",
+                dataType: "JSON",
+                success: function (responseData) 
+                {   
 
-                success: function(data){
+                    let html = ""
+                    $.each(responseData, function (i, dataOptions) 
+                    {
+                        html +=
+                            "<option value='" +
+                            dataOptions.id +
+                            "'>" +
+                            dataOptions.title +
+                            "</option>";
 
-                    let id_select = '<option disabled selected>List of program/s</option>'
-                    $.each(data, function (i){
-                        id_select += `<option value="${data[i].id}">${data[i].title}</option>`
-                    })
+                    });
 
-                    $('#program_id').html(id_select)
-                    // $('#faculty_type_id_edit').html(id_select)
+                    $("#program_id").html(html);
                 },
                 error: function(error){
                     $.each(error.responseJSON.errors, function(key,value) {
                         swalAlert('warning', value)
                     });
+                    console.log(error)
+                    console.log(`message: ${error.responseJSON.message}`)
+                    console.log(`status: ${error.status}`)
                 }
-            // ajax closing tag
+            });
+        };
+
+        loadPrograms();
+        // END LOAD PROGRAMS IN MODAL
+
+       // PROGRAM FUNCTION
+       function getProgramList(){
+
+            var program_url = APP_URL+'/api/v1/program'
+
+            $.ajax({
+                url: program_url,
+                type: "GET",
+                dataType: "JSON",
+
+                success: function(data){
+
+                    var html = '<option value="" disabled selected>List of Program/s</option>'
+
+                    for(var i=0; i < data.length; i++){
+                    html += `<option value="${data[i].id}">${data[i].title}</option>`
+                    }
+                    
+                    $('#program_id').html(html);
+                    console.log(html)
+                }
             })
         }
-        // GET LIST OF PROGRAM DATATABLE FUNCTION
+        // END OF PROGRAM FUNCTION
 
         // GET EDUCAITONAL PROFILE FUNCTION
         function getFacultyEducationalProfile(){
@@ -429,6 +588,29 @@
                     if(data.faculty.image != null){
                         $('#faculty_image').attr("src", APP_URL + "/" + data.faculty.image)
                         console.log(APP_URL + "/" + data.faculty.image)
+                    }
+
+                    if(data.faculty.faculty_program.length != 0)
+                    {
+                        let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
+                                                    <span class="text-primary"><strong>Program</strong></span>
+                                                </li>`;
+                        $.each(data.faculty.faculty_program, function(i){
+                            let requiredDocumentTitle = data.faculty.faculty_program[i].program.title 
+                            FacultyProgramList += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span class="text-primary">${requiredDocumentTitle}</span>
+                                                        <button type="button" class="btn btn-danger btnDeactivateFacultyProgram" id="${data.faculty.faculty_program[i].id}"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                                    </li>`;
+                        })
+                        $('#FacultyProgramList').html(FacultyProgramList)
+                    }
+                    else
+                    {
+                        let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
+                                                    <span class="text-primary"><strong>No Program added yet</strong></span>
+                                                </li>`; 
+                        
+                        $('#FacultyProgramList').html(FacultyProgramList)
                     }
 
                     // FOR EDUCATIONAL BACKGROUND
