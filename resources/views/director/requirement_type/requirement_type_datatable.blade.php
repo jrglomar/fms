@@ -18,7 +18,7 @@
                                 <th>Created at</th>
                                 <th>Title</th>
                                 <th>Description</th>
-                                <th class="text-center">Action</th>
+                                <th class="justify-content-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -9,7 +9,7 @@
             PUPQC FMS
         </li>
         <li class="breadcrumb-item">
-            Academic Head Reports
+            Director Reports
         </li>
         <li class="breadcrumb-item" id="director_requirement_bin">
         <a href="#">Activity Reports</a>

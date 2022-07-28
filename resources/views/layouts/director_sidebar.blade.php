@@ -163,10 +163,6 @@
                                     <a class="nav-link" href="/director/srd_reports">
                                         <span>SRD Report</span></a>
                                 </li>
-                                <li class="{{ Request::segment(2) == 'meeting_reports' ? 'active' : ''}}">
-                                    <a class="nav-link" href="/director/meeting_reports">
-                                        <span>Meeting Report</span></a>
-                                </li>
                                 <li class="{{ Request::segment(2) == 'activity_reports' ? 'active' : ''}}">
                                     <a class="nav-link" href="/director/activity_reports">
                                         <span>Activity Report</span></a>
