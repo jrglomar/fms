@@ -52,7 +52,7 @@
                                                 ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
-                        <span>Observation</span></a>
+                        <span>Class Section</span></a>
                         <ul class="dropdown-menu">
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
                             <li class="{{ Request::segment(2) == 'schedule' || 
