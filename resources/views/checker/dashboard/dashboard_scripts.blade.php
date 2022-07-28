@@ -105,7 +105,7 @@
                   datasets: [
                     {
                       data: [sub,fr,dec,app],
-                      backgroundColor : ['#cdd3d8', '#00a65a', '#f39c12', '#f56954', ],
+                      backgroundColor : ['#cdd3d8', '#f39c12', '#f56954', '#00a65a',],
                     }
                   ]
                 }
