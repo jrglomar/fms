@@ -1,6 +1,3 @@
-
-&nbsp;
-
 <div class="row">
     <div class="col-6">
         <div class="hero bg-white text-dark">

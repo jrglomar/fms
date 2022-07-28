@@ -37,6 +37,11 @@
                                 <th>Created at</th>
                                 <th>Faculty</th>
                                 <th>Date of Observation</th>
+                                <th>Asgmt Code</th>
+                                <th>Subject Title</th>
+                                <th>Year & Section</th>
+                                <th>Room</th>
+                                <th>Subject Schedule</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -50,7 +55,13 @@
                                 <th>Created at</th>
                                 <th>Faculty</th>
                                 <th>Date of Observation</th>
-                                <th>Status</th> 
+                                <th>Asgmt Code</th>
+                                <th>Subject Title</th>
+                                <th>Year & Section</th>
+                                <th>Room</th>
+                                <th>Subject Schedule</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
                         </tfoot>
                     </table>
