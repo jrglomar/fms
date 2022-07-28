@@ -1,7 +1,6 @@
 
 <script>
     $(document).ready(function(){
-
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
@@ -11,11 +10,35 @@
         var FACULTY_ID
         // END OF GLOBAL VARIABLE
 
+        // PAST DATE RESTRICTION ON INPUT="DATE"
+            // To set the minimum of date picker.....
+            FilterPastDate = () =>
+            {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+                
+                if (dd < 10) {
+                dd = '0' + dd;
+                }
+                
+                if (mm < 10) {
+                mm = '0' + mm;
+                } 
+                    
+                today = yyyy + '-' + mm + '-' + dd;
+                document.getElementById("hire_date").setAttribute("max", today); // "min" or "max"
+                document.getElementById("birthdate").setAttribute("max", today); // "min" or "max"
+                // document.getElementById("date").setAttribute("max", today); // "min" or "max"
+            }
+            FilterPastDate()
+        // END PAST DATE RESTRICTION ON INPUT="DATE"
+
         // GET PROGRAM(S) OF FACULTY
         function getAssignedProgramOfFaculty()
         {
             var form_url = APP_URL+'/api/v1/user/'+USER_ID;
-
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -26,25 +49,27 @@
                     "Content-Type": "application/json"
                 },
                 success: function(data){
-                    if(data.faculty.faculty_program.length != 0)
+                    console.log(data)
+                    if(data.faculty.faculty_program.length === 0)
                     {
                         let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
-                                                    <span class="text-primary"><strong>Program</strong></span>
-                                                </li>`;
-                        $.each(data.faculty.faculty_program, function(i){
-                            let requiredDocumentTitle = data.faculty.faculty_program[i].program.title 
-                            FacultyProgramList += `<li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        <span class="text-primary">${requiredDocumentTitle}</span>
-                                                        <button type="button" class="btn btn-danger btnDeactivateFacultyProgram" id="${data.faculty.faculty_program[i].id}"><i class="fa fa-minus" aria-hidden="true"></i></button>
-                                                    </li>`;
-                        })
+                                                    <span class="text-primary"><strong>No Program added yet</strong></span>
+                                                </li>`; 
+                        
                         $('#FacultyProgramList').html(FacultyProgramList)
                     }
                     else
                     {
                         let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
-                                                    <span class="text-primary"><strong>No Program added yet</strong></span>
-                                                </li>`; 
+                                                    <span class="text-primary"><strong>Program</strong></span>
+                                                </li>`;
+
+                        $.each(data.faculty.faculty_program, function(i){
+                            let requiredDocumentTitle = data.faculty.faculty_program[i].program.title 
+                            FacultyProgramList += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <span class="text-primary">&nbsp;&nbsp;&nbsp${requiredDocumentTitle}</span>
+                                                    </li>`;
+                        })
                         
                         $('#FacultyProgramList').html(FacultyProgramList)
                     }
@@ -63,13 +88,15 @@
             console.log(faculty_id);
 
             var form_url = APP_URL + '/api/v1/faculty_education_profile/'
-            var form = $("#createForm").serializeArray();
-            let data = {}
+            let data = {
+                "degree": $('#degree').val(),
+                "program": $('#program').val(),
+                "school": $('#school').val(),
+                "year_of_attendance": $('#year_of_attendance').val(),
+                "faculty_id": faculty_id
+            }
 
-            $.each(form, function(){
-                data[[this.name]] = this.value;
-            })
-
+            console.log(data)
             // ajax opening tag
             $.ajax({
                 url: form_url,
@@ -185,7 +212,7 @@
                                 notification('success', 'Faculty Program')
                                 $("#createFacultyProgramForm").trigger("reset")
                                 $('#createFacultyProgramModal').modal('hide')
-                                getAssignedProgramOfFaculty();
+                                getAssignedProgramOfFaculty()
                             },
                             error: function(error){
                                 $.each(error.responseJSON.errors, function(key,value) {
@@ -413,7 +440,6 @@
                     }
                     
                     $('#program_id').html(html);
-                    console.log(html)
                 }
             })
         }
@@ -531,7 +557,7 @@
                                                                         '<span><b>Year of Attendance: </b>' +
                                                                     '</div>' +
                                                                     '<div class="col-md-12 text-center">' +
-                                                                        '<span> ' + 
+                                                                        '<span>' + 
                                                                             year_of_attendance +
                                                                         '</span>' +
                                                                     '</div>' +
@@ -593,8 +619,17 @@
                         console.log(APP_URL + "/" + data.faculty.image)
                     }
 
-                    $('#FacultyProgramList').html(FacultyProgramList)
+                    var faculty_user_role = ""
+                    var count = data.user_role.length
 
+                    for (var i=0; i<count; i++)
+                    {
+                        faculty_user_role += data.user_role[i].role.title + ", "
+                        $('#faculty_role').append(faculty_user_role);
+                    }
+                    
+                    $('#faculty_role').html(faculty_user_role);
+                    $('#faculty_email').html(data.email);
                     // FOR EDUCATIONAL BACKGROUND
                     $('#faculty_id').val(data.faculty.id);
                     // END FOR EDUCATIONAL BACKGROUND

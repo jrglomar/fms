@@ -138,36 +138,23 @@
                         <input hidden type="file" id="uploadImage" name="uploadImage" accept="image/*" size="20" class="form-control-file">
                         
                         </div>
-
+                        <br>
                         <form id="updateUserForm" data-parsley-validate>
-                            {{-- EMAIL --}}
                             <div class="form-row text-center">
                                 <div class="col-md-12">
                                     <h6 class="text-sm" for="email">Email: 
                                     <label class="text-dark" id="email"></label></h6>
+                                    <p id="faculty_email"></p>
                                     
-                                    {{-- <label disabled type="email" class="form-control" id="email"> --}}
                                 </div>
                                 <div class="col-md-12">
                                     <h6 class="text-sm" for="user_role">Role: 
                                     <label class="text-dark" id="user_role"></label></h6>
-                                    {{-- <label disabled type="email" class="form-control" id="email"> --}}
+                                    <p id="faculty_role"></p>
+                                    
                                 </div>
                                 <div class="form-group col-md-2"></div>
                             </div>
-
-                            
-                            {{-- USER ROLE --}}
-                            <div class="form-row">
-                                <div class="form-group col-md-2">
-                                    <label class="required-input">User Role</label>
-                                </div>
-                                <div class="form-group col-md-10" id="role_id">
-                                    
-                                </div>
-                            </div>
-
-                            <button type="submit" class="btn btn-success float-right" >Save Changes</button>
                         </form>
 
                     </div>
@@ -294,11 +281,11 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label class="required-input" for="birthdate">Birthdate</label>
-                                    <input type="date" class="form-control" id="birthdate" name="birthdate" required>
+                                    <input type="date" class="form-control" id="birthdate" name="birthdate" disabled>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label class="required-input" for="birthplace">Birthplace</label>
-                                    <input  type="text" class="form-control" id="birthplace" name="birthplace" disabled>
+                                    <input  type="text" class="form-control" id="birthplace" name="birthplace" required>
                                 </div>
                             </div>
                             <div class="form-row">

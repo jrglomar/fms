@@ -1,7 +1,6 @@
 
 <script>
     $(document).ready(function(){
-
         // GLOBAL VARIABLE
         var APP_URL = {!! json_encode(url('/')) !!}
         var API_TOKEN = localStorage.getItem("API_TOKEN")
@@ -11,11 +10,35 @@
         var FACULTY_ID
         // END OF GLOBAL VARIABLE
 
+        // PAST DATE RESTRICTION ON INPUT="DATE"
+            // To set the minimum of date picker.....
+            FilterPastDate = () =>
+            {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; //January is 0!
+                var yyyy = today.getFullYear();
+                
+                if (dd < 10) {
+                dd = '0' + dd;
+                }
+                
+                if (mm < 10) {
+                mm = '0' + mm;
+                } 
+                    
+                today = yyyy + '-' + mm + '-' + dd;
+                document.getElementById("hire_date").setAttribute("max", today); // "min" or "max"
+                document.getElementById("birthdate").setAttribute("max", today); // "min" or "max"
+                // document.getElementById("date").setAttribute("max", today); // "min" or "max"
+            }
+            FilterPastDate()
+        // END PAST DATE RESTRICTION ON INPUT="DATE"
+
         // GET PROGRAM(S) OF FACULTY
         function getAssignedProgramOfFaculty()
         {
             var form_url = APP_URL+'/api/v1/user/'+USER_ID;
-
             $.ajax({
                 url: form_url,
                 method: "GET",
@@ -26,27 +49,37 @@
                     "Content-Type": "application/json"
                 },
                 success: function(data){
-                    if(data.faculty.faculty_program.length != 0)
+                    console.log(data)
+                    if (data.faculty != null)
                     {
-                        let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
-                                                    <span class="text-primary"><strong>Program</strong></span>
-                                                </li>`;
-                        $.each(data.faculty.faculty_program, function(i){
-                            let requiredDocumentTitle = data.faculty.faculty_program[i].program.title 
-                            FacultyProgramList += `<li class="list-group-item d-flex justify-content-between align-items-center">
-                                                        <span class="text-primary">${requiredDocumentTitle}</span>
-                                                        <button type="button" class="btn btn-danger btnDeactivateFacultyProgram" id="${data.faculty.faculty_program[i].id}"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                        if(data.faculty.faculty_program.length === 0)
+                        {
+                            let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
+                                                        <span class="text-primary"><strong>No Program added yet</strong></span>
+                                                    </li>`; 
+                            
+                            $('#FacultyProgramList').html(FacultyProgramList)
+                        }
+                        else
+                        {
+                            let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
+                                                        <span class="text-primary"><strong>Program</strong></span>
                                                     </li>`;
-                        })
-                        $('#FacultyProgramList').html(FacultyProgramList)
+
+                            $.each(data.faculty.faculty_program, function(i){
+                                let requiredDocumentTitle = data.faculty.faculty_program[i].program.title 
+                                FacultyProgramList += `<li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <span class="text-primary">${requiredDocumentTitle}</span>
+                                                            <button type="button" class="btn btn-danger btnDeactivateFacultyProgram" id="${data.faculty.faculty_program[i].id}"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                                        </li>`;
+                            })
+                            
+                            $('#FacultyProgramList').html(FacultyProgramList)
+                        }
                     }
-                    else
+                    else 
                     {
-                        let FacultyProgramList = `<li class="list-group-item d-flex justify-content-between" disabled>
-                                                    <span class="text-primary"><strong>No Program added yet</strong></span>
-                                                </li>`; 
-                        
-                        $('#FacultyProgramList').html(FacultyProgramList)
+                        console.log("No Faculty Details")
                     }
                 }  
             })    
@@ -136,7 +169,28 @@
 
         // FOR FACULTY PROGRAM ADD BUTTON
         $('#createFacultyProgram').on('click', function(){
-            $('#createFacultyProgramModal').modal('show')
+            var form_url = APP_URL+'/api/v1/user/'+USER_ID;
+
+            $.ajax({
+                url: form_url,
+                method: "GET",
+                async: true,
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": API_TOKEN,
+                    "Content-Type": "application/json"
+                },
+                success: function(data){
+                    if(data.faculty != null)
+                    {
+                        $('#createFacultyProgramModal').modal('show')
+                    }
+                    else
+                    {
+                        swalAlert('warning', 'Please Update Faculty Detail First')
+                    }
+                }
+            })
         })
         // END FOR FACULTY PROGRAM ADD BUTTON
 
@@ -415,7 +469,6 @@
                     }
                     
                     $('#program_id').html(html);
-                    console.log(html)
                 }
             })
         }
@@ -436,116 +489,123 @@
                 },
                 success: function(data)
                 {
-                    var faculty_educ_profile_url = APP_URL + '/api/v1/faculty_education_profile/get_all_educational_background_of_faculty/' + data.faculty.id;
-                    $.ajax({
-                        url: faculty_educ_profile_url,
-                        method: "GET",
-                        async: true,
-                        headers: {
-                            "Accept": "application/json",
-                            "Authorization": API_TOKEN,
-                            "Content-Type": "application/json"
-                        },
-                        success: function(responseData)
-                        {
-                            // Ticket Details
-							$("#educational_profile_card_body").empty();
-
-                            var faculty_education = "";
-
-                            console.log(responseData)
-                            if (responseData.length == 0)
+                    if(data.faculty != null)
+                    {
+                        var faculty_educ_profile_url = APP_URL + '/api/v1/faculty_education_profile/get_all_educational_background_of_faculty/' + data.faculty.id;
+                        $.ajax({
+                            url: faculty_educ_profile_url,
+                            method: "GET",
+                            async: true,
+                            headers: {
+                                "Accept": "application/json",
+                                "Authorization": API_TOKEN,
+                                "Content-Type": "application/json"
+                            },
+                            success: function(responseData)
                             {
-                                faculty_education =     '<div class="row">' +
-                                                            '<div class="col-md-12 text-center">' +
-                                                                '<span> No Educational Profile added yet.</span>'
-                                                            '</div>' +
-                                                        '</div>';
-                                $("#educational_profile_card_body").html(faculty_education);
-                            }
-                            else 
-                            {
-                                for(var i=0; i < responseData.length; i++)
+                                // Ticket Details
+                                $("#educational_profile_card_body").empty();
+
+                                var faculty_education = "";
+
+                                console.log(responseData)
+                                if (responseData.length == 0)
                                 {
-                                    var school = responseData[i].school
-                                    var year_of_attendance = responseData[i].year_of_attendance
-
-                                    if (school == null)
-                                    {
-                                        school = ""
-                                    }
-                                    else
-                                    {
-                                        school = responseData[i].school
-                                    }
-                                    if (year_of_attendance == null)
-                                    {
-                                        year_of_attendance = ""
-                                    }
-                                    else
-                                    {
-                                        year_of_attendance = responseData[i].year_of_attendance
-                                    }
-                                    console.log(responseData.length);
-                                    console.log(responseData[i].degree);
-                                    faculty_education +=    '<div class="row">' +
-                                                                [i+1] +
-                                                                '&emsp;&emsp;' +
-                                                                '<div class="btn-group">' +
-                                                                    '<button class="button btn-info text-center btnEdit" id="' + responseData[i].id + '""><i class="fas fa-edit"></i></button>' +
-                                                                    '<button class="button btn-danger text-center btnDeactivate" id="' + responseData[i].id + '""><i class="fas fa-trash-alt"></i></button>' +
+                                    faculty_education =     '<div class="row">' +
+                                                                '<div class="col-md-12 text-center">' +
+                                                                    '<span> No Educational Profile added yet.</span>'
                                                                 '</div>' +
-                                                            '</div>' +
-                                                            '<br>' +
-                                                            '<div class="row">' +
-                                                                '<div class="col-md-3" id="faculty_degree">' +
-                                                                    '<div class="col-md-12">' +
-                                                                        '<span><b>Degree: </b>' +
-                                                                    '</div>' +
-                                                                    '<div class="col-md-12">' +
-                                                                        '<br><span>&nbsp;&nbsp;- ' + 
-                                                                            responseData[i].degree +
-                                                                        '</span>' +
-                                                                    '</div>' +
-                                                                '</div>' +
-                                                                '<div class="col-md-4" id="faculty_program">' +
-                                                                    '<div class="col-md-12">' +
-                                                                        '<span><b>Program: </b>' +
-                                                                    '</div>' +
-                                                                    '<div class="col-md-12">' +
-                                                                        '<br><span>&nbsp;&nbsp;- ' + 
-                                                                            responseData[i].program +
-                                                                        '</span>' +
-                                                                    '</div>' +
-                                                                '</div>' +
-                                                                '<div class="col-md-3" id="faculty_school">' +
-                                                                    '<div class="col-md-12">' +
-                                                                        '<span><b>School: </b>' +
-                                                                    '</div>' +
-                                                                    '<div class="col-md-12">' +
-                                                                        '<br><span>&nbsp;&nbsp;- ' + 
-                                                                            school +
-                                                                        '</span>' +
-                                                                    '</div>' +
-                                                                '</div>' +
-                                                                '<div class="col-md-2" id="faculty_year_of_attendance">' +
-                                                                    '<div class="col-md-12 text-center">' +
-                                                                        '<span><b>Year of Attendance: </b>' +
-                                                                    '</div>' +
-                                                                    '<div class="col-md-12 text-center">' +
-                                                                        '<span>' + 
-                                                                            year_of_attendance +
-                                                                        '</span>' +
-                                                                    '</div>' +
-                                                                '</div>' +
-                                                            '</div>' +
-                                                            '<hr class="solid">';
+                                                            '</div>';
+                                    $("#educational_profile_card_body").html(faculty_education);
                                 }
-                                $("#educational_profile_card_body").append(faculty_education);       
+                                else 
+                                {
+                                    for(var i=0; i < responseData.length; i++)
+                                    {
+                                        var school = responseData[i].school
+                                        var year_of_attendance = responseData[i].year_of_attendance
+
+                                        if (school == null)
+                                        {
+                                            school = ""
+                                        }
+                                        else
+                                        {
+                                            school = responseData[i].school
+                                        }
+                                        if (year_of_attendance == null)
+                                        {
+                                            year_of_attendance = ""
+                                        }
+                                        else
+                                        {
+                                            year_of_attendance = responseData[i].year_of_attendance
+                                        }
+                                        console.log(responseData.length);
+                                        console.log(responseData[i].degree);
+                                        faculty_education +=    '<div class="row">' +
+                                                                    [i+1] +
+                                                                    '&emsp;&emsp;' +
+                                                                    '<div class="btn-group">' +
+                                                                        '<button class="button btn-info text-center btnEdit" id="' + responseData[i].id + '""><i class="fas fa-edit"></i></button>' +
+                                                                        '<button class="button btn-danger text-center btnDeactivate" id="' + responseData[i].id + '""><i class="fas fa-trash-alt"></i></button>' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<br>' +
+                                                                '<div class="row">' +
+                                                                    '<div class="col-md-3" id="faculty_degree">' +
+                                                                        '<div class="col-md-12">' +
+                                                                            '<span><b>Degree: </b>' +
+                                                                        '</div>' +
+                                                                        '<div class="col-md-12">' +
+                                                                            '<br><span>&nbsp;&nbsp;- ' + 
+                                                                                responseData[i].degree +
+                                                                            '</span>' +
+                                                                        '</div>' +
+                                                                    '</div>' +
+                                                                    '<div class="col-md-4" id="faculty_program">' +
+                                                                        '<div class="col-md-12">' +
+                                                                            '<span><b>Program: </b>' +
+                                                                        '</div>' +
+                                                                        '<div class="col-md-12">' +
+                                                                            '<br><span>&nbsp;&nbsp;- ' + 
+                                                                                responseData[i].program +
+                                                                            '</span>' +
+                                                                        '</div>' +
+                                                                    '</div>' +
+                                                                    '<div class="col-md-3" id="faculty_school">' +
+                                                                        '<div class="col-md-12">' +
+                                                                            '<span><b>School: </b>' +
+                                                                        '</div>' +
+                                                                        '<div class="col-md-12">' +
+                                                                            '<br><span>&nbsp;&nbsp;- ' + 
+                                                                                school +
+                                                                            '</span>' +
+                                                                        '</div>' +
+                                                                    '</div>' +
+                                                                    '<div class="col-md-2" id="faculty_year_of_attendance">' +
+                                                                        '<div class="col-md-12 text-center">' +
+                                                                            '<span><b>Year of Attendance: </b>' +
+                                                                        '</div>' +
+                                                                        '<div class="col-md-12 text-center">' +
+                                                                            '<span>' + 
+                                                                                year_of_attendance +
+                                                                            '</span>' +
+                                                                        '</div>' +
+                                                                    '</div>' +
+                                                                '</div>' +
+                                                                '<hr class="solid">';
+                                    }
+                                    $("#educational_profile_card_body").append(faculty_education);       
+                                }
+                                
                             }
-                            
-                        }
-                    });
+                        });
+                    }
+                    else
+                    {
+                        console.log("No Faculty Details")
+                    }
                 }
             })
         }
@@ -563,7 +623,6 @@
                     "Authorization": API_TOKEN,
                     "Content-Type": "application/json"
                 },
-
                 success: function(data){
                     console.log('specific')
                     console.log(data)
@@ -588,38 +647,40 @@
                     }
 
                     // $("input[name=gender]").val(data.faculty.gender);
-                    $("input[name=gender][value=" + data.faculty.gender + "]").attr('checked', 'checked')
+                    if(data.faculty != null)
+                    {
+                        $("input[name=gender][value=" + data.faculty.gender + "]").attr('checked', 'checked')
 
-                    if(data.faculty.image != null){
-                        $('#faculty_image').attr("src", APP_URL + "/" + data.faculty.image)
-                        console.log(APP_URL + "/" + data.faculty.image)
+                        if(data.faculty.image != null){
+                            $('#faculty_image').attr("src", APP_URL + "/" + data.faculty.image)
+                            console.log(APP_URL + "/" + data.faculty.image)
+                        }
+                        
+                        // FOR EDUCATIONAL BACKGROUND
+                        $('#faculty_id').val(data.faculty.id);
+                        // END FOR EDUCATIONAL BACKGROUND
+                        $('#faculty_type_id').val(data.faculty.faculty_type_id);
+                        $('#academic_rank_id').val(data.faculty.academic_rank_id);
+                        $('#designation_id').val(data.faculty.designation_id);
+                        $('#specialization_id').val(data.faculty.specialization_id);
+                        $('#program_id').val(data.faculty.program_id);
+                        $('#barangay').val(data.faculty.barangay);
+                        $('#birthdate').val(data.faculty.birthdate);
+                        $('#birthplace').val(data.faculty.birthplace);
+                        $('#city').val(data.faculty.city);
+                        $('#street').val(data.faculty.street);
+                        $('#salutation').val(data.faculty.salutation);
+                        $('#first_name').val(data.faculty.first_name);
+                        $('#hire_date').val(data.faculty.hire_date);
+                        $('#house_number').val(data.faculty.house_number);
+                        $('#last_name').val(data.faculty.last_name);
+                        $('#middle_name').val(data.faculty.middle_name);
+                        $('#phone_number').val(data.faculty.phone_number);
+                        $('#province').val(data.faculty.province);
+                        $('#salutation').val(data.faculty.salutation);
+                        // SETTINGS FACULTY ID
+                        FACULTY_ID = data.faculty.id;
                     }
-
-                    // FOR EDUCATIONAL BACKGROUND
-                    $('#faculty_id').val(data.faculty.id);
-                    // END FOR EDUCATIONAL BACKGROUND
-                    $('#faculty_type_id').val(data.faculty.faculty_type_id);
-                    $('#academic_rank_id').val(data.faculty.academic_rank_id);
-                    $('#designation_id').val(data.faculty.designation_id);
-                    $('#specialization_id').val(data.faculty.specialization_id);
-                    $('#program_id').val(data.faculty.program_id);
-                    $('#barangay').val(data.faculty.barangay);
-                    $('#birthdate').val(data.faculty.birthdate);
-                    $('#birthplace').val(data.faculty.birthplace);
-                    $('#city').val(data.faculty.city);
-                    $('#street').val(data.faculty.street);
-                    $('#salutation').val(data.faculty.salutation);
-                    $('#first_name').val(data.faculty.first_name);
-                    $('#hire_date').val(data.faculty.hire_date);
-                    $('#house_number').val(data.faculty.house_number);
-                    $('#last_name').val(data.faculty.last_name);
-                    $('#middle_name').val(data.faculty.middle_name);
-                    $('#phone_number').val(data.faculty.phone_number);
-                    $('#province').val(data.faculty.province);
-                    $('#salutation').val(data.faculty.salutation);
-
-                    // SETTINGS FACULTY ID
-                    FACULTY_ID = data.faculty.id;
                     removeLoader()
                 },
                 error: function(error){
