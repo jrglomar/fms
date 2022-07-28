@@ -8,6 +8,282 @@
         var USER_DATA = localStorage.getItem("USER_DATA")
         var FACULTY_ID = JSON.parse(USER_DATA).faculty.id
         // END OF GLOBAL VARIABLE
+      // FUNCTION TO UPDATE MEETING STATUS UPON VIEWING
+      
+      function updateActivityStatus()
+        {
+            $.ajax({
+                url: APP_URL + '/api/v1/activity/',
+                type: "GET",
+                dataType: "JSON",
+                success: function (responseData) 
+                {  
+                    $.each(responseData, function (i, dataOptions) 
+                    {
+                        var status = responseData[i].status
+
+                        var start_date_hours = new Date(responseData[i].start_datetime).getHours();
+                        var start_date_mins = new Date(responseData[i].start_datetime).getMinutes();
+                        if (start_date_hours < 10)
+                        {
+                            start_date_hours = "0"+start_date_hours
+                        }
+                        if (start_date_mins < 10)
+                        {
+                            start_date_mins = "0"+start_date_mins
+                        }
+
+                        var end_date_hours = new Date(responseData[i].end_datetime).getHours();
+                        var end_date_mins = new Date(responseData[i].end_datetime).getMinutes();
+                        if (end_date_hours < 10)
+                        {
+                            end_date_hours = "0"+end_date_hours
+                        }
+                        if (end_date_mins < 10)
+                        {
+                            end_date_mins = "0"+end_date_mins
+                        }
+
+                        var current_time = new Date(); // current time
+                        var hours = current_time.getHours();
+                        var mins = current_time.getMinutes();
+                        if (hours < 10)
+                        {
+                            hours = "0"+hours
+                        }
+                        if (mins < 10)
+                        {
+                            mins = "0"+mins
+                        }
+            
+                        var moment_current_date = moment(current_time).format('L')
+                        var moment_start_date = moment(responseData[i].start_datetime).format('L');
+                        var moment_end_date = moment(responseData[i].end_datetime).format('L');
+
+
+                        var now = hours+":"+mins+":00";
+                        var start_time = start_date_hours + ":" + start_date_mins + ":00"
+                        var end_time = end_date_hours + ":" + end_date_mins + ":00"
+
+                        if(status == "Pending")
+                        {
+                            if((moment_current_date >= moment_start_date && moment_current_date <= moment_end_date)) 
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "On Going",
+                                    
+                                }
+                                $.ajax({
+                                    url: APP_URL + '/api/v1/activity/' + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            else if(moment_current_date > moment_end_date)
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "Done",
+                                }
+                                $.ajax({
+                                    url: APP_URL + '/api/v1/activity/' + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            else if(moment_current_date < moment_start_date)
+                            {
+                                refresh()
+                            }
+                            else if((moment_current_date == moment_end_date) && (now > end_time))
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "Done",
+                                }
+                                $.ajax({
+                                    url: APP_URL + '/api/v1/activity/' + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            else if(moment_current_date == moment_start_date && now < start_time && now < end_time)
+                            {
+                                refresh()
+                            }
+                        }
+                        else if(status == "On Going")
+                        {                
+                            if(moment_current_date > moment_end_date)
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "Done",
+                                }
+                                $.ajax({
+                                    url: APP_URL + '/api/v1/activity/' + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            else if(moment_current_date == moment_end_date && now > end_time)
+                            {
+                                let data = {
+                                    "title": responseData[i].title,
+                                    "activity_type_id": responseData[i].activity_type_id,
+                                    "description": responseData[i].description,
+                                    "agenda": responseData[i].agenda,
+                                    "location": responseData[i].location,
+                                    "start_datetime": responseData[i].start_datetime,
+                                    "end_datetime": responseData[i].end_datetime,
+                                    "is_required": responseData[i].is_required,
+                                    "memorandum_file_directory": responseData[i].memorandum_file_directory,
+                                    "status": "Done",
+                                }
+                                $.ajax({
+                                    url: APP_URL + '/api/v1/activity/' + responseData[i].id,
+                                    method: "PUT",
+                                    data: JSON.stringify(data),
+                                    dataType: "JSON",
+                                    headers: {
+                                        "Accept": "application/json",
+                                        "Authorization": API_TOKEN,
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function(data)
+                                    {
+                                        refresh()
+                                    },
+                                    error: function(error){
+                                        $.each(error.responseJSON.errors, function(key,value) {
+                                            swalAlert('warning', value)
+                                        });
+                                        console.log(error)
+                                        console.log(`message: ${error.responseJSON.message}`)
+                                        console.log(`status: ${error.status}`)
+                                    }
+                                // ajax closing tag
+                                })
+                            }
+                            else
+                            {
+                                refresh()
+                            }
+                        }
+                    });
+                },
+            });
+        }
+        updateActivityStatus()
 
 
       // 1st and 2nd ROW - CARDS and CHARTS(DONUT)

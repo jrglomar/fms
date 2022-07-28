@@ -63,13 +63,19 @@
             console.log(faculty_id);
 
             var form_url = APP_URL + '/api/v1/faculty_education_profile/'
-            var form = $("#createForm").serializeArray();
-            let data = {}
+            let data = {
+                "degree": $('#degree').val(),
+                "program": $('#program').val(),
+                "school": $('#school').val(),
+                "year_of_attendance": $('#year_of_attendance').val(),
+                "faculty_id": faculty_id
+            }
 
-            $.each(form, function(){
-                data[[this.name]] = this.value;
-            })
+            // $.each(form, function(){
+            //     data[[this.name]] = this.value;
+            // })
 
+            console.log(data)
             // ajax opening tag
             $.ajax({
                 url: form_url,
