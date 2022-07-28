@@ -65,3 +65,47 @@
 </div>
 {{-- END OF VIEW MODAL --}}
 
+{{-- CREATE REQUIREMENT DOCUMENT MODAL --}}
+<div id="createFacultyProgramModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Faculty Program</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createFacultyProgramForm" data-parsley-validate>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <!-- <label class="required-input">Requirement Bin</label> -->
+                                <input type="hidden" class="form-control" id="faculty_id" name="faculty_id"
+                                tabindex="1" value="" required>
+                            </div>                       
+                        </div>
+                        
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label class="required-input">Program</label>
+                                <select class="form-control" id="program_id" name="program_id" required data-parsley-errors-container="#program-error">
+                                    
+                                </select>
+                                <ul class="parsley-err-msg">
+                                    <li id="program-error"></li>
+                                </ul>
+                            </div>                
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="btnAddFacultyProgram" type="submit" class="btn btn-success">Add Faculty Program</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{-- END OF CREATE REQUIREMENT DOCUMENT MODAL --}}
+

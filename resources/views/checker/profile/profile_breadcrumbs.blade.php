@@ -6,20 +6,30 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb" style="background-color: #FFFFFF; padding-left: 0px; margin-bottom: 0px">
         <li class="breadcrumb-item">
-            Dashboard
+            Account Management
         </li>
-        <li class="breadcrumb-item" id="acad_head_profile">
-        <a href="javascript:window.location.reload();">Profile</a>
+        <li class="breadcrumb-item">
+            Account
+        </li>
+        <li class="breadcrumb-item" id="checker_user">
+        <a href="/checker/user">User</a>
             <script>
-                if(window.location.pathname == '/acad_head/profile')
+                if(window.location.pathname == '/checker/user')
                 {
-                    document.getElementById("acad_head_profile").classList.add('active');
-                    document.getElementById("acad_head_profile").setAttribute("aria-current", "page")
+                    document.getElementById("checker_user").classList.add('active');
+                    document.getElementById("checker_user").setAttribute("aria-current", "page")
                 }
             </script>
         </li>
-        <li class="breadcrumb-item">
-            User Details
+        <li class="breadcrumb-item" id="checker_user_profile">
+        <a href="javascript:window.location.reload();">User Profile</a>
+            <script>
+                if(window.location.pathname == '/checker/user')
+                {
+                    document.getElementById("checker_user_profile").classList.add('active');
+                    document.getElementById("checker_user_profile").setAttribute("aria-current", "page")
+                }
+            </script>
         </li>
     </ol>
 </nav>
