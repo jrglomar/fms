@@ -332,8 +332,13 @@ Route::group(['middleware' => ['role.checker'],
 
     // ------------SCHEDULE VIEW--------------- //
     Route::get('/schedule/{id}', function ($id) {
-        return view('checker/schedule_view/schedule_view', ['page_title' => 'Class Schedule', 'schedule_id' => $id]);
+        return view('checker/schedule_view/schedule_view', ['page_title' => 'Class Attendance', 'schedule_id' => $id]);
     })->name('checker_schedule_view');
+
+    // ------------CLASS ATTENDANCE VIEW--------------- //
+    Route::get('/class_attendance', function () {
+        return view('checker/class_attendance/class_attendance', ['page_title' => 'Class Attendance']);
+    })->name('checker_class_attendance');
 
 });
 

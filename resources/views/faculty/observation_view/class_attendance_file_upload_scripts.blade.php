@@ -133,7 +133,7 @@
             }
         });
 
-        // ADD FILE UPLOAD
+        // EDIT FILE UPLOAD
         $("#editFileupload").dropzone({
             url: APP_URL+'/api/v1/class_attendance/file_uploads',
             acceptedFiles: 'image/*',
@@ -145,7 +145,6 @@
             init: function () {
 
                 var myDropzone = this;
-
 
                 // Update selector to match your button
                 $(".btnUpdateProofOfAttendance").click(function (e) {
@@ -183,7 +182,6 @@
                             "Content-Type": "application/json"
                         },
 
-                        
                         success: function(data){
                             console.log(data)
                             myDropzone.removeAllFiles(true);
@@ -209,6 +207,48 @@
                         }
                     })
                 });
+
+                
+                $('.btnUpdateProofOfAttendance').on('click', function(){
+                        console.log(myDropzone.files[0].status)
+
+                        if(myDropzone.files[0].status == 'Submitted'){
+                            let class_attendance_id = $('#class_attendance_id_e').val()
+                            var form_url = BASE_API + class_attendance_id
+                            let submission_data = {
+                                "start_time": $('#start_time_input_e').val(),
+                                "end_time": $('#end_time_input_e').val(),
+                                "date_of_class": $('#date_of_class_e').val(),
+                            }
+                            $.ajax({
+                                url: form_url,
+                                method: "PUT",
+                                data: JSON.stringify(submission_data),
+                                dataType: "JSON",
+                                headers: {
+                                    "Accept": "application/json",
+                                    "Authorization": API_TOKEN,
+                                    "Content-Type": "application/json"
+                                },
+                                success: function(data){
+                                    notification('info', 'Class Attendance')
+                                    $("#editProofOfAttendanceForm").trigger("reset")
+                                    $("#editProofOfAttendanceModal").modal("hide")
+                                    setInterval(() => {
+                                        location.reload()
+                                    }, 1500);
+                                },
+                                error: function(error){
+                                    $.each(error.responseJSON.errors, function(key,value) {
+                                        swalAlert('warning', value)
+                                    });
+                                    console.log(error)
+                                    console.log(`message: ${error.responseJSON.message}`)
+                                    console.log(`status: ${error.status}`)
+                                }
+                            })
+                        }
+                })
 
                 myDropzone.on("complete", function(file) {
                     console.log(file)
@@ -250,7 +290,6 @@
             },
 
             success: function(response, data, file){
-
                 let class_attendance_id = $('#class_attendance_id_e').val()
                 var form_url = BASE_API + class_attendance_id
                 let submission_data = {
@@ -291,6 +330,7 @@
                         console.log(`status: ${error.status}`)
                     }
                 })
+                
 
             },
 

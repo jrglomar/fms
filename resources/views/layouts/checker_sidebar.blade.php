@@ -49,6 +49,7 @@
                                                 Request::segment(2) == 'schedule_view' ||
                                                 Request::segment(2) == 'class_observation' ||
                                                 Request::segment(2) == 'class_observation_view' ||
+                                                Request::segment(2) == 'class_attendance' ||
                                                 Request::segment(2) == 'class_observation_reports'
                                                 ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
