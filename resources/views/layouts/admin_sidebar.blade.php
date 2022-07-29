@@ -81,7 +81,7 @@
                                             ? 'active' : ''}}">
                             <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                     class="fas fa-book-reader"></i>
-                                <span>Account</span></a>
+                                <span>User Setup</span></a>
                             <ul class="dropdown-menu">
                                 <li class="{{ Request::segment(2) == 'user' ? 'active' : ''}}" >
                                     <a class="nav-link" href="/admin/user">

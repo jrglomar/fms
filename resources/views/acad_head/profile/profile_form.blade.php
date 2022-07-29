@@ -142,16 +142,10 @@
                         <form id="updateUserForm" data-parsley-validate>
                             <div class="form-row text-center">
                                 <div class="col-md-12">
-                                    <h6 class="text-sm" for="email">Email: 
-                                    <label class="text-dark" id="email"></label></h6>
-                                    <p id="faculty_email"></p>
-                                    
+                                    <h6 class="text-sm" for="email">Email: <span class="text-dark"  id="faculty_email"></span></h6>
                                 </div>
                                 <div class="col-md-12">
-                                    <h6 class="text-sm" for="user_role">Role: 
-                                    <label class="text-dark" id="user_role"></label></h6>
-                                    <p id="faculty_role"></p>
-                                    
+                                    <h6 class="text-sm" for="user_role">Role: <span class="text-dark" id="faculty_role"></span></h6>
                                 </div>
                                 <div class="form-group col-md-2"></div>
                             </div>

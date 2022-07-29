@@ -53,6 +53,21 @@
             $('#subject_status').html(data.subject_offering.status)
             $('#teaching_hours').html(data.subject_offering.teaching_hours)
             $('#subject_description').html(data.subject_offering.curriculum_subject.subject.title)
+
+            // ROOM DETAILS MODAL
+            $('#room_building_modal').html(data.room.building)
+            $('#room_floor_modal').html(data.room.floor)
+            $('#room_status_modal').html(data.room.status)
+            $('#room_number_modal').html(data.room.room_number)
+            $('#room_type_modal').html(data.room.room_type)
+
+            // SUBJECT DETAILS MODAL
+            $('#assignment_code_modal').html(data.assignment_code)
+            $('#subject_code_modal').html(data.subject_code)
+            $('#subject_schedule_modal').html(data.day_time)
+            $('#subject_status_modal').html(data.subject_offering.status)
+            $('#teaching_hours_modal').html(data.subject_offering.teaching_hours)
+            $('#subject_description_modal').html(data.subject_offering.curriculum_subject.subject.title)
             
             // FACULTY DETAILS
             $('#faculty_image').html(APP_URL + "/" + data.faculty.image)
@@ -63,6 +78,16 @@
             $('#faculty_designation').html(data.faculty.designation.title)
             $('#faculty_specialization').html(data.faculty.specialization.title)
             $('#faculty_program').html(data.faculty.program.title)
+
+            // FACULTY DETAILS
+            $('#faculty_image_modal').html(APP_URL + "/" + data.faculty.image)
+            $('#faculty_name_modal').html(data.faculty.full_name)
+            $('#faculty_type_modal').html(data.faculty.faculty_type.title)
+            $('#faculty_role_modal').html(user_role)
+            $('#faculty_academic_rank_modal').html(data.faculty.academic_rank.title)
+            $('#faculty_designation_modal').html(data.faculty.designation.title)
+            $('#faculty_specialization_modal').html(data.faculty.specialization.title)
+            $('#faculty_program_modal').html(data.faculty.program.title)
 
             $('#start_time_input').val(data.start_time)
             $('#end_time_input').val(data.end_time)

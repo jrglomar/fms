@@ -619,16 +619,19 @@
                         console.log(APP_URL + "/" + data.faculty.image)
                     }
 
-                    var faculty_user_role = ""
-                    var count = data.user_role.length
 
-                    for (var i=0; i<count; i++)
-                    {
-                        faculty_user_role += data.user_role[i].role.title + ", "
-                        $('#faculty_role').append(faculty_user_role);
-                    }
+                    let user_role = ''
+                    $.each(data.user_role, function(i){
+                        if(i < (data.user_role.length) - 1){
+                            user_role += data.user_role[i].role.title + ', '
+                        }
+                        else{
+                            user_role += data.user_role[i].role.title
+                        }
+                    })
+
+                    $('#faculty_role').html(user_role)
                     
-                    $('#faculty_role').html(faculty_user_role);
                     $('#faculty_email').html(data.email);
                     // FOR EDUCATIONAL BACKGROUND
                     $('#faculty_id').val(data.faculty.id);

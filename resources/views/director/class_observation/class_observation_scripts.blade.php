@@ -15,7 +15,6 @@
         function dataTable(){
                 $('#dataTable tfoot th').each( function (i) {
                     var title = $('#dataTable thead th').eq( $(this).index() ).text();
-                    console.log(title)
                     $(this).html( '<input size="15" class="form-control" type="text" placeholder="'+title+'" data-index="'+i+'" />');
                 } );
 
@@ -77,6 +76,7 @@
                         }
                         return status_html
                     }},
+                    { data: "date_of_observation"},
                     { data: "deleted_at", render: function(data, type, row){
                         let class_schedule_id = row.class_schedule_id
                         let row_data = class_sched_data.filter( row => row.id == class_schedule_id)
@@ -90,7 +90,7 @@
                             }
                         }
                     ],
-                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1] }],
+                "aoColumnDefs": [{ "bVisible": false, "aTargets": [0, 1, 10] }],
                 "order": [[1, "desc"]]
                 })
 
@@ -101,33 +101,78 @@
                         .search( this.value )
                         .draw();
                 });
+
+                 // Extend dataTables search
+                 $.fn.dataTable.ext.search.push(
+                    function( settings, data, dataIndex ) {
+                        var min  = $('#date_from').val();
+                        var max  = $('#date_to').val();
+                        var dateOfObs = data[10] // Our date column in the table
+                        
+                        if  ( 
+                                ( min == "" || max == "" )
+                                || 
+                                ( moment(dateOfObs).isSameOrAfter(moment(min).format('YYYY-MM-DD' + ' 00:00:00')) && moment(dateOfObs).isSameOrBefore(moment(max).format('YYYY-MM-DD' + ' 23:59:59')) ) 
+                            )
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+
+                // Re-draw the table when the a date range filter changes
+                $('.date-range-filter').change( function() {
+                    dataTable.draw();
+                });
         }
         // END OF DATATABLE FUNCTION
 
         // CALLING DATATABLE FUNCTION
         dataTable()
 
-        function activity_type(){
-
-            activity_type_url = BASE_API
-    
-            $.ajax({
-            url: activity_type_url,
-            type: "GET",
-            dataType: "JSON",
-
-            success: function(data){
-
-                console.log(data)
-                
-
+        $('.btnChangeStatus').on('change', function(){
+            let checked = $('input[name="status_options"]:checked').val();
+            console.log(checked)
+            if(checked == 'All'){
+                    dataTable
+                        .column(9)
+                        .search("")
+                        .draw();
             }
-            })
-        }
+            else if(checked == 'Pending'){
+                dataTable
+                        .column(9)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'Ongoing'){
+                dataTable
+                        .column(9)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'Cancelled'){
+                dataTable
+                        .column(9)
+                        .search($(this).val())
+                        .draw();
+            }
+            else if(checked == 'Done'){
+                dataTable
+                        .column(9)
+                        .search($(this).val())
+                        .draw();
+            }
+        })
+        
+        $('#btnDateReset').on('click', function(){
+            $('.date-range-filter').val("")
 
-        // CALLING ACTIVITY TYPE FUNCTION
-        activity_type()
+            dataTable.draw();
+        })
 
+       
         $('#status').change(function(){
             if(this.value == "Pending" || "Ongoing" || "Ended") {
                 html = '<div class="form-group col-md-6 additional-input">' +

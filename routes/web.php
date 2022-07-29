@@ -448,4 +448,8 @@ Route::group(['middleware' => ['role.director'],
         Route::get('/activity_reports', function () {
             return view('director/report/activity_reports', ['page_title' => 'Activity Reports']);
         })->name('activity_report');
+        // ------------CLASS ATTENDANCE REPORTS--------------- //
+        Route::get('/class_attendance_reports', function () {
+            return view('director/class_attendance_reports/class_attendance_reports', ['page_title' => 'Class Attendance Reports']);
+        })->name('director_class_attendance_reports');
 });

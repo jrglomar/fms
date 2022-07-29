@@ -148,13 +148,20 @@
                         <li class="dropdown {{ Request::segment(2) == 'srd_reports' || 
                                                 Request::segment(2) == 'meeting_reports' ||
                                                 Request::segment(2) == 'activity_reports' ||
-                                                Request::segment(2) == 'class_observation_reports' 
+                                                Request::segment(2) == 'class_observation_reports' ||
+                                                Request::segment(2) == 'class_attendance_reports'
+
                                                 ? 'active' : ''}}">
                         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i
                                 class="fas fa-book-reader"></i>
                         <span>Reports</span></a>
                         <ul class="dropdown-menu">
                             <!-- THIS IS REQUIRED FOR CHECKING ACTIVE CLASS -->
+                            <li class="{{ Request::segment(2) == 'class_attendance_reports'
+                            ? 'active' : ''}}">
+                                <a class="nav-link" href="/director/class_attendance_reports">
+                                    <span>Class Attendance Reports</span></a>
+                            </li>
                             <li class="{{ Request::segment(2) == 'class_observation_reports'
                             ? 'active' : ''}}">
                                 <a class="nav-link" href="/director/class_observation_reports">

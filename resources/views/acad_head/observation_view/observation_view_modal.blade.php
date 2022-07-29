@@ -11,6 +11,121 @@
                 <form id="setObservationForm" data-parsley-validate>
                     <div class="card-body">
                         <div class="row">
+                            <div class="col-8 mb-5">
+                                <div class="d-flex justify-content-between">
+                                    <h5> Subject Details </h5>
+                                </div>        
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="text-dark" style="margin-bottom: 0px">
+                                                <label class="font-weight-bold" for="">Assignment Code: <span id="assignment_code_modal" class="font-weight-light">-</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="text-dark" style="margin-bottom: 0px">
+                                                <label class="font-weight-bold" for="">Teaching Hours: <span id="teaching_hours_modal" class="font-weight-light">-</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="text-dark" style="margin-bottom: 0px">
+                                                <label class="font-weight-bold" for="">Subject Code: <span id="subject_code_modal" class="font-weight-light">-</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="text-dark" style="margin-bottom: 0px">
+                                                <label class="font-weight-bold" for="">Status: <span id="subject_status_modal" class="font-weight-light">-</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="text-dark" style="margin-bottom: 0px">
+                                                <label class="font-weight-bold" for="">Subject Schedule: <span id="subject_schedule_modal" class="font-weight-light">-</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="text-dark" style="margin-bottom: 0px">
+                                                <label class="font-weight-bold" for="">Subject Description: <span id="subject_description_modal" class="font-weight-light">-</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 mb-5">
+                                <div class="d-flex justify-content-between">
+                                    <h5> Room Details </h5>
+                                </div>         
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="text-dark" style="margin-bottom: 0px">
+                                                <label class="font-weight-bold" for="">Building: <span id="room_building_modal" class="font-weight-light">-</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="text-dark" style="margin-bottom: 0px">
+                                                <label class="font-weight-bold" for="">Room Number: <span id="room_number_modal" class="font-weight-light">-</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="text-dark" style="margin-bottom: 0px">
+                                                <label class="font-weight-bold" for="">Floor: <span id="room_floor_modal" class="font-weight-light">-</span></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="text-dark" style="margin-bottom: 0px">
+                                                <label class="font-weight-bold" for="">Room Type: <span id="room_type_modal" class="font-weight-light">-</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="text-dark" style="margin-bottom: 0px">
+                                                <label class="font-weight-bold" for="">Status: <span id="room_status_modal" class="font-weight-light">-</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 mb-5">
+                                <div class="d-flex justify-content-between">
+                                    <h5>  Faculty Details </h5>
+                                </div> &nbsp;
+                                <li class="media">
+                                    <img id="faculty_image" alt="image" class="mr-3 rounded-circle" width="70" src="https://demo.getstisla.com/assets/img/avatar/avatar-1.png">
+                                    <div class="media-body">
+                                      <h6 class="font-weight-bold">Name: <span id="faculty_name_modal" class="font-weight-light">-</span></h6>
+        
+                                      <div class="row">
+                                        {{-- <div class="col-12">
+                                            <label class=" mb-3 font-weight-bold">Details: </label>
+                                        </div> --}}
+                                      </div>
+                                      <div class="row px-4">
+                                        <div class="col-6">
+                                                <div class="font-weight-bold mb-2">Faculty Type: <span id="faculty_type_modal" class="font-weight-light">-</span></div>
+                                                <div class="font-weight-bold mb-2">Academic Rank: <span id="faculty_academic_rank_modal" class="font-weight-light">-</span></div>
+                                                <div class="font-weight-bold mb-2">Designation: <span id="faculty_designation_modal" class="font-weight-light">-</span></div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="font-weight-bold mb-2">Role: <span id="faculty_role_modal" class="font-weight-light">-</span></div>
+                                            <div class="font-weight-bold mb-2">Specialization: <span id="faculty_specialization_modal" class="font-weight-light">-</span></div>
+                                            <div class="font-weight-bold mb-2">Program: <span id="faculty_program_modal" class="font-weight-light">-</span></div>
+                                        </div>
+                                      </div>
+                                      
+                                    </div>
+                                </li>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="form-group col-md-12" hidden>
                                 <label class="required-input">ID</label>
                                 <input type="text" class="form-control" id="class_schedule_id" name="class_schedule_id"
