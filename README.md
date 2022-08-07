@@ -92,8 +92,3 @@ Start the local development server
     </table>
 </div>
 
-## System Screenshot
-<div style="display: flex; align-items: center; justify-content: center;">
-    [![image.png](https://i.postimg.cc/kXDH6Rh7/image.png)](https://postimg.cc/gnFs1jW7)
-</div>
- 
