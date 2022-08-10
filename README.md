@@ -11,6 +11,7 @@ The Faculty Monitoring System is a system that will aid the Faculty Staff in man
 **- MySQL**<br>
 **- jQuery**<br>
 **- LaravelBlade**<br>
+**- Bootstrap**<br>
 **- Laravel (Database Seeding, Factory, Migration)**<br>
 **- Javascript (Dropzone JS, EnjoyHint)**<br>
 
