@@ -27,52 +27,83 @@ The Faculty Monitoring System is a system that will aid the Faculty Staff in man
 
 
 ## Installation
+Clone the repository
+<pre class="notranslate"><code>git clone https://github.com/jrglomar/fms
+</code></pre>
 
-- Copy all files inside readme/ext folder to your
-xampp/php/ext
+Switch to the repo folder
+<pre class="notranslate"><code>cd fms
+</code></pre>
 
-- Modify your php.ini 
-Find extension=pdo_sqlite
-Make a new line and add this lines:
-extension=php_sqlsrv_74_nts_x64.dll
-extension=php_sqlsrv_74_ts_x64.dll
+Install all the dependencies using composer 
+<pre class="notranslate"><code>composer install
+</code></pre>
 
-- Run the database script in the folder using ssms.
-Version to download
-SQL SERVER 2014
-https://www.microsoft.com/en-sg/download/confirmation.aspx?id=42299
+Copy the .env.example content and rename it to .env file
+<pre class="notranslate"><code>cp .env.example .env
+</code></pre>
 
-XAMPP VERSION 7.4.12
-https://www.apachefriends.org/download.html
+Generate a new application key
+<pre class="notranslate"><code>php artisan key:generate
+</code></pre>
 
-OPTIONAL:
-SSMS 2018:
-https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15
+<!-- 
+Generate a new JWT authentication secret key
+<pre class="notranslate"><code>php artisan jwt:generate
+</code></pre>
+Copy the example env file and make the required configuration changes in the .env file
+<pre class="notranslate"><code>cp .env.example .env
+</code></pre> -->
 
-- If run locally to access the homepag - http://localhost/eboto/
+Run the database migrations (Set the database connection in .env before migrating)  
+<pre class="notranslate"><code>php artisan migrate:fresh --seed
+</code></pre>
 
-## Login to browse the system
+Start the local development server
+<pre class="notranslate"><code>php artisan serve
+</code></pre>
+
+## Login at APP_URL/login to setup system
 <div>
     <table>
         <thead>
             <tr>
-                <th><strong>Student Number</strong></th>
+                <th><strong>Email</strong></th>
                 <th><strong>Password</strong></th>
                 <th><strong>Role</strong></th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>admin</td>
-                <td>admin</td>
+                <td>admin@pupqc.com</td>
+                <td>User01</td>
                 <td>Admin</td>
             </tr>
             <tr>
-                <td>2018-00232-CM-0</td>
-                <td>admin</td>
-                <td>Student</td>
+                <td>acadhead@pupqc.com</td>
+                <td>User01</td>
+                <td>Academic Head</td>
+            </tr>
+            <tr>
+                <td>faculty@pupqc.com</td>
+                <td>User01</td>
+                <td>Faculty</td>
+            </tr>
+            <tr>
+                <td>faculty2@pupqc.com</td>
+                <td>User01</td>
+                <td>Faculty</td>
+            </tr>
+            <tr>
+                <td>director@pupqc.com</td>
+                <td>User01</td>
+                <td>Director</td>
+            </tr>
+            <tr>
+                <td>checker@pupqc.com</td>
+                <td>User01</td>
+                <td>Checker</td>
             </tr>
         </tbody>
     </table>
 </div>
-
