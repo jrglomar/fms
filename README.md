@@ -1,7 +1,7 @@
 <div align="center">
 
 # Faculty Monitoring System
-In my OJT, I was the lead developer on the team. Developing the Faculty Monitoring System (FMS). This is a system that will aid the faculty staff in managing the details of submitting the required documents, class attendance, and campus activities. It will also provide the faculties with automated tools to quickly follow them. It is a web application that offers an automated solution for faculty monitoring that is well-organized and improved.
+This is a system that will aid the faculty staff in managing the details of submitting the required documents, class attendance, and campus activities. It will also provide the faculties with automated tools to quickly follow them. It is a web application that offers an automated solution for faculty monitoring that is well-organized and improved.
 
 <br>
 
